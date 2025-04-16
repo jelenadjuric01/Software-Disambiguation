@@ -6,7 +6,7 @@ import requests
 
 
 
-def get_github_user_data(username: str) -> dict:
+def get_github_user_data(username: str) -> str:
     url = f"https://api.github.com/users/{username}"
     token = os.getenv("GITHUB_TOKEN")
     headers = {"Authorization": f"token {token}"} if token else {}
@@ -16,17 +16,14 @@ def get_github_user_data(username: str) -> dict:
         if response.status_code == 200:
             data = response.json()
             full_name = data.get("name", "")
-            return {
-                "name": full_name or username
-            }
-
+            return  full_name or username
+            
+ 
     except Exception as e:
         print(f"Failed to fetch GitHub user data for {username}: {e}")
 
     # fallback
-    return {
-        "name": username
-    }
+    return username
 
 def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/somef") -> dict:
     # Create a temp file to store the output
