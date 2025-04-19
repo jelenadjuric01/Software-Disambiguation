@@ -2,30 +2,37 @@ import pandas as pd
 from pathlib import Path
 import json
 from typing import Dict
+import os
+from fetching_medata_from_cantidate_url import get_metadata  
 
-# 👇 assumes this function is already defined
-from fetching_medata_from_cantidate_url import get_metadata  # replace with actual import
 
-
-def dictionary_with_cantidate_metadata(df,output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
-    
-
-    # Extract unique, non-empty URLs
+def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
+    # Step 1: Extract unique, non-empty URLs
     url_set = set()
     for cell in df["candidate_urls"].dropna():
         if isinstance(cell, str):
             urls = [url.strip() for url in cell.split(",") if url.strip()]
             url_set.update(urls)
 
-    # Initialize dictionary
-    metadata_cache = {url: None for url in url_set}
-    # Fill metadata where missing
-    for url in metadata_cache:
-        print(f"🔍 Processing: {url}")
-        metadata = get_metadata(url)
-        metadata_cache[url] = metadata
+    # Step 2: Load existing cache or initialize empty one
+    if os.path.exists(output_json_path) and os.path.getsize(output_json_path) > 0:
+        with open(output_json_path, "r", encoding="utf-8") as f:
+            try:
+                metadata_cache = json.load(f)
+            except json.JSONDecodeError:
+                print("⚠️ Warning: Could not decode existing JSON. Starting with empty cache.")
+                metadata_cache = {}
+    else:
+        metadata_cache = {}
 
-    # Save to JSON
+    # Step 3: Fetch and update missing metadata
+    for url in url_set: #Add that is also fetches again if the metadata is empty
+        if url not in metadata_cache or metadata_cache[url] in [None, {}]:
+            print(f"🔍 Processing: {url}")
+            metadata = get_metadata(url)
+            metadata_cache[url] = metadata
+
+    # Step 4: Save updated metadata
     with open(output_json_path, "w", encoding="utf-8") as f:
         json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
         print(f"📦 Metadata cache saved to: {output_json_path}")
@@ -33,7 +40,7 @@ def dictionary_with_cantidate_metadata(df,output_json_path: str = "metadata_cach
     return metadata_cache
 
 
-def add_metadata(df, metadata:dict,output_path: str = None):
+def add_metadata(df:pd.DataFrame, metadata:dict,output_path: str = None):
 
 
     # Columns to ensure exist
@@ -75,19 +82,33 @@ def add_metadata(df, metadata:dict,output_path: str = None):
 
     # Save to Excel if output path is provided
     if output_path:
-        df.to_excel(output_path, index=False)
+        df.to_csv(output_path, index=False)
         print(f"📄 Updated Excel file saved to {output_path}")
+#Makes pairs of candidate urls and metadata and saves the temp file
+def make_pairs(df:pd.DataFrame) -> pd.DataFrame:
+    df["candidate_urls"] = df["candidate_urls"].fillna('').apply(
+        lambda x: [url.strip() for url in str(x).split(',') if url.strip()]
+    )
+    df_exploded = df.explode("candidate_urls").reset_index(drop=True)
+    
+    # Assign new unique ID
+    df_exploded["id"] = range(1, len(df_exploded) + 1)
+    df_exploded.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/pairwise_temp.csv", index=False)  # Save the DataFrame to a temporary CSV file
 
+    return df_exploded
+    
 if __name__ == "__main__":
     # Example usage
-    excel_path = "path_to_your_excel_file.xlsx"
-    output_json_path = "metadata_cache.json"
-    output_excel_path = "updated_excel_file.xlsx"
+    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus.xlsx"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/updated_with_metadata_file.csv"
 
     # Build metadata cache from Excel
 
     # Load the DataFrame again to add metadata
     df = pd.read_excel(excel_path)
-    metadata_cache = dictionary_with_cantidate_metadata(excel_path, output_json_path)
+    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
+    print(metadata_cache)
+    df = make_pairs(df)
 
-    add_metadata(df,metadata_cache, output_excel_path)
+    add_metadata(df,metadata_cache, output_path)

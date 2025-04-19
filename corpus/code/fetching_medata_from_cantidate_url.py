@@ -73,29 +73,14 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
         os.remove(output_path)
 #Function that retireves the metadata from CRAN
 def extract_cran_metadata(url: str) -> dict:
-    # Extract the package name from the URL
-    match = re.search(r"cran\.r-project\.org/web/packages/(.*?)/", url)
-    if match:
-        package_name = match.group(1)
-        return {
-            "name": package_name,
-            "description": "CRAN package",
-            "keywords": [],
-            "authors": []
-        }
+    
     return {}
 #Function that handles the generic website metadata extraction
 def extract_website_metadata(url: str) -> dict:
-    # Placeholder for generic website metadata extraction
-    return {
-        "name": "Generic Website",
-        "description": "Generic website metadata",
-        "keywords": [],
-        "authors": []
-    }
+    return {}
 
 #Function that retrieves the metadata from any link
-def get_metadata(repo_url: str) -> dict:
+def get_metadata(url: str) -> dict:
     if not isinstance(url, str) or not url.strip():
         return {"error": "Invalid URL"}
 
@@ -117,7 +102,4 @@ github_repos = [
     "https://github.com/dgarijo/Widoco/"
 ]
 
-for url in github_repos:
-    metadata = extract_somef_metadata(url)
-    print(f"\n📦 Metadata for: {url}\n{json.dumps(metadata, indent=2)}")
-    
+   

@@ -1,0 +1,61 @@
+{
+  "https://github.com/ZaixuCui/PANDA": {
+    "name": "PANDA",
+    "description": "Pipeline software \"Pipeline for Analyzing braiN Diffusion imAges\" for processing diffusion MRI data.",
+    "keywords": [],
+    "authors": [
+      {
+        "name": "Zaixu Cui"
+      }
+    ]
+  },
+  "https://github.com/r-spatial/stars/": {
+    "name": "stars",
+    "description": "Spatiotemporal Arrays, Raster and Vector Data Cubes",
+    "keywords": [
+      "r",
+      "raster",
+      "satellite-images",
+      "spatial"
+    ],
+    "authors": [
+      {
+        "name": "r-spatial"
+      }
+    ]
+  },
+  "https://cran.r-project.org/web/packages/activity/": {},
+  "https://github.com/scikit-learn/scikit-learn": {},
+  "https://github.com/pandas-dev/pandas": {
+    "name": "pandas",
+    "description": "Flexible and powerful data analysis / manipulation library for Python, providing labeled data structures similar to R data.frame objects, statistical functions, and much more",
+    "keywords": [
+      "alignment",
+      "data-analysis",
+      "data-science",
+      "flexible",
+      "pandas",
+      "python"
+    ],
+    "authors": [
+      {
+        "name": "pandas"
+      }
+    ]
+  },
+  "https://cran.r-project.org/package=sets": {},
+  "https://github.com/alexdobin/STAR": {
+    "name": "STAR",
+    "description": "RNA-seq aligner",
+    "keywords": [],
+    "authors": [
+      {
+        "name": "Alexander Dobin"
+      }
+    ]
+  },
+  "https://r-spatial.github.io/stars/": {},
+  "https://cran.r-project.org/package=stars": {},
+  "https://www.dnastar.com/": {},
+  "https://www.rhino3d.com/": {}
+}
