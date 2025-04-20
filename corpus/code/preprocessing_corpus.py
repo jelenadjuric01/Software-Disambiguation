@@ -84,7 +84,7 @@ def add_metadata(df:pd.DataFrame, metadata:dict,output_path: str = None):
     if output_path:
         df.to_csv(output_path, index=False)
         print(f"📄 Updated Excel file saved to {output_path}")
-#Makes pairs of candidate urls and metadata and saves the temp file
+#Makes pairs of candidate urls and metadata and sets their probabilities, saves the temp file
 def make_pairs(df:pd.DataFrame) -> pd.DataFrame:
     df["candidate_urls"] = df["candidate_urls"].fillna('').apply(
         lambda x: [url.strip() for url in str(x).split(',') if url.strip()]
@@ -93,6 +93,12 @@ def make_pairs(df:pd.DataFrame) -> pd.DataFrame:
     
     # Assign new unique ID
     df_exploded["id"] = range(1, len(df_exploded) + 1)
+    df_exploded["probability (ground truth)"] = (
+        df_exploded.apply(
+            lambda row: int(row["candidate_urls"] in row["url (ground truth)"]),
+            axis=1
+        )
+    )
     df_exploded.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/pairwise_temp.csv", index=False)  # Save the DataFrame to a temporary CSV file
 
     return df_exploded

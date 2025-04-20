@@ -24,7 +24,6 @@
       }
     ]
   },
-  "https://cran.r-project.org/web/packages/activity/": {},
   "https://github.com/scikit-learn/scikit-learn": {},
   "https://github.com/pandas-dev/pandas": {
     "name": "pandas",
@@ -57,5 +56,6 @@
   "https://r-spatial.github.io/stars/": {},
   "https://cran.r-project.org/package=stars": {},
   "https://www.dnastar.com/": {},
-  "https://www.rhino3d.com/": {}
+  "https://www.rhino3d.com/": {},
+  "https://cran.r-project.org/package=activity": {}
 }
