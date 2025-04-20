@@ -1,13 +1,83 @@
 {
+  "https://github.com/alexdobin/STAR": {
+    "name": "STAR",
+    "description": "RNA-seq aligner",
+    "keywords": [],
+    "authors": [
+      "Alexander Dobin"
+    ]
+  },
+  "https://github.com/scikit-learn/scikit-learn": {},
   "https://github.com/ZaixuCui/PANDA": {
     "name": "PANDA",
     "description": "Pipeline software \"Pipeline for Analyzing braiN Diffusion imAges\" for processing diffusion MRI data.",
     "keywords": [],
     "authors": [
-      {
-        "name": "Zaixu Cui"
-      }
+      "Zaixu Cui"
     ]
+  },
+  "https://www.dnastar.com/": {},
+  "https://pypi.org/project/pandas/": {
+    "name": "pandas",
+    "description": "Powerful data structures for data analysis, time series, and statistics",
+    "keywords": [
+      "5 - Production/Stable",
+      "Console",
+      "Science/Research",
+      "OSI Approved",
+      "BSD License",
+      "OS Independent",
+      "Cython",
+      "Python",
+      "3",
+      "Only",
+      "3.10",
+      "3.11",
+      "3.12",
+      "3.9",
+      "Scientific/Engineering"
+    ],
+    "authors": []
+  },
+  "https://r-spatial.github.io/stars/": {},
+  "https://cran.r-project.org/package=sets": {
+    "name": "sets",
+    "description": "Data structures and basic operations for ordinary sets,\ngeneralizations such as fuzzy sets, multisets, and\nfuzzy multisets, customizable sets, and intervals.",
+    "keywords": null,
+    "authors": [
+      "David Meyer",
+      "Kurt Hornik",
+      "Christian Buchta"
+    ]
+  },
+  "https://pypi.org/project/scikit-learn/": {
+    "name": "scikit-learn",
+    "description": "A set of python modules for machine learning and data mining",
+    "keywords": [
+      "5 - Production/Stable",
+      "Developers",
+      "Science/Research",
+      "OSI Approved",
+      "BSD License",
+      "MacOS",
+      "Microsoft",
+      "Windows",
+      "POSIX",
+      "Unix",
+      "C",
+      "Python",
+      "3",
+      "3.10",
+      "3.11",
+      "3.12",
+      "3.13",
+      "3.9",
+      "Implementation",
+      "CPython",
+      "Scientific/Engineering",
+      "Software Development"
+    ],
+    "authors": []
   },
   "https://github.com/r-spatial/stars/": {
     "name": "stars",
@@ -19,12 +89,9 @@
       "spatial"
     ],
     "authors": [
-      {
-        "name": "r-spatial"
-      }
+      "r-spatial"
     ]
   },
-  "https://github.com/scikit-learn/scikit-learn": {},
   "https://github.com/pandas-dev/pandas": {
     "name": "pandas",
     "description": "Flexible and powerful data analysis / manipulation library for Python, providing labeled data structures similar to R data.frame objects, statistical functions, and much more",
@@ -37,25 +104,29 @@
       "python"
     ],
     "authors": [
-      {
-        "name": "pandas"
-      }
+      "pandas"
     ]
   },
-  "https://cran.r-project.org/package=sets": {},
-  "https://github.com/alexdobin/STAR": {
-    "name": "STAR",
-    "description": "RNA-seq aligner",
-    "keywords": [],
-    "authors": [
-      {
-        "name": "Alexander Dobin"
-      }
-    ]
-  },
-  "https://r-spatial.github.io/stars/": {},
-  "https://cran.r-project.org/package=stars": {},
-  "https://www.dnastar.com/": {},
   "https://www.rhino3d.com/": {},
-  "https://cran.r-project.org/package=activity": {}
+  "https://cran.r-project.org/package=activity": {
+    "name": "activity",
+    "description": "Provides functions to express clock time data relative to\nanchor points (typically solar); fit kernel density functions to animal\nactivity time data; plot activity distributions; quantify overall\nlevels of activity; statistically compare activity metrics through\nbootstrapping; evaluate variation in linear variables with time (or\nother circular variables).",
+    "keywords": null,
+    "authors": [
+      "Marcus Rowcliffe"
+    ]
+  },
+  "https://cran.r-project.org/package=stars": {
+    "name": "stars",
+    "description": "Reading, manipulating, writing and plotting\nspatiotemporal arrays (raster and vector data cubes) in 'R', using 'GDAL'\nbindings provided by 'sf', and 'NetCDF' bindings by 'ncmeta' and 'RNetCDF'.",
+    "keywords": null,
+    "authors": [
+      "Edzer Pebesma",
+      "Michael Sumner",
+      "Etienne Racine",
+      "Adriano Fantini",
+      "David Blodgett",
+      "Krzysztof Dyba"
+    ]
+  }
 }

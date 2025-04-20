@@ -5,7 +5,8 @@ from typing import Dict
 import os
 from fetching_medata_from_cantidate_url import get_metadata  
 
-
+ 
+    
 def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
     # Step 1: Extract unique, non-empty URLs
     url_set = set()
