@@ -72,11 +72,18 @@ def add_metadata(df:pd.DataFrame, metadata:dict,output_path: str = None):
         df.at[idx, "metadata_name"] = metadata_data.get("name", "")
 
         # Convert authors and keywords to JSON strings
-        authors = metadata_data.get("authors", [])
-        df.at[idx, "metadata_authors"] = json.dumps(authors, ensure_ascii=False)
+        authors = metadata_data.get("authors") or []
+        if isinstance(authors, list) and authors:
+            df.at[idx, "metadata_authors"] = ", ".join(authors)
+        else:
+            df.at[idx, "metadata_authors"] = ""
 
-        keywords = metadata_data.get("keywords", [])
-        df.at[idx, "metadata_keywords"] = json.dumps(keywords, ensure_ascii=False)
+        # Keywords: same treatment
+        keywords = metadata_data.get("keywords") or []
+        if isinstance(keywords, list) and keywords:
+            df.at[idx, "metadata_keywords"] = ", ".join(keywords)
+        else:
+            df.at[idx, "metadata_keywords"] = ""
 
         df.at[idx, "metadata_description"] = metadata_data.get("description", "")
         print(f"Processed row {idx} for URL: {url}")

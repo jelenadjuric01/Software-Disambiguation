@@ -86,27 +86,30 @@ def extract_pypi_metadata(url: str) -> Dict[str, Any]:
         "authors"     : authors,
     }
 
-
 def parse_authors_r(authors_r: str) -> List[str]:
-    """Extract a list of 'Given Family' from an R Authors@R string."""
-    folks = re.findall(r'person\((.*?)\)', authors_r, flags=re.DOTALL)
+    """
+    Extract all person(...) blocks from an Authors@R string
+    into 'Given Family' entries, plus any single-quoted org names.
+    """
+    blocks = re.findall(r'person\((.*?)\)', authors_r, flags=re.DOTALL)
     out = []
-    for block in folks:
-        given  = re.search(r'given\s*=\s*"([^"]+)"', block)
-        family = re.search(r'family\s*=\s*"([^"]+)"', block)
-        if given and family:
-            out.append(f"{given.group(1).strip()} {family.group(1).strip()}")
+    for block in blocks:
+        names = re.findall(r'"([^"]+)"', block)
+        if len(names) >= 2:
+            out.append(f"{names[0]} {names[1]}")
+        elif len(names) == 1:
+            out.append(names[0])
     return out
 
 def extract_cran_metadata(url: str) -> Dict[str, Any]:
     """
-    Given a CRAN package page URL, extract:
+    Given a CRAN package page URL, return:
       - name        : str
       - description : str
       - keywords    : List[str]   # DESCRIPTION Keywords or Task Views
-      - authors     : List[str]   # from Authors@R, DESCRIPTION Author, or HTML
+      - authors     : List[str]   # always non-empty if CRAN has an Author
     """
-    # 1) pull out the pkg name
+    # 1) extract pkg name
     parsed = urlparse(url)
     qs     = parse_qs(parsed.query)
     if "package" in qs:
@@ -122,13 +125,13 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
             else:
                 raise ValueError(f"Cannot parse package name from URL: {url}")
 
-    # 2) try CRANDB JSON
+    # 2) fetch JSON from CRANDB
     api_url = f"https://crandb.r-pkg.org/{pkg}"
     resp    = requests.get(api_url)
     resp.raise_for_status()
     data    = resp.json()
 
-    name        = data.get("Package")
+    name        = data.get("Package", pkg)
     description = data.get("Description", "")
 
     # 3) AUTHORS: JSON Authors@R → DESCRIPTION Author → HTML fallback
@@ -136,30 +139,37 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
     if data.get("Authors@R"):
         authors = parse_authors_r(data["Authors@R"])
     elif data.get("Author"):
-        # grab everything before each [role,…]
         raw = data["Author"]
-        authors = [a.strip() for a in re.findall(r'([^,\[]+?)(?=\s*\[)', raw)]
+        # strip out any <email> and [role,…] bits
+        raw = re.sub(r'<[^>]+>', '', raw)
+        raw = re.sub(r'\[.*?\]', '', raw)
+        # split on commas, semicolons or " and "
+        parts = re.split(r',|;| and ', raw)
+        authors = [p.strip() for p in parts if p.strip()]
+
     if not authors:
-        # HTML scrape of the <dt>Author:</dt> line
+        # HTML fallback: scrape the <dt>Author:</dt> block
         html = requests.get(f"https://cran.r-project.org/web/packages/{pkg}/index.html").text
         soup = BeautifulSoup(html, "html.parser")
         dt = soup.find("dt", string=re.compile(r"Author:", re.IGNORECASE))
         if dt:
-            txt = dt.find_next_sibling("dd").get_text()
-            authors = [a.strip() for a in re.findall(r'([^,\[]+?)(?=\s*\[)', txt)]
+            txt   = dt.find_next_sibling("dd").get_text()
+            txt   = re.sub(r'<[^>]+>', '', txt)
+            txt   = re.sub(r'\[.*?\]', '', txt)
+            parts = re.split(r',|;| and ', txt)
+            authors = [p.strip() for p in parts if p.strip()]
 
-    # 4) KEYWORDS: DESCRIPTION Keywords → Task Views HTML fallback
+    # 4) KEYWORDS: DESCRIPTION Keywords → Task Views HTML fallback
     raw_kw = data.get("Keywords") or ""
     kws    = [w.strip() for w in re.split(r"[,\s]+", raw_kw) if w.strip()]
-
     if not kws:
-        # look for the “In views:” line on the CRAN page
         html = requests.get(f"https://cran.r-project.org/web/packages/{pkg}/index.html").text
         soup = BeautifulSoup(html, "html.parser")
-        dt   = soup.find("dt", string=re.compile(r"In\s*views:", re.IGNORECASE))
+        dt   = next((d for d in soup.find_all("dt")
+                     if "views" in d.get_text().lower()), None)
         if dt:
-            txt = dt.find_next_sibling("dd").get_text()
-            kws = [v.strip() for v in txt.split(",") if v.strip()]
+            dd_text = dt.find_next_sibling("dd").get_text()
+            kws = [v.strip() for v in dd_text.split(",") if v.strip()]
 
     return {
         "name"       : name,
@@ -260,13 +270,3 @@ def get_metadata(url: str) -> dict:
     # Generic website fallback
     return extract_website_metadata(url)
     
-if __name__ == "__main__":
-    url  = "https://cran.r-project.org/package=dplyr"
-    meta = extract_cran_metadata(url)
-    print(meta)
-    # → {
-    #      'name': 'dplyr',
-    #      'description': 'A grammar of data manipulation, providing a consistent set of verbs ...',
-    #      'keywords': ['Data Import, Tidy Data, Data Transformation, Data Aggregation'], 
-    #      'authors': ['Hadley Wickham', ...]
-    #    }
