@@ -9,6 +9,24 @@ import csv
 from similarity_metrics import compute_similarity_df, get_average_min_max
     
 def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
+    """
+    Extract and cache metadata for all unique candidate URLs in a DataFrame.
+
+    This function:
+      1. Gathers every non-empty URL from the `candidate_urls` column.
+      2. Loads an existing JSON cache from `output_json_path`, or initializes a new one.
+      3. For each URL not already cached (or with empty metadata), calls `get_metadata(url)`
+         and updates the cache.
+      4. Writes the updated cache back to `output_json_path`.
+
+    Args:
+        df: A pandas DataFrame containing a “candidate_urls” column where each cell
+            is a comma-separated string of URLs.
+        output_json_path: Path to the JSON file used for caching URL→metadata mappings.
+
+    Returns:
+        A dict mapping each URL (str) to its metadata (dict).
+    """
     # Step 1: Extract unique, non-empty URLs
     url_set = set()
     for cell in df["candidate_urls"].dropna():
@@ -43,8 +61,16 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
 
 def sanitize_text_for_csv(text: str) -> str:
     """
-    Replace control characters (incl. newlines, tabs, nulls) with spaces,
-    escape internal double-quotes by doubling them, and trim.
+    Clean a text string so it can safely be written as a CSV field.
+
+    This replaces control characters (newlines, tabs, nulls, etc.) with spaces,
+    escapes any internal double-quotes by doubling them, and trims whitespace.
+
+    Args:
+        text: The raw string to sanitize.
+
+    Returns:
+        A cleaned string with no control characters and properly escaped quotes.
     """
     # 1) Replace control chars (U+0000–U+001F, U+007F) with space
     text = re.sub(r'[\x00-\x1F\x7F]+', ' ', text)
@@ -54,6 +80,29 @@ def sanitize_text_for_csv(text: str) -> str:
     return text.strip()
 
 def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
+    """
+    Populate a DataFrame with metadata fields for each candidate URL, in place.
+
+    This function:
+      1. Ensures the columns “metadata_name”, “metadata_authors”,
+         “metadata_keywords”, and “metadata_description” exist.
+      2. For each row lacking `metadata_name` and with a valid URL in
+         `candidate_urls`, looks up its metadata in the provided `metadata` dict.
+      3. Sanitizes each metadata field via `sanitize_text_for_csv` and writes
+         it into the DataFrame.
+      4. If `output_path` is given, saves the updated DataFrame to CSV using
+         minimal quoting.
+
+    Args:
+        df: A pandas DataFrame with a “candidate_urls” column and optional
+            metadata columns to fill.
+        metadata: A dict mapping URLs (str) to metadata dicts with keys
+                  "name", "authors", "keywords", and "description".
+        output_path: Optional path to write the updated DataFrame as a CSV file.
+
+    Returns:
+        None. The DataFrame `df` is modified in place.
+    """
     # Ensure metadata columns exist
     for col in ["metadata_name", "metadata_authors", "metadata_keywords", "metadata_description"]:
         if col not in df.columns:
@@ -100,8 +149,30 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
         df.to_csv(output_path, index=False, quoting=csv.QUOTE_MINIMAL)
         print(f"📄 Updated CSV file saved to {output_path}")
 
-#Makes pairs of candidate urls and metadata and sets their probabilities, saves the temp file
 def make_pairs(df:pd.DataFrame) -> pd.DataFrame:
+    """
+    Explode comma-separated candidate URLs into one row per (mention, URL) pair.
+
+    This function:
+      1. Splits the “candidate_urls” column on commas and explodes the list
+         into individual rows.
+      2. Assigns a new unique integer “id” to each row.
+      3. Computes a ground-truth flag “probability (ground truth)” which is 1
+         if the candidate URL appears in the “url (ground truth)” column, else 0.
+      4. Saves the pairwise result to a temporary CSV and returns the exploded DataFrame.
+
+    Args:
+        df: A pandas DataFrame containing at least the columns
+            “candidate_urls” (comma-separated URLs) and “url (ground truth)”.
+
+    Returns:
+        A new DataFrame with columns:
+          - id: unique integer per (mention, URL) pair
+          - candidate_urls: one URL per row
+          - url (ground truth): original ground-truth URL list
+          - probability (ground truth): 1 or 0
+          plus any other original columns repeated per exploded row.
+    """
     df["candidate_urls"] = df["candidate_urls"].fillna('').apply(
         lambda x: [url.strip() for url in str(x).split(',') if url.strip()]
     )
