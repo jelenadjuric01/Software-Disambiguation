@@ -5,7 +5,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 from typing import Optional
 import numpy as np
 import pandas as pd
-
+import textdistance
+import csv
 
 # 1. Load your models once (at module import)
 #    - A lightweight BERT for keyword-vs-keyword
@@ -39,7 +40,7 @@ def keyword_similarity_with_fallback(
         software_description: free‐text description of the software.
 
     Returns:
-        A float in [0.0, 1.0]:
+        A float in [-1.0, 1.0]:
           - 0.0 if paper_keywords is empty or None.
           - If site_keywords is empty/None: cosine similarity between
             paper_keywords and software_description using RoBERTa.
@@ -81,7 +82,7 @@ def paragraph_description_similarity(text1: str, text2: str) -> float:
         text2: e.g. the software's description.
     
     Returns:
-        A float in [0.0, 1.0], where higher means more semantically similar.
+        A float in [-1.0, 1.0], where higher means more semantically similar.
     """
     if not text1 or not (text1 := text1.strip()):
         return 0.0
@@ -128,7 +129,7 @@ def software_name_similarity(name1: str, name2: str) -> float:
     """
     n1 = normalize_software_name(name1)
     n2 = normalize_software_name(name2)
-    return jellyfish.jaro_winkler(n1, n2)
+    return textdistance.jaro_winkler(n1, n2)
 
 
 
@@ -174,10 +175,10 @@ def author_name_similarity(name1: str, name2: str) -> float:
         return 0.0
     n1 = normalize_author_name(name1)
     n2 = normalize_author_name(name2)
-    return jellyfish.jaro_winkler(n1, n2)
+    return textdistance.jaro_winkler(n1, n2)
 
 
-def compute_similarity_df(df: pd.DataFrame) -> pd.DataFrame:
+def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFrame:
     """
     Given a DataFrame with columns
       id, name, doi, paragraph, authors, field/topic/keywords, url,
@@ -218,10 +219,69 @@ def compute_similarity_df(df: pd.DataFrame) -> pd.DataFrame:
     # 3) Select and return the requested columns
     cols = [
         'id','name','doi','paragraph','authors','field/topic/keywords',
-        'url','candidate_urls','probability',
+        'url (ground truth)','candidate_urls','probability (ground truth)',
         'metadata_name','metadata_authors','metadata_keywords','metadata_description',
         'name_metric','author_metric','paragraph_metric','keywords_metric'
     ]
-    sub[cols].to_csv("similarity_metrics_version_1.csv", index=False)
-    print("📄 Similarity metrics saved to similarity_metrics.csv")
+    if output_path:
+        # Save to CSV if requested, 
+        sub[cols].to_csv(output_path, index=False)
+        print(f"📄 Similarity metrics saved to {output_path}")
+    
     return sub[cols]
+def get_average_min_max(df: pd.DataFrame, output_path: str = None) -> None:
+    """
+    Compute per-row and overall summary statistics for the similarity metrics in a DataFrame.
+
+    This function:
+      1. Adds three new columns to `df`:
+         - "average": the row-wise mean of ["name_metric", "author_metric", "paragraph_metric", "keywords_metric"]
+         - "min":     the row-wise minimum of those same four metric columns
+         - "max":     the row-wise maximum of those same four metric columns
+      2. Prints the overall mean, min, and max for each of these seven columns:
+         ["name_metric", "author_metric", "paragraph_metric", "keywords_metric",
+          "average", "min", "max"]
+      3. Optionally writes the augmented DataFrame to a CSV file if `output_path` is provided.
+
+    Args:
+        df: A pandas DataFrame containing at least the columns
+            "name_metric", "author_metric", "paragraph_metric", and "keywords_metric".
+        output_path: Path to save the updated DataFrame as CSV. If None, no file is written.
+
+    Returns:
+        None: The DataFrame `df` is modified in place and summary statistics are printed.
+    """
+    # Calculate average, min, and max for each candidate URL
+    df['average'] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric"]].mean(axis=1)
+    df["min"] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric"]].min(axis=1)
+    df["max"] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric"]].max(axis=1)
+    metrics = ["name_metric","author_metric",'paragraph_metric','keywords_metric', "average","min","max"]
+# 2) Or, if you prefer one‐by‐one formatting:
+    for m in metrics:
+        avg = df[m].mean()
+        mn  = df[m].min()
+        mx  = df[m].max()
+        print(f"{m:15s} →  avg: {avg:.4f}   min: {mn:.4f}   max: {mx:.4f}")
+    if output_path:
+        df.to_csv(output_path, index=False)
+        print(f"📄 Average, min, and max metrics saved to {output_path}")
+
+if __name__ == "__main__":
+    # Example usage
+    df = pd.DataFrame({
+        'id': [1, 2],
+        'name': ['Software A', 'Software B'],
+        'doi': ['10.1000/xyz123', '10.1000/xyz456'],
+        'paragraph': ['This is a description of Software A.', 'This is a description of Software B.'],
+        'authors': ['Alice Smith', 'Bob Johnson'],
+        'field/topic/keywords': ['AI, ML', 'Data Science'],
+        'url': ['http://example.com/a', 'http://example.com/b'],
+        'candidate_urls': ['http://example.com/c', 'http://example.com/d'],
+        'probability': [1, 0],
+        'metadata_name': ['Software A', 'Software B'],
+        'metadata_authors': ['Alice Smith', 'Bob Johnson'],
+        'metadata_keywords': ['AI, ML', 'Data Science'],
+        'metadata_description': ['A software for AI and ML.', 'A software for Data Science.']
+    })
+
+    compute_similarity_df(df)

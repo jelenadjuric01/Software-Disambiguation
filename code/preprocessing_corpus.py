@@ -6,6 +6,7 @@ import os
 from fetching_medata_from_cantidate_url import get_metadata  
 import re
 import csv
+from similarity_metrics import compute_similarity_df, get_average_min_max
     
 def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
     # Step 1: Extract unique, non-empty URLs
@@ -117,13 +118,16 @@ def make_pairs(df:pd.DataFrame) -> pd.DataFrame:
     df_exploded.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/pairwise_temp.csv", index=False)  # Save the DataFrame to a temporary CSV file
 
     return df_exploded
+
+    
     
 if __name__ == "__main__":
-    # Example usage
+    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file
+    """'''
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus.xlsx"
     output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
     output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/updated_with_metadata_file.csv"
-
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv"
     # Build metadata cache from Excel
 
     # Load the DataFrame again to add metadata
@@ -133,3 +137,9 @@ if __name__ == "__main__":
     df = make_pairs(df)
 
     add_metadata(df,metadata_cache, output_path)
+    df = compute_similarity_df(df,output_path_similarities)"""
+    output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/calculated_version_1.csv"
+    # Load the DataFrame again to see the results
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv")
+    # Get the average, min, and max for each metric
+    get_average_min_max(df, output_path_calculated_version_1)
