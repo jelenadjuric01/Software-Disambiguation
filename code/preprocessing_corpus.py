@@ -4,8 +4,8 @@ import json
 from typing import Dict
 import os
 from fetching_medata_from_cantidate_url import get_metadata  
-
- 
+import re
+import csv
     
 def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
     # Step 1: Extract unique, non-empty URLs
@@ -40,58 +40,65 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
 
     return metadata_cache
 
+def sanitize_text_for_csv(text: str) -> str:
+    """
+    Replace control characters (incl. newlines, tabs, nulls) with spaces,
+    escape internal double-quotes by doubling them, and trim.
+    """
+    # 1) Replace control chars (U+0000–U+001F, U+007F) with space
+    text = re.sub(r'[\x00-\x1F\x7F]+', ' ', text)
+    # 2) Escape any internal double‑quotes per RFC 4180: " → ""
+    text = text.replace('"', '""')
+    # 3) Trim leading/trailing whitespace
+    return text.strip()
 
-def add_metadata(df:pd.DataFrame, metadata:dict,output_path: str = None):
-
-
-    # Columns to ensure exist
-    metadata_columns = [
-        "metadata_name",
-        "metadata_authors",
-        "metadata_keywords",
-        "metadata_description"
-    ]
-
-    # Add missing columns
-    for col in metadata_columns:
+def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
+    # Ensure metadata columns exist
+    for col in ["metadata_name", "metadata_authors", "metadata_keywords", "metadata_description"]:
         if col not in df.columns:
             df[col] = ""
 
     for idx, row in df.iterrows():
-        if pd.notna(df.at[idx, "metadata_name"]) and str(df.at[idx, "metadata_name"]).strip() != "":
-            continue  # Skip if metadata_name already exists
-        url = row.get("candidate_urls")
-        if not isinstance(url, str) or url.strip() == "":
+        # Skip rows where metadata_name is already present
+        name_cell = row.get("metadata_name", "")
+        if pd.notna(name_cell) and str(name_cell).strip():
+            continue
+
+        url = row.get("candidate_urls", "")
+        if not isinstance(url, str) or not url.strip():
             print(f"Skipping row {idx}: missing or invalid URL")
             continue
-        metadata_data = metadata.get(url, {})
-        if not metadata_data:
+
+        meta = metadata.get(url, {})
+        if not meta:
             print(f"Skipping row {idx}: no metadata found for URL {url}")
             continue
 
-        df.at[idx, "metadata_name"] = metadata_data.get("name", "")
+        # 1) Name
+        raw_name = meta.get("name", "") or ""
+        df.at[idx, "metadata_name"] = sanitize_text_for_csv(raw_name)
 
-        # Convert authors and keywords to JSON strings
-        authors = metadata_data.get("authors") or []
-        if isinstance(authors, list) and authors:
-            df.at[idx, "metadata_authors"] = ", ".join(authors)
-        else:
-            df.at[idx, "metadata_authors"] = ""
+        # 2) Authors (list → comma‑sep string)
+        authors = meta.get("authors") or []
+        authors_str = ", ".join(authors) if isinstance(authors, list) else ""
+        df.at[idx, "metadata_authors"] = sanitize_text_for_csv(authors_str)
 
-        # Keywords: same treatment
-        keywords = metadata_data.get("keywords") or []
-        if isinstance(keywords, list) and keywords:
-            df.at[idx, "metadata_keywords"] = ", ".join(keywords)
-        else:
-            df.at[idx, "metadata_keywords"] = ""
+        # 3) Keywords (list → comma‑sep string)
+        keywords = meta.get("keywords") or []
+        kw_str = ", ".join(keywords) if isinstance(keywords, list) else ""
+        df.at[idx, "metadata_keywords"] = sanitize_text_for_csv(kw_str)
 
-        df.at[idx, "metadata_description"] = metadata_data.get("description", "")
+        # 4) Description
+        raw_desc = meta.get("description", "") or ""
+        df.at[idx, "metadata_description"] = sanitize_text_for_csv(raw_desc)
+
         print(f"Processed row {idx} for URL: {url}")
 
-    # Save to Excel if output path is provided
+    # Save to CSV if requested, using minimal quoting (fields with commas/quotes will be wrapped & escaped)
     if output_path:
-        df.to_csv(output_path, index=False)
-        print(f"📄 Updated Excel file saved to {output_path}")
+        df.to_csv(output_path, index=False, quoting=csv.QUOTE_MINIMAL)
+        print(f"📄 Updated CSV file saved to {output_path}")
+
 #Makes pairs of candidate urls and metadata and sets their probabilities, saves the temp file
 def make_pairs(df:pd.DataFrame) -> pd.DataFrame:
     df["candidate_urls"] = df["candidate_urls"].fillna('').apply(
