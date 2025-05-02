@@ -60,7 +60,6 @@
     "https://github.com/asaluau292922129017/Karthi_BCEAAC2CB95E3B785A04DBFC7140965A",
     "https://github.com/clippit/Paw-BCEAuthDynamicValue",
     "https://github.com/giabaio/BCEA",
-    "https://github.com/giabaio/BCEA/",
     "https://github.com/giabaio/BCEAweb",
     "https://n8thangreen.github.io/BCEA/",
     "https://www.butte.edu/departments/hr/salaries-cba/bcea-cba.php",
@@ -217,7 +216,6 @@
     "https://github.com/miguelgrinberg/flasky",
     "https://github.com/pallets-eco/flask-admin",
     "https://github.com/pallets/flask",
-    "https://github.com/pallets/flask/",
     "https://palletsprojects.com/projects/flask",
     "https://pypi.org/project/Flask/",
     "https://www.hydroflask.com/"
@@ -456,7 +454,6 @@
     "https://my.clevelandclinic.org/health/body/21887-muscle",
     "https://pypi.org/project/muscle/",
     "https://www.drive5.com/muscle/",
-    "https://www.ebi.ac.uk/jdispatcher/msa/muscle",
     "https://www.ebi.ac.uk/jdispatcher/msa/muscle?stype=protein",
     "https://www.menshealth.com/uk/building-muscle/train-smarter/a64497723/fewer-sets-per-workout/"
   ],
@@ -850,7 +847,6 @@
     "https://www.piliapp.com/actual-size/inch-ruler/"
   ],
   "SCINA": [
-    "http://lce.biohpc.swmed.edu/scina/",
     "http://www.marinespecies.org/aphia.php?p=taxdetails&id=103278",
     "https://cran.r-project.org/package=CINNA",
     "https://cran.r-project.org/package=SCI",
@@ -1224,8 +1220,7 @@
     "https://escholarship.org/uc/item/9rs1536m",
     "https://github.com/snacktavish/TreeToReads",
     "https://pypi.org/project/TreeToReads/",
-    "https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000799",
-    "https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000799?crawler=true"
+    "https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000799"
   ],
   "TunePareto": [
     "https://cran.r-project.org/package=GPareto",
@@ -1268,7 +1263,6 @@
     "https://en.wikipedia.org/wiki/Velvet",
     "https://github.com/bitswift/Velvet",
     "https://github.com/caro401/royal-velvet",
-    "https://github.com/dzerbino/velvet",
     "https://github.com/dzerbino/velvet/",
     "https://github.com/ergohaven/velvet",
     "https://github.com/noamr/velvette",
@@ -1700,7 +1694,6 @@
     "https://github.com/facebookarchive/fixed-data-table",
     "https://github.com/jbetancur/react-data-table-component",
     "https://r-datatable.com/",
-    "https://rdatatable.gitlab.io/data.table",
     "https://rdatatable.gitlab.io/data.table/"
   ],
   "deepredeff": [
@@ -1713,7 +1706,6 @@
     "https://dl.acm.org/doi/10.1016/j.compbiolchem.2024.108169",
     "https://github.com/cran/deepredeff",
     "https://github.com/darcyabjones/deepredeff-py",
-    "https://github.com/ruthkr/deepredeff",
     "https://github.com/ruthkr/deepredeff/",
     "https://ruthkr.github.io/deepredeff/reference/aasset_to_df.html",
     "https://www.biorxiv.org/content/10.1101/2020.07.08.193250v1.full.pdf",
@@ -2086,7 +2078,6 @@
     "https://github.com/lattera/glibc",
     "https://github.com/olikraus/u8glib",
     "https://github.com/sgerrand/alpine-pkg-glibc",
-    "https://gitlab.gnome.org/GNOME/glib",
     "https://gitlab.gnome.org/GNOME/glib/",
     "https://pypi.org/project/glib/",
     "https://www.merriam-webster.com/dictionary/glib"
@@ -2191,7 +2182,6 @@
     "https://cran.r-project.org/package=mintyr",
     "https://cran.r-project.org/package=mmints",
     "https://daniel-caro.com/r-intsvy",
-    "https://daniel-caro.com/r-intsvy/",
     "https://github.com/CambridgeAssessmentResearch/intsvyExtras",
     "https://github.com/INTsvyatkov211/INTsvyatkov211",
     "https://github.com/cran/intsvy",
@@ -2391,7 +2381,6 @@
     "https://github.com/JeffFessler/mirt",
     "https://github.com/guanhuaw/MIRTorch",
     "https://github.com/mirth-lang/mirth",
-    "https://github.com/philchalmers/mirt",
     "https://github.com/philchalmers/mirt/",
     "https://mirt.bandcamp.com/",
     "https://philchalmers.github.io/mirt/",
@@ -2416,6 +2405,7 @@
     "https://pubmed.ncbi.nlm.nih.gov/31792509/"
   ],
   "mnnpy": [
+    "https://anaconda.org/bioconda/mnnpy",
     "https://cran.r-project.org/package=knnp",
     "https://cran.r-project.org/package=mnonr",
     "https://cran.r-project.org/package=mpoly",
@@ -2424,7 +2414,11 @@
     "https://github.com/aysalama/mnnpython",
     "https://github.com/chriscainx/mnnpy",
     "https://github.com/granatumx/gbox-mnnpy",
-    "https://pypi.org/project/mnnpy/"
+    "https://pypi.org/project/mnnpy/",
+    "https://scanpy.readthedocs.io/en/1.9.x/generated/scanpy.external.pp.mnn_correct.html",
+    "https://scanpy.readthedocs.io/en/stable/generated/scanpy.external.pp.mnn_correct.html",
+    "https://www.amazon.es/Anatomy-Muscles-Pictures-Education-20X27inch/dp/B0888LZ94B",
+    "https://www.amazon.se/-/en/Anatomy-Muscles-Pictures-Education-16x20inch/dp/B0888N3YVH"
   ],
   "modes": [
     "https://cran.r-project.org/package=ModEstM",
@@ -2510,7 +2504,6 @@
     "https://github.com/jbornschein/mpi4py-examples",
     "https://github.com/mpi4py/mpi4py",
     "https://github.com/mpi4py/mpi4py-fft",
-    "https://github.com/mpi4py/mpi4py/",
     "https://github.com/mpi4py/setup-mpi",
     "https://github.com/pyscf/mpi4pyscf",
     "https://groups.google.com/g/mpi4py/c/Zd3wZr6A5aQ",
@@ -2556,7 +2549,6 @@
     "https://www.nasa.gov/centers-and-facilities/langley/nasas-laser-navigation-tech-enables-commercial-lunar-exploration/"
   ],
   "ngCGH": [
-    "http://github.com/seandavi/ngCGH",
     "https://bionano.com/blogs/comparison-of-cnv-detection-from-whole-exome-sequencing-wes-as-compared-with-snp-microarray/",
     "https://bionano.com/wp-content/uploads/2023/03/Comparison-of-the-BAM-Multiscale-reference-algorithm-to-other-methods-for-CNV-detection-from-NGS-1.pdf",
     "https://github.com/paulvan/ngCGH",
@@ -2683,7 +2675,6 @@
     "https://github.com/fossgis/osmdata",
     "https://github.com/osmdatar/osmdatar",
     "https://github.com/riccardoklinger/osmdata.xyz",
-    "https://github.com/ropensci/osmdata",
     "https://github.com/ropensci/osmdata/",
     "https://joss.theoj.org/papers/10.21105/joss.00305",
     "https://osmdata.openstreetmap.de/",
@@ -2696,14 +2687,19 @@
     "https://cran.r-project.org/package=pgdraw",
     "https://cran.r-project.org/package=raw",
     "https://cran.r-project.org/package=trawl",
+    "https://developer.parrot.com/docs/pdraw/installation.html",
+    "https://developer.parrot.com/docs/pdraw/overview.html",
+    "https://forum.developer.parrot.com/t/pdraw-crashes-after-few-seconds-using-olympe/15114",
+    "https://forum.developer.parrot.com/t/pdraw-in-docker/15094",
     "https://github.com/Akaaba/pdraw",
     "https://github.com/Parrot-Developers/pdraw",
     "https://github.com/Phylliida/P2PDraw",
     "https://github.com/ShowMeThe/AnimatedWebPDrawable",
-    "https://github.com/contriteobserver/AnimatedWebPDrawable"
+    "https://github.com/au5ton/pDraw",
+    "https://github.com/contriteobserver/AnimatedWebPDrawable",
+    "https://www.acaclone.com/"
   ],
   "pDraw 32": [
-    "http://www.acaclone.com/",
     "http://www.acaclone.com/download/download.htm",
     "http://www.methods.info/software/sequence_analysis/pdraw32.html",
     "https://github.com/au5ton/pDraw",
@@ -2892,28 +2888,45 @@
     "https://cran.r-project.org/package=pcvr",
     "https://cran.r-project.org/package=pvar",
     "https://cran.r-project.org/package=ypr",
+    "https://en.wikipedia.org/wiki/PVR",
     "https://github.com/fxgames/pvrtextool_wrapper",
     "https://github.com/kodi-pvr/pvr.hts",
     "https://github.com/kodi-pvr/pvr.iptvsimple",
     "https://github.com/mrossini-ethz/camera-calibration-pvr",
-    "https://github.com/pvrbook/pvr"
+    "https://github.com/pvrbook/pvr",
+    "https://www.genecards.org/cgi-bin/carddisp.pl?gene=PVR",
+    "https://www.iss-foundation.org/vessel-and-company-commitments/proactive-vessel-register/proactive-vessel-register-pvr/",
+    "https://www.pvrcinemas.com/",
+    "https://www.uniprot.org/uniprotkb/P15151/entry"
   ],
   "pyAFQ": [
+    "https://figshare.com/articles/dataset/pyAFQ_Stanford_HARDI_tractography_and_mapping_updated/23848884",
     "https://github.com/Anneef/pyAFQ",
     "https://github.com/brainlife/app-pyafq-segment",
     "https://github.com/scitran-apps/pyafq",
     "https://github.com/tractometry/pyAFQ",
     "https://github.com/yeatmanlab/pyAFQ",
-    "https://pypi.org/project/pyAFQ/"
+    "https://neurostars.org/t/pyafq-cingulum-outputs/29019",
+    "https://neurostars.org/t/resampling-to-30-nodes-using-pyafq-config-file/27194",
+    "https://pypi.org/project/pyAFQ/",
+    "https://tractometry.org/pyAFQ/",
+    "https://yeatmanlab.github.io/pyAFQ",
+    "https://yeatmanlab.github.io/pyAFQ/tutorials/index.html"
   ],
   "pymagnitude": [
+    "https://colab.research.google.com/github/sonoisa/irasuto_search_tutorial_for_Colab/blob/master/irasuto_search.ipynb",
     "https://cran.r-project.org/package=pargasite",
+    "https://discuss.pytorch.org/t/how-to-predict-a-single-sample-on-a-trained-lstm-model/114905",
+    "https://docs.vultr.com/how-to-create-a-deep-learning-rest-api-with-word2vec-and-flask",
     "https://github.com/Sankar16kds/pymagnitude",
     "https://github.com/kamujun/compare_pymagnitude_with_gensim_and_tfhub",
     "https://github.com/lambwang/pymagnitude",
     "https://github.com/shr3yans/pymagnitude-tutorial",
     "https://github.com/zfang/benchmark_pymagnitude",
-    "https://pypi.org/project/pymagnitude/"
+    "https://gitlab.com/Plasticity/magnitude",
+    "https://pypi.org/project/pymagnitude/",
+    "https://www.cis.upenn.edu/~ccb/publications/magnitude-fast-efficient-vector-embeddings-in-python.pdf",
+    "https://www.kaggle.com/datasets/tongahlai/pymagnitude"
   ],
   "pyphysio": [
     "https://cran.r-project.org/package=ctypesio",
@@ -3743,7 +3756,6 @@
     "https://github.com/cartant/tsutils-etc",
     "https://github.com/htinaunglu/tsutils",
     "https://github.com/hynd/heka-tsutils-plugins",
-    "https://github.com/trnnick/tsutils",
     "https://github.com/trnnick/tsutils/",
     "https://kourentzes.com/forecasting/2019/01/14/r-package-tsutils/",
     "https://pypi.org/project/tsutils/",
