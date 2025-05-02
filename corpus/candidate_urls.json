@@ -22,7 +22,6 @@
     "https://github.com/gojiplus/abbyyR",
     "https://github.com/samueltc/ABBYY",
     "https://pdf.abbyy.com/",
-    "https://pypi.org/project/ABBYY",
     "https://pypi.org/project/ABBYY/",
     "https://www.abbyy.com/",
     "https://www.abbyy.com/company/about-us/",
@@ -45,7 +44,7 @@
     "https://github.com/lamplightdev/aeon",
     "https://github.com/logicabrity/aeon",
     "https://myaeon2go.com/",
-    "https://pypi.org/project/Aeon",
+    "https://pypi.org/project/Aeon/",
     "https://pypi.org/project/aeon/"
   ],
   "BCEA": [
@@ -86,7 +85,7 @@
     "https://github.com/wention/BeautifulSoup9",
     "https://programminghistorian.org/en/lessons/retired/intro-to-beautiful-soup",
     "https://pypi.org/project/BeautifulSoup/",
-    "https://pypi.org/project/beautifulsoup4",
+    "https://pypi.org/project/beautifulsoup4/",
     "https://scrapfly.io/blog/web-scraping-with-python-beautifulsoup/",
     "https://www.crummy.com/software/BeautifulSoup/",
     "https://www.crummy.com/software/BeautifulSoup/bs4/doc/"
@@ -105,7 +104,6 @@
     "https://github.com/goslim56/CoAPthon",
     "https://github.com/thscowns/coapthon_rasec",
     "https://ieeexplore.ieee.org/document/7389028/",
-    "https://pypi.org/project/CoAPthon",
     "https://pypi.org/project/CoAPthon/"
   ],
   "DALI": [
@@ -161,7 +159,6 @@
     "https://github.com/django/django",
     "https://github.com/encode/django-rest-framework",
     "https://github.com/wsvincent/awesome-django",
-    "https://pypi.org/project/Django",
     "https://pypi.org/project/Django/",
     "https://www.djangoproject.com/",
     "https://www.imdb.com/title/tt1853728/",
@@ -222,7 +219,6 @@
     "https://github.com/pallets/flask",
     "https://github.com/pallets/flask/",
     "https://palletsprojects.com/projects/flask",
-    "https://pypi.org/project/Flask",
     "https://pypi.org/project/Flask/",
     "https://www.hydroflask.com/"
   ],
@@ -421,7 +417,7 @@
     "https://askubuntu.com/questions/1254428/problems-running-a-program-tested-in-ubuntu-according-to-developers",
     "https://github.com/by-student-2017/MOPAC2016-examples",
     "https://github.com/mbanders/mopac_checker",
-    "https://pypi.org/project/mopac",
+    "https://pypi.org/project/mopac/",
     "https://support.revvitysignals.com/hc/en-us/articles/4536888634772-Unable-to-Integrate-current-update-of-MOPAC-2016-client-with-Chem3D"
   ],
   "MOTIF": [
@@ -545,7 +541,6 @@
     "https://poap.xyz/",
     "https://poap.xyz/about-the-protocol",
     "https://poap.xyz/how-to-use-poap",
-    "https://pypi.org/project/POAP",
     "https://pypi.org/project/POAP/"
   ],
   "Pandas": [
@@ -628,7 +623,6 @@
     "https://pygments.org/",
     "https://pygments.org/demo/",
     "https://pygments.org/docs/",
-    "https://pypi.org/project/Pygments",
     "https://pypi.org/project/Pygments/",
     "https://tex.stackexchange.com/questions/514854/how-to-solve-the-pygmentize-error-in-latex-after-installing-pygments-and-minte"
   ],
@@ -685,7 +679,7 @@
     "https://github.com/jkomyno/bioalgo-QCluster-vs-isONclust",
     "https://github.com/qcluster/QCluster",
     "https://pypi.org/project/QCluster/",
-    "https://pypi.org/project/Qcluster",
+    "https://pypi.org/project/Qcluster/",
     "https://www.pythonanywhere.com/forums/topic/30810/",
     "https://www.pythonanywhere.com/forums/topic/33544/"
   ],
@@ -888,7 +882,6 @@
     "https://github.com/xxcisxxc/SIMLR-python",
     "https://play.google.com/store/apps/details?id=com.similar.similar",
     "https://pubmed.ncbi.nlm.nih.gov/29265724/",
-    "https://pypi.org/project/SIMLR",
     "https://pypi.org/project/SIMLR/",
     "https://www.10xgenomics.com/blog/simlr-a-novel-scrna-seq-analysis-method",
     "https://www.bioconductor.org/packages/release/bioc/html/SIMLR.html",
@@ -1197,7 +1190,6 @@
     "https://github.com/mariushoch/Toolserver-hoo",
     "https://github.com/mormegil-cz/toolserver-tools",
     "https://meta.wikimedia.org/wiki/Toolserver",
-    "https://pypi.org/project/Toolserver",
     "https://pypi.org/project/Toolserver/",
     "https://toolserver.org/",
     "https://www.mediawiki.org/wiki/Tool_Labs/Collection_of_issues_after_Toolserver_shutdown",
@@ -1231,7 +1223,6 @@
     "https://cran.r-project.org/package=roads",
     "https://escholarship.org/uc/item/9rs1536m",
     "https://github.com/snacktavish/TreeToReads",
-    "https://pypi.org/project/TreeToReads",
     "https://pypi.org/project/TreeToReads/",
     "https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000799",
     "https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000799?crawler=true"
@@ -1312,7 +1303,7 @@
     "https://estesrockets.com/products/tandem-x-launch-set",
     "https://github.com/philippeller/dragoman",
     "https://pmc.ncbi.nlm.nih.gov/articles/PMC3863625/",
-    "https://pypi.org/project/tandem",
+    "https://pypi.org/project/tandem/",
     "https://www.thegpm.org/tandem/"
   ],
   "activity": [
@@ -1348,7 +1339,6 @@
     "https://github.com/jerryn70/GoodbyeAds",
     "https://github.com/kboghdady/youTube_ads_4_pi-hole",
     "https://github.com/revive-adserver/revive-adserver",
-    "https://pypi.org/project/ads",
     "https://pypi.org/project/ads/",
     "https://ui.adsabs.harvard.edu/",
     "https://www.adsinc.com/",
@@ -1417,7 +1407,6 @@
     "https://github.com/Esri/arcgis-osm-editor",
     "https://github.com/Esri/arcgis-python-api",
     "https://github.com/Esri/arcgis-runtime-samples-android",
-    "https://pypi.org/project/arcgis",
     "https://pypi.org/project/arcgis/",
     "https://storymaps.arcgis.com/",
     "https://www.arcgis.com/index.html",
@@ -1450,7 +1439,6 @@
     "https://github.com/collegue1337/BeautifulSoup4",
     "https://github.com/meteopavel/BeautifulSoup4_PEP_Parser",
     "https://github.com/wention/BeautifulSoup4",
-    "https://pypi.org/project/beautifulsoup4",
     "https://pypi.org/project/beautifulsoup4/",
     "https://www.crummy.com/software/BeautifulSoup/"
   ],
@@ -1487,7 +1475,6 @@
     "https://github.com/jheled/biopy",
     "https://github.com/peterjc/biopython_workshop",
     "https://github.com/tiagoantao/biopython-notebook",
-    "https://pypi.org/project/biopy",
     "https://pypi.org/project/biopy/",
     "https://tpwd.texas.gov/landwater/land/maps/gis/data_downloads/metadata/biopy.pdf",
     "https://www.aromatica.hr/en/kategorije-proizvoda/other/biopy-05-l/"
@@ -1656,7 +1643,6 @@
     "https://github.com/cytoflow/cytoflow",
     "https://github.com/cytoflow/cytoflow-examples",
     "https://github.com/jiawu/cytoflow",
-    "https://pypi.org/project/cytoflow",
     "https://pypi.org/project/cytoflow/",
     "https://www.biorxiv.org/content/10.1101/2022.07.22.501078v1"
   ],
@@ -1675,7 +1661,6 @@
     "https://github.com/svenholcombe/Codie-D3plot",
     "https://github.com/victusfate/d3Plots",
     "https://github.com/yuhangwang/d3plot",
-    "https://pypi.org/project/d3plot",
     "https://pypi.org/project/d3plot/",
     "https://www.oasys-software.com/dyna/software/d3plot/",
     "https://www.oasys-software.com/dyna/software/d3plotviewer/"
@@ -1740,7 +1725,6 @@
     "https://hal.science/hal-03437921/document",
     "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0289693",
     "https://pmc.ncbi.nlm.nih.gov/articles/PMC6193196/",
-    "https://pypi.org/project/django-blastplus",
     "https://pypi.org/project/django-blastplus/",
     "https://www.scienceopen.com/document_file/0aca2486-392b-4cc5-ab39-33619dae5b39/PubMedCentral/0aca2486-392b-4cc5-ab39-33619dae5b39.pdf"
   ],
@@ -1770,7 +1754,6 @@
     "https://github.com/dvav/eQTLseq",
     "https://link.springer.com/article/10.1007/s11105-023-01411-8",
     "https://pubmed.ncbi.nlm.nih.gov/28575251/",
-    "https://pypi.org/project/eQTLseq",
     "https://pypi.org/project/eQTLseq/",
     "https://riunet.upv.es/handle/10251/136912",
     "https://scholar.google.com/citations?user=hn49yA4AAAAJ&hl=en"
@@ -1807,7 +1790,6 @@
     "https://github.com/IIC2133-PUC/edd_utils",
     "https://github.com/JBEI/edd-utils",
     "https://github.com/arraypress/edd-utils",
-    "https://pypi.org/project/edd-utils",
     "https://pypi.org/project/edd-utils/",
     "https://www.cde.ca.gov/ci/ct/sf/documents/energyutilities.pdf",
     "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-costs/care-fera-program",
@@ -1949,7 +1931,6 @@
     "https://github.com/molpopgen/fwdpy11_arg_example",
     "https://github.com/molpopgen/fwdpy11_infinitesimal",
     "https://molpopgen.github.io/fwdpy/",
-    "https://pypi.org/project/fwdpy",
     "https://pypi.org/project/fwdpy/",
     "https://tskit.dev/tutorials/simulation_overview.html",
     "https://www.biorxiv.org/content/10.1101/2025.04.24.650500v1.full.pdf"
@@ -1968,7 +1949,7 @@
     "https://github.com/sthairno/SasaGUI",
     "https://manual.gromacs.org/current/onlinehelp/gmx-sasa.html",
     "https://pubmed.ncbi.nlm.nih.gov/26290379/",
-    "https://pypi.org/project/sasa",
+    "https://pypi.org/project/sasa/",
     "https://www.eventbrite.com/e/gsasa-burns-night-ceilidh-tickets-1144286043359",
     "https://www.eventbrite.com/e/gsasa-spring-ceilidh-tickets-1285958098289",
     "https://www.gsasa.com/",
@@ -1985,7 +1966,6 @@
     "https://github.com/gdscadypsoe/gdscadypsoe",
     "https://github.com/gdscadypsoe/gdscadypsoe.github.io",
     "https://github.com/hohlraum/gdsCAD",
-    "https://pypi.org/project/gdsCAD",
     "https://pypi.org/project/gdsCAD/",
     "https://pythonhosted.org/gdsCAD/",
     "https://pythonhosted.org/gdsCAD/api/core_api.html",
@@ -2005,7 +1985,6 @@
     "https://ipeagit.github.io/geobr/",
     "https://ipeagit.github.io/geobr/articles/intro_to_geobr.html",
     "https://ipeagit.github.io/geobr/articles/python-intro/py-intro-to-geobr.html",
-    "https://pypi.org/project/geobr",
     "https://pypi.org/project/geobr/",
     "https://rdrr.io/cran/geobr/man/read_state.html",
     "https://www.rdocumentation.org/packages/geobr/versions/1.0"
@@ -2090,7 +2069,6 @@
     "https://github.com/xanzy/go-gitlab",
     "https://gitlab.com/gitlab-com",
     "https://gitlab.com/users/sign_in",
-    "https://pypi.org/project/gitlab",
     "https://pypi.org/project/gitlab/",
     "https://python-gitlab.readthedocs.io/en/stable/"
   ],
@@ -2110,7 +2088,6 @@
     "https://github.com/sgerrand/alpine-pkg-glibc",
     "https://gitlab.gnome.org/GNOME/glib",
     "https://gitlab.gnome.org/GNOME/glib/",
-    "https://pypi.org/project/glib",
     "https://pypi.org/project/glib/",
     "https://www.merriam-webster.com/dictionary/glib"
   ],
@@ -2130,7 +2107,6 @@
     "https://github.com/facebookresearch/habitat-sim",
     "https://github.com/habitat-sh/habitat",
     "https://hassavocadoboard.com/",
-    "https://pypi.org/project/hab",
     "https://pypi.org/project/hab/",
     "https://www.hab-inc.com/",
     "https://www.hanford.gov/page.cfm/hab",
@@ -2149,7 +2125,6 @@
     "https://github.com/httplib2/httplib2",
     "https://github.com/jcgregorio/httplib2",
     "https://httplib2.readthedocs.io/",
-    "https://pypi.org/project/httplib2",
     "https://pypi.org/project/httplib2/",
     "https://superuser.com/questions/1139569/why-am-i-getting-the-message-no-module-named-httplib2",
     "https://unix.stackexchange.com/questions/602324/unable-to-install-package-python-httplib2-in-kali-linux"
@@ -2167,7 +2142,6 @@
     "https://github.com/insolar/insolar",
     "https://github.com/sysu19351064/Pressure_Insole",
     "https://meteoexploration.com/R/insol/index.html",
-    "https://pypi.org/project/insol",
     "https://pypi.org/project/insol/",
     "https://www.insol-europe.org/",
     "https://www.insol.org/",
@@ -2258,7 +2232,6 @@
     "https://github.com/meromelo/Kontroller",
     "https://github.com/raghavk92/Kontroller",
     "https://github.com/tpneill/nanoKontroller",
-    "https://pypi.org/project/kontroller",
     "https://pypi.org/project/kontroller/",
     "https://vi-control.net/community/",
     "https://www.cisecurity.org/controls/cis-controls-list",
@@ -2283,7 +2256,6 @@
     "https://libmesh.github.io/examples.html",
     "https://libmesh.github.io/installation.html",
     "https://ntrs.nasa.gov/api/citations/20130013759/downloads/20130013759.pdf",
-    "https://pypi.org/project/libmesh",
     "https://pypi.org/project/libmesh/"
   ],
   "linprog": [
@@ -2351,7 +2323,6 @@
     "https://github.com/jasonlvhit/lunar",
     "https://github.com/lunarphp/lunar",
     "https://lunar.fyi/",
-    "https://pypi.org/project/lunar",
     "https://pypi.org/project/lunar/",
     "https://www.instagram.com/slavenlunar/",
     "https://www.lunarclient.com/",
@@ -2391,7 +2362,6 @@
     "https://matplotlib.org/stable/gallery/index.html",
     "https://matplotlib.org/stable/index.html",
     "https://pbpython.com/effective-matplotlib.html",
-    "https://pypi.org/project/matplotlib",
     "https://pypi.org/project/matplotlib/",
     "https://sourceforge.net/projects/matplotlib/"
   ],
@@ -2407,7 +2377,6 @@
     "https://life-epigenetics-methylcheck.readthedocs-hosted.com/",
     "https://life-epigenetics-methylcheck.readthedocs-hosted.com/en/latest/docs/filtering-probes.html",
     "https://life-epigenetics-methylprep.readthedocs-hosted.com/",
-    "https://pypi.org/project/methylcheck",
     "https://pypi.org/project/methylcheck/",
     "https://www.zymoresearch.com/pages/targeted-bisulfite-sequencing"
   ],
@@ -2447,7 +2416,6 @@
     "https://pubmed.ncbi.nlm.nih.gov/31792509/"
   ],
   "mnnpy": [
-    "http://github.com/chriscainx/mnnpy",
     "https://cran.r-project.org/package=knnp",
     "https://cran.r-project.org/package=mnonr",
     "https://cran.r-project.org/package=mpoly",
@@ -2456,7 +2424,6 @@
     "https://github.com/aysalama/mnnpython",
     "https://github.com/chriscainx/mnnpy",
     "https://github.com/granatumx/gbox-mnnpy",
-    "https://pypi.org/project/mnnpy",
     "https://pypi.org/project/mnnpy/"
   ],
   "modes": [
@@ -2475,7 +2442,6 @@
     "https://github.com/stamen/modestmaps-js",
     "https://modes.com/",
     "https://pubmed.ncbi.nlm.nih.gov/18650835/",
-    "https://pypi.org/project/modes",
     "https://pypi.org/project/modes/",
     "https://www.fcgov.com/fcmoves/active-modes-plan",
     "https://www.instagram.com/modes.official/"
@@ -2511,7 +2477,6 @@
     "https://github.com/mbanders/mopac_checker",
     "https://github.com/openmopac/mopac",
     "https://github.com/phiamo/MopaComposerBridge",
-    "https://pypi.org/project/mopac",
     "https://pypi.org/project/mopac/",
     "https://www.mobilityauthority.com/traveler-info/open-roads/mopac-express/",
     "https://www.mopac.biz/",
@@ -2529,7 +2494,6 @@
     "https://github.com/mozy/mordor",
     "https://github.com/openeventdata/mordecai",
     "https://mord.bandcamp.com/merch",
-    "https://pypi.org/project/mord",
     "https://pypi.org/project/mord/",
     "https://rural.gov.in/en",
     "https://www.ballardsunderfuneral.com/obituaries/karen-mord",
@@ -2553,7 +2517,6 @@
     "https://mpi4py.readthedocs.io/",
     "https://mpi4py.readthedocs.io/en/4.0.2/tutorial.html",
     "https://mpi4py.readthedocs.io/en/stable/tutorial.html",
-    "https://pypi.org/project/mpi4py",
     "https://pypi.org/project/mpi4py/"
   ],
   "mrMLM": [
@@ -2589,7 +2552,6 @@
     "https://ndlindustries.com/",
     "https://ndlprohealth.com/en",
     "https://nmanet.org/",
-    "https://pypi.org/project/ndl",
     "https://pypi.org/project/ndl/",
     "https://www.nasa.gov/centers-and-facilities/langley/nasas-laser-navigation-tech-enables-commercial-lunar-exploration/"
   ],
@@ -2601,7 +2563,6 @@
     "https://github.com/paulvan/ngCGH-master",
     "https://github.com/seandavi/ngCGH",
     "https://pubmed.ncbi.nlm.nih.gov/28460482/",
-    "https://pypi.org/project/ngCGH",
     "https://pypi.org/project/ngCGH/",
     "https://www.acronymfinder.com/Information-Technology/NGCE.html",
     "https://www.justanswer.com/microsoft-office/ngcgh-working-excel-laptop-received-message.html"
@@ -2637,7 +2598,6 @@
     "https://github.com/arnold-O/Noldstore",
     "https://github.com/noldswift360/noldswift360",
     "https://obits.masslive.com/us/obituaries/masslive/name/jeannine-nolds-obituary?id=52687144",
-    "https://pypi.org/project/nolds",
     "https://pypi.org/project/nolds/",
     "https://umbertoluce.com/en-us/products/nolds-brown-leather-motorcycle-boots-d3o-men",
     "https://www.noldsequipment.com/"
@@ -2657,7 +2617,6 @@
     "https://numpy.org/",
     "https://numpy.org/doc/2.2/",
     "https://numpy.org/doc/stable/",
-    "https://pypi.org/project/numpy",
     "https://pypi.org/project/numpy/",
     "https://www.nature.com/articles/s41586-020-2649-2"
   ],
@@ -2677,7 +2636,6 @@
     "https://github.com/onnx/onnx",
     "https://onnx.ai/",
     "https://onnxruntime.ai/",
-    "https://pypi.org/project/onnx",
     "https://pypi.org/project/onnx/"
   ],
   "openrouteservice": [
@@ -2695,7 +2653,6 @@
     "https://maps.openrouteservice.org/",
     "https://openrouteservice.org/",
     "https://openrouteservice.org/dev/",
-    "https://pypi.org/project/openrouteservice",
     "https://pypi.org/project/openrouteservice/"
   ],
   "optrees": [
@@ -2734,7 +2691,6 @@
     "https://www.openstreetmap.org/"
   ],
   "pDraw": [
-    "http://www.acaclone.com/",
     "https://cran.r-project.org/package=draw",
     "https://cran.r-project.org/package=paws",
     "https://cran.r-project.org/package=pgdraw",
@@ -2744,7 +2700,6 @@
     "https://github.com/Parrot-Developers/pdraw",
     "https://github.com/Phylliida/P2PDraw",
     "https://github.com/ShowMeThe/AnimatedWebPDrawable",
-    "https://github.com/au5ton/pDraw",
     "https://github.com/contriteobserver/AnimatedWebPDrawable"
   ],
   "pDraw 32": [
@@ -2790,7 +2745,6 @@
     "https://pandas.pydata.org/",
     "https://pandas.pydata.org/docs/",
     "https://pandasnetwork.org/",
-    "https://pypi.org/project/pandas",
     "https://pypi.org/project/pandas/",
     "https://www.nimh.nih.gov/health/publications/pandas"
   ],
@@ -2893,7 +2847,6 @@
     "https://github.com/evilthreads669966/Pickpocket",
     "https://github.com/paperboi/PickPocket",
     "https://github.com/tiagoamaro/pickpocket-rust",
-    "https://pypi.org/project/pickpocket",
     "https://pypi.org/project/pickpocket/",
     "https://www.criterion.com/current/posts/400-pickpocket-robert-bresson-hidden-in-plain-sight",
     "https://www.criterion.com/films/229-pickpocket",
@@ -2951,14 +2904,16 @@
     "https://github.com/scitran-apps/pyafq",
     "https://github.com/tractometry/pyAFQ",
     "https://github.com/yeatmanlab/pyAFQ",
-    "https://pypi.org/project/pyAFQ",
-    "https://pypi.org/project/pyAFQ/",
-    "https://yeatmanlab.github.io/pyAFQ"
+    "https://pypi.org/project/pyAFQ/"
   ],
   "pymagnitude": [
     "https://cran.r-project.org/package=pargasite",
-    "https://gitlab.com/Plasticity/magnitude",
-    "https://pypi.org/project/pymagnitude"
+    "https://github.com/Sankar16kds/pymagnitude",
+    "https://github.com/kamujun/compare_pymagnitude_with_gensim_and_tfhub",
+    "https://github.com/lambwang/pymagnitude",
+    "https://github.com/shr3yans/pymagnitude-tutorial",
+    "https://github.com/zfang/benchmark_pymagnitude",
+    "https://pypi.org/project/pymagnitude/"
   ],
   "pyphysio": [
     "https://cran.r-project.org/package=ctypesio",
@@ -2968,7 +2923,6 @@
     "https://github.com/MPBA/pyphysio",
     "https://github.com/RobinSinghYadav/PyPhysio",
     "https://ieeexplore.ieee.org/document/9216076/",
-    "https://pypi.org/project/pyphysio",
     "https://pypi.org/project/pyphysio/",
     "https://support.pluxbiosignals.com/knowledge-base/do-you-know-any-open-source-software-for-biosignal-processing/",
     "https://www.biorxiv.org/content/10.1101/2020.10.27.356980v1.full.pdf",
@@ -2986,7 +2940,6 @@
     "https://github.com/onrik/pyqiwi",
     "https://github.com/qir-alliance/pyqir",
     "https://groups.google.com/g/qiime-forum/c/iAb8jWa3Xf4",
-    "https://pypi.org/project/pyqi",
     "https://pypi.org/project/pyqi/",
     "https://sources.debian.org/patches/pyqi/",
     "https://www.alibaba.com/product-detail/Electronic-Components-TPS2065CDBVR-2-TPS2065CDBVT-2-1600472945801.html"
@@ -3004,7 +2957,6 @@
     "https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix",
     "https://github.com/pytorch/pytorch",
     "https://github.com/yunjey/pytorch-tutorial",
-    "https://pypi.org/project/pytorch",
     "https://pypi.org/project/pytorch/",
     "https://pypi.org/project/torch/",
     "https://pytorch.org/",
@@ -3021,7 +2973,6 @@
     "https://github.com/MAVENSDC/pytplot",
     "https://github.com/pulupa/pytplot",
     "https://heliopython.org/gallery/generated/gallery/pytplot_demo.html",
-    "https://pypi.org/project/pytplot",
     "https://pypi.org/project/pytplot/",
     "https://pyspedas.readthedocs.io/en/latest/pytplot.html",
     "https://pytplot.readthedocs.io/",
@@ -3043,7 +2994,7 @@
     "https://github.com/paintception/Deep-Quality-Value-DQV-Learning-",
     "https://github.com/xiaopc/qdii-value",
     "https://github.com/yv989c/BlazarTech.QueryableValues",
-    "https://pypi.org/project/value",
+    "https://pypi.org/project/value/",
     "https://www.bioconductor.org/packages/release/bioc/html/qvalue.html",
     "https://www.nndc.bnl.gov/qcalc/",
     "https://www.nonlinear.com/progenesis/qi/v2.0/faq/pq-values.aspx"
@@ -3058,7 +3009,7 @@
     "https://cran.r-project.org/package=valuemap",
     "https://en.wikipedia.org/wiki/Q-value_(statistics)",
     "https://en.wikipedia.org/wiki/Q_value_(nuclear_science)",
-    "https://pypi.org/project/value",
+    "https://pypi.org/project/value/",
     "https://www.bioconductor.org/packages/release/bioc/html/qvalue.html",
     "https://www.nndc.bnl.gov/qcalc/",
     "https://www.nonlinear.com/progenesis/qi/v2.0/faq/pq-values.aspx"
@@ -3152,7 +3103,6 @@
     "https://github.com/psf/requests-html",
     "https://github.com/requests/requests-oauthlib",
     "https://github.com/ross/requests-futures",
-    "https://pypi.org/project/requests",
     "https://pypi.org/project/requests/",
     "https://requests.readthedocs.io/",
     "https://requests.readthedocs.io/en/latest/",
@@ -3224,7 +3174,6 @@
     "https://github.com/blakechen97/SASA",
     "https://github.com/sasansafari/sasansafari",
     "https://manual.gromacs.org/current/onlinehelp/gmx-sasa.html",
-    "https://pypi.org/project/sasa",
     "https://pypi.org/project/sasa/",
     "https://raisingvoices.org/women/sasa-approach/",
     "https://www.sasa.com/",
@@ -3257,7 +3206,6 @@
     "https://github.com/scikit-learn-contrib/imbalanced-learn",
     "https://github.com/scikit-learn-contrib/sklearn-pandas",
     "https://github.com/scikit-learn/scikit-learn",
-    "https://pypi.org/project/scikit-learn",
     "https://pypi.org/project/scikit-learn/",
     "https://scikit-learn.org/",
     "https://scikit-learn.org/stable/",
@@ -3384,7 +3332,6 @@
     "https://github.com/linshideng/SMNet",
     "https://github.com/sureshmopidevi/SMNetworkManager",
     "https://ieeexplore.ieee.org/document/10064180/",
-    "https://pypi.org/project/smnet",
     "https://pypi.org/project/smnet/",
     "https://smnetmisup.org/",
     "https://smnewsnet.com/",
@@ -3446,7 +3393,6 @@
     "https://graphneural.network/",
     "https://miguelzenon.bandcamp.com/album/yo-soy-la-tradici-n",
     "https://newamsterdamrecords.bandcamp.com/album/behind-the-wallpaper",
-    "https://pypi.org/project/spektral",
     "https://pypi.org/project/spektral/",
     "https://spektralquartet.com/",
     "https://spektralquartet.com/about"
@@ -3464,7 +3410,6 @@
     "https://github.com/sst/guide",
     "https://github.com/sst/ion",
     "https://github.com/sst/sst",
-    "https://pypi.org/project/sst",
     "https://pypi.org/project/sst/",
     "https://sst.dev/",
     "https://sstsuperstore.com/",
@@ -3542,7 +3487,6 @@
     "https://github.com/signalbash/how_are_we_stranded_here",
     "https://github.com/strand-tech/strand",
     "https://github.com/strands-project/strands_perception_people",
-    "https://pypi.org/project/strand",
     "https://pypi.org/project/strand/",
     "https://strandbrewing.com/",
     "https://www.nytimes.com/games/strands?smtyp=cur&smid=bsky-nytimes",
@@ -3580,7 +3524,6 @@
     "https://github.com/dcomtois/summarytools-python",
     "https://github.com/lj1337/summarytools",
     "https://github.com/plutonbacon/summarytools.rb",
-    "https://pypi.org/project/summarytools",
     "https://pypi.org/project/summarytools/",
     "https://www.r-bloggers.com/2024/09/how-to-analyze-your-data-faster-with-r-using-summarytools/",
     "https://www.rdocumentation.org/packages/summarytools/versions/1.1.3"
@@ -3616,7 +3559,6 @@
     "https://github.com/swirldev/swirl",
     "https://github.com/swirldev/swirl_courses",
     "https://honestlyyum.com/10933/blueberry-swirl-muffins/",
-    "https://pypi.org/project/swirl",
     "https://pypi.org/project/swirl/",
     "https://swirlaiconnect.com/",
     "https://swirlstats.com/",
@@ -3655,7 +3597,6 @@
     "https://github.com/tandem-pt/zustand-yjs",
     "https://github.com/tum-vision/tandem",
     "https://github.com/typeintandem/tandem",
-    "https://pypi.org/project/tandem",
     "https://pypi.org/project/tandem/",
     "https://tandem.bu.edu/trf/trf.html",
     "https://tandem.net/",
@@ -3678,7 +3619,6 @@
     "https://github.com/tensorflow/tensorflow",
     "https://github.com/tensorflow/tfjs",
     "https://playground.tensorflow.org/",
-    "https://pypi.org/project/tensorflow",
     "https://pypi.org/project/tensorflow/",
     "https://tensorflow.rstudio.com/",
     "https://www.tensorflow.org/",
@@ -3749,7 +3689,6 @@
     "https://github.com/treehouse/cheatsheets",
     "https://github.com/treehousedev/treehouse",
     "https://github.com/treehouses/treehouses.github.io",
-    "https://pypi.org/project/treehouse",
     "https://pypi.org/project/treehouse/",
     "https://teamtreehouse.com/",
     "https://treehousebrew.com/",
@@ -3772,7 +3711,6 @@
     "https://github.com/tripal/tripal_jbrowse",
     "https://github.com/tripal/tripal_synview",
     "https://pubmed.ncbi.nlm.nih.gov/21959868/",
-    "https://pypi.org/project/tripal",
     "https://pypi.org/project/tripal/",
     "https://tripal.info/",
     "https://www.drupal.org/project/tripal"
@@ -3827,7 +3765,6 @@
     "https://github.com/ip200/venn-abers",
     "https://github.com/jbyuki/venn.nvim",
     "https://github.com/konstantint/matplotlib-venn",
-    "https://pypi.org/project/venn",
     "https://pypi.org/project/venn/",
     "https://vennskincare.com/",
     "https://www.venn.city/",
