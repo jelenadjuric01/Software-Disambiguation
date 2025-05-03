@@ -128,5 +128,420 @@
     "authors": [
       "Zaixu Cui"
     ]
-  }
+  },
+  "https://github.com/jvns/pandas-cookbook": {
+    "name": "pandas-cookbook",
+    "description": "Recipes for using Python's pandas library",
+    "keywords": [],
+    "authors": [
+      "Julia Evans"
+    ]
+  },
+  "https://cran.r-project.org/package=PRISMA": {
+    "name": "PRISMA",
+    "description": "Loads and processes huge text\ncorpora processed with the sally toolbox (<http://www.mlsec.org/sally/>).\nsally acts as a very fast preprocessor which splits the text files into\ntokens or n-grams. These output files can then be read with the PRISMA\npackage which applies testing-based token selection and has some\nreplicate-aware, highly tuned non-negative matrix factorization and\nprincipal component analysis implementation which allows the processing of\nvery big data sets even on desktop machines.",
+    "keywords": [],
+    "authors": [
+      "Tammo Krueger",
+      "Nicole Kraemer"
+    ]
+  },
+  "https://github.com/cran/SparseDC": {
+    "name": "SparseDC",
+    "description": ":exclamation:�This�is�a�read-only�mirror�of�the�CRAN�R�package�repository.  SparseDC���Implementation�of�SparseDC�Algorithm  ",
+    "keywords": [],
+    "authors": [
+      "cran"
+    ]
+  },
+  "https://cran.r-project.org/package=cops": {
+    "name": "cops",
+    "description": "Multidimensional scaling (MDS) methods that aim at pronouncing the clustered appearance of the configuration (Rusch, Mair & Hornik, 2021, <doi:10.1080/10618600.2020.1869027>). They achieve this by transforming proximities/distances with explicit power functions and penalizing the fitting criterion with a clusteredness index, the OPTICS Cordillera (Rusch, Hornik & Mair, 2018, <doi:10.1080/10618600.2017.1349664>). There are two variants: One for finding the configuration directly (COPS-C) with given explicit power transformations and implicit ratio, interval and non-metric optimal scaling transformations (Borg & Groenen, 2005, ISBN:978-0-387-28981-6), and one for using the augmented fitting criterion to find optimal hyperparameters for the explicit transformations (P-COPS). The package contains various functions, wrappers, methods and classes for fitting, plotting and displaying a large number of different MDS models (most of the functionality in smacofx) in the COPS framework. The package further contains a function for pattern search optimization, the ``Adaptive Luus-Jaakola Algorithm'' (Rusch, Mair & Hornik, 2021,<doi:10.1080/10618600.2020.1869027>) and a functions to calculate the phi-distances for count data or histograms.",
+    "keywords": [],
+    "authors": [
+      "Thomas Rusch",
+      "Patrick Mair",
+      "Kurt Hornik"
+    ]
+  },
+  "https://github.com/BioPyTeam/biopy": {
+    "name": "biopy",
+    "description": "Multi-omics translations through the usage of multiple uncoupled autoencoders sharing a common latent space",
+    "keywords": [
+      "autoencoders",
+      "bioinformatics",
+      "deep-learning",
+      "gdc-portal"
+    ],
+    "authors": [
+      "BioPyTeam"
+    ]
+  },
+  "https://cran.r-project.org/package=modesto": {
+    "name": "modesto",
+    "description": "Compute important quantities when we consider stochastic systems that are observed continuously.\nSuch as, Cost model, Limiting distribution, Transition matrix, Transition distribution and Occupancy matrix.\nThe methods are described, for example, Ross S. (2014), Introduction to Probability Models. Eleven Edition. Academic Press.",
+    "keywords": [],
+    "authors": [
+      "Carlos Alberto Cardozo Delgado"
+    ]
+  },
+  "https://cran.r-project.org/package=toscutil": {
+    "name": "toscutil",
+    "description": "Base R sometimes requires verbose statements for simple,\noften recurring tasks, such as printing text without trailing\nspace, ending with newline. This package aims at providing\nshorthands for such tasks.",
+    "keywords": [],
+    "authors": [
+      "Tobias Schmidt"
+    ]
+  },
+  "https://github.com/stevenconnorg/rlidar-accuracy": {
+    "name": "rlidar-accuracy",
+    "description": "Uses spatial joins to calculate precision, recall, and f-score assessments of lidar-derived Canopy Height Models using varying parameters (fixed-window size, CHM smoothing-window size, and lidar pulse densities) using the Local Maxima algorithm as implemented in the 'rLiDAR' R package.",
+    "keywords": [],
+    "authors": [
+      "Steven C. Gonzalez"
+    ]
+  },
+  "https://cran.r-project.org/package=depcoeff": {
+    "name": "depcoeff",
+    "description": "Functions to compute coefficients measuring the dependence of two or more than two variables. The functions can be deployed to gain information about functional dependencies of the variables with emphasis on monotone functions. The statistics describe how well one response variable can be approximated by a monotone function of other variables. In regression analysis the variable selection is an important issue. In this framework the functions could be useful tools in modeling the regression function. Detailed explanations on the subject can be found in papers Liebscher (2014) <doi:10.2478/demo-2014-0004>; Liebscher (2017) <doi:10.1515/demo-2017-0012>; Liebscher (2019, submitted).",
+    "keywords": [],
+    "authors": [
+      "Eckhard Liebscher"
+    ]
+  },
+  "https://github.com/strands-project/strands_perception_people": {
+    "name": "strands_perception_people",
+    "description": "long-term detection, tracking and recognition of people",
+    "keywords": [],
+    "authors": [
+      "STRANDS"
+    ]
+  },
+  "https://cran.r-project.org/package=svglite": {
+    "name": "svglite",
+    "description": "A graphics device for R that produces 'Scalable Vector\nGraphics'. 'svglite' is a fork of the older 'RSvgDevice' package.",
+    "keywords": [],
+    "authors": [
+      "Hadley Wickham",
+      "Lionel Henry",
+      "Thomas Lin Pedersen",
+      "T Jake Luciani",
+      "Matthieu Decorde",
+      "Vaudor Lise",
+      "Tony Plate",
+      "David Gohel",
+      "Yixuan Qiu",
+      "H�kon Malmedal",
+      "Posit, PBC cph"
+    ]
+  },
+  "https://www.abbyy.com/": {},
+  "https://github.com/yanyachen/rBayesianOptimization": {
+    "name": "rBayesianOptimization",
+    "description": "Bayesian Optimization of Hyperparameters",
+    "keywords": [],
+    "authors": [
+      "Yachen Yan"
+    ]
+  },
+  "https://cran.r-project.org/package=DNAmotif": {
+    "name": "DNAmotif",
+    "description": "Motifs within biological sequences show a significant role. This package utilizes a user-defined threshold value (window size and similarity) to create consensus segments or motifs through local alignment of dynamic  programming with gap and it calculates the frequency of each identified motif, offering a detailed view of their prevalence within the dataset. It allows for thorough exploration and understanding of sequence patterns and their biological importance.",
+    "keywords": [],
+    "authors": [
+      "Subham Ghosh",
+      "UB Angadi",
+      "Md Yeasin",
+      "Dipro Sinha",
+      "Saikath Das",
+      "Mir Asif Iquebal",
+      "Sarika aut"
+    ]
+  },
+  "https://cran.r-project.org/package=rD3plot": {
+    "name": "rD3plot",
+    "description": "Creates interactive analytic graphs with 'R'. It joins the data analysis power of R and the visualization libraries of JavaScript in one package. The package provides interactive networks, timelines, barplots, image galleries and evolving networks. Graphs are represented as 'D3.js' graphs embedded in a web page ready for its interactive analysis and exploration.",
+    "keywords": [],
+    "authors": [
+      "Modesto Escobar",
+      "Carlos Prieto",
+      "David Barrios"
+    ]
+  },
+  "https://spektralquartet.com/": {},
+  "https://github.com/expersso/pdftables": {
+    "name": "pdftables",
+    "description": "Programmatic Conversion of PDF Tables With R",
+    "keywords": [],
+    "authors": [
+      "EP"
+    ]
+  },
+  "https://github.com/WhiteApfel/pyQiwiP2P": {
+    "name": "pyQiwiP2P",
+    "description": "Simple wrapper for comfortable work with the API of payment system for individuals QiwiP2P",
+    "keywords": [
+      "api",
+      "api-wrapper",
+      "asyncio",
+      "payments",
+      "qiwi",
+      "qiwip2p"
+    ],
+    "authors": [
+      "Eugene Mayer"
+    ]
+  },
+  "https://github.com/jmarrietar/SIVA": {
+    "name": "SIVA",
+    "description": "Evaluation of weakly supervised learning paradigms in automatic visual inspections of defects in textures",
+    "keywords": [
+      "computer-vision",
+      "machine-learning"
+    ],
+    "authors": [
+      "Jose Miguel Arrieta"
+    ]
+  },
+  "https://www.esri.com/en-us/arcgis/geospatial-platform/overview": {},
+  "https://github.com/rsheets/cellranger": {
+    "name": "cellranger",
+    "description": "Helper functions to work with spreadsheets and the \"A1:D10\" style of cell range specification ",
+    "keywords": [],
+    "authors": [
+      "rsheets"
+    ]
+  },
+  "https://cran.r-project.org/package=BFS": {
+    "name": "BFS",
+    "description": "Search and download data from the Swiss Federal Statistical Office (BFS) APIs <https://www.bfs.admin.ch/>.",
+    "keywords": [],
+    "authors": [
+      "Felix Luginbuhl",
+      "Janosch Brenzel-Weiss",
+      "Joao Martins",
+      "Philipp Baumann"
+    ]
+  },
+  "https://cran.r-project.org/package=tttplot": {
+    "name": "tttplot",
+    "description": "Implementation of Time to Target plot based on the work\nof Ribeiro and Rosseti (2015) <DOI:10.1007/s11590-014-0760-8>,\nthat describe a numerical method that gives the probability of\nan algorithm A finds a solution at least as good as a given\ntarget value in smaller computation time than algorithm B.",
+    "keywords": [],
+    "authors": [
+      "Carlos A. Martinez  based on the work of Ribeiro",
+      "Rosseti (2015)."
+    ]
+  },
+  "https://pypi.org/project/treehouse/": {
+    "name": "treehouse",
+    "description": "High-performance tree traversal",
+    "keywords": [
+      "5 - Production/Stable",
+      "Developers",
+      "OSI Approved",
+      "MIT License",
+      "Python",
+      "3",
+      "Only"
+    ],
+    "authors": [
+      "Jason R. Coombs"
+    ]
+  },
+  "https://www.mediawiki.org/wiki/Tool_Labs/Collection_of_issues_after_Toolserver_shutdown": {},
+  "https://www.statistix.com/faq/": {},
+  "https://github.com/cran/anocva": {
+    "name": "anocva",
+    "description": ":exclamation:�This�is�a�read-only�mirror�of�the�CRAN�R�package�repository.  anocva���A�Non-Parametric�Statistical�Test�to�Compare�Clustering�Structures  ",
+    "keywords": [],
+    "authors": [
+      "cran"
+    ]
+  },
+  "https://training.galaxyproject.org/training-material/topics/transcriptomics/tutorials/rna-seq-bash-star-align/tutorial.html": {},
+  "https://github.com/caseykneale/ChemometricsTools.jl": {
+    "name": "ChemometricsTools.jl",
+    "description": "A collection of tools for chemometrics and machine learning written in Julia.",
+    "keywords": [
+      "chemometrics",
+      "classification",
+      "curve-resolution",
+      "julia",
+      "machine-learning",
+      "regression",
+      "sampling"
+    ],
+    "authors": [
+      "Casey Kneale"
+    ]
+  },
+  "https://lce.biohpc.swmed.edu/scina/": {},
+  "https://github.com/cran/bootLR": {
+    "name": "bootLR",
+    "description": ":exclamation:�This�is�a�read-only�mirror�of�the�CRAN�R�package�repository.  bootLR���Bootstrapped�Confidence�Intervals�for�(Negative)�Likelihood�Ratio�Tests  ",
+    "keywords": [],
+    "authors": [
+      "cran"
+    ]
+  },
+  "https://github.com/cran/biosignalEMG": {
+    "name": "biosignalEMG",
+    "description": ":exclamation:�This�is�a�read-only�mirror�of�the�CRAN�R�package�repository.  biosignalEMG���Tools�for�Electromyogram�Signals�(EMG)�Analysis  ",
+    "keywords": [],
+    "authors": [
+      "cran"
+    ]
+  },
+  "https://github.com/by-student-2017/MOPAC2016-examples": {},
+  "https://cran.r-project.org/package=mcbiopi": {
+    "name": "mcbiopi",
+    "description": "Computes the prime implicants or a minimal disjunctive normal form for a\nlogic expression presented by a truth table or a logic tree. Has been particularly\ndeveloped for logic expressions resulting from a logic regression analysis, i.e.\nlogic expressions typically consisting of up to 16 literals, where the prime implicants\nare typically composed of a maximum of 4 or 5 literals.",
+    "keywords": [],
+    "authors": [
+      "Holger Schwender"
+    ]
+  },
+  "https://cran.r-project.org/package=motif": {
+    "name": "motif",
+    "description": "Describes spatial patterns of categorical raster data for\nany defined regular and irregular areas.\nPatterns are described quantitatively using built-in signatures\nbased on co-occurrence matrices but also allows for\nany user-defined functions.\nIt enables spatial analysis such as search, change detection,\nand clustering to be performed on spatial patterns (Nowosad (2021) <doi:10.1007/s10980-020-01135-0>).",
+    "keywords": [],
+    "authors": [
+      "Jakub Nowosad"
+    ]
+  },
+  "https://cran.r-project.org/package=newscatcheR": {
+    "name": "newscatcheR",
+    "description": "Programmatically collect normalized news from\n(almost) any website. An 'R' clone of the\n<https://github.com/kotartemiy/newscatcher> 'Python' module.",
+    "keywords": [],
+    "authors": [
+      "Novica Nakov",
+      "Teofil Nakov",
+      "Artem Bugara",
+      "Discindo cph"
+    ]
+  },
+  "https://github.com/flowjo-lakes/Deep-Learning-Plugin": {
+    "name": "Deep-Learning-Plugin",
+    "description": "Deep learning plugin for SeqGeq",
+    "keywords": [],
+    "authors": [
+      "flowjo-lakes"
+    ]
+  },
+  "https://pypi.org/project/Toolserver/": {
+    "name": "Toolserver",
+    "description": "Toolserver Framework for Python",
+    "keywords": [
+      "4 - Beta",
+      "Developers",
+      "OSI Approved",
+      "BSD License",
+      "OS Independent",
+      "Python",
+      "Internet",
+      "WWW/HTTP"
+    ],
+    "authors": [
+      "Georg Bauer"
+    ]
+  },
+  "https://ggplot2.tidyverse.org/": {},
+  "https://cran.r-project.org/package=fastmit": {
+    "name": "fastmit",
+    "description": "A mutual information estimator based on k-nearest neighbor method proposed by A. Kraskov, et al. (2004) <doi:10.1103/PhysRevE.69.066138> to measure general dependence and the time complexity for our estimator is only squared to the sample size, which is faster than other statistics. Besides, an implementation of mutual information based independence test is provided for analyzing multivariate data in Euclidean space (T B. Berrett, et al. (2019) <doi:10.1093/biomet/asz024>); furthermore, we extend it to tackle datasets in metric spaces.",
+    "keywords": [],
+    "authors": [
+      "Shiyun Lin",
+      "Jin Zhu",
+      "Wenliang Pan",
+      "Xueqin Wang",
+      "SC2S2 cph"
+    ]
+  },
+  "https://cran.r-project.org/package=forstringr": {
+    "name": "forstringr",
+    "description": "The goal of 'forstringr' is to enable complex string\nmanipulation in R especially to those more familiar with LEFT(),\nRIGHT(), and MID() functions in Microsoft Excel. The package combines\nthe power of 'stringr' with other manipulation packages such as\n'dplyr' and 'tidyr'.",
+    "keywords": [],
+    "authors": [
+      "Ezekiel Ogundepo",
+      "Olubukunola Oyedele",
+      "Fatimo Adebanjo"
+    ]
+  },
+  "https://www.idtdna.com/site/order/gblockentry": {},
+  "https://brevardzoo.org/adventures/rhino-encounter/": {},
+  "https://rich-iannone.r-universe.dev/DiagrammeRsvg": {},
+  "https://ads.google.com/intl/en_us/home/": {},
+  "https://github.com/psychopy/psychopy": {
+    "name": "psychopy",
+    "description": "For running psychology and neuroscience experiments",
+    "keywords": [
+      "experiment",
+      "experiment-control",
+      "experimental-design",
+      "linguistics",
+      "neuroscience",
+      "psycholinguistics",
+      "psychology",
+      "psychophysics",
+      "psychopy",
+      "python",
+      "science"
+    ],
+    "authors": [
+      "PsychoPy"
+    ]
+  },
+  "https://cran.r-project.org/package=shiny2docker": {
+    "name": "shiny2docker",
+    "description": "Automates the creation of Dockerfiles for deploying 'Shiny' applications.\nBy integrating with 'renv' for dependency management and leveraging Docker-based\nsolutions, it simplifies the process of containerizing 'Shiny' apps,\nensuring reproducibility and consistency across different environments.\nAdditionally, it facilitates the setup of CI/CD pipelines for building Docker images\non both GitLab and GitHub.",
+    "keywords": [],
+    "authors": [
+      "Vincent Guyader"
+    ]
+  },
+  "https://github.com/Dario-Galanti/multipheno_GWAS": {
+    "name": "multipheno_GWAS",
+    "description": "Scripts for running multi-phenotype GWAS using mixed models with the R package \"rrBLUP\". Additional functionality includes phenotype transformations and enrichment of a-priori candidate genes.",
+    "keywords": [],
+    "authors": [
+      "Dario Galanti"
+    ]
+  },
+  "https://cran.r-project.org/package=stRoke": {
+    "name": "stRoke",
+    "description": "A collection of tools for clinical trial data management and\nanalysis in research and teaching.\nThe package is mainly collected for personal use, but any use beyond that is encouraged.\nThis package has migrated functions from 'agdamsbo/daDoctoR', and new functions has been added.\nVersion follows months and year. See NEWS/Changelog for release notes.\nThis package includes sampled data from the TALOS trial (Kraglund et al (2018) <doi:10.1161/STROKEAHA.117.020067>).\nThe win_prob() function is based on work by Zou et al (2022) <doi:10.1161/STROKEAHA.121.037744>.\nThe age_calc() function is based on work by Becker (2020) <doi:10.18637/jss.v093.i02>.",
+    "keywords": [],
+    "authors": [
+      "Andreas Gammelgaard Damsbo"
+    ]
+  },
+  "https://www.velvettaco.com/": {},
+  "https://pypi.org/project/QCluster/": {
+    "name": "QCluster",
+    "description": "An SDK to enable quick clustering of microservices.",
+    "keywords": [
+      "3 - Alpha",
+      "Flake8",
+      "Pytest",
+      "tox",
+      "Developers",
+      "System Administrators",
+      "OSI Approved",
+      "Apache Software License",
+      "English",
+      "OS Independent",
+      "Python",
+      "3",
+      "3.8",
+      "System",
+      "Clustering",
+      "Distributed Computing"
+    ],
+    "authors": [
+      "Aaron Rohrbaugh + (See GitHub)",
+      "Chris O'Connor"
+    ]
+  },
+  "https://rpubs.com/DragonflyStats/Truncated-Regression": {}
 }
