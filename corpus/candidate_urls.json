@@ -7,9 +7,7 @@
     "https://cran.r-project.org/package=TAR",
     "https://en.wikipedia.org/wiki/Star",
     "https://github.com/alexdobin/STAR",
-    "https://starmagazine.com/",
     "https://www.star.hawaii.edu/studentinterface/",
-    "https://www.staridaho.org/home",
     "https://www.tax.ny.gov/star/"
   ],
   "ABBYY": [
@@ -111,7 +109,6 @@
     "https://cran.r-project.org/package=DRAYL",
     "https://cran.r-project.org/package=RCALI",
     "https://cran.r-project.org/package=vandalico",
-    "https://ekhidna.biocenter.helsinki.fi/dali_server/",
     "https://en.wikipedia.org/wiki/Salvador_Dal%C3%AD",
     "https://github.com/NVIDIA/DALI",
     "https://github.com/daliansky/daliansky.github.io",
@@ -250,12 +247,10 @@
     "https://github.com/quantixed/gBlocks",
     "https://github.com/viveketic/gblocks",
     "https://kbase.us/applist/apps/kb_gblocks/run_Gblocks/release",
-    "https://www.biologiaevolutiva.org/jcastresana/Gblocks.html",
     "https://www.idtdna.com/pages/products/genes-and-gene-fragments/double-stranded-dna-fragments/gblocks-gene-fragments",
     "https://www.idtdna.com/site/order/gblockentry"
   ],
   "GeneMapper": [
-    "https://assets.thermofisher.com/TFS-Assets/LSG/manuals/cms_042035.pdf",
     "https://cran.r-project.org/package=AncestryMapper",
     "https://cran.r-project.org/package=FCMapper",
     "https://cran.r-project.org/package=GeneScape",
@@ -270,13 +265,11 @@
     "https://nij.ojp.gov/nij-hosted-online-training-courses/str-data-analysis-and-interpretation-forensic-analysts/str-data-analysis-interpretation-software/genemapper-id-v32",
     "https://pypi.org/project/genemapper/",
     "https://www.fishersci.com/shop/products/genemapper-software-6-1-full-installation/A53547",
-    "https://www.nyc.gov/assets/ocme/downloads/pdf/technical-manuals/forensic-biology-technical-manuals/genemapper_id_troubleshooting_062016.pdf",
     "https://www.thermofisher.com/order/catalog/product/4366925",
     "https://www.thermofisher.com/order/catalog/product/4475073",
     "https://www.thermofisher.com/us/en/home/industrial/forensics/human-identification/forensic-dna-analysis/forensic-dna-data-interpretation/genemapper-id-x-software.html"
   ],
   "GillespieSSA": [
-    "https://cloud.r-project.org/web/packages/GillespieSSA/GillespieSSA.pdf",
     "https://cran.r-project.org/package=Allspice",
     "https://cran.r-project.org/package=GillespieSSA",
     "https://cran.r-project.org/package=GillespieSSA2",
@@ -301,7 +294,6 @@
     "https://pmc.ncbi.nlm.nih.gov/articles/PMC5302412/",
     "https://pubmed.ncbi.nlm.nih.gov/27028501/",
     "https://pubmed.ncbi.nlm.nih.gov/37905999/",
-    "https://www.natap.org/2024/HIV/FILE_0152.pdf",
     "https://www.thelancet.com/journals/lanhiv/article/PIIS2352-3018(23)00028-0/fulltext"
   ],
   "HydeNet": [
@@ -309,7 +301,6 @@
     "http://download.nust.na/pub3/cran/web/packages/HydeNet/vignettes/HydeNetPlots.html",
     "https://cran.r-project.org/package=HydeNet",
     "https://cran.r-project.org/package=debest",
-    "https://ftp.eenet.ee/pub/cran/web/packages/HydeNet/vignettes/DecisionNetworks.html",
     "https://github.com/carda749/hydenetcms",
     "https://github.com/cran/HydeNet",
     "https://github.com/nutterb/HydeNet",
@@ -336,7 +327,6 @@
   ],
   "MAP": [
     "https://celehs.github.io/MAP/",
-    "https://cran.r-project.org/package=AdvBinomApps",
     "https://cran.r-project.org/package=MAP",
     "https://cran.r-project.org/package=amap",
     "https://cran.r-project.org/package=amapGeocode",
@@ -347,7 +337,6 @@
     "https://github.com/mapbox/mapbox-gl-js",
     "https://github.com/react-native-maps/react-native-maps",
     "https://github.com/subframe7536/maple-font",
-    "https://msc.fema.gov/",
     "https://planthardiness.ars.usda.gov/",
     "https://pypi.org/project/map/",
     "https://www.google.com/maps/search/?api=1&query=,",
@@ -451,7 +440,6 @@
     "https://github.com/gree/MuscleCompressor",
     "https://github.com/micli/MuscleFellow",
     "https://github.com/rcedgar/muscle",
-    "https://my.clevelandclinic.org/health/body/21887-muscle",
     "https://pypi.org/project/muscle/",
     "https://www.drive5.com/muscle/",
     "https://www.ebi.ac.uk/jdispatcher/msa/muscle?stype=protein",
@@ -586,7 +574,6 @@
     "https://github.com/elsander/PresenceAbsenceNetworks",
     "https://github.com/ykanno/presenceAbsence",
     "https://rdrr.io/cran/PresenceAbsence/man/optimal.thresholds.html",
-    "https://research.fs.usda.gov/treesearch/download/29484.pdf",
     "https://theamericanscholar.org/the-presence-of-absence/",
     "https://www.jstatsoft.org/v23/i11",
     "https://www.rdocumentation.org/packages/PresenceAbsence/versions/1.1.11"
@@ -594,7 +581,6 @@
   "PySiology": [
     "http://www.alrassoul.org/en/support-services-and-parts",
     "https://cran.r-project.org/package=AeRobiology",
-    "https://dr.ntu.edu.sg/bitstream/10356/143582/2/PySiology%20A%20Python%20Package%20for%20Physiological%20Feature%20Extraction.pdf",
     "https://fertilityhubnigeria.com/menstrual-cycle-linked-to-fertility/pysiology-menstrual-cycle/",
     "https://github.com/Cpetter1/Pysiology",
     "https://github.com/Gabrock94/Pysiology",
@@ -745,7 +731,6 @@
     "https://cran.r-project.org/package=distances",
     "https://cran.r-project.org/package=distanceto",
     "https://cran.r-project.org/package=gdistance",
-    "https://ftp.eenet.ee/pub/cran/web/packages/Rdistance/vignettes/Rdistance_BeginnerLineTransectCovar.pdf",
     "https://github.com/Chrisjb/RDistanceMatrix",
     "https://github.com/cran/Rdistance",
     "https://github.com/dill/RDistanceBook",
@@ -804,7 +789,6 @@
     "https://github.com/kleerkoat/rhinoScripts",
     "https://github.com/mcneel/rhinoscriptsyntax",
     "https://github.com/rhinos-app/rhinos-app-dev",
-    "https://www.blanketsforbabyrhinos.org/",
     "https://www.rhino3d.com/",
     "https://www.therhinos.co.uk/",
     "https://www.worldwildlife.org/species/rhino"
@@ -822,7 +806,6 @@
     "https://github.com/rob-miller/rTracker",
     "https://github.com/rupertoverall/Rtrack",
     "https://github.com/sethjwilliamson/LoRTracker",
-    "https://ksrec.in/rtrack/",
     "https://rtrack.live/",
     "https://rupertoverall.net/Rtrack/",
     "https://v3.rtrack.live/"
@@ -900,8 +883,7 @@
     "https://www.energy.ca.gov/about/commissioners/siva-gunda",
     "https://www.instagram.com/sivaofficial/",
     "https://www.maggiesottero.com/sottero-and-midgley/siva/18611",
-    "https://www.noshwithmicah.com/",
-    "https://www.snec.com.sg/patient-care/specialties-and-services/clinics-centres/snec-ocular-reading-centre"
+    "https://www.noshwithmicah.com/"
   ],
   "SKLEARN": [
     "https://cran.r-project.org/package=DCLEAR",
@@ -944,7 +926,6 @@
     "https://cran.r-project.org/package=BAYSTAR",
     "https://cran.r-project.org/package=DDPstar",
     "https://cran.r-project.org/package=DstarM",
-    "https://cran.r-project.org/package=EffectStars",
     "https://cran.r-project.org/package=countSTAR",
     "https://en.wikipedia.org/wiki/Star",
     "https://github.com/ZachGoldberg/Startup-CTO-Handbook",
@@ -954,15 +935,12 @@
     "https://github.com/sahat/hackathon-starter",
     "https://github.com/starship/starship",
     "https://pypi.org/project/star/",
-    "https://starmagazine.com/",
     "https://www.star.hawaii.edu/studentinterface/",
-    "https://www.staridaho.org/home",
     "https://www.tax.ny.gov/star/"
   ],
   "STAR RNA-seq aligner package": [
     "https://github.com/alexdobin/STAR",
     "https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html",
-    "https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf",
     "https://pmc.ncbi.nlm.nih.gov/articles/PMC3530905/",
     "https://pubmed.ncbi.nlm.nih.gov/23104886/",
     "https://training.galaxyproject.org/training-material/topics/transcriptomics/tutorials/rna-seq-bash-star-align/tutorial.html"
@@ -971,7 +949,6 @@
     "https://cran.r-project.org/package=FSTpackage",
     "https://cran.r-project.org/package=packageDiff",
     "https://cran.r-project.org/package=packageRank",
-    "https://cran.r-project.org/package=packagepal",
     "https://cran.r-project.org/package=packager",
     "https://github.com/LottePitcher/opinionated-package-starter",
     "https://github.com/RYanXuDev/ShootingStarPackages",
@@ -993,15 +970,12 @@
     "https://cran.r-project.org/package=TAR",
     "https://en.wikipedia.org/wiki/Star",
     "https://github.com/alexdobin/STAR",
-    "https://starmagazine.com/",
     "https://www.star.hawaii.edu/studentinterface/",
-    "https://www.staridaho.org/home",
     "https://www.tax.ny.gov/star/"
   ],
   "STAR) RNA-Seq aligner": [
     "https://github.com/alexdobin/STAR",
     "https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html",
-    "https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf",
     "https://pmc.ncbi.nlm.nih.gov/articles/PMC3530905/",
     "https://pubmed.ncbi.nlm.nih.gov/23104886/",
     "https://support.illumina.com/help/BS_App_RNASeq_Alignment_OLH_1000000006112/Content/Source/Informatics/STAR_RNAseq.htm"
@@ -1010,7 +984,6 @@
     "https://cran.r-project.org/package=ggaligner",
     "https://github.com/alexdobin/STAR",
     "https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html",
-    "https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf",
     "https://pmc.ncbi.nlm.nih.gov/articles/PMC3530905/",
     "https://pubmed.ncbi.nlm.nih.gov/23104886/",
     "https://support.illumina.com/help/BS_App_RNASeq_Alignment_OLH_1000000006112/Content/Source/Informatics/STAR_RNAseq.htm"
@@ -1030,7 +1003,6 @@
     "https://github.com/sfeuerriegel/SentimentAnalysis",
     "https://github.com/virgoC0der/SentimentAnalysisOfProductReview",
     "https://pypi.org/project/SentimentAnalysis/",
-    "https://www.cs.uic.edu/~liub/FBS/SentimentAnalysis-and-OpinionMining.pdf",
     "https://www.ibm.com/think/topics/sentiment-analysis",
     "https://www.rdocumentation.org/packages/SentimentAnalysis/versions/1.3-5"
   ],
@@ -1047,7 +1019,6 @@
     "https://github.com/guillaumegenthial/sequence_tagging",
     "https://github.com/helio-fm/helio-sequencer",
     "https://pypi.org/project/sequence/",
-    "https://weblogo.berkeley.edu/logo.cgi",
     "https://www.amazon.com/Sequence/dp/B09FSGVW4X",
     "https://www.getsequence.io/",
     "https://www.joinsequence.com/",
@@ -1055,7 +1026,6 @@
   ],
   "SeuratObject": [
     "https://anaconda.org/conda-forge/r-seuratobject",
-    "https://cloud.r-project.org/web/packages/SeuratObject/SeuratObject.pdf",
     "https://cran.r-project.org/package=Seurat",
     "https://cran.r-project.org/package=SeuratObject",
     "https://cran.r-project.org/package=eudract",
@@ -1119,7 +1089,6 @@
     "https://cran.r-project.org/package=BAYSTAR",
     "https://cran.r-project.org/package=DDPstar",
     "https://cran.r-project.org/package=DstarM",
-    "https://cran.r-project.org/package=EffectStars",
     "https://cran.r-project.org/package=countSTAR",
     "https://en.wikipedia.org/wiki/Star",
     "https://github.com/ZachGoldberg/Startup-CTO-Handbook",
@@ -1129,9 +1098,7 @@
     "https://github.com/sahat/hackathon-starter",
     "https://github.com/starship/starship",
     "https://pypi.org/project/star/",
-    "https://starmagazine.com/",
     "https://www.star.hawaii.edu/studentinterface/",
-    "https://www.staridaho.org/home",
     "https://www.tax.ny.gov/star/"
   ],
   "Statistix": [
@@ -1166,8 +1133,6 @@
     "https://github.com/lucidrains/TPDNE",
     "https://github.com/xelerance/xl2tpd",
     "https://pypi.org/project/tpd/",
-    "https://studentaid.gov/manage-loans/forgiveness-cancellation/disability-discharge",
-    "https://studentaid.gov/tpd-discharge",
     "https://tpdinc.com/",
     "https://www.talgov.com/publicsafety/tpd",
     "https://www.tucsonaz.gov/Departments/Police"
@@ -1219,8 +1184,7 @@
     "https://cran.r-project.org/package=roads",
     "https://escholarship.org/uc/item/9rs1536m",
     "https://github.com/snacktavish/TreeToReads",
-    "https://pypi.org/project/TreeToReads/",
-    "https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000799"
+    "https://pypi.org/project/TreeToReads/"
   ],
   "TunePareto": [
     "https://cran.r-project.org/package=GPareto",
@@ -1232,8 +1196,7 @@
     "https://link.springer.com/article/10.1007/s10994-024-06561-8",
     "https://search.r-project.org/CRAN/refmans/ORION/help/dropThreshold.html",
     "https://www.jstatsoft.org/issue/view/v046",
-    "https://www.jstatsoft.org/v46/i05/",
-    "https://www.slds.stat.uni-muenchen.de/bibrefs/pdfs/multi_objective_parameter_configuration.pdf"
+    "https://www.jstatsoft.org/v46/i05/"
   ],
   "VOSviewer": [
     "https://app.vosviewer.com/",
@@ -1250,9 +1213,7 @@
     "https://github.com/wshuyi/demo-vosviewer-CNKI-keyword-co-occurence-analysis",
     "https://pubmed.ncbi.nlm.nih.gov/36589296/",
     "https://researchguides.uic.edu/bibliometrics/vosviewer",
-    "https://www.vosviewer.com/",
-    "https://www.vosviewer.com/documentation/Manual_VOSviewer_1.6.20.pdf",
-    "https://www.vosviewer.com/documentation/Manual_VOSviewer_1.6.6.pdf"
+    "https://www.vosviewer.com/"
   ],
   "Velvet": [
     "https://cran.r-project.org/package=elect",
@@ -1353,8 +1314,7 @@
     "https://github.com/danielpalme/ADTest",
     "https://github.com/m-kina/adtest",
     "https://github.com/tilo1583/AdTest",
-    "https://my.f5.com/manage/s/article/K11308",
-    "https://www.mathworks.com/help/stats/adtest.html"
+    "https://my.f5.com/manage/s/article/K11308"
   ],
   "ampir": [
     "https://academic.oup.com/bioinformatics/article/36/21/5262/5873588",
@@ -1470,7 +1430,6 @@
     "https://github.com/peterjc/biopython_workshop",
     "https://github.com/tiagoantao/biopython-notebook",
     "https://pypi.org/project/biopy/",
-    "https://tpwd.texas.gov/landwater/land/maps/gis/data_downloads/metadata/biopy.pdf",
     "https://www.aromatica.hr/en/kategorije-proizvoda/other/biopy-05-l/"
   ],
   "biosignalEMG": [
@@ -1518,7 +1477,6 @@
   ],
   "catmap": [
     "http://github.com/tpq/catmap",
-    "https://cat-map.wustl.edu/",
     "https://catmap.readthedocs.io/",
     "https://cran.r-project.org/package=cata",
     "https://cran.r-project.org/package=catdap",
@@ -1566,9 +1524,7 @@
     "https://github.com/julesjacobs/cgraphs",
     "https://github.com/trailofbits/ObjCGraphView",
     "https://gotofritz.net/blog/pygraphviz-woes-on-m1-mac-docker-to-the-rescue/",
-    "https://pypi.org/project/cGraph/",
-    "https://www.graphviz.org/pdf/cgraph.pdf",
-    "https://www.stata.com/manuals/tsirfcgraph.pdf"
+    "https://pypi.org/project/cGraph/"
   ],
   "chemometrics": [
     "https://analyticalsciencejournals.onlinelibrary.wiley.com/journal/1099128x",
@@ -1617,7 +1573,6 @@
     "https://cran.r-project.org/package=crmReg",
     "https://cran.r-project.org/package=cumSeg",
     "https://cran.r-project.org/package=sumSome",
-    "https://cran.uni-muenster.de/web/packages/cumSeg/cumSeg.pdf",
     "https://github.com/cran/cumSeg",
     "https://pubmed.ncbi.nlm.nih.gov/21088029/",
     "https://www.rdocumentation.org/packages/cumSeg/versions/1.3/topics/fit.control"
@@ -1643,8 +1598,6 @@
   "d3plot": [
     "https://community.altair.com/discussion/14869/import-d3plot-and-k-files-export",
     "https://community.altair.com/discussion/24521/hyperview-load-results-only-ls-dyna-d3plot",
-    "https://cran.r-project.org/package=d3po",
-    "https://cran.r-project.org/package=dbplot",
     "https://cran.r-project.org/package=ddplot",
     "https://cran.r-project.org/package=desplot",
     "https://cran.r-project.org/package=rD3plot",
@@ -1685,7 +1638,6 @@
     "https://cran.r-project.org/package=data.table",
     "https://cran.r-project.org/package=data.table.threads",
     "https://cran.r-project.org/package=dbi.table",
-    "https://cran.r-project.org/package=rqdatatable",
     "https://datatables.net/",
     "https://developer.genesys.cloud/forum/t/help-updating-data-table-via-data-action/15325",
     "https://github.com/DataTables/DataTables",
@@ -1708,17 +1660,14 @@
     "https://github.com/darcyabjones/deepredeff-py",
     "https://github.com/ruthkr/deepredeff/",
     "https://ruthkr.github.io/deepredeff/reference/aasset_to_df.html",
-    "https://www.biorxiv.org/content/10.1101/2020.07.08.193250v1.full.pdf",
     "https://www.sciencedirect.com/science/article/pii/S1476927124001579"
   ],
   "django-blastplus": [
     "https://academic.oup.com/nar/article/47/D1/D63/5115215",
     "https://github.com/michal-stuglik/django-blastplus",
-    "https://hal.science/hal-03437921/document",
     "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0289693",
     "https://pmc.ncbi.nlm.nih.gov/articles/PMC6193196/",
-    "https://pypi.org/project/django-blastplus/",
-    "https://www.scienceopen.com/document_file/0aca2486-392b-4cc5-ab39-33619dae5b39/PubMedCentral/0aca2486-392b-4cc5-ab39-33619dae5b39.pdf"
+    "https://pypi.org/project/django-blastplus/"
   ],
   "dplyr": [
     "https://cran.r-project.org/package=dbplyr",
@@ -1747,7 +1696,6 @@
     "https://link.springer.com/article/10.1007/s11105-023-01411-8",
     "https://pubmed.ncbi.nlm.nih.gov/28575251/",
     "https://pypi.org/project/eQTLseq/",
-    "https://riunet.upv.es/handle/10251/136912",
     "https://scholar.google.com/citations?user=hn49yA4AAAAJ&hl=en"
   ],
   "earth": [
@@ -1783,7 +1731,6 @@
     "https://github.com/JBEI/edd-utils",
     "https://github.com/arraypress/edd-utils",
     "https://pypi.org/project/edd-utils/",
-    "https://www.cde.ca.gov/ci/ct/sf/documents/energyutilities.pdf",
     "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-costs/care-fera-program",
     "https://www.cpuc.ca.gov/industries-and-topics/natural-gas/greenhouse-gas-cap-and-trade-program/california-climate-credit",
     "https://www.csd.ca.gov/Pages/Assistance-PayingMyEnergyBills.aspx"
@@ -1802,7 +1749,6 @@
     "https://github.com/psitem/edgerouter-backup",
     "https://github.com/stevejenkins/UBNT-EdgeRouter-Example-Configs",
     "https://pypi.org/project/edger/",
-    "https://www.bioconductor.org/packages/devel/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf",
     "https://www.homedepot.com/b/Outdoors-Outdoor-Power-Equipment-Trimmers-Edgers-Edgers/N-5yc1vZbxdg",
     "https://www.worx.com/lawn-garden/string-trimmers-edgers.html"
   ],
@@ -1876,7 +1822,6 @@
     "https://toolbox.google.com/factcheck/explorer"
   ],
   "funFEM": [
-    "https://arxiv.org/pdf/1601.07999",
     "https://cran.r-project.org/package=fun",
     "https://cran.r-project.org/package=funFEM",
     "https://cran.r-project.org/package=funLBM",
@@ -1910,7 +1855,6 @@
     "https://www.wayfair.com/furniture/cat/furniture-c45974.html"
   ],
   "fwdpy": [
-    "https://academic.oup.com/mbe/article-pdf/34/1/230/17720498/msw211.pdf",
     "https://academic.oup.com/mbe/article/34/1/230/2670194",
     "https://cran.r-project.org/package=fplyr",
     "https://cran.r-project.org/package=sfdep",
@@ -1924,8 +1868,7 @@
     "https://github.com/molpopgen/fwdpy11_infinitesimal",
     "https://molpopgen.github.io/fwdpy/",
     "https://pypi.org/project/fwdpy/",
-    "https://tskit.dev/tutorials/simulation_overview.html",
-    "https://www.biorxiv.org/content/10.1101/2025.04.24.650500v1.full.pdf"
+    "https://tskit.dev/tutorials/simulation_overview.html"
   ],
   "g_sasa": [
     "https://code.google.com/p/sasa-tool/",
@@ -2141,7 +2084,6 @@
     "https://www.merriam-webster.com/dictionary/insol"
   ],
   "intePareto": [
-    "html",
     "https://academic.oup.com/bib/article/25/2/bbad521/7585925",
     "https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-020-07205-6",
     "https://cran.r-project.org/package=GPareto",
@@ -2187,8 +2129,6 @@
     "https://github.com/cran/intsvy",
     "https://github.com/dickli/intsvy2",
     "https://github.com/eldafani/intsvy",
-    "https://ora.ox.ac.uk/objects/uuid:5026adab-19f3-483a-94f4-4b936f9dcf26/files/rft848r94m",
-    "https://www.jstatsoft.org/article/view/v081i07/1163",
     "https://www.jstatsoft.org/v081/i07",
     "https://www.rdocumentation.org/packages/intsvy/versions/2.9/topics/intsvy.mean.pv"
   ],
@@ -2245,7 +2185,6 @@
     "https://libmesh.github.io/",
     "https://libmesh.github.io/examples.html",
     "https://libmesh.github.io/installation.html",
-    "https://ntrs.nasa.gov/api/citations/20130013759/downloads/20130013759.pdf",
     "https://pypi.org/project/libmesh/"
   ],
   "linprog": [
@@ -2256,18 +2195,14 @@
     "https://cran.r-project.org/package=nproc",
     "https://cran.r-project.org/package=nprotreg",
     "https://docs.scipy.org/doc/scipy-1.15.2/reference/generated/scipy.optimize.linprog.html",
-    "https://es.mathworks.com/help/optim/linear-programming-and-mixed-integer-linear-programming.html",
     "https://github.com/Lyxn/linprog",
     "https://github.com/ZhiQiangFeng/LinprogSolver4Cpp",
     "https://github.com/astoeckel/linprog2d",
     "https://github.com/denisorehovsky/django-linprog-solver-website",
     "https://github.com/epogrebnyak/linprog",
-    "https://linprog.com/main-simplex-method/result",
-    "https://system.cs.fsu.edu/new/self-help/new-linprog-certificates/",
-    "https://www.mathworks.com/help/optim/ug/linprog.html"
+    "https://system.cs.fsu.edu/new/self-help/new-linprog-certificates/"
   ],
   "logspline": [
-    "http://www.econ.uiuc.edu/~roger/courses/574/lectures/L18.pdf",
     "https://cran.r-project.org/package=lgspline",
     "https://cran.r-project.org/package=logspline",
     "https://cran.r-project.org/package=lspline",
@@ -2297,7 +2232,6 @@
     "https://juliasilge.com/blog/lubridate-london-stage/",
     "https://lubridate.tidyverse.org/",
     "https://lubridate.tidyverse.org/reference/index.html",
-    "https://posit.co/wp-content/uploads/2022/10/lubridate-1.pdf",
     "https://www.jstatsoft.org/v40/i03/"
   ],
   "lunar": [
@@ -2489,7 +2423,6 @@
     "https://github.com/openeventdata/mordecai",
     "https://mord.bandcamp.com/merch",
     "https://pypi.org/project/mord/",
-    "https://rural.gov.in/en",
     "https://www.ballardsunderfuneral.com/obituaries/karen-mord",
     "https://www.commonfund.org/research-center/press-releases/commonfund-ocio-names-julia-mord-chief-investment-officer",
     "https://www.instagram.com/mordfustang/"
@@ -2550,7 +2483,6 @@
   ],
   "ngCGH": [
     "https://bionano.com/blogs/comparison-of-cnv-detection-from-whole-exome-sequencing-wes-as-compared-with-snp-microarray/",
-    "https://bionano.com/wp-content/uploads/2023/03/Comparison-of-the-BAM-Multiscale-reference-algorithm-to-other-methods-for-CNV-detection-from-NGS-1.pdf",
     "https://github.com/paulvan/ngCGH",
     "https://github.com/paulvan/ngCGH-master",
     "https://github.com/seandavi/ngCGH",
@@ -2591,8 +2523,7 @@
     "https://github.com/noldswift360/noldswift360",
     "https://obits.masslive.com/us/obituaries/masslive/name/jeannine-nolds-obituary?id=52687144",
     "https://pypi.org/project/nolds/",
-    "https://umbertoluce.com/en-us/products/nolds-brown-leather-motorcycle-boots-d3o-men",
-    "https://www.noldsequipment.com/"
+    "https://umbertoluce.com/en-us/products/nolds-brown-leather-motorcycle-boots-d3o-men"
   ],
   "numpy": [
     "https://cran.r-project.org/package=cnum",
@@ -2823,11 +2754,9 @@
     "https://cran.r-project.org/package=pensynth",
     "https://cran.r-project.org/package=psych",
     "https://cran.r-project.org/package=psycho",
-    "https://dr.ntu.edu.sg/bitstream/10356/152453/2/2020%20Bizzego%20et%20al%20WIRN.pdf",
     "https://gitlab.com/abp-san-public",
     "https://gitlab.com/abp-san-public/physynch",
     "https://gitlab.eurecom.fr/oai/openairinterface5g/-/issues/699",
-    "https://iris.unitn.it/retrieve/e3835198-c808-72ef-e053-3705fe0ad821/WIRN2019_Synchrony_methods.pdf",
     "https://www.hodanamiux.com/physync-app"
   ],
   "pickpocket": [
@@ -2852,7 +2781,6 @@
   "powerGWASinteraction": [
     "http://download.nust.na/pub3/cran/web/packages/powerGWASinteraction/index.html",
     "https://academic.oup.com/bioinformatics/article/37/22/4269/6278296",
-    "https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=bd59b1412f971186adfd0487a5ae9b2ba1a07506",
     "https://cran.r-project.org/package=interactionR",
     "https://cran.r-project.org/package=interactions",
     "https://cran.r-project.org/package=powerGWASinteraction",
@@ -2894,7 +2822,6 @@
     "https://github.com/kodi-pvr/pvr.iptvsimple",
     "https://github.com/mrossini-ethz/camera-calibration-pvr",
     "https://github.com/pvrbook/pvr",
-    "https://www.genecards.org/cgi-bin/carddisp.pl?gene=PVR",
     "https://www.iss-foundation.org/vessel-and-company-commitments/proactive-vessel-register/proactive-vessel-register-pvr/",
     "https://www.pvrcinemas.com/",
     "https://www.uniprot.org/uniprotkb/P15151/entry"
@@ -2925,7 +2852,6 @@
     "https://github.com/zfang/benchmark_pymagnitude",
     "https://gitlab.com/Plasticity/magnitude",
     "https://pypi.org/project/pymagnitude/",
-    "https://www.cis.upenn.edu/~ccb/publications/magnitude-fast-efficient-vector-embeddings-in-python.pdf",
     "https://www.kaggle.com/datasets/tongahlai/pymagnitude"
   ],
   "pyphysio": [
@@ -2938,7 +2864,6 @@
     "https://ieeexplore.ieee.org/document/9216076/",
     "https://pypi.org/project/pyphysio/",
     "https://support.pluxbiosignals.com/knowledge-base/do-you-know-any-open-source-software-for-biosignal-processing/",
-    "https://www.biorxiv.org/content/10.1101/2020.10.27.356980v1.full.pdf",
     "https://www.sciencedirect.com/science/article/pii/S2352711019301839"
   ],
   "pyqi": [
@@ -3049,7 +2974,6 @@
     "https://ijpds.org/article/view/1362",
     "https://journal.r-project.org/news/RJ-2014-2-cran/",
     "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0099825",
-    "https://pearl.plymouth.ac.uk/cgi/viewcontent.cgi?article=1504&context=nm-research",
     "https://pmc.ncbi.nlm.nih.gov/articles/PMC4062485/"
   ],
   "rLiDAR": [
@@ -3223,8 +3147,7 @@
     "https://scikit-learn.org/",
     "https://scikit-learn.org/stable/",
     "https://scikit-learn.org/stable/install.html",
-    "https://scikit-learn.org/stable/user_guide.html",
-    "https://www.jmlr.org/papers/volume12/pedregosa11a/pedregosa11a.pdf"
+    "https://scikit-learn.org/stable/user_guide.html"
   ],
   "sets": [
     "https://cran.r-project.org/package=airGRdatasets",
@@ -3245,15 +3168,12 @@
     "https://www.setgame.com/set/puzzle"
   ],
   "sfsmisc": [
-    "http://r.meteo.uni.wroc.pl/web/packages/sfsmisc/sfsmisc.pdf",
     "https://anaconda.org/conda-forge/r-sfsmisc",
-    "https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=e6b1be70aed708589f4830c78ce33aa25c477f21",
     "https://cran.r-project.org/package=dsmisc",
     "https://cran.r-project.org/package=esmisc",
     "https://cran.r-project.org/package=sfsmisc",
     "https://cran.r-project.org/package=sjmisc",
     "https://cran.r-project.org/package=swfscMisc",
-    "https://ftp.icm.edu.pl/packages/cran/web/packages/sfsmisc/sfsmisc.pdf",
     "https://github.com/OpenMandrivaAssociation/R-sfsmisc",
     "https://github.com/clearlinux-pkgs/R-sfsmisc",
     "https://github.com/conda-forge/r-sfsmisc-feedstock",
@@ -3366,7 +3286,6 @@
     "https://rdrr.io/cran/snpReady/man/raw.data.html"
   ],
   "spBayesSurv": [
-    "https://arxiv.org/pdf/1705.04584",
     "https://cran.r-project.org/package=BayesMFSurv",
     "https://cran.r-project.org/package=BayesPPDSurv",
     "https://cran.r-project.org/package=BayesSurvive",
@@ -3375,7 +3294,6 @@
     "https://github.com/cran/spBayesSurv",
     "https://pubmed.ncbi.nlm.nih.gov/26148536/",
     "https://rdrr.io/cran/spBayesSurv/man/LeukSurv.html",
-    "https://www.jstatsoft.org/article/download/v092i09/1340",
     "https://www.jstatsoft.org/article/view/v092i09"
   ],
   "spacesXYZ": [
@@ -3433,7 +3351,6 @@
     "https://cran.r-project.org/package=BAYSTAR",
     "https://cran.r-project.org/package=DDPstar",
     "https://cran.r-project.org/package=DstarM",
-    "https://cran.r-project.org/package=EffectStars",
     "https://cran.r-project.org/package=countSTAR",
     "https://en.wikipedia.org/wiki/Star",
     "https://github.com/ZachGoldberg/Startup-CTO-Handbook",
@@ -3443,13 +3360,10 @@
     "https://github.com/sahat/hackathon-starter",
     "https://github.com/starship/starship",
     "https://pypi.org/project/star/",
-    "https://starmagazine.com/",
     "https://www.star.hawaii.edu/studentinterface/",
-    "https://www.staridaho.org/home",
     "https://www.tax.ny.gov/star/"
   ],
   "stars": [
-    "https://cran.r-project.org/package=EffectStars",
     "https://cran.r-project.org/package=EffectStars2",
     "https://cran.r-project.org/package=stars",
     "https://cran.r-project.org/package=starsExtra",
@@ -3519,7 +3433,6 @@
     "https://github.com/mrlacey/StringResourceVisualizer",
     "https://github.com/tidyverse/stringr",
     "https://home.stringr.com/",
-    "https://rstudio.github.io/cheatsheets/strings.pdf",
     "https://stringr.tidyverse.org/",
     "https://www.app.stringr.com/"
   ],
@@ -3560,7 +3473,6 @@
     "https://www.sciviews.org/svUnit/"
   ],
   "swirl": [
-    "http://code.naeseth.com/swirl/",
     "https://cran.r-project.org/package=rswipl",
     "https://cran.r-project.org/package=simrel",
     "https://cran.r-project.org/package=swirl",
@@ -3742,8 +3654,6 @@
     "https://github.com/r-forge/truncreg",
     "https://rpubs.com/DragonflyStats/Truncated-Regression",
     "https://stats.oarc.ucla.edu/stata/dae/truncated-regression/",
-    "https://www.stata.com/manuals/mimiimputetruncreg.pdf",
-    "https://www.stata.com/manuals/rtruncreg.pdf",
     "https://www.statalist.org/forums/forum/general-stata-discussion/general/1675565-using-truncreg-with-mi-impute-chained"
   ],
   "tsutils": [

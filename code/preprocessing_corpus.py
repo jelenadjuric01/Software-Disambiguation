@@ -46,12 +46,20 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
         metadata_cache = {}
 
     # Step 3: Fetch and update missing metadata
-    for url in url_set: #Add that is also fetches again if the metadata is empty
-        if url not in metadata_cache or metadata_cache[url] in [None, {}]:
-            print(f"🔍 Processing: {url}")
-            metadata = get_metadata(url)
-            metadata_cache[url] = metadata
-
+    try:
+        for url in url_set: #Add that is also fetches again if the metadata is empty
+            if url not in metadata_cache or metadata_cache[url] in [None, {}]:
+                print(f"🔍 Processing: {url}")
+                metadata = get_metadata(url)
+                metadata_cache[url] = metadata
+    
+    except Exception as e:
+    # On any error, still save whatever's in url_dict
+        with open(output_json_path, 'w') as f:
+            json.dump(metadata_cache, f, indent=2,ensure_ascii=False)
+        print(f"An error occurred: {e!r}")
+        print("Partial results saved to data_filtered_partial.json")
+        raise
     # Step 4: Save updated metadata
     with open(output_json_path, "w", encoding="utf-8") as f:
         json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
@@ -193,11 +201,11 @@ def make_pairs(df:pd.DataFrame) -> pd.DataFrame:
     
     
 if __name__ == "__main__":
-    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file
+    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
     """'''
-    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus.xlsx"
+    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v1.xlsx"
     output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/updated_with_metadata_file.csv"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/updated_with_metadata_file_v1.csv"
     output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv"
     # Build metadata cache from Excel
 
@@ -208,9 +216,31 @@ if __name__ == "__main__":
     df = make_pairs(df)
 
     add_metadata(df,metadata_cache, output_path)
-    df = compute_similarity_df(df,output_path_similarities)"""
+    df = compute_similarity_df(df,output_path_similarities)
     output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/calculated_version_1.csv"
     # Load the DataFrame again to see the results
     df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv")
+    # Get the average, min, and max for each metric
+    get_average_min_max(df, output_path_calculated_version_1)
+    """
+
+    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 2
+    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v2.xlsx"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/similarities_version_1.csv"
+    # Build metadata cache from Excel
+    
+    # Load the DataFrame again to add metadata
+    df = pd.read_excel(excel_path)
+    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
+    print(metadata_cache)
+    df = make_pairs(df)
+
+    add_metadata(df,metadata_cache, output_path)
+    df = compute_similarity_df(df,output_path_similarities)
+    output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv"
+    # Load the DataFrame again to see the results
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/similarities.csv")
     # Get the average, min, and max for each metric
     get_average_min_max(df, output_path_calculated_version_1)
