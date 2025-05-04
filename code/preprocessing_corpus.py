@@ -47,23 +47,28 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
 
     # Step 3: Fetch and update missing metadata
     try:
-        for url in url_set: #Add that is also fetches again if the metadata is empty
+        identifier = 0
+        num_url = len(url_set)
+        num_dict = len(metadata_cache)
+        for url in url_set:
             if url not in metadata_cache or metadata_cache[url] in [None, {}]:
+                print(f"🔍 Processing: {identifier}/{num_url-num_dict}")
                 print(f"🔍 Processing: {url}")
-                metadata = get_metadata(url)
-                metadata_cache[url] = metadata
-    
+                metadata_cache[url] = get_metadata(url)
+            identifier += 1
+
     except Exception as e:
-    # On any error, still save whatever's in url_dict
-        with open(output_json_path, 'w') as f:
-            json.dump(metadata_cache, f, indent=2,ensure_ascii=False)
-        print(f"An error occurred: {e!r}")
-        print("Partial results saved to data_filtered_partial.json")
+        # On first error: save and then re-raise
+        with open(output_json_path, "w", encoding="utf-8") as f:
+            json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
+        print(f"⚠️ Error at {url!r}: {e!r}  → cache saved to {output_json_path}")
         raise
-    # Step 4: Save updated metadata
-    with open(output_json_path, "w", encoding="utf-8") as f:
-        json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
-        print(f"📦 Metadata cache saved to: {output_json_path}")
+
+    else:
+        # If we got here with no exceptions, save normally
+        with open(output_json_path, "w", encoding="utf-8") as f:
+            json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
+        print(f"✅ All done — cache saved to {output_json_path}")
 
     return metadata_cache
 
@@ -129,7 +134,6 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
 
         meta = metadata.get(url, {})
         if not meta:
-            print(f"Skipping row {idx}: no metadata found for URL {url}")
             continue
 
         # 1) Name
@@ -150,14 +154,14 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
         raw_desc = meta.get("description", "") or ""
         df.at[idx, "metadata_description"] = sanitize_text_for_csv(raw_desc)
 
-        print(f"Processed row {idx} for URL: {url}")
+        #print(f"Processed row {idx} for URL: {url}")
 
     # Save to CSV if requested, using minimal quoting (fields with commas/quotes will be wrapped & escaped)
     if output_path:
         df.to_csv(output_path, index=False, quoting=csv.QUOTE_MINIMAL)
         print(f"📄 Updated CSV file saved to {output_path}")
 
-def make_pairs(df:pd.DataFrame) -> pd.DataFrame:
+def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
     """
     Explode comma-separated candidate URLs into one row per (mention, URL) pair.
 
@@ -194,7 +198,7 @@ def make_pairs(df:pd.DataFrame) -> pd.DataFrame:
             axis=1
         )
     )
-    df_exploded.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/pairwise_temp.csv", index=False)  # Save the DataFrame to a temporary CSV file
+    df_exploded.to_csv(output_path, index=False)  # Save the DataFrame to a temporary CSV file
 
     return df_exploded
 
@@ -229,13 +233,14 @@ if __name__ == "__main__":
     output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
     output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/updated_with_metadata_file.csv"
     output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/similarities_version_1.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/pairs.csv"
     # Build metadata cache from Excel
     
     # Load the DataFrame again to add metadata
     df = pd.read_excel(excel_path)
     metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
     print(metadata_cache)
-    df = make_pairs(df)
+    df = make_pairs(df,output_path_pairs)
 
     add_metadata(df,metadata_cache, output_path)
     df = compute_similarity_df(df,output_path_similarities)

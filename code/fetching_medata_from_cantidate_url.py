@@ -354,15 +354,19 @@ def get_metadata(url: str) -> dict:
         return {"error": "Invalid URL"}
 
     url = url.strip()
+    parsed = urlparse(url)
     domain = urlparse(url).netloc.lower()
+    path   = parsed.path or ""
 
     # GitHub repo
     if "github.com" in domain:
         return extract_somef_metadata(url)
 
     # CRAN package (common formats: cran.r-project.org or pkg.go.dev/r)
-    if "cran.r-project.org" in domain or re.search(r"(r-project\.org|cran)\b", domain):
-        return extract_cran_metadata(url)
+    if domain == "cran.r-project.org" and (
+        path.startswith("/web/packages/") or
+        path.startswith("/package=")
+    ):        return extract_cran_metadata(url)
     ## PyPI package (common formats: pypi.org or pypi.python.org)
     if "pypi.org" in domain or "pypi.python.org" in domain:
         return extract_pypi_metadata(url)

@@ -1194,7 +1194,6 @@
     "https://cran.r-project.org/package=rnetcarto",
     "https://github.com/cran/TunePareto",
     "https://link.springer.com/article/10.1007/s10994-024-06561-8",
-    "https://search.r-project.org/CRAN/refmans/ORION/help/dropThreshold.html",
     "https://www.jstatsoft.org/issue/view/v046",
     "https://www.jstatsoft.org/v46/i05/"
   ],
@@ -1764,8 +1763,7 @@
     "https://github.com/fatmasevinck/enetLTS",
     "https://joss.theoj.org/papers/10.21105/joss.04773",
     "https://r-universe.dev/search?q=exports:plotCoef.enetLTS",
-    "https://rdrr.io/github/fatmasevinck/enetLTS/src/R/BYfunc.R",
-    "https://search.r-project.org/CRAN/refmans/enetLTS/help/residuals.enetLTS.html"
+    "https://rdrr.io/github/fatmasevinck/enetLTS/src/R/BYfunc.R"
   ],
   "fastDummies": [
     "https://anaconda.org/conda-forge/r-fastdummies",
@@ -1832,7 +1830,6 @@
     "https://github.com/cran/funFEM",
     "https://projecteuclid.org/journals/annals-of-applied-statistics/volume-9/issue-4/The-discriminative-functional-mixture-model-for-a-comparative-analysis-of/10.1214/15-AOAS861.full",
     "https://rdrr.io/cran/funFEM/man/funFEM.html",
-    "https://search.r-project.org/CRAN/refmans/funFEM/html/funFEM-package.html",
     "https://www.researchgate.net/figure/US-map-of-4-clusters-obtained-from-FunFEM-algorithm-and-simulated-curves-correspond-to_fig9_369378903"
   ],
   "furniture": [
@@ -2962,7 +2959,6 @@
     "https://github.com/yanyachen/rBayesianOptimization",
     "https://r-universe.dev/search?q=needs:GPfit",
     "https://rpubs.com/Argaadya/bayesian-optimization",
-    "https://search.r-project.org/CRAN/refmans/ParBayesianOptimization/help/bayesOpt.html",
     "https://www.rdocumentation.org/packages/rBayesianOptimization/versions/1.2.1",
     "https://www.rdocumentation.org/packages/rBayesianOptimization/versions/1.2.1/topics/BayesianOptimization"
   ],
@@ -3307,7 +3303,6 @@
     "https://en.wikipedia.org/wiki/CIE_1931_color_space",
     "https://github.com/conda-forge/r-spacesxyz-feedstock",
     "https://github.com/cran/spacesXYZ",
-    "https://search.r-project.org/CRAN/refmans/spacesXYZ/help/toXYZ.html",
     "https://www.rdocumentation.org/packages/spacesXYZ/versions/1.5-1"
   ],
   "spektral": [

@@ -47,8 +47,13 @@ def keyword_similarity_with_fallback(
           - Otherwise: cosine similarity between paper_keywords and
             site_keywords using BERT.
     """
-    # 1. Guard: if paper_keywords missing → 0.0
-    if not paper_keywords or not paper_keywords.strip():
+    if pd.isna(paper_keywords):
+        return 0.0
+
+    # 2) Coerce to string and strip ALL whitespace
+    pk_str = str(paper_keywords).strip()
+    # 3) If empty after stripping → 0.0
+    if not pk_str:
         return 0.0
 
     # Normalize by splitting on commas, lowercasing, stripping
