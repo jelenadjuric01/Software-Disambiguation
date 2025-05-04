@@ -7,6 +7,7 @@ from fetching_medata_from_cantidate_url import get_metadata
 import re
 import csv
 from similarity_metrics import compute_similarity_df, get_average_min_max
+from evaluation import split_by_avg_min_max, group_by_candidates, evaluation
     
 def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
     """
@@ -282,6 +283,8 @@ if __name__ == "__main__":
     output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/updated_with_metadata_file.csv"
     output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/similarities.csv"
     output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/pairs.csv"
+    output_path_calculated = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv"
+
     # Build metadata cache from Excel
     
     # Load the DataFrame again to add metadata
@@ -292,9 +295,24 @@ if __name__ == "__main__":
 
     add_metadata(df,metadata_cache, output_path)
     df = compute_similarity_df(df,output_path_similarities)
-    output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv"
     # Load the DataFrame again to see the results
     df = pd.read_csv(output_path_similarities)
     # Get the average, min, and max for each metric
-    get_average_min_max(df, output_path_calculated_version_1)'''
+    get_average_min_max(df, output_path_calculated)'''
+    outputh_avg_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/average_ranked.csv"
+    outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/min_ranked.csv"
+    outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/max_ranked.csv"
+    #Get ranked candidates and save the updated file version 2
+    df = pd.read_csv(output_path_calculated)
+    df_avg, df_min, df_max = split_by_avg_min_max(df)
+    df_avg = group_by_candidates(df_avg, outputh_avg_ranked)
+    df_min = group_by_candidates(df_min, outputh_min_ranked)
+    df_max = group_by_candidates(df_max, outputh_max_ranked)
+    print("Evaluation  of average")
+    evaluation(df_avg)
+    print("Evaluation  of min")
+    evaluation(df_min)
+    print("Evaluation  of max")
+    evaluation(df_max)
+
     
