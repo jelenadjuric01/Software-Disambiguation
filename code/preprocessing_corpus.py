@@ -243,9 +243,21 @@ if __name__ == "__main__":
     df = make_pairs(df,output_path_pairs)
 
     add_metadata(df,metadata_cache, output_path)
-    df = compute_similarity_df(df,output_path_similarities)'''
+    df = compute_similarity_df(df,output_path_similarities)
+    output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv"
+    # Load the DataFrame again to see the results
+    df = pd.read_csv(output_path_similarities)
+    # Get the average, min, and max for each metric
+    get_average_min_max(df, output_path_calculated_version_1)'''
+
+    df = pd.read_excel(excel_path)
+    metadata = json.load(open(output_json_path, "r", encoding="utf-8"))
+    df = make_pairs(df,output_path_pairs)
+    add_metadata(df,metadata, output_path)
+    df = compute_similarity_df(df,output_path_similarities)
     output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv"
     # Load the DataFrame again to see the results
     df = pd.read_csv(output_path_similarities)
     # Get the average, min, and max for each metric
     get_average_min_max(df, output_path_calculated_version_1)
+
