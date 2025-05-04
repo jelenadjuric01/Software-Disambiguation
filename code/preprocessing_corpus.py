@@ -237,13 +237,13 @@ if __name__ == "__main__":
     # Build metadata cache from Excel
     
     # Load the DataFrame again to add metadata
-    df = pd.read_excel(excel_path)
+    '''df = pd.read_excel(excel_path)
     metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
     print(metadata_cache)
     df = make_pairs(df,output_path_pairs)
 
     add_metadata(df,metadata_cache, output_path)
-    df = compute_similarity_df(df,output_path_similarities)
+    df = compute_similarity_df(df,output_path_similarities)'''
     output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv"
     # Load the DataFrame again to see the results
     df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/similarities.csv")

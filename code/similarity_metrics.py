@@ -198,21 +198,43 @@ def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFra
       - paragraph_metric  (paragraph_description_similarity) RoBERTa cosine similarity
       - keywords_metric   (keyword_similarity_with_fallback) BERT cosine similarity
     """
-    # 1) Filter to rows with a non-empty metadata_name
-    mask = df['metadata_name'].notna() & df['metadata_name'].str.strip().astype(bool)
-    sub = df.loc[mask].copy()
+    for col in ['name_metric','author_metric','paragraph_metric','keywords_metric']:
+        if col not in df.columns:
+            df[col] = np.nan
 
-    # 2) Compute each metric
-    sub['name_metric'] = sub.apply(
-        lambda r: software_name_similarity(r['name'], r['metadata_name']), axis=1
+    # 1) Mask of all rows that have valid metadata_name
+    valid = (
+        df['metadata_name'].notna() &
+        df['metadata_name'].astype(str).str.strip().astype(bool)
     )
-    sub['author_metric'] = sub.apply(
-        lambda r: author_name_similarity(r['authors'], r['metadata_authors']), axis=1
+
+    # 2) name_metric: only for valid rows where name_metric is still NaN
+    nm = valid & df['name_metric'].isna()
+    df.loc[nm, 'name_metric'] = df.loc[nm].apply(
+        lambda r: software_name_similarity(r['name'], r['metadata_name']),
+        axis=1
     )
-    sub['paragraph_metric'] = sub.apply(
-        lambda r: paragraph_description_similarity(r['paragraph'], r['metadata_description']), axis=1
+
+    # 3) author_metric:
+    am = valid & df['author_metric'].isna()
+    df.loc[am, 'author_metric'] = df.loc[am].apply(
+        lambda r: author_name_similarity(r['authors'], r['metadata_authors']),
+        axis=1
     )
-    sub['keywords_metric'] = sub.apply(
+
+    # 4) paragraph_metric: only for rows with metadata_description & NaN
+    pm = valid & df['paragraph_metric'].isna()
+    df.loc[pm, 'paragraph_metric'] = df.loc[pm].apply(
+        lambda r: paragraph_description_similarity(
+            r['paragraph'], r['metadata_description']
+        ),
+        axis=1
+    )
+
+    # 5) keywords_metric: only for rows with both metadata_keywords & metadata_description & NaN
+   
+    km = valid & df['keywords_metric'].isna()
+    df.loc[km, 'keywords_metric'] = df.loc[km].apply(
         lambda r: keyword_similarity_with_fallback(
             r['field/topic/keywords'],
             r['metadata_keywords'],
@@ -221,19 +243,21 @@ def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFra
         axis=1
     )
 
-    # 3) Select and return the requested columns
+    # 6) Build the “sub” DataFrame you originally returned
     cols = [
         'id','name','doi','paragraph','authors','field/topic/keywords',
         'url (ground truth)','candidate_urls','probability (ground truth)',
         'metadata_name','metadata_authors','metadata_keywords','metadata_description',
         'name_metric','author_metric','paragraph_metric','keywords_metric'
     ]
+    sub = df.loc[valid, cols].copy()
+
+    # 7) Optionally save
     if output_path:
-        # Save to CSV if requested, 
-        sub[cols].to_csv(output_path, index=False)
+        sub.to_csv(output_path, index=False)
         print(f"📄 Similarity metrics saved to {output_path}")
-    
-    return sub[cols]
+
+    return sub
 def get_average_min_max(df: pd.DataFrame, output_path: str = None) -> None:
     """
     Compute per-row and overall summary statistics for the similarity metrics in a DataFrame.
