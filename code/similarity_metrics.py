@@ -89,9 +89,9 @@ def paragraph_description_similarity(text1: str, text2: str) -> float:
     Returns:
         A float in [-1.0, 1.0], where higher means more semantically similar.
     """
-    if not text1 or not (text1 := text1.strip()):
+    if not text1 or pd.isna(text1) or not (text1 := text1.strip()):
         return 0.0
-    if not text2 or not (text2 := text2.strip()):
+    if not text2 or pd.isna(text2) or not (text2 := text2.strip()):
         return 0.0
     # 1. Encode both texts (batch is faster than one by one)
     embeddings = _ROBERTA_MODEL.encode([text1, text2], convert_to_tensor=False)
@@ -173,7 +173,7 @@ def author_name_similarity(name1: str, name2: str) -> float:
     If either name is None or empty (after stripping), returns 0.0 immediately.
     """
     # Treat None as missing
-    if not name1 or not name2:
+    if not name1 or not name2 or pd.isna(name1) or pd.isna(name2):
         return 0.0
     # After stripping, if either is empty
     if not name1.strip() or not name2.strip():
