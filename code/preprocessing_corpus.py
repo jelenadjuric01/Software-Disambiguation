@@ -202,6 +202,54 @@ def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
 
     return df_exploded
 
+import pandas as pd
+import numpy as np
+
+def even_out_dataframes(df_full: pd.DataFrame, df_metrics: pd.DataFrame, output_path:str) -> pd.DataFrame:
+    """
+    Ensure that every (name, doi, paragraph) in df_full also appears in df_metrics.
+    Any rows present in df_full but missing in df_metrics are appended to df_metrics
+    with all metric columns set to NaN.
+
+    - df_full should have at least these cols:
+      ['id','name','doi','paragraph','authors_oa','authors',
+       'field/topic/keywords','url (ground truth)','annotator','comments',
+       'candidate_urls','probability (ground truth)',
+       'metadata_name','metadata_authors','metadata_keywords','metadata_description']
+
+    - df_metrics should have these cols:
+      ['id','name','doi','paragraph','authors',
+       'field/topic/keywords','url (ground truth)',
+       'candidate_urls','probability (ground truth)',
+       'metadata_name','metadata_authors','metadata_keywords',
+       'metadata_description',
+       'name_metric','author_metric','paragraph_metric','keywords_metric']
+    """
+    key_cols = ['name', 'doi', 'paragraph',"candidate_urls"]
+
+    # 1) Merge left-only to find rows in full but not in metrics
+    merged = df_full.merge(
+        df_metrics[key_cols],
+        on=key_cols,
+        how='left',
+        indicator=True
+    )
+
+    missing = merged[merged['_merge'] == 'left_only'].copy()
+
+    # 2) Build a DataFrame with exactly the same columns as df_metrics
+    #    Reindex will:
+    #      - pick the columns in df_metrics.columns order
+    #      - fill missing metric-cols with NaN automatically
+    to_append = missing.reindex(columns=df_metrics.columns)
+
+    # 3) Concatenate
+    result = pd.concat([df_metrics, to_append], ignore_index=True, sort=False)
+    if output_path:
+        result.to_csv(output_path, index=False)
+        print(f"📄 Updated CSV file saved to {output_path}")
+    return result
+
     
     
 if __name__ == "__main__":
@@ -249,15 +297,4 @@ if __name__ == "__main__":
     df = pd.read_csv(output_path_similarities)
     # Get the average, min, and max for each metric
     get_average_min_max(df, output_path_calculated_version_1)'''
-
-    df = pd.read_excel(excel_path)
-    metadata = json.load(open(output_json_path, "r", encoding="utf-8"))
-    df = make_pairs(df,output_path_pairs)
-    add_metadata(df,metadata, output_path)
-    df = compute_similarity_df(df,output_path_similarities)
-    output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv"
-    # Load the DataFrame again to see the results
-    df = pd.read_csv(output_path_similarities)
-    # Get the average, min, and max for each metric
-    get_average_min_max(df, output_path_calculated_version_1)
-
+    

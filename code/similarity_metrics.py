@@ -63,7 +63,7 @@ def keyword_similarity_with_fallback(
     pk_list = _normalize_list(paper_keywords)
 
     # 2. If site_keywords missing → fallback to description
-    if not site_keywords or not site_keywords.strip():
+    if not site_keywords or pd.isna(site_keywords) or not site_keywords.strip():
         # treat the entire keywords list as a single "document"
         if not software_description or not software_description.strip():
             return 0.0
