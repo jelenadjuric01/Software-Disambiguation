@@ -429,3 +429,15 @@ if __name__ == "__main__":
     print("Evaluation  of min")
     evaluation(df_min)
     print("Evaluation  of max")
+    #to do
+    # select only rows where the ground-truth probability is exactly 1
+    filtered_df = df[df['probability (ground truth)'] == 1].reset_index(drop=True)
+    metrics = ["name_metric","author_metric",'paragraph_metric','keywords_metric', "language_metric","average","min","max"]
+# 2) Or, if you prefer one‐by‐one formatting:
+    for m in metrics:
+        avg = df[m].mean()
+        mn  = df[m].min()
+        mx  = df[m].max()
+        print(f"{m:15s} →  avg: {avg:.4f}   min: {mn:.4f}   max: {mx:.4f}")
+    
+
