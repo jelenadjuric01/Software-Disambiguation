@@ -32,7 +32,8 @@ def split_by_avg_min_max(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, 
         'name_metric',
         'author_metric',
         'paragraph_metric',
-        'keywords_metric'
+        'keywords_metric',
+        "language_metric"
     ]
 
     # average-based

@@ -9,7 +9,10 @@ from urllib.parse import urlparse, parse_qs
 from typing import Dict, Any, List
 import re
 from bs4 import BeautifulSoup
+from rake_nltk import Rake
 
+BLACKLIST = {"Development Status", "License", "Programming Language", "Topic", "Framework"}
+MIN_LEN   = 3
 
 def extract_pypi_metadata(url: str) -> Dict[str, Any]:
     """
@@ -76,25 +79,26 @@ def extract_pypi_metadata(url: str) -> Dict[str, Any]:
 
     # 7) derive fallback keywords from classifiers if JSON was empty
     if not keywords and classifiers:
-        # e.g. split "Topic :: Internet :: WWW/HTTP :: Dynamic Content"
         derived = []
         for c in classifiers:
-            parts = [part.strip() for part in c.split("::")]
-            # skip the top-level category (e.g. "Topic", "License", etc.)
-            derived.extend(parts[1:])
-        # de-dup and filter
+            # keep only Topic-related classifiers
+            if not c.startswith("Topic ::"):
+                continue
+            tag = c.split("::")[-1].strip()
+            # length filter + blacklist
+            if len(tag) < MIN_LEN or tag in BLACKLIST:
+                continue
+            derived.append(tag)
+        # dedupe while preserving order
         seen = set()
-        keywords = []
-        for tag in derived:
-            if tag and tag not in seen:
-                seen.add(tag)
-                keywords.append(tag)
+        keywords = [t for t in derived if not (t in seen or seen.add(t))]
 
     return {
         "name"        : info.get("name", pkg),
         "description" : summary,
         "keywords"    : keywords,
         "authors"     : authors,
+        "language"  : "Python"
     }
 
 def parse_authors_r(authors_r: str) -> List[str]:
@@ -199,19 +203,29 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
     raw_kw = data.get("Keywords") or ""
     kws    = [w.strip() for w in re.split(r"[,\s]+", raw_kw) if w.strip()]
     if not kws:
-        html = requests.get(f"https://cran.r-project.org/web/packages/{pkg}/index.html").text
-        soup = BeautifulSoup(html, "html.parser")
-        dt   = next((d for d in soup.find_all("dt")
-                     if "views" in d.get_text().lower()), None)
-        if dt:
-            dd_text = dt.find_next_sibling("dd").get_text()
-            kws = [v.strip() for v in dd_text.split(",") if v.strip()]
+        r = Rake(min_length=2, max_length=3)
+        r.extract_keywords_from_text(description)
+        kws = r.get_ranked_phrases()[:5]
+
+        # 4c) clean & filter
+        cleaned = []
+        for kw in kws:
+            # strip stray punctuation/quotes and lowercase
+            tag = kw.strip(' "\'.,').lower()
+            # keep only multi-word, alphanumeric phrases
+            if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+                cleaned.append(tag)
+        # dedupe
+        seen = set()
+        kws = [t for t in cleaned if not (t in seen or seen.add(t))]
+
 
     return {
         "name"       : name,
         "description": description,
         "keywords"   : kws,
         "authors"    : authors,
+        "language"   : "R"
     }
 
 
@@ -300,12 +314,24 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
 
         # "owner" is treated as author (GitHub username)
         owner = get_first_value("owner")
+        #get language
+        langs = metadata.get("programming_languages", [])
+        primary_language = ""
+        if langs:
+            # pick the entry with the largest "size" under result
+            primary = max(
+                langs,
+                key=lambda x: x.get("result", {}).get("size", 0)
+            )
+            primary_language = primary.get("result", {}).get("value", "")
         #gets only first description, could be multiple
         return {
             "name": get_first_value("name"),
             "description": get_first_value("description"),
             "keywords": keywords,
-            "authors": [get_github_user_data(owner)] if owner else []
+            "authors": [get_github_user_data(owner)] if owner else [],
+            "language": primary_language
+
         }
 
 
@@ -371,3 +397,8 @@ def get_metadata(url: str) -> dict:
     # Generic website fallback
     return extract_website_metadata(url)
     
+if __name__ == "__main__":
+    # Example usage
+    url = "https://github.com/scikit-learn/scikit-learn"
+    metadata = get_metadata(url)
+    print(metadata)

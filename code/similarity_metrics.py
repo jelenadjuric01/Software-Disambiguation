@@ -48,13 +48,13 @@ def keyword_similarity_with_fallback(
             site_keywords using BERT.
     """
     if pd.isna(paper_keywords):
-        return 0.0
+        return np.nan
 
     # 2) Coerce to string and strip ALL whitespace
     pk_str = str(paper_keywords).strip()
     # 3) If empty after stripping → 0.0
     if not pk_str:
-        return 0.0
+        return np.nan
 
     # Normalize by splitting on commas, lowercasing, stripping
     def _normalize_list(s: str) -> list[str]:
@@ -66,7 +66,7 @@ def keyword_similarity_with_fallback(
     if not site_keywords or pd.isna(site_keywords) or not site_keywords.strip():
         # treat the entire keywords list as a single "document"
         if not software_description or not software_description.strip():
-            return 0.0
+            return np.nan
         # If software_description is empty, return 0.0
         text1 = [" ".join(pk_list)]
         text2 = [software_description.strip()]
@@ -90,9 +90,9 @@ def paragraph_description_similarity(text1: str, text2: str) -> float:
         A float in [-1.0, 1.0], where higher means more semantically similar.
     """
     if not text1 or pd.isna(text1) or not (text1 := text1.strip()):
-        return 0.0
+        return np.nan
     if not text2 or pd.isna(text2) or not (text2 := text2.strip()):
-        return 0.0
+        return np.nan
     # 1. Encode both texts (batch is faster than one by one)
     embeddings = _ROBERTA_MODEL.encode([text1, text2], convert_to_tensor=False)
     # 2. Compute cosine similarity
@@ -137,6 +137,35 @@ def software_name_similarity(name1: str, name2: str) -> float:
     return textdistance.jaro_winkler(n1, n2)
 
 
+def programming_language_similarity(lang1: Optional[str],
+                                    lang2: Optional[str]) -> float:
+    """
+    Compute a simple equality‐based similarity between two programming
+    language names.
+
+    Args:
+        lang1: e.g. the language inferred from the paper paragraph.
+        lang2: e.g. the primary language returned by fetching.
+
+    Returns:
+        1.0 if both are non-empty and case-insensitive equal,
+        0.0 if both are non-empty but different,
+        np.nan if either input is missing/empty.
+    """
+    # 1) Missing → nan
+    if pd.isna(lang1) or pd.isna(lang2):
+        return np.nan
+
+    # 2) Normalize to lowercase strings
+    l1 = str(lang1).strip().lower()
+    l2 = str(lang2).strip().lower()
+
+    # 3) Empty after stripping → nan
+    if not l1 or not l2:
+        return np.nan
+
+    return textdistance.jaro_winkler(l1, l2)
+
 
 def normalize_author_name(name: str) -> str:
     """
@@ -174,10 +203,10 @@ def author_name_similarity(name1: str, name2: str) -> float:
     """
     # Treat None as missing
     if not name1 or not name2 or pd.isna(name1) or pd.isna(name2):
-        return 0.0
+        return np.nan
     # After stripping, if either is empty
     if not name1.strip() or not name2.strip():
-        return 0.0
+        return np.nan
     n1 = normalize_author_name(name1)
     n2 = normalize_author_name(name2)
     return textdistance.jaro_winkler(n1, n2)
@@ -198,7 +227,7 @@ def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFra
       - paragraph_metric  (paragraph_description_similarity) RoBERTa cosine similarity
       - keywords_metric   (keyword_similarity_with_fallback) BERT cosine similarity
     """
-    for col in ['name_metric','author_metric','paragraph_metric','keywords_metric']:
+    for col in ['name_metric','author_metric','paragraph_metric','keywords_metric',"language_metric"]:
         if col not in df.columns:
             df[col] = np.nan
 
@@ -242,13 +271,20 @@ def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFra
         ),
         axis=1
     )
-
+    lm = valid & df['language_metric'].isna()
+    df.loc[lm, 'language_metric'] = df.loc[lm].apply(
+        lambda r: programming_language_similarity(
+            r['language'],
+            r['metadata_language']
+        ),
+        axis=1
+    )
     # 6) Build the “sub” DataFrame you originally returned
     cols = [
         'id','name','doi','paragraph','authors','field/topic/keywords',
         'url (ground truth)','candidate_urls','probability (ground truth)',
         'metadata_name','metadata_authors','metadata_keywords','metadata_description',
-        'name_metric','author_metric','paragraph_metric','keywords_metric'
+        'name_metric','author_metric','paragraph_metric','keywords_metric','language_metric'
     ]
     sub = df.loc[valid, cols].copy()
 
@@ -281,10 +317,10 @@ def get_average_min_max(df: pd.DataFrame, output_path: str = None) -> None:
         None: The DataFrame `df` is modified in place and summary statistics are printed.
     """
     # Calculate average, min, and max for each candidate URL
-    df['average'] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric"]].mean(axis=1)
-    df["min"] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric"]].min(axis=1)
-    df["max"] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric"]].max(axis=1)
-    metrics = ["name_metric","author_metric",'paragraph_metric','keywords_metric', "average","min","max"]
+    df['average'] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric",'language_metric']].mean(axis=1,skipna=True)
+    df["min"] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric",'language_metric']].min(axis=1)
+    df["max"] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric","language_metric"]].max(axis=1)
+    metrics = ["name_metric","author_metric",'paragraph_metric','keywords_metric', "language_metric","average","min","max"]
 # 2) Or, if you prefer one‐by‐one formatting:
     for m in metrics:
         avg = df[m].mean()
@@ -304,13 +340,15 @@ if __name__ == "__main__":
         'paragraph': ['This is a description of Software A.', 'This is a description of Software B.'],
         'authors': ['Alice Smith', 'Bob Johnson'],
         'field/topic/keywords': ['AI, ML', 'Data Science'],
-        'url': ['http://example.com/a', 'http://example.com/b'],
+        'language': ['Python', 'R'],
+        'url (ground truth)': ['http://example.com/a', 'http://example.com/b'],
         'candidate_urls': ['http://example.com/c', 'http://example.com/d'],
-        'probability': [1, 0],
+        'probability (ground truth)': [1, 0],
         'metadata_name': ['Software A', 'Software B'],
         'metadata_authors': ['Alice Smith', 'Bob Johnson'],
         'metadata_keywords': ['AI, ML', 'Data Science'],
-        'metadata_description': ['A software for AI and ML.', 'A software for Data Science.']
+        'metadata_description': ['A software for AI and ML.', 'A software for Data Science.'],
+        'metadata_language': ['Python', 'R'],
     })
 
-    compute_similarity_df(df)
+    print(compute_similarity_df(df))

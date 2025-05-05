@@ -1,7 +1,7 @@
 import pandas as pd
 from pathlib import Path
 import json
-from typing import Dict
+from typing import List, Tuple, Dict, Optional
 import os
 from fetching_medata_from_cantidate_url import get_metadata  
 import re
@@ -118,7 +118,7 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
         None. The DataFrame `df` is modified in place.
     """
     # Ensure metadata columns exist
-    for col in ["metadata_name", "metadata_authors", "metadata_keywords", "metadata_description"]:
+    for col in ["metadata_name", "metadata_authors", "metadata_keywords", "metadata_description","metadata_language"]:
         if col not in df.columns:
             df[col] = ""
 
@@ -154,6 +154,9 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
         # 4) Description
         raw_desc = meta.get("description", "") or ""
         df.at[idx, "metadata_description"] = sanitize_text_for_csv(raw_desc)
+
+        raw_lang = meta.get("language", "") or ""
+        df.at[idx, "metadata_language"] = sanitize_text_for_csv(raw_lang)
 
         #print(f"Processed row {idx} for URL: {url}")
 
@@ -251,7 +254,87 @@ def even_out_dataframes(df_full: pd.DataFrame, df_metrics: pd.DataFrame, output_
         print(f"📄 Updated CSV file saved to {output_path}")
     return result
 
+
+# Reuse or customize these lists/mappings
+COMMON_LANGUAGES = [
+    "Python", "R", "Java", "C\\+\\+", "C#", "C", "JavaScript",
+    "TypeScript", "Ruby", "Go", "Rust", "Scala", "Haskell",
+    "MATLAB", "PHP", "Perl", "Swift", "Kotlin", "Dart", "Julia"
+]
+
+IDE_MAPPING = {
+    "rstudio": "R",
+    "pycharm": "Python",
+    "jupyter": "Python",
+    "spyder": "Python",
+    "eclipse": "Java",
+    "intellij": "Java",
+    "visual studio": "C#",
+    "netbeans": "Java",
+    "android studio": "Java",
+    # add more IDE→language pairs as needed
+}
+
+def get_language_positions(
+    text: str
+) -> List[Tuple[str, int, int]]:
+    """
+    Return a list of (language, start_index, end_index) for each mention found.
+    """
     
+    languages = COMMON_LANGUAGES
+    ide_mapping = IDE_MAPPING
+
+    positions: List[Tuple[str, int, int]] = []
+
+    # Detect explicit language names
+    for lang in languages:
+        pattern = rf"\b{lang}\b"
+        for m in re.finditer(pattern, text, flags=re.IGNORECASE):
+            name = lang.replace("\\+\\+", "++")
+            positions.append((name, m.start(), m.end()))
+
+    # Detect IDE mentions and map back to language
+    for ide, lang in ide_mapping.items():
+        pattern = rf"\b{re.escape(ide)}\b"
+        for m in re.finditer(pattern, text, flags=re.IGNORECASE):
+            positions.append((lang, m.start(), m.end()))
+
+    return positions
+
+def find_nearest_language_for_softwares(
+    text: str,
+    software_names: str
+) -> str:
+    """
+    For each software name, find the closest language mention in the text.
+    Returns a dict mapping software_name -> nearest_language (or None if none found).
+    """
+    languages = COMMON_LANGUAGES
+    ide_mapping = IDE_MAPPING
+    lang_positions = get_language_positions(text)
+
+  
+    # find first occurrence of software mention
+    match = re.search(rf"\b{re.escape(software_names)}\b", text, flags=re.IGNORECASE)
+    if not match:
+        return None
+        
+
+    center = (match.start() + match.end()) // 2
+
+        # pick the language with minimum distance to the software
+    nearest = min(
+        lang_positions,
+        key=lambda lp: abs(((lp[1] + lp[2]) // 2) - center),
+        default=None
+    )
+    result = nearest[0] if nearest else None
+
+    return result
+
+
+ 
     
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
@@ -275,7 +358,7 @@ if __name__ == "__main__":
     df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv")
     # Get the average, min, and max for each metric
     get_average_min_max(df, output_path_calculated_version_1)
-    """
+    
 
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 2
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v2.xlsx"
@@ -288,7 +371,7 @@ if __name__ == "__main__":
     # Build metadata cache from Excel
     
     # Load the DataFrame again to add metadata
-    '''df = pd.read_excel(excel_path)
+    df = pd.read_excel(excel_path)
     metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
     print(metadata_cache)
     df = make_pairs(df,output_path_pairs)
@@ -298,7 +381,7 @@ if __name__ == "__main__":
     # Load the DataFrame again to see the results
     df = pd.read_csv(output_path_similarities)
     # Get the average, min, and max for each metric
-    get_average_min_max(df, output_path_calculated)'''
+    get_average_min_max(df, output_path_calculated)
     outputh_avg_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/average_ranked.csv"
     outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/min_ranked.csv"
     outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/max_ranked.csv"
@@ -313,6 +396,36 @@ if __name__ == "__main__":
     print("Evaluation  of min")
     evaluation(df_min)
     print("Evaluation  of max")
-    evaluation(df_max)
+    evaluation(df_max)"""
+    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3.xlsx"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/pairs.csv"
+    output_path_calculated = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv"
+    df = pd.read_excel(excel_path)
 
-    
+    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
+    print(metadata_cache)
+    df = make_pairs(df,output_path_pairs)
+
+    add_metadata(df,metadata_cache, output_path)
+    df = compute_similarity_df(df,output_path_similarities)
+    # Load the DataFrame again to see the results
+    df = pd.read_csv(output_path_similarities)
+    # Get the average, min, and max for each metric
+    get_average_min_max(df, output_path_calculated)
+    outputh_avg_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/average_ranked.csv"
+    outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/min_ranked.csv"
+    outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/max_ranked.csv"
+    #Get ranked candidates and save the updated file version 2
+    df = pd.read_csv(output_path_calculated)
+    df_avg, df_min, df_max = split_by_avg_min_max(df)
+    df_avg = group_by_candidates(df_avg, outputh_avg_ranked)
+    df_min = group_by_candidates(df_min, outputh_min_ranked)
+    df_max = group_by_candidates(df_max, outputh_max_ranked)
+    print("Evaluation  of average")
+    evaluation(df_avg)
+    print("Evaluation  of min")
+    evaluation(df_min)
+    print("Evaluation  of max")
