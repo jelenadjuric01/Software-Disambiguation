@@ -283,7 +283,7 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
             "poetry", "run", "somef", "describe",
             "-r", repo_url,
             "-o", output_path,
-            "-t", "0.8",
+            "-t", "0.93",
             "-m"
         ], cwd=somef_path, check=True)
 
