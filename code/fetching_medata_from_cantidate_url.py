@@ -8,8 +8,6 @@ from urllib.parse import urlparse
 from urllib.parse import urlparse, parse_qs
 from typing import Dict, Any, List
 import re
-from urllib.parse import urlparse
-from typing import Dict, Any, List
 from bs4 import BeautifulSoup
 
 
