@@ -408,7 +408,7 @@ if __name__ == "__main__":
     print("Evaluation  of min")
     evaluation(df_min)
     print("Evaluation  of max")
-    evaluation(df_max)"""
+    evaluation(df_max)
     #Version 3
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 3
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3.xlsx"
@@ -449,8 +449,8 @@ if __name__ == "__main__":
     print("Evaluation  of min")
     evaluation(df_min)
     print("Evaluation  of max")
-    evaluation(df_max)
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv")
+    evaluation(df_max)"""
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated_positives.csv")
     filtered = filter_rows_by_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'])
     filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")
    
