@@ -83,8 +83,8 @@ def group_by_candidates(df: pd.DataFrame, output_path:str) -> pd.DataFrame:
         'authors': 'first',
         'field/topic/keywords': 'first',
         'url (ground truth)': 'first',
-        'candidate_urls': lambda urls: list(urls),
-        'predicted_probability': lambda probs: list(probs)
+        'candidate_urls':       lambda urls: ",".join(urls),
+        'predicted_probability': lambda probs: ",".join(map(str, probs))
     })
 
     # 3) Rename and reorder
@@ -121,7 +121,7 @@ def mrr_at_1(df: pd.DataFrame) -> float:
     rr_scores = []
     for _, row in df.iterrows():
         true_set = set(row["url (ground truth)"].split(","))
-        top1 = row["candidate_urls"][0]  # highest‐ranked URL
+        top1 = row["candidate_urls"].split(',')[0]  # highest‐ranked URL
         rr_scores.append(1.0 if top1 in true_set else 0.0)
     return sum(rr_scores) / len(rr_scores)
 
@@ -145,7 +145,7 @@ def full_mrr(
     for _, row in df.iterrows():
         true_set = set(row["url (ground truth)"].split(","))
         position = 0
-        for idx, candidate in enumerate(row["candidate_urls"], start=1):
+        for idx, candidate in enumerate(row["candidate_urls"].split(','), start=1):
             if candidate in true_set:
                 position = idx
                 break
@@ -172,7 +172,7 @@ def r_precision(df: pd.DataFrame) -> float:
         if R == 0:
             # if you have no ground truth for a mention, you may choose to skip it
             continue
-        top_R = row["candidate_urls"][:R]
+        top_R = row["candidate_urls"].split(',')[:R]
         hits = len(set(top_R) & true_set)
         rp_scores.append(hits / R)
     return sum(rp_scores) / len(rp_scores) if rp_scores else 0.0

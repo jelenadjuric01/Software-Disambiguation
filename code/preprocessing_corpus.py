@@ -305,7 +305,7 @@ def get_language_positions(
 def find_nearest_language_for_softwares(
     text: str,
     software_names: str
-) -> str:
+) -> str: 
     """
     For each software name, find the closest language mention in the text.
     Returns a dict mapping software_name -> nearest_language (or None if none found).
@@ -397,6 +397,8 @@ if __name__ == "__main__":
     evaluation(df_min)
     print("Evaluation  of max")
     evaluation(df_max)"""
+    #Version 3
+    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 3
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3.xlsx"
     output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
     output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/updated_with_metadata_file.csv"
@@ -404,9 +406,16 @@ if __name__ == "__main__":
     output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/pairs.csv"
     output_path_calculated = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv"
     df = pd.read_excel(excel_path)
+    df['language'] = df.apply(
+    lambda row: find_nearest_language_for_softwares(
+        text=row['paragraph'],
+        software_names=row['name']
 
+    ),
+    axis=1
+)
+    df['language'] = df['language'].fillna('')
     metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
-    print(metadata_cache)
     df = make_pairs(df,output_path_pairs)
 
     add_metadata(df,metadata_cache, output_path)
@@ -418,8 +427,7 @@ if __name__ == "__main__":
     outputh_avg_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/average_ranked.csv"
     outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/min_ranked.csv"
     outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/max_ranked.csv"
-    #Get ranked candidates and save the updated file version 2
-    df = pd.read_csv(output_path_calculated)
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv")
     df_avg, df_min, df_max = split_by_avg_min_max(df)
     df_avg = group_by_candidates(df_avg, outputh_avg_ranked)
     df_min = group_by_candidates(df_min, outputh_min_ranked)
@@ -429,15 +437,5 @@ if __name__ == "__main__":
     print("Evaluation  of min")
     evaluation(df_min)
     print("Evaluation  of max")
-    #to do
-    # select only rows where the ground-truth probability is exactly 1
-    filtered_df = df[df['probability (ground truth)'] == 1].reset_index(drop=True)
-    metrics = ["name_metric","author_metric",'paragraph_metric','keywords_metric', "language_metric","average","min","max"]
-# 2) Or, if you prefer one‐by‐one formatting:
-    for m in metrics:
-        avg = df[m].mean()
-        mn  = df[m].min()
-        mx  = df[m].max()
-        print(f"{m:15s} →  avg: {avg:.4f}   min: {mn:.4f}   max: {mx:.4f}")
-    
-
+    evaluation(df_max)
+   
