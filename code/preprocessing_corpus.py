@@ -334,7 +334,19 @@ def find_nearest_language_for_softwares(
     return result
 
 
- 
+def filter_rows_by_threshold(df: pd.DataFrame, cols: list[str], threshold: float = 0.3) -> pd.DataFrame:
+    """
+    Returns a DataFrame with all rows removed where any of the `cols` has a value < threshold.
+    
+    :param df:       Input DataFrame.
+    :param cols:     List of column names to check.
+    :param threshold: Minimum allowed value.
+    """
+    # Create a boolean mask: True for rows to drop
+    mask = (df[cols] < threshold).any(axis=1)
+    # Keep only rows where mask is False
+    return df.loc[~mask].reset_index(drop=True)
+
     
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
@@ -438,4 +450,7 @@ if __name__ == "__main__":
     evaluation(df_min)
     print("Evaluation  of max")
     evaluation(df_max)
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv")
+    filtered = filter_rows_by_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'])
+    filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")
    
