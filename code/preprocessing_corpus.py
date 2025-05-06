@@ -334,18 +334,24 @@ def find_nearest_language_for_softwares(
     return result
 
 
-def filter_rows_by_threshold(df: pd.DataFrame, cols: list[str], threshold: float = 0.3) -> pd.DataFrame:
+def select_rows_below_threshold(
+    df: pd.DataFrame,
+    cols: list[str],
+    threshold: float = 0.3
+) -> pd.DataFrame:
     """
-    Returns a DataFrame with all rows removed where any of the `cols` has a value < threshold.
-    
-    :param df:       Input DataFrame.
-    :param cols:     List of column names to check.
-    :param threshold: Minimum allowed value.
+    Returns a DataFrame containing only the rows where any of the `cols`
+    has a value < threshold. NaNs in those columns are treated as
+    “passing” (i.e. not < threshold), so they won’t count as below threshold.
+
+    :param df:        Input DataFrame.
+    :param cols:      List of column names to check.
+    :param threshold: Threshold value.
     """
-    # Create a boolean mask: True for rows to drop
-    mask = (df[cols] < threshold).any(axis=1)
-    # Keep only rows where mask is False
-    return df.loc[~mask].reset_index(drop=True)
+    # Boolean mask: True for values < threshold, NaN → False
+    below = df[cols].lt(threshold).fillna(False).any(axis=1)
+    # Select only those rows
+    return df.loc[below].reset_index(drop=True)
 
     
 if __name__ == "__main__":
@@ -451,6 +457,6 @@ if __name__ == "__main__":
     print("Evaluation  of max")
     evaluation(df_max)"""
     df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated_positives.csv")
-    filtered = filter_rows_by_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'])
+    filtered = select_rows_below_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'],0.1)
     filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")
    
