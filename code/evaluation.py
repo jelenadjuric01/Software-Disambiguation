@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import Tuple
-from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+from sklearn.metrics import precision_score, recall_score, f1_score, classification_report
 
 def split_by_avg_min_max(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """
@@ -109,6 +109,41 @@ def group_by_candidates(df: pd.DataFrame, output_path:str) -> pd.DataFrame:
     return grouped[ordered_cols]
 
 
+def split_by_summary(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    Given a DataFrame `df` that has one row per candidate (with columns:
+      ['id','name','doi','paragraph','authors',
+       'field/topic/keywords','url (ground truth)',
+       'candidate_urls','average','min','max', ... ]
+    produce three DataFrames (avg_df, min_df, max_df), each with:
+
+      • the columns
+        ['id','name','doi','paragraph','authors',
+         'field/topic/keywords','url (ground truth)','candidate_urls',
+         'prediction']
+      • a `prediction` column = 1 if the respective summary metric > 0.5, else 0
+
+    Returns:
+        (avg_df, min_df, max_df)
+    """
+    base_cols = [
+        'id','name','doi','paragraph','authors',
+        'field/topic/keywords','url (ground truth)','candidate_urls'
+    ]
+
+    # Average-summary predictions
+    avg_df = df[base_cols].copy()
+    avg_df['prediction'] = (df['average'] > 0.5).astype(int)
+
+    # Min-summary predictions
+    min_df = df[base_cols].copy()
+    min_df['prediction'] = (df['min'] > 0.5).astype(int)
+
+    # Max-summary predictions
+    max_df = df[base_cols].copy()
+    max_df['prediction'] = (df['max'] > 0.5).astype(int)
+
+    return avg_df, min_df, max_df
 
 def mrr_at_1(df: pd.DataFrame) -> float:
     """
@@ -181,18 +216,22 @@ def r_precision(df: pd.DataFrame) -> float:
 def evaluation(df: pd.DataFrame) -> None:
     """
     Evaluates the model's predictions in `df` and prints it.
-    Has MRR@1, Top-1 accuracy, R-Precision, and classification metrics.
+    Has 
     """
+    df['true_label'] = [
+    int(c in [u.strip() for u in g.split(',')])
+    for c, g in zip(df['candidate_urls'], df['url (ground truth)'])
+]   
+    y_true = df['true_label']
+    y_pred = df['prediction']
     
-    # Compute metrics
-    mrr = mrr_at_1(df)
-    full_mrr_score = full_mrr(df)
-
-    r_prec = r_precision(df)
-
+    p = precision_score(y_true, y_pred, zero_division=0)
+    r = recall_score(y_true, y_pred, zero_division=0)
+    f1 = f1_score(y_true, y_pred, zero_division=0)
     
-    # Print results
-    print(f"MRR@1: {mrr:.4f}")
-    print(f"R-Precision: {r_prec:.4f}")
-    print(f"Full MRR: {full_mrr_score:.4f}")
-   
+    print(f"Precision: {p:.2f}")
+    print(f"Recall:    {r:.2f}")
+    print(f"F1-score:  {f1:.2f}\n")
+    # if you want the full breakdown:
+    print(classification_report(y_true, y_pred, target_names=['non-match','match']))
+    print()

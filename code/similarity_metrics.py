@@ -282,7 +282,7 @@ def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFra
     # 6) Build the “sub” DataFrame you originally returned
     cols = [
         'id','name','doi','paragraph','authors','field/topic/keywords','language',
-        'url (ground truth)','candidate_urls','probability (ground truth)',
+        'url (ground truth)','candidate_urls',
         'metadata_name','metadata_authors','metadata_keywords','metadata_description','metadata_language',
         'name_metric','author_metric','paragraph_metric','keywords_metric','language_metric'
     ]

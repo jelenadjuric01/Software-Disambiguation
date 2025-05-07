@@ -7,7 +7,7 @@ from fetching_medata_from_cantidate_url import get_metadata
 import re
 import csv
 from similarity_metrics import compute_similarity_df, get_average_min_max
-from evaluation import split_by_avg_min_max, group_by_candidates, evaluation
+from evaluation import split_by_avg_min_max, group_by_candidates, evaluation, split_by_summary
     
 def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
     """
@@ -196,12 +196,6 @@ def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
     
     # Assign new unique ID
     df_exploded["id"] = range(1, len(df_exploded) + 1)
-    df_exploded["probability (ground truth)"] = (
-        df_exploded.apply(
-            lambda row: int(row["candidate_urls"] in row["url (ground truth)"]),
-            axis=1
-        )
-    )
     df_exploded.to_csv(output_path, index=False)  # Save the DataFrame to a temporary CSV file
 
     return df_exploded
@@ -455,9 +449,19 @@ if __name__ == "__main__":
     print("Evaluation  of min")
     evaluation(df_min)
     print("Evaluation  of max")
-    evaluation(df_max)"""
+    evaluation(df_max)
    
     df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated_positives.csv")
     filtered = select_rows_below_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'],0.1)
-    filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")
-   
+    filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")"""
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv")
+    df_avg, df_min, df_max = split_by_summary(df)
+    print("Evaluation  of average")
+    evaluation(df_avg)
+    print("Evaluation  of min")
+    evaluation(df_min)
+    print("Evaluation  of max")
+    evaluation(df_max)
+    df_avg.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/average_ranked.csv")
+    df_min.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/min_ranked.csv")
+    df_max.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/max_ranked.csv")
