@@ -440,21 +440,6 @@ if __name__ == "__main__":
     outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/min_ranked.csv"
     outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/max_ranked.csv"
     df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv")
-    df_avg, df_min, df_max = split_by_avg_min_max(df)
-    df_avg = group_by_candidates(df_avg, outputh_avg_ranked)
-    df_min = group_by_candidates(df_min, outputh_min_ranked)
-    df_max = group_by_candidates(df_max, outputh_max_ranked)
-    print("Evaluation  of average")
-    evaluation(df_avg)
-    print("Evaluation  of min")
-    evaluation(df_min)
-    print("Evaluation  of max")
-    evaluation(df_max)
-   
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated_positives.csv")
-    filtered = select_rows_below_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'],0.1)
-    filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")"""
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv")
     df_avg, df_min, df_max = split_by_summary(df)
     print("Evaluation  of average")
     evaluation(df_avg)
@@ -462,6 +447,11 @@ if __name__ == "__main__":
     evaluation(df_min)
     print("Evaluation  of max")
     evaluation(df_max)
-    df_avg.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/average_ranked.csv")
-    df_min.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/min_ranked.csv")
-    df_max.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/max_ranked.csv")
+    df_avg.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/average_ranked.csv")
+    df_min.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/min_ranked.csv")
+    df_max.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/max_ranked.csv")
+   
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated_positives.csv")
+    filtered = select_rows_below_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'],0.1)
+    filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")"""
+    
