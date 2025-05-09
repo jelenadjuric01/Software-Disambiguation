@@ -357,35 +357,7 @@ def select_rows_below_threshold(
     below = df[cols].lt(threshold).fillna(False).any(axis=1)
     # Select only those rows
     return df.loc[below].reset_index(drop=True)
-def get_columns_for_model(df: pd.DataFrame) -> pd.DataFrame:
-    """Select model input columns and compute a binary `true_label` flag.
 
-    Computes `true_label` = 1 if `candidate_urls` is in the
-    comma-separated `url (ground truth)` set, else 0.
-
-    Args:
-        df (pd.DataFrame): Input DataFrame with columns
-            `candidate_urls` and `url (ground truth)`.
-
-    Returns:
-        pd.DataFrame: DataFrame containing columns:
-        `['id','name_metric','author_metric','paragraph_metric',
-           'keywords_metric','language_metric','true_label']`.
-    """
-    cols = [
-        "id",
-        "name_metric",
-        "author_metric",
-        "paragraph_metric",
-        "keywords_metric",
-        "language_metric",
-        "true_label"
-    ]
-    df['true_label'] = [
-    int(c in [u.strip() for u in g.split(',')])
-    for c, g in zip(df['candidate_urls'], df['url (ground truth)'])
-    ]
-    return df[cols]
     
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1

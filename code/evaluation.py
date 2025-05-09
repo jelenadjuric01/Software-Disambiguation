@@ -247,10 +247,7 @@ def evaluation(df: pd.DataFrame) -> None:
         Precision, recall, F1-score (to 2 decimal places), and
         a full classification report.
     """
-    df['true_label'] = [
-    int(c in [u.strip() for u in g.split(',')])
-    for c, g in zip(df['candidate_urls'], df['url (ground truth)'])
-]   
+
     y_true = df['true_label']
     y_pred = df['prediction']
     

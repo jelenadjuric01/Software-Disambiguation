@@ -316,8 +316,13 @@ def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFra
         'id','name','doi','paragraph','authors','field/topic/keywords','language',
         'url (ground truth)','candidate_urls',
         'metadata_name','metadata_authors','metadata_keywords','metadata_description','metadata_language',
-        'name_metric','author_metric','paragraph_metric','keywords_metric','language_metric'
+        'name_metric','author_metric','paragraph_metric','keywords_metric','language_metric','true_label'
     ]
+    # 7) Add the true_label column
+    df['true_label'] = [
+    int(c in [u.strip() for u in g.split(',')])
+    for c, g in zip(df['candidate_urls'], df['url (ground truth)'])
+    ] 
     sub = df.loc[valid, cols].copy()
 
     # 7) Optionally save
