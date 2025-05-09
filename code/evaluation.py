@@ -51,21 +51,26 @@ def split_by_avg_min_max(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, 
     return df_avg, df_min, df_max
 
 def group_by_candidates(df: pd.DataFrame, output_path:str) -> pd.DataFrame:
-    """
-    Groups rows by 'name', 'doi' and 'paragraph', orders each group by
-    'predicted_probability' descending, and aggregates:
+    """Rank and aggregate candidate URLs by predicted probability.
 
-      • id                    : first id in the group
-      • authors               : first authors in the group
-      • field/topic/keywords  : first value in the group
-      • url (ground truth)    : first URL in the group
-      • candidate_urls        : list of URLs in ranked order
-      • probability_ranked    : list of predicted probabilities in the same order
+    Groups rows by ('name','doi','paragraph'), orders each group
+    by descending 'predicted_probability', then aggregates:
+      • id                    : first id
+      • authors               : first authors
+      • field/topic/keywords  : first topic
+      • url (ground truth)    : first ground-truth URL
+      • candidate_urls        : comma-joined URLs in rank order
+      • probability_ranked    : comma-joined probabilities in same order
 
-    Returns a DataFrame with columns:
-    ['id','name','doi','paragraph','authors',
-     'field/topic/keywords','url (ground truth)',
-     'candidate_urls','probability_ranked']
+    Args:
+        df: DataFrame with a 'predicted_probability' column.
+        output_path: If non-empty, path to CSV for saving the result.
+
+    Returns:
+        A DataFrame with columns
+        ['id','name','doi','paragraph','authors',
+         'field/topic/keywords','url (ground truth)',
+         'candidate_urls','probability_ranked'].
     """
     # 1) Sort so that within each (name, doi, paragraph) block,
     #    highest predicted_probability comes first.
@@ -110,21 +115,19 @@ def group_by_candidates(df: pd.DataFrame, output_path:str) -> pd.DataFrame:
 
 
 def split_by_summary(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """
-    Given a DataFrame `df` that has one row per candidate (with columns:
-      ['id','name','doi','paragraph','authors',
-       'field/topic/keywords','url (ground truth)',
-       'candidate_urls','average','min','max', ... ]
-    produce three DataFrames (avg_df, min_df, max_df), each with:
+    """Split DataFrame into three versions using average, min, and max scores.
 
-      • the columns
-        ['id','name','doi','paragraph','authors',
-         'field/topic/keywords','url (ground truth)','candidate_urls',
-         'prediction']
-      • a `prediction` column = 1 if the respective summary metric > 0.5, else 0
+    Expects `df` to have at least these columns:
+      id, name, doi, paragraph, authors,
+      field/topic/keywords, url (ground truth),
+      candidate_urls, probability (ground truth),
+      metadata_*, *_metric for name, author, paragraph, keywords, language,
+      average, min, max
 
     Returns:
-        (avg_df, min_df, max_df)
+        A tuple of three DataFrames (df_avg, df_min, df_max), each with
+        all base columns plus:
+          'predicted_probability' ← one of 'average', 'min', or 'max'.
     """
     base_cols = [
         'id','name','doi','paragraph','authors',
@@ -146,12 +149,17 @@ def split_by_summary(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.D
     return avg_df, min_df, max_df
 
 def mrr_at_1(df: pd.DataFrame) -> float:
-    """
-    Compute MRR@1 over all rows in `df`.
-    - truth_col: column holding a set (or list) of correct URLs.
-    - cand_col: column holding the model’s ranked list of URLs.
-    
-    Returns mean reciprocal rank clipped at 1 (i.e. 1 if top‐1 is correct, else 0).
+    """Compute MRR@1 (i.e. precision@1) over all rows.
+
+    For each row, checks if the top‐ranked URL is in the ground‐truth set.
+
+    Args:
+        df (pd.DataFrame): Must contain
+            - 'url (ground truth)' (comma-separated correct URLs)
+            - 'candidate_urls'   (comma-separated ranked URLs)
+
+    Returns:
+        float: Mean of 1.0 where top-1 is correct, else 0.0.
     """
     rr_scores = []
     for _, row in df.iterrows():
@@ -166,15 +174,19 @@ def mrr_at_1(df: pd.DataFrame) -> float:
 def full_mrr(
     df: pd.DataFrame
 ) -> float:
-    """
-    Compute full Mean Reciprocal Rank (MRR) over all rows in `df`.
-    
+    """Compute full Mean Reciprocal Rank (MRR) over all rows.
+
     For each row:
-      
-    We find the position (1-indexed) of the first candidate that appears in the ground-truth set.
-    Reciprocal rank = 1/position (or 0 if none match).
-    
-    Returns the average reciprocal rank across all rows.
+      1. Identify the 1‐based rank of the first correct URL.
+      2. Compute reciprocal rank = 1 / rank (or 0 if no match).
+
+    Args:
+        df (pd.DataFrame): Must contain
+            - 'url (ground truth)' (comma-separated correct URLs)
+            - 'candidate_urls'   (comma-separated ranked URLs)
+
+    Returns:
+        float: Average of reciprocal ranks across all rows.
     """
     rr_scores = []
     for _, row in df.iterrows():
@@ -191,14 +203,19 @@ def full_mrr(
 
 
 def r_precision(df: pd.DataFrame) -> float:
-    """
-    Compute mean R-Precision over all rows in df.
-    
+    """Compute average R-Precision over all rows.
+
     For each row:
-      - R = len(truth_set)
-      - R-Precision = (# of truth URLs in top-R candidates) / R
-    
-    Returns the average R-Precision across all rows.
+      - Let R = number of ground-truth URLs.
+      - R-Precision = (# of correct URLs in top-R candidates) / R.
+
+    Args:
+        df (pd.DataFrame): Must contain
+            - 'url (ground truth)' (comma-separated correct URLs)
+            - 'candidate_urls'   (comma-separated ranked URLs)
+
+    Returns:
+        float: Mean R-Precision across all rows.
     """
     rp_scores = []
     for _, row in df.iterrows():
@@ -214,9 +231,21 @@ def r_precision(df: pd.DataFrame) -> float:
 
 
 def evaluation(df: pd.DataFrame) -> None:
-    """
-    Evaluates the model's predictions in `df` and prints it.
-    Has 
+    """Compute and print classification metrics for a binary match task.
+
+    For each row in `df`, compares the single `candidate_urls` entry
+    against the comma-separated ground truth set in `url (ground truth)`
+    to form `true_label`.  Uses the `prediction` column as the predicted label.
+
+    Args:
+        df: A DataFrame with columns
+            - 'candidate_urls': single-URL string per row
+            - 'url (ground truth)': comma-separated list of correct URLs
+            - 'prediction': 0 or 1 model output
+
+    Prints:
+        Precision, recall, F1-score (to 2 decimal places), and
+        a full classification report.
     """
     df['true_label'] = [
     int(c in [u.strip() for u in g.split(',')])

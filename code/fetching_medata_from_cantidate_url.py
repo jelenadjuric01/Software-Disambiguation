@@ -15,26 +15,24 @@ BLACKLIST = {"Development Status", "License", "Programming Language", "Topic", "
 MIN_LEN   = 3
 
 def extract_pypi_metadata(url: str) -> Dict[str, Any]:
-    """
-    Fetch metadata for a PyPI package given its project URL.
+    """Fetch metadata for a PyPI package given its project URL.
 
-    This function:
-      1. Parses the package name from the URL.
-      2. Calls the PyPI JSON API to retrieve package info.
-      3. Extracts the package name, summary description, keywords (from JSON or classifiers),
-         and authors (author + maintainer fields).
-      4. Derives fallback keywords from Trove classifiers if none are provided.
+    Parses the package name from the URL, retrieves info from the PyPI JSON API,
+    and extracts:
+      - name       : package name
+      - description: summary string
+      - keywords   : list from JSON or derived from Trove classifiers
+      - authors    : combined author + maintainer names
+      - language   : always "Python"
 
     Args:
-        url: The URL of the PyPI project page (e.g. "https://pypi.org/project/foo").
+        url: PyPI project URL (e.g. "https://pypi.org/project/foo").
 
     Returns:
         A dict with keys:
-          - "name"        (str): the package name
-          - "description" (str): the package summary
-          - "keywords"    (List[str]): list of keywords or derived classifier tags
-          - "authors"     (List[str]): list of author/maintainer names
-        Or, on error, {"error": "..."}.
+          name (str), description (str), keywords (List[str]),
+          authors (List[str]), language (str).
+        On error, returns {"error": "..."}.
     """
     # 1) extract package name
     parsed = urlparse(url)
@@ -102,20 +100,17 @@ def extract_pypi_metadata(url: str) -> Dict[str, Any]:
     }
 
 def parse_authors_r(authors_r: str) -> List[str]:
-    """
-    Parse an R Authors@R field into a list of author names.
+    """Parse an R Authors@R DESCRIPTION field into author names.
 
-    This function:
-      1. Finds all `person(...)` blocks in the Authors@R string.
-      2. Extracts the quoted names inside each block.
-      3. Joins given and family names into "Given Family" format,
-         and includes single-quoted organization entries.
+    Finds all `person(...)` blocks in the string, extracts quoted tokens,
+    and joins given + family names into "Given Family" format.  Single-quoted
+    entries (organizations) are included as-is.
 
     Args:
-        authors_r: The raw Authors@R string from a CRAN DESCRIPTION.
+        authors_r: Raw Authors@R field from a CRAN DESCRIPTION file.
 
     Returns:
-        A list of author names (e.g. ["First Last", "OrgName"]).
+        A list of author or organization names (e.g. ["First Last", "OrgName"]).
     """
     blocks = re.findall(r'person\((.*?)\)', authors_r, flags=re.DOTALL)
     out = []
@@ -128,26 +123,25 @@ def parse_authors_r(authors_r: str) -> List[str]:
     return out
 
 def extract_cran_metadata(url: str) -> Dict[str, Any]:
-    """
-    Fetch metadata for a CRAN R package given its documentation URL.
+    """Fetch metadata for a CRAN R package given its documentation URL.
 
-    This function:
-      1. Parses the package name from the URL query or path.
-      2. Calls the CRANDB JSON API to retrieve package info.
-      3. Extracts the package name, DESCRIPTION field, and authors
-         from Authors@R or Author fields, with HTML fallback scraping.
-      4. Extracts keywords from DESCRIPTION or Task Views, with HTML fallback.
+    Parses the package name from the URL or query, queries the CRANDB API,
+    and extracts:
+      - name       : package name
+      - description: DESCRIPTION text
+      - keywords   : from DESCRIPTION, Task Views, or RAKE fallback
+      - authors    : from Authors@R, Author field, or HTML fallback
+      - language   : always "R"
 
     Args:
-        url: The URL of the CRAN package page
-             (e.g. "https://cran.r-project.org/web/packages/pkg/index.html" or "?package=pkg").
+        url: CRAN package URL, e.g.
+             "https://cran.r-project.org/web/packages/pkg/index.html"
+             or "?package=pkg".
 
     Returns:
         A dict with keys:
-          - "name"        (str): package name
-          - "description" (str): DESCRIPTION text
-          - "keywords"    (List[str]): list of Keywords or Task View tags
-          - "authors"     (List[str]): list of author names
+          name (str), description (str), keywords (List[str]), authors (List[str]), language (str).
+        Raises ValueError if the package name cannot be parsed.
     """
     # 1) extract pkg name
     parsed = urlparse(url)
@@ -231,16 +225,13 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
 
 
 def get_github_user_data(username: str) -> str:
-    """
-    Retrieve the full name for a GitHub user via the GitHub API.
+    """Retrieve a GitHub user’s display name via the GitHub API.
 
-    This function:
-      1. Sends an authenticated request to GitHub’s /users/{username} endpoint
-         if a GITHUB_TOKEN is set, or unauthenticated otherwise.
-      2. Returns the “name” field if present, else falls back to the login.
+    Sends an authenticated request if GITHUB_TOKEN is set; otherwise unauthenticated.
+    Returns the “name” field from the API, falling back to the login on error or if blank.
 
     Args:
-        username: The GitHub login name (e.g. "octocat").
+        username: GitHub login (e.g. "octocat").
 
     Returns:
         The user’s full name (str), or the original username if not found or on error.
@@ -265,27 +256,23 @@ def get_github_user_data(username: str) -> str:
 
 
 def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/somef") -> dict:
-    """
-    Run the SOMEF tool on a GitHub repository to extract metadata.
+    """Run the SOMEF tool on a GitHub repository to extract metadata.
 
-    This function:
-      1. Creates a temporary JSON file.
-      2. Invokes `poetry run somef describe -r {repo_url}` directing output to the temp file.
-      3. Loads the SOMEF JSON output and extracts fields "name", "description",
-         "keywords", and "owner" (mapped to authors via GitHub lookup).
-      4. Cleans up the temporary file.
+    Invokes `poetry run somef describe` in a temp file, then reads JSON to extract:
+      - name        : project name
+      - description : text description
+      - keywords    : list of keywords
+      - authors     : list containing the GitHub repo owner’s display name
+      - language    : primary programming language by code size
 
     Args:
-        repo_url: URL of the GitHub repository to analyze.
-        somef_path: Path to the SOMEF project directory (where `poetry run somef` is available).
+        repo_url:   URL of the GitHub repository.
+        somef_path: Path to the SOMEF project directory where `poetry run somef` is available.
 
     Returns:
         A dict with keys:
-          - "name"        (str)
-          - "description" (str)
-          - "keywords"    (List[str])
-          - "authors"     (List[str])
-        Or an empty dict on failure.
+          name (str), description (str), keywords (List[str]), authors (List[str]), language (str).
+        Returns an empty dict on failure.
     """
     # Create a temp file to store the output
     with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
@@ -358,20 +345,19 @@ def extract_website_metadata(url: str) -> dict:
 
 #Function that retrieves the metadata from any link
 def get_metadata(url: str) -> dict:
-    """
-    Dispatch metadata extraction based on URL domain.
+    """Dispatch metadata extraction based on the URL’s domain.
 
-    This function inspects the URL’s domain and routes to:
-      - GitHub repositories (extract_somef_metadata)
-      - CRAN packages (extract_cran_metadata)
-      - PyPI packages (extract_pypi_metadata)
-      - Generic websites (extract_website_metadata)
+    Routes to the appropriate extractor:
+      - GitHub repos      → extract_somef_metadata
+      - CRAN packages     → extract_cran_metadata
+      - PyPI packages     → extract_pypi_metadata
+      - Other websites    → extract_website_metadata
 
     Args:
         url: The URL from which to extract metadata.
 
     Returns:
-        A metadata dict as produced by one of the specialized extractors,
+        A metadata dict as returned by one of the specialized extractors,
         or {"error": "..."} on invalid input or failure.
     """
     if not isinstance(url, str) or not url.strip():

@@ -10,23 +10,23 @@ from similarity_metrics import compute_similarity_df, get_average_min_max
 from evaluation import split_by_avg_min_max, group_by_candidates, evaluation, split_by_summary
     
 def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
-    """
-    Extract and cache metadata for all unique candidate URLs in a DataFrame.
+    """Extract and cache metadata for all unique candidate URLs in a DataFrame.
 
     This function:
       1. Gathers every non-empty URL from the `candidate_urls` column.
-      2. Loads an existing JSON cache from `output_json_path`, or initializes a new one.
+      2. Loads an existing JSON cache from `output_json_path`, or starts a new one.
       3. For each URL not already cached (or with empty metadata), calls `get_metadata(url)`
          and updates the cache.
       4. Writes the updated cache back to `output_json_path`.
 
     Args:
-        df: A pandas DataFrame containing a “candidate_urls” column where each cell
-            is a comma-separated string of URLs.
-        output_json_path: Path to the JSON file used for caching URL→metadata mappings.
+        df (pd.DataFrame): DataFrame with a `candidate_urls` column containing
+            comma-separated URL strings.
+        output_json_path (str): Path to the JSON file used for caching
+            URL → metadata mappings.
 
     Returns:
-        A dict mapping each URL (str) to its metadata (dict).
+        Dict[str, dict]: A mapping from each URL (str) to its metadata dict.
     """
     # Step 1: Extract unique, non-empty URLs
     url_set = set()
@@ -74,17 +74,16 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
     return metadata_cache
 
 def sanitize_text_for_csv(text: str) -> str:
-    """
-    Clean a text string so it can safely be written as a CSV field.
+    """Prepare a text string for safe CSV export.
 
-    This replaces control characters (newlines, tabs, nulls, etc.) with spaces,
-    escapes any internal double-quotes by doubling them, and trims whitespace.
+    Replaces control characters with spaces, escapes internal quotes,
+    and trims whitespace.
 
     Args:
-        text: The raw string to sanitize.
+        text: Raw input string.
 
     Returns:
-        A cleaned string with no control characters and properly escaped quotes.
+        A cleaned string with no control characters and RFC-4180-compliant quotes.
     """
     # 1) Replace control chars (U+0000–U+001F, U+007F) with space
     text = re.sub(r'[\x00-\x1F\x7F]+', ' ', text)
@@ -94,28 +93,27 @@ def sanitize_text_for_csv(text: str) -> str:
     return text.strip()
 
 def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
-    """
-    Populate a DataFrame with metadata fields for each candidate URL, in place.
+    """Populate a DataFrame in place with metadata for each candidate URL.
 
-    This function:
-      1. Ensures the columns “metadata_name”, “metadata_authors”,
-         “metadata_keywords”, and “metadata_description” exist.
-      2. For each row lacking `metadata_name` and with a valid URL in
-         `candidate_urls`, looks up its metadata in the provided `metadata` dict.
-      3. Sanitizes each metadata field via `sanitize_text_for_csv` and writes
-         it into the DataFrame.
-      4. If `output_path` is given, saves the updated DataFrame to CSV using
-         minimal quoting.
+    Ensures the columns
+    `metadata_name`, `metadata_authors`, `metadata_keywords`,
+    `metadata_description`, and `metadata_language` exist. Then for each row
+    missing `metadata_name`:
+      1. Looks up its URL in the `metadata` dict.
+      2. Sanitizes each field via `sanitize_text_for_csv`.
+      3. Writes the values into the DataFrame.
+    Optionally saves the updated DataFrame to CSV.
 
     Args:
-        df: A pandas DataFrame with a “candidate_urls” column and optional
+        df (pd.DataFrame): DataFrame with `candidate_urls` and optional
             metadata columns to fill.
-        metadata: A dict mapping URLs (str) to metadata dicts with keys
-                  "name", "authors", "keywords", and "description".
-        output_path: Optional path to write the updated DataFrame as a CSV file.
+        metadata (Dict[str, dict]): Mapping URLs (str) → metadata dicts with keys
+            `"name"`, `"authors"`, `"keywords"`, `"description"`, `"language"`.
+        output_path (str, optional): If provided, path to write the updated
+            DataFrame as CSV using minimal quoting.
 
     Returns:
-        None. The DataFrame `df` is modified in place.
+        None
     """
     # Ensure metadata columns exist
     for col in ["metadata_name", "metadata_authors", "metadata_keywords", "metadata_description","metadata_language"]:
@@ -166,28 +164,24 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
         print(f"📄 Updated CSV file saved to {output_path}")
 
 def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
-    """
-    Explode comma-separated candidate URLs into one row per (mention, URL) pair.
+    """Explode candidate URLs into one row per (mention, URL) pair and save to CSV.
 
-    This function:
-      1. Splits the “candidate_urls” column on commas and explodes the list
-         into individual rows.
-      2. Assigns a new unique integer “id” to each row.
-      3. Computes a ground-truth flag “probability (ground truth)” which is 1
-         if the candidate URL appears in the “url (ground truth)” column, else 0.
-      4. Saves the pairwise result to a temporary CSV and returns the exploded DataFrame.
+    1. Splits the `candidate_urls` column on commas and explodes each URL
+       into its own row.
+    2. Assigns a new unique integer `id` to each row.
+    3. Computes `probability (ground truth)` = 1 if the URL appears in
+       `url (ground truth)`, else 0.
+    4. Saves the exploded DataFrame to `output_path` and returns it.
 
     Args:
-        df: A pandas DataFrame containing at least the columns
-            “candidate_urls” (comma-separated URLs) and “url (ground truth)”.
+        df (pd.DataFrame): DataFrame with columns
+            `candidate_urls` (comma-separated URLs) and
+            `url (ground truth)`.
+        output_path (str): File path to save the exploded CSV.
 
     Returns:
-        A new DataFrame with columns:
-          - id: unique integer per (mention, URL) pair
-          - candidate_urls: one URL per row
-          - url (ground truth): original ground-truth URL list
-          - probability (ground truth): 1 or 0
-          plus any other original columns repeated per exploded row.
+        pd.DataFrame: Exploded DataFrame with new `id` and
+        `probability (ground truth)` columns.
     """
     df["candidate_urls"] = df["candidate_urls"].fillna('').apply(
         lambda x: [url.strip() for url in str(x).split(',') if url.strip()]
@@ -200,28 +194,22 @@ def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
 
     return df_exploded
 
-import pandas as pd
-import numpy as np
 
 def even_out_dataframes(df_full: pd.DataFrame, df_metrics: pd.DataFrame, output_path:str) -> pd.DataFrame:
-    """
-    Ensure that every (name, doi, paragraph) in df_full also appears in df_metrics.
-    Any rows present in df_full but missing in df_metrics are appended to df_metrics
-    with all metric columns set to NaN.
+    """Append missing rows from `df_full` into `df_metrics`, filling metrics with NaN.
 
-    - df_full should have at least these cols:
-      ['id','name','doi','paragraph','authors_oa','authors',
-       'field/topic/keywords','url (ground truth)','annotator','comments',
-       'candidate_urls','probability (ground truth)',
-       'metadata_name','metadata_authors','metadata_keywords','metadata_description']
+    Ensures that every (`name`, `doi`, `paragraph`, `candidate_urls`) in
+    `df_full` is present in `df_metrics`. Any rows missing in `df_metrics`
+    are appended with metric columns set to NaN.
 
-    - df_metrics should have these cols:
-      ['id','name','doi','paragraph','authors',
-       'field/topic/keywords','url (ground truth)',
-       'candidate_urls','probability (ground truth)',
-       'metadata_name','metadata_authors','metadata_keywords',
-       'metadata_description',
-       'name_metric','author_metric','paragraph_metric','keywords_metric']
+    Args:
+        df_full (pd.DataFrame): The master DataFrame containing all expected rows.
+        df_metrics (pd.DataFrame): DataFrame with metric columns.
+        output_path (str, optional): If provided, saves the result to CSV.
+
+    Returns:
+        pd.DataFrame: Concatenated DataFrame containing all rows from both inputs,
+        with missing metrics as NaN.
     """
     key_cols = ['name', 'doi', 'paragraph',"candidate_urls"]
 
@@ -272,8 +260,17 @@ IDE_MAPPING = {
 def get_language_positions(
     text: str
 ) -> List[Tuple[str, int, int]]:
-    """
-    Return a list of (language, start_index, end_index) for each mention found.
+    """Detect programming language and IDE mentions in text with character spans.
+
+    Scans `text` for known language names and IDE keywords, recording
+    each match’s start and end indices.
+
+    Args:
+        text (str): Input document string.
+
+    Returns:
+        List[Tuple[str, int, int]]: A list of tuples
+        `(language, start_index, end_index)` for each mention.
     """
     
     languages = COMMON_LANGUAGES
@@ -299,10 +296,20 @@ def get_language_positions(
 def find_nearest_language_for_softwares(
     text: str,
     software_names: str
-) -> str: 
-    """
-    For each software name, find the closest language mention in the text.
-    Returns a dict mapping software_name -> nearest_language (or None if none found).
+) -> Optional[str]: 
+    """Find the programming language mention closest to a software name.
+
+    Uses `get_language_positions` to locate all language/IDE mentions,
+    finds the first occurrence of `software_names`, and returns the
+    nearest language by character‐distance.
+
+    Args:
+        text (str): Document text to search.
+        software_names (str): The software name to locate in `text`.
+
+    Returns:
+        Optional[str]: Closest language (e.g. 'Python', 'R'), or `None`
+        if no software or language match is found.
     """
     languages = COMMON_LANGUAGES
     ide_mapping = IDE_MAPPING
@@ -333,20 +340,52 @@ def select_rows_below_threshold(
     cols: list[str],
     threshold: float = 0.3
 ) -> pd.DataFrame:
-    """
-    Returns a DataFrame containing only the rows where any of the `cols`
-    has a value < threshold. NaNs in those columns are treated as
-    “passing” (i.e. not < threshold), so they won’t count as below threshold.
+    """Filter rows where any specified column’s value is below a threshold.
 
-    :param df:        Input DataFrame.
-    :param cols:      List of column names to check.
-    :param threshold: Threshold value.
+    Treats NaNs as not below threshold.
+
+    Args:
+        df (pd.DataFrame): Input DataFrame.
+        cols (List[str]): List of column names to check.
+        threshold (float): Threshold value; defaults to 0.3.
+
+    Returns:
+        pd.DataFrame: New DataFrame containing only rows where any of
+        `cols` has a value < `threshold`.
     """
     # Boolean mask: True for values < threshold, NaN → False
     below = df[cols].lt(threshold).fillna(False).any(axis=1)
     # Select only those rows
     return df.loc[below].reset_index(drop=True)
+def get_columns_for_model(df: pd.DataFrame) -> pd.DataFrame:
+    """Select model input columns and compute a binary `true_label` flag.
 
+    Computes `true_label` = 1 if `candidate_urls` is in the
+    comma-separated `url (ground truth)` set, else 0.
+
+    Args:
+        df (pd.DataFrame): Input DataFrame with columns
+            `candidate_urls` and `url (ground truth)`.
+
+    Returns:
+        pd.DataFrame: DataFrame containing columns:
+        `['id','name_metric','author_metric','paragraph_metric',
+           'keywords_metric','language_metric','true_label']`.
+    """
+    cols = [
+        "id",
+        "name_metric",
+        "author_metric",
+        "paragraph_metric",
+        "keywords_metric",
+        "language_metric",
+        "true_label"
+    ]
+    df['true_label'] = [
+    int(c in [u.strip() for u in g.split(',')])
+    for c, g in zip(df['candidate_urls'], df['url (ground truth)'])
+    ]
+    return df[cols]
     
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1

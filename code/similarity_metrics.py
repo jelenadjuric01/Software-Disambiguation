@@ -1,23 +1,31 @@
 import re
-import jellyfish
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from typing import Optional
 import numpy as np
 import pandas as pd
 import textdistance
-import csv
 
-# 1. Load your models once (at module import)
+# 1. module import
 #    - A lightweight BERT for keyword-vs-keyword
-#    - A larger RoBERTa for fallback (keywords vs. description)
+#    - A larger RoBERTa for fallback (keywords vs. description) and description vs. paragraph
 _BERT_MODEL = SentenceTransformer('all-MiniLM-L6-v2')
 _ROBERTA_MODEL = SentenceTransformer('sentence-transformers/all-roberta-large-v1')
 
 def _encode_and_cosine(model: SentenceTransformer, texts1, texts2) -> float:
-    """
-    Helper: encode two lists of texts and return mean cosine similarity
-    between corresponding embeddings.
+    """Encode two lists of texts and return the mean cosine similarity.
+
+    This helper function uses `model` to embed `texts1` and `texts2`,
+    computes pairwise cosine similarities, and returns the average
+    of the diagonal (i.e., corresponding pairs).
+
+    Args:
+        model (SentenceTransformer): Pre-loaded sentence transformer.
+        texts1 (List[str]): First batch of text inputs.
+        texts2 (List[str]): Second batch of text inputs.
+
+    Returns:
+        float: Mean cosine similarity of corresponding embeddings.
     """
     emb1 = model.encode(texts1, convert_to_tensor=False)
     emb2 = model.encode(texts2, convert_to_tensor=False)
@@ -30,22 +38,22 @@ def keyword_similarity_with_fallback(
     site_keywords: Optional[str],
     software_description: str
 ) -> float:
-    """
-    Compute a similarity score between paper‐keywords and site‐keywords,
-    with a RoBERTa fallback to software_description if site_keywords is missing.
+    """Compute a keyword-based similarity with a description fallback.
+
+    If `site_keywords` is present, compares comma-separated
+    `paper_keywords` vs. `site_keywords` using a lightweight BERT model.
+    Otherwise falls back to comparing `paper_keywords` vs.
+    `software_description` using a larger RoBERTa model.
 
     Args:
-        paper_keywords: comma‐separated keywords from the paper.
-        site_keywords: comma‐separated keywords from the software site.
-        software_description: free‐text description of the software.
+        paper_keywords (Optional[str]): Comma-separated keywords from the paper.
+        site_keywords (Optional[str]): Comma-separated keywords from the software site.
+        software_description (str): Full text description of the software.
 
     Returns:
-        A float in [-1.0, 1.0]:
-          - 0.0 if paper_keywords is empty or None.
-          - If site_keywords is empty/None: cosine similarity between
-            paper_keywords and software_description using RoBERTa.
-          - Otherwise: cosine similarity between paper_keywords and
-            site_keywords using BERT.
+        float:
+          - `np.nan` if `paper_keywords` is missing or empty.
+          - Cosine similarity ∈ [–1.0, 1.0] computed with the chosen model.
     """
     if pd.isna(paper_keywords):
         return np.nan
@@ -79,15 +87,17 @@ def keyword_similarity_with_fallback(
     return _encode_and_cosine(_BERT_MODEL, text1, text2)
 
 def paragraph_description_similarity(text1: str, text2: str) -> float:
-    """
-    Compute cosine similarity between two texts using RoBERTa sentence embeddings.
-    
+    """Compute semantic similarity between two texts via RoBERTa embeddings.
+
+    Strips and validates `text1` and `text2`, encodes both with the
+    RoBERTa model, and returns their cosine similarity.
+
     Args:
-        text1: e.g. a paragraph from a paper.
-        text2: e.g. the software's description.
-    
+        text1 (str): Arbitrary text (e.g., a paper paragraph).
+        text2 (str): Another text (e.g., software description).
+
     Returns:
-        A float in [-1.0, 1.0], where higher means more semantically similar.
+        float: Cosine similarity ∈ [–1.0, 1.0], or `np.nan` if either input is empty.
     """
     if not text1 or pd.isna(text1) or not (text1 := text1.strip()):
         return np.nan
@@ -106,13 +116,20 @@ COMMON_AFFIXES = {
 }
 
 def normalize_software_name(name: str) -> str:
-    """
-    Normalize a software name by:
-      1. Lowercasing
-      2. Removing version numbers (e.g., v2.0, 2021)
-      3. Stripping common affixes (e.g., Pro, Suite)
-      4. Removing punctuation
-      5. Collapsing whitespace
+    """Normalize a software name to a canonical lowercase token string.
+
+    Steps:
+      1. Lowercase and trim.
+      2. Remove version tokens (e.g., "v2.0", "2021").
+      3. Strip punctuation.
+      4. Remove common affixes (e.g., "Pro", "Suite").
+      5. Collapse whitespace.
+
+    Args:
+        name (str): Original software name.
+
+    Returns:
+        str: Normalized name.
     """
     s = name.lower().strip()
     # 1. Remove version-like tokens (v1, 2.0, 2022)
@@ -125,12 +142,16 @@ def normalize_software_name(name: str) -> str:
     return " ".join(tokens)
 
 def software_name_similarity(name1: str, name2: str) -> float:
-    """
-    Compute Jaro–Winkler similarity between two software names
-    after normalization.
-    
+    """Measure Jaro–Winkler similarity between two software names.
+
+    Both names are first normalized via `normalize_software_name`.
+
+    Args:
+        name1 (str): First software name.
+        name2 (str): Second software name.
+
     Returns:
-        A float between 0.0 and 1.0.
+        float: Jaro–Winkler similarity ∈ [0.0, 1.0].
     """
     n1 = normalize_software_name(name1)
     n2 = normalize_software_name(name2)
@@ -139,18 +160,17 @@ def software_name_similarity(name1: str, name2: str) -> float:
 
 def programming_language_similarity(lang1: Optional[str],
                                     lang2: Optional[str]) -> float:
-    """
-    Compute a simple equality‐based similarity between two programming
-    language names.
+    """Compute a simple equality-based similarity between two languages.
+
+    Returns 1.0 if both non-empty names match case-insensitively,
+    0.0 if both present but differ, or `np.nan` if either is missing.
 
     Args:
-        lang1: e.g. the language inferred from the paper paragraph.
-        lang2: e.g. the primary language returned by fetching.
+        lang1 (Optional[str]): First language name.
+        lang2 (Optional[str]): Second language name.
 
     Returns:
-        1.0 if both are non-empty and case-insensitive equal,
-        0.0 if both are non-empty but different,
-        np.nan if either input is missing/empty.
+        float: Similarity score or `np.nan` for missing data.
     """
     # 1) Missing → nan
     if pd.isna(lang1) or pd.isna(lang2):
@@ -168,13 +188,20 @@ def programming_language_similarity(lang1: Optional[str],
 
 
 def normalize_author_name(name: str) -> str:
-    """
-    Normalize an author name by:
-      1. Flipping "Last, First Middle" → "First Middle Last"
-      2. Expanding initials (e.g. "J.K." → "J K")
-      3. Lowercasing
-      4. Removing anything but letters and spaces
-      5. Collapsing multiple spaces
+    """Normalize an author name to lowercase, first-last order, letters only.
+
+    Steps:
+      1. Flip "Last, First" → "First Last".
+      2. Expand initials (e.g., "J.K." → "J K").
+      3. Lowercase.
+      4. Remove non-letter characters.
+      5. Collapse spaces.
+
+    Args:
+        name (str): Raw author name.
+
+    Returns:
+        str: Normalized author name.
     """
     s = name.strip()
     # 1. Flip "Last, First" to "First Last"
@@ -193,13 +220,16 @@ def normalize_author_name(name: str) -> str:
     return s
 
 def author_name_similarity(name1: str, name2: str) -> float:
-    """
-    Compute the Jaro–Winkler similarity between two author names
-    after normalization.
+    """Compute Jaro–Winkler similarity between two normalized author names.
+
+    If either input is missing or blank, returns `np.nan` immediately.
+
+    Args:
+        name1 (str): First author name.
+        name2 (str): Second author name.
 
     Returns:
-        A float between 0.0 and 1.0 (1.0 = exact match).
-    If either name is None or empty (after stripping), returns 0.0 immediately.
+        float: Similarity ∈ [0.0, 1.0], or `np.nan` if either name is missing.
     """
     # Treat None as missing
     if not name1 or not name2 or pd.isna(name1) or pd.isna(name2):
@@ -213,19 +243,21 @@ def author_name_similarity(name1: str, name2: str) -> float:
 
 
 def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFrame:
-    """
-    Given a DataFrame with columns
-      id, name, doi, paragraph, authors, field/topic/keywords, url,
-      candidate_urls, probability, metadata_name, metadata_authors,
-      metadata_keywords, metadata_description
+    """Compute and collect multiple similarity metrics for each candidate.
 
-    Returns a new DataFrame containing only rows where metadata_name is non-empty,
-    copying all those source columns and adding:
+    For rows with valid `metadata_name`, computes:
+      - `name_metric`       via `software_name_similarity`
+      - `author_metric`     via `author_name_similarity`
+      - `paragraph_metric`  via `paragraph_description_similarity`
+      - `keywords_metric`   via `keyword_similarity_with_fallback`
+      - `language_metric`   via `programming_language_similarity`
 
-      - name_metric       (software_name_similarity) Jaro Winkler similarity
-      - author_metric     (author_name_similarity) Jaro Winkler similarity
-      - paragraph_metric  (paragraph_description_similarity) RoBERTa cosine similarity
-      - keywords_metric   (keyword_similarity_with_fallback) BERT cosine similarity
+    Args:
+        df (pd.DataFrame): Input with metadata and source columns.
+        output_path (str, optional): If given, CSV filepath to save results.
+
+    Returns:
+        pd.DataFrame: Subset DataFrame with original columns plus the five metrics.
     """
     for col in ['name_metric','author_metric','paragraph_metric','keywords_metric',"language_metric"]:
         if col not in df.columns:
@@ -295,26 +327,20 @@ def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFra
 
     return sub
 def get_average_min_max(df: pd.DataFrame, output_path: str = None) -> None:
-    """
-    Compute per-row and overall summary statistics for the similarity metrics in a DataFrame.
+    """Add per-row and overall average/min/max of similarity metrics.
 
-    This function:
-      1. Adds three new columns to `df`:
-         - "average": the row-wise mean of ["name_metric", "author_metric", "paragraph_metric", "keywords_metric"]
-         - "min":     the row-wise minimum of those same four metric columns
-         - "max":     the row-wise maximum of those same four metric columns
-      2. Prints the overall mean, min, and max for each of these seven columns:
-         ["name_metric", "author_metric", "paragraph_metric", "keywords_metric",
-          "average", "min", "max"]
-      3. Optionally writes the augmented DataFrame to a CSV file if `output_path` is provided.
+    1. Adds columns `average`, `min`, and `max` across
+       ['name_metric', 'author_metric', 'paragraph_metric',
+        'keywords_metric', 'language_metric'].
+    2. Prints overall statistics for each metric.
+    3. Optionally saves the augmented DataFrame to `output_path`.
 
     Args:
-        df: A pandas DataFrame containing at least the columns
-            "name_metric", "author_metric", "paragraph_metric", and "keywords_metric".
-        output_path: Path to save the updated DataFrame as CSV. If None, no file is written.
+        df (pd.DataFrame): Must contain the five metric columns.
+        output_path (str, optional): CSV filepath to write the updated DataFrame.
 
     Returns:
-        None: The DataFrame `df` is modified in place and summary statistics are printed.
+        None
     """
     # Calculate average, min, and max for each candidate URL
     df['average'] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric",'language_metric']].mean(axis=1,skipna=True)
