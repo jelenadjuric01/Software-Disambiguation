@@ -285,7 +285,7 @@ if __name__ == "__main__":
     #    figsize=(12,10),
     #    cmap="coolwarm"
     #)
-    print("Saved dense feature correlation matrix to dense_correlation_matrix.png\n")
+    #print("Saved dense feature correlation matrix to dense_correlation_matrix.png\n")
 
     # 4) Train each model on the full train+val set and evaluate on test
     models_to_try = [
