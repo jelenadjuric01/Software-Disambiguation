@@ -1,168 +1,219 @@
+from typing import List, Optional, Tuple
 import pandas as pd
 import numpy as np
-
-from sklearn.feature_selection import SelectKBest, f_classif
-from sklearn.decomposition import PCA
-from sklearn.model_selection import StratifiedKFold
-
-from models import (
-    split_data,
-    apply_imputer,
-    apply_scaler,
-    make_model
-)
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.model_selection import train_test_split, StratifiedKFold
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.utils.class_weight import compute_class_weight
+from sklearn.pipeline import Pipeline
+from sklearn.feature_selection import SelectKBest, f_classif, SelectFromModel
 from evaluation import evaluation
+from models import MedianImputerWithIndicator, make_model, split_data, get_preprocessing_pipeline
 
+if __name__ == "__main__":
+    # Load & split
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/model_input.csv")
+    X_trainval, X_test, y_trainval, y_test = split_data(df, "true_label", test_size=0.2)
+    cols_to_impute = ['author_metric', 'paragraph_metric', 'keywords_metric', 'language_metric']
+    X_tree_train = X_trainval.copy()
+    X_tree_test = X_test.copy()
 
-
-
-
-def evaluate_models(models_to_try: list,
-                    X_train_dense: pd.DataFrame,
-                    X_test_dense: pd.DataFrame,
-                    X_train_tree: pd.DataFrame,
-                    X_test_tree: pd.DataFrame,
-                    y_train: pd.Series,
-                    y_test: pd.Series,
-                    description: str
-                   ) -> None:
-    """
-    Exactly your 5-fold CV + final-test evaluation on each model.
-    Uses tree-view for XGBoost/LightGBM and dense-view otherwise.
-    """
-    print(f"\n==================== {description} ====================")
+    models_to_try = ['Logistic Regression', 'Random Forest', 'XGBoost', 'LightGBM', 'Neural Net']
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
-    # 1) 5-fold CV on train+val
+    
+    # 1) Baseline: CV & test evaluation with all features
+    print("\n### Baseline 5-fold CV (all features) ###")
     for name in models_to_try:
         y_true_oof, y_pred_oof = [], []
-        for train_idx, val_idx in cv.split(X_train_dense, y_train):
-            if name.lower() in ("xgboost", "lightgbm"):
-                X_tr = X_train_tree.iloc[train_idx]
-                X_val = X_train_tree.iloc[val_idx]
+        for train_idx, val_idx in cv.split(X_trainval, y_trainval):
+            X_tr_raw = X_trainval.iloc[train_idx]; X_val_raw = X_trainval.iloc[val_idx]
+            y_tr = y_trainval.iloc[train_idx].values; y_val = y_trainval.iloc[val_idx].values
+            if name in ("XGBoost","LightGBM"):
+                X_tr, X_val = X_tr_raw.copy(), X_val_raw.copy()
             else:
-                X_tr = X_train_dense.iloc[train_idx]
-                X_val = X_train_dense.iloc[val_idx]
-
-            y_tr = y_train.iloc[train_idx]
-            y_val = y_train.iloc[val_idx]
-
+                preproc = get_preprocessing_pipeline(cols_to_impute)
+                X_tr = pd.DataFrame(preproc.fit_transform(X_tr_raw),
+                                     columns=preproc.get_feature_names_out())
+                X_val = pd.DataFrame(preproc.transform(X_val_raw),
+                                      columns=preproc.get_feature_names_out())
             model = make_model(name, y_tr)
             model.fit(X_tr, y_tr)
             y_pred = model.predict(X_val)
+            y_true_oof.extend(y_val); y_pred_oof.extend(y_pred)
+        print(f"\n--- CV results for {name} ---")
+        evaluation(pd.DataFrame({"true_label": y_true_oof, "prediction": y_pred_oof}))
 
-            y_true_oof.extend(y_val)
-            y_pred_oof.extend(y_pred)
-
-        cv_df = pd.DataFrame({
-            "true_label": y_true_oof,
-            "prediction": y_pred_oof
-        })
-        print(f"\n--- 5-fold CV results for {name} ---")
-        evaluation(cv_df)
-
-    # 2) Final test on held-out 20%
+    # Final test on held-out 20%
+    print("\n### Final test evaluation (all features) ###")
     for name in models_to_try:
-        if name.lower() in ("xgboost", "lightgbm"):
-            X_tr_full, X_test_view = X_train_tree, X_test_tree
+        if name in ("XGBoost","LightGBM"):
+            X_tr_full, X_te_full = X_tree_train, X_tree_test
         else:
-            X_tr_full, X_test_view = X_train_dense, X_test_dense
+            preproc = get_preprocessing_pipeline(cols_to_impute)
+            X_tr_full = pd.DataFrame(preproc.fit_transform(X_trainval),
+                                    columns=preproc.get_feature_names_out())
+            X_te_full = pd.DataFrame(preproc.transform(X_test),
+                                    columns=preproc.get_feature_names_out())
+        model = make_model(name, y_trainval.values)
+        model.fit(X_tr_full, y_trainval.values)
+        y_pred_test = model.predict(X_te_full)
+        print(f"\n--- Test results for {name} ---")
+        evaluation(pd.DataFrame({"true_label": y_test.values, "prediction": y_pred_test}))
 
-        model = make_model(name, y_train)
-        model.fit(X_tr_full, y_train)
-        y_pred_test = model.predict(X_test_view)
+    # 2) Feature Selection
+    # Impute full train+val
+    imputer = MedianImputerWithIndicator(cols=cols_to_impute)
+    X_train_imp = pd.DataFrame(imputer.fit_transform(X_trainval), columns=imputer.get_feature_names_out())
+    X_test_imp = pd.DataFrame(imputer.transform(X_test), columns=imputer.get_feature_names_out())
+    all_feats = X_train_imp.columns.tolist()
 
-        test_df = pd.DataFrame({
-            "true_label": y_test.values,
-            "prediction": y_pred_test
-        })
-        print(f"\n--- Final test results for {name} ---")
-        evaluation(test_df)
+    # 2a) Univariate selection
+    k = 3
+    uni = SelectKBest(score_func=f_classif, k=k)
+    uni.fit(X_train_imp, y_trainval.values)
+    uni_scores = pd.DataFrame({'feature': all_feats, 'score': uni.scores_, 'pvalue': uni.pvalues_})
+    uni_scores = uni_scores.sort_values(by='score', ascending=False)
+    print("\n### Univariate Feature Scores ###")
+    print(uni_scores)
+    top_uni = uni_scores['feature'].iloc[:k].tolist()
+    print(f"\nSelected top {k} univariate features: {top_uni}")
 
+    # CV with univariate-selected features
+    print("\n### Univariate CV (selected features) ###")
+    for name in models_to_try:
+        y_true_oof, y_pred_oof = [], []
+        for train_idx, val_idx in cv.split(X_trainval, y_trainval):
+            X_tr_raw = X_trainval.iloc[train_idx]; X_val_raw = X_trainval.iloc[val_idx]
+            y_tr = y_trainval.iloc[train_idx].values; y_val = y_trainval.iloc[val_idx].values
+            if name in ("XGBoost","LightGBM"):
+                X_tr, X_val = X_tr_raw[top_uni].copy(), X_val_raw[top_uni].copy()
+            else:
+                imp_fold = MedianImputerWithIndicator(cols=cols_to_impute)
+                X_tr_imp = pd.DataFrame(imp_fold.fit_transform(X_tr_raw), columns=imp_fold.get_feature_names_out())
+                X_val_imp = pd.DataFrame(imp_fold.transform(X_val_raw), columns=imp_fold.get_feature_names_out())
+                X_tr_sel = X_tr_imp[top_uni]; X_val_sel = X_val_imp[top_uni]
+                scaler = StandardScaler()
+                X_tr = pd.DataFrame(scaler.fit_transform(X_tr_sel), columns=top_uni)
+                X_val = pd.DataFrame(scaler.transform(X_val_sel), columns=top_uni)
+            model = make_model(name, y_tr)
+            model.fit(X_tr, y_tr)
+            y_pred = model.predict(X_val)
+            y_true_oof.extend(y_val); y_pred_oof.extend(y_pred)
+        print(f"\n--- CV results for {name} (univariate) ---")
+        evaluation(pd.DataFrame({"true_label": y_true_oof, "prediction": y_pred_oof}))
 
-if __name__ == "__main__":
-    # 1) Load & split
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/model_input.csv")
-    X_trainval, X_test, y_trainval, y_test = split_data(df, "true_label", test_size=0.2)
+    # Test with univariate-selected features
+    print("\n### Test Evaluation (univariate-selected) ###")
+    for name in models_to_try:
+        if name in ("XGBoost","LightGBM"):
+            X_tr_sel, X_te_sel = X_trainval[top_uni], X_test[top_uni]
+        else:
+            X_tr_sel = X_train_imp[top_uni]; X_te_sel = X_test_imp[top_uni]
+            scaler = StandardScaler()
+            X_tr_sel = pd.DataFrame(scaler.fit_transform(X_tr_sel), columns=top_uni)
+            X_te_sel = pd.DataFrame(scaler.transform(X_te_sel), columns=top_uni)
+        model = make_model(name, y_trainval.values)
+        model.fit(X_tr_sel, y_trainval.values)
+        y_pred = model.predict(X_te_sel)
+        print(f"\n--- Test results for {name} (univariate) ---")
+        evaluation(pd.DataFrame({"true_label": y_test.values, "prediction": y_pred}))
 
-    # 2) Impute & scale to get dense view
-    X_imp_train, imputer       = apply_imputer(X_trainval,['author_metric','paragraph_metric','keywords_metric','language_metric'])
-    X_dense_train, scaler = apply_scaler(X_imp_train)
+    # 2b) Multivariate (model-based) selection
+    base = RandomForestClassifier(n_estimators=100, random_state=42)
+    base.fit(X_train_imp, y_trainval.values)
+    msel = SelectFromModel(base, threshold='median')
+    msel.fit(X_train_imp, y_trainval.values)
+    imp_df = pd.DataFrame({'feature': all_feats, 'importance': base.feature_importances_})
+    imp_df = imp_df.sort_values(by='importance', ascending=False)
+    sel_mtv = imp_df.loc[msel.get_support(), 'feature'].tolist()
+    print("\n### Multivariate Feature Importances ###")
+    print(imp_df)
+    print(f"\nSelected multivariate features: {sel_mtv}")
 
-    X_imp_test = imputer.transform(X_test)
-    X_dense_test, _    = apply_scaler(X_imp_test, scaler=scaler)
+    # CV with multivariate-selected features
+    print("\n### Multivariate CV (selected features) ###")
+    for name in models_to_try:
+        y_true_oof, y_pred_oof = [], []
+        for train_idx, val_idx in cv.split(X_trainval, y_trainval):
+            X_tr_raw = X_trainval.iloc[train_idx]; X_val_raw = X_trainval.iloc[val_idx]
+            y_tr = y_trainval.iloc[train_idx].values; y_val = y_trainval.iloc[val_idx].values
+            if name in ("XGBoost","LightGBM"):
+                X_tr, X_val = X_tr_raw[sel_mtv].copy(), X_val_raw[sel_mtv].copy()
+            else:
+                imp_fold = MedianImputerWithIndicator(cols=cols_to_impute)
+                X_tr_imp = pd.DataFrame(imp_fold.fit_transform(X_tr_raw), columns=imp_fold.get_feature_names_out())
+                X_val_imp = pd.DataFrame(imp_fold.transform(X_val_raw), columns=imp_fold.get_feature_names_out())
+                X_tr_sel = X_tr_imp[sel_mtv]; X_val_sel = X_val_imp[sel_mtv]
+                scaler = StandardScaler()
+                X_tr = pd.DataFrame(scaler.fit_transform(X_tr_sel), columns=sel_mtv)
+                X_val = pd.DataFrame(scaler.transform(X_val_sel), columns=sel_mtv)
+            model = make_model(name, y_tr)
+            model.fit(X_tr, y_tr)
+            y_pred = model.predict(X_val)
+            y_true_oof.extend(y_val); y_pred_oof.extend(y_pred)
+        print(f"\n--- CV results for {name} (multivariate) ---")
+        evaluation(pd.DataFrame({"true_label": y_true_oof, "prediction": y_pred_oof}))
 
-    # 3) Tree view is the raw (unscaled) metrics
-    X_tree_train = X_trainval.copy()
-    X_tree_test  = X_test.copy()
+    # Test with multivariate-selected features
+    print("\n### Test Evaluation (multivariate-selected) ###")
+    for name in models_to_try:
+        if name in ("XGBoost","LightGBM"):
+            X_tr_sel, X_te_sel = X_trainval[sel_mtv], X_test[sel_mtv]
+        else:
+            X_tr_sel = X_train_imp[sel_mtv]; X_te_sel = X_test_imp[sel_mtv]
+            scaler = StandardScaler()
+            X_tr_sel = pd.DataFrame(scaler.fit_transform(X_tr_sel), columns=sel_mtv)
+            X_te_sel = pd.DataFrame(scaler.transform(X_te_sel), columns=sel_mtv)
+        model = make_model(name, y_trainval.values)
+        model.fit(X_tr_sel, y_trainval.values)
+        y_pred = model.predict(X_te_sel)
+        print(f"\n--- Test results for {name} (univariate) ---")
+        evaluation(pd.DataFrame({"true_label": y_test.values, "prediction": y_pred}))
 
-    models_to_try = [
-        "Logistic Regression",
-        "Random Forest",
-        "XGBoost",
-        "LightGBM",
-        "Neural Net"
-    ]
+    print("\n### CV (selected features) ###")
+    selected_columns = ['name_metric', 'paragraph_metric', 'keywords_metric']
+    print(f"Selected columns: {selected_columns}")
+    selected_columns_imp=selected_columns+[col+"_missing" for col in selected_columns if col !="name_metric"]
+    print(f"Selected columns (imputed): {selected_columns_imp}")
+    for name in models_to_try:
+        y_true_oof, y_pred_oof = [], []
+        for train_idx, val_idx in cv.split(X_trainval, y_trainval):
+            X_tr_raw = X_trainval.iloc[train_idx]; X_val_raw = X_trainval.iloc[val_idx]
+            y_tr = y_trainval.iloc[train_idx].values; y_val = y_trainval.iloc[val_idx].values
+            if name in ("XGBoost","LightGBM"):
+                X_tr, X_val = X_tr_raw[selected_columns].copy(), X_val_raw[selected_columns].copy()
+            else:
+                imp_fold = MedianImputerWithIndicator(cols=cols_to_impute)
+                X_tr_imp = pd.DataFrame(imp_fold.fit_transform(X_tr_raw), columns=imp_fold.get_feature_names_out())
+                X_val_imp = pd.DataFrame(imp_fold.transform(X_val_raw), columns=imp_fold.get_feature_names_out())
+                X_tr_sel = X_tr_imp[selected_columns_imp]; X_val_sel = X_val_imp[selected_columns_imp]
+                scaler = StandardScaler()
+                X_tr = pd.DataFrame(scaler.fit_transform(X_tr_sel), columns=selected_columns_imp)
+                X_val = pd.DataFrame(scaler.transform(X_val_sel), columns=selected_columns_imp)
+            model = make_model(name, y_tr)
+            model.fit(X_tr, y_tr)
+            y_pred = model.predict(X_val)
+            y_true_oof.extend(y_val); y_pred_oof.extend(y_pred)
+        print(f"\n--- CV results for {name} (multivariate) ---")
+        evaluation(pd.DataFrame({"true_label": y_true_oof, "prediction": y_pred_oof}))
 
-    # —— A) Baseline with ALL features ——
-    evaluate_models(models_to_try,
-                    X_dense_train, X_dense_test,
-                    X_tree_train,  X_tree_test,
-                    y_trainval,    y_test,
-                    description="All features (baseline)")
-
-    # —— B) Univariate selection ——
-    # pick top-k from the DENSE (imputed+scaled) features:
-    k=3
-    selector_uni = SelectKBest(score_func=f_classif, k=k)
-    selector_uni.fit(X_dense_train, y_trainval)
-    uni_scores = pd.Series(selector_uni.scores_, index=X_dense_train.columns)
-    selected_feats = list(X_dense_train.columns[selector_uni.get_support()])
-    print(f"\n--- Univariate selection (top {k} features) ---")
-    print(uni_scores.sort_values(ascending=False).head(k).to_string(), "\n")
-    # build DataFrames of just those:
-    X_uni_train = pd.DataFrame(
-        selector_uni.transform(X_dense_train),
-        columns=selected_feats,
-        index=X_dense_train.index
-    )
-    X_uni_test = pd.DataFrame(
-        selector_uni.transform(X_dense_test),
-        columns=selected_feats,
-        index=X_dense_test.index
-    )
-    # also apply to tree view (for XGBoost/LightGBM):
-    X_tree_uni_train = X_tree_train[selected_feats]
-    X_tree_uni_test  = X_tree_test[selected_feats]
-
-    evaluate_models(models_to_try,
-                    X_uni_train,        X_uni_test,
-                    X_tree_uni_train,   X_tree_uni_test,
-                    y_trainval,         y_test,
-                    description="Univariate-selected features")
-
-    # —— C) Multivariate extraction (PCA) ——
-    variance_ratio=0.95
-    pca = PCA(n_components=variance_ratio, svd_solver="full", random_state=42)
-    X_pca_train = pca.fit_transform(X_dense_train)
-    n_comp = pca.n_components_
-    comp_names = [f"PC{i+1}" for i in range(n_comp)]
-    X_pca_df = pd.DataFrame(X_pca_train, columns=comp_names, index=X_dense_train.index)
-
-    print(f"\n--- PCA extraction ({n_comp} components explaining "
-          f"{pca.explained_variance_ratio_.sum():.2%} variance) ---")
-    for i, var in enumerate(pca.explained_variance_ratio_, 1):
-        print(f"  PC{i}: {var:.2%}")
-    print()
-   
-    X_pca_test = pd.DataFrame(
-        pca.transform(X_dense_test),
-        columns=X_pca_train.columns,
-        index=X_dense_test.index
-    )
-    # for tree models we’ll also feed them the PCs:
-    evaluate_models(models_to_try,
-                    X_pca_train, X_pca_test,
-                    X_pca_train, X_pca_test,
-                    y_trainval,  y_test,
-                    description="PCA-extracted components")
+    print("\n### Test Evaluation (selected) ###")
+    for name in models_to_try:
+        if name in ("XGBoost","LightGBM"):
+            X_tr_sel, X_te_sel = X_trainval[selected_columns], X_test[selected_columns]
+        else:
+            X_tr_sel = X_train_imp[selected_columns_imp]; X_te_sel = X_test_imp[selected_columns_imp]
+            scaler = StandardScaler()
+            X_tr_sel = pd.DataFrame(scaler.fit_transform(X_tr_sel), columns=selected_columns_imp)
+            X_te_sel = pd.DataFrame(scaler.transform(X_te_sel), columns=selected_columns_imp)
+        model = make_model(name, y_trainval.values)
+        model.fit(X_tr_sel, y_trainval.values) 
+        y_pred = model.predict(X_te_sel)
+        print(f"\n--- Test results for {name} ---")
+        evaluation(pd.DataFrame({"true_label": y_test.values, "prediction": y_pred}))
