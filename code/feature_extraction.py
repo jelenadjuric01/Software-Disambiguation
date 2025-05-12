@@ -177,7 +177,7 @@ if __name__ == "__main__":
         evaluation(pd.DataFrame({"true_label": y_test.values, "prediction": y_pred}))
 
     print("\n### CV (selected features) ###")
-    selected_columns = ['name_metric', 'paragraph_metric', 'keywords_metric']
+    selected_columns = ['name_metric', 'paragraph_metric', 'keywords_metric','language_metric']
     print(f"Selected columns: {selected_columns}")
     selected_columns_imp=selected_columns+[col+"_missing" for col in selected_columns if col !="name_metric"]
     print(f"Selected columns (imputed): {selected_columns_imp}")
@@ -200,7 +200,7 @@ if __name__ == "__main__":
             model.fit(X_tr, y_tr)
             y_pred = model.predict(X_val)
             y_true_oof.extend(y_val); y_pred_oof.extend(y_pred)
-        print(f"\n--- CV results for {name} (multivariate) ---")
+        print(f"\n--- CV results for {name} ---")
         evaluation(pd.DataFrame({"true_label": y_true_oof, "prediction": y_pred_oof}))
 
     print("\n### Test Evaluation (selected) ###")
