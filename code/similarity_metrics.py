@@ -73,7 +73,7 @@ def keyword_similarity_with_fallback(
     # 2. If site_keywords missing → fallback to description
     if not site_keywords or pd.isna(site_keywords) or not site_keywords.strip():
         # treat the entire keywords list as a single "document"
-        if not software_description or not software_description.strip():
+        if not software_description or pd.isna(software_description) or not software_description.strip():
             return np.nan
         # If software_description is empty, return 0.0
         text1 = [" ".join(pk_list)]

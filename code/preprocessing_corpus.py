@@ -232,6 +232,7 @@ def even_out_dataframes(df_full: pd.DataFrame, df_metrics: pd.DataFrame, output_
 
     # 3) Concatenate
     result = pd.concat([df_metrics, to_append], ignore_index=True, sort=False)
+    result = result.dropna(subset='metadata_name', how='all')
     if output_path:
         result.to_csv(output_path, index=False)
         print(f"📄 Updated CSV file saved to {output_path}")
@@ -483,9 +484,23 @@ if __name__ == "__main__":
     df.to_csv(similarities_path, index=False)
     model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
     model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
-    
-
-    
-    
-
+    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3.xlsx"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/pairs.csv"
+    df = pd.read_csv(output_path)
+    sim=pd.read_csv(output_path_similarities)
+    df.dropna(subset=['metadata_name'], inplace=True)
+    sim['synonyms']=df["synonyms"]
+    sim['synonym_metric'] = sim.apply(
+        lambda row: synonym_name_similarity(
+            row['metadata_name'],
+            row['synonyms']
+        ),
+        axis=1
+    )
+    sim.to_csv(output_path_similarities, index=False)
+    model_input = sim[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
+    model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)
     

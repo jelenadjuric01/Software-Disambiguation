@@ -1,5 +1,4 @@
 {
-  "https://www.github.com/expersso/pdftables": {},
   "https://cran.r-project.org/package=nanostringr": {
     "name": "nanostringr",
     "description": "Provides quality control (QC), normalization, and batch\neffect correction operations for 'NanoString nCounter' data, Talhouk\net al. (2016) <doi:10.1371/journal.pone.0153844>.  Various metrics are\nused to determine which samples passed or failed QC.  Gene expression\nshould first be normalized to housekeeping genes, before a\nreference-based approach is used to adjust for batch effects.  Raw\nNanoString data can be imported in the form of Reporter Code Count\n(RCC) files.",
@@ -825,7 +824,21 @@
     ],
     "language": "R"
   },
-  "https://github.com/ASKurz/Statistical_Rethinking_with_brms_ggplot2_and_the_tidyverse": {},
+  "https://github.com/ASKurz/Statistical_Rethinking_with_brms_ggplot2_and_the_tidyverse": {
+    "name": "Statistical_Rethinking_with_brms_ggplot2_and_the_tidyverse",
+    "description": "The bookdown version lives here: https://bookdown.org/content/3890",
+    "keywords": [
+      "bayesian-inference",
+      "brms",
+      "regression",
+      "rethinking",
+      "tidyverse"
+    ],
+    "authors": [
+      "A. Solomon Kurz"
+    ],
+    "language": "HTML"
+  },
   "https://github.com/cran/spBayesSurv": {
     "name": "spBayesSurv",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  spBayesSurv — Bayesian Modeling and Analysis of Spatially Correlated Survival Data  ",
@@ -9654,7 +9667,15 @@
     ],
     "language": "JavaScript"
   },
-  "https://github.com/ampir-nn/android_kernel_leeco_msm8976-9.x": {},
+  "https://github.com/ampir-nn/android_kernel_leeco_msm8976-9.x": {
+    "name": "android_kernel_leeco_msm8976-9.x",
+    "description": "Interface with the Linux profiling infrastructure",
+    "keywords": [],
+    "authors": [
+      "ampir-nn"
+    ],
+    "language": "C"
+  },
   "https://pypi.org/project/panda/": {
     "name": "panda",
     "description": "A Python implementation of the Panda REST interface",
@@ -11070,7 +11091,17 @@
     ],
     "language": "R"
   },
-  "https://github.com/zhaoolee/StarsAndClown": {},
+  "https://github.com/zhaoolee/StarsAndClown": {
+    "name": "StarsAndClown",
+    "description": "☀️Github星聚弃疗榜, 让吃瓜群众也能享受Github带来的乐趣~Github StarsAndClown, Let the people who eat me can enjoy the fun of Github~",
+    "keywords": [
+      "cli"
+    ],
+    "authors": [
+      "zhaoolee"
+    ],
+    "language": "Python"
+  },
   "https://cran.r-project.org/package=BCEE": {
     "name": "BCEE",
     "description": "A Bayesian model averaging approach to causal effect estimation\nbased on the BCEE algorithm. Currently supports binary or continuous\nexposures and outcomes. For more details, see\nTalbot et al. (2015) <doi:10.1515/jci-2014-0035>\nTalbot and Beaudoin (2022) <doi:10.1515/jci-2021-0023>.",
@@ -16839,7 +16870,22 @@
     ],
     "language": "Python"
   },
-  "https://github.com/EmalIsmail/Predict-The-Stock-Market-With-Machine-Learning-And-Python-s-library-sklearn--RandomForestClassifier-": {},
+  "https://github.com/EmalIsmail/Predict-The-Stock-Market-With-Machine-Learning-And-Python-s-library-sklearn--RandomForestClassifier-": {
+    "name": "Predict-The-Stock-Market-With-Machine-Learning-And-Python-s-library-sklearn--RandomForestClassifier-",
+    "description": "Predict tomorrow's S&P 500 index price using historical data. The data analysis has been preformed mainly using Jupyter Notebook and Python Machine Learning library of sklearn -RandomForestClassifier",
+    "keywords": [
+      "machine-learning",
+      "pandas",
+      "python",
+      "randomforestclassifier",
+      "scikit-learn",
+      "stock-market"
+    ],
+    "authors": [
+      "Emal Ismail"
+    ],
+    "language": "Jupyter Notebook"
+  },
   "https://cran.r-project.org/package=earthtones": {
     "name": "earthtones",
     "description": "Downloads a satellite image via ESRI and maptiles (these are\noriginally from a variety of aerial photography sources),\ntranslates the image into a perceptually uniform color space,\nruns one of a few different clustering algorithms on the colors in the image\nsearching for a user-supplied number of colors,\nand returns the resulting color palette.",
@@ -18220,7 +18266,15 @@
     ],
     "language": "R"
   },
-  "https://github.com/MeganBeckett/lubridate-heatmaps_tutorial": {},
+  "https://github.com/MeganBeckett/lubridate-heatmaps_tutorial": {
+    "name": "lubridate-heatmaps_tutorial",
+    "description": "Lubridate tutorial and dataviz project of running data",
+    "keywords": [],
+    "authors": [
+      "Megan Rogers"
+    ],
+    "language": "HTML"
+  },
   "https://github.com/cran/intePareto": {
     "name": "intePareto",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  intePareto — Integrative Analysis of RNA-Seq and ChIP-Seq Data  ",
@@ -20431,5 +20485,6 @@
       "cran"
     ],
     "language": "R"
-  }
+  },
+  "https://www.github.com/expersso/pdftables": {}
 }

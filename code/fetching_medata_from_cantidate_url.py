@@ -1,5 +1,6 @@
 import subprocess
 import json
+import sys
 import tempfile
 import os
 import requests
@@ -282,13 +283,18 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
 
     try:
         # Run SOMEF with poetry from its own directory
+        path = "D:\\MASTER\\TMF\\somef\\temp"
+        os.makedirs(path, exist_ok=True)
+        if sys.platform == "win32":
+        # note: in a Python string literal this is "\\\\?\\"
+            path = "\\\\?\\" + path
         subprocess.run([
             "poetry", "run", "somef", "describe",
             "-r", repo_url,
             "-o", output_path,
             "-t", "0.93",
             "-m",
-            "-kt D:\MASTER\TMF\somef\temp"
+            "-kt", path
         ], cwd=somef_path, check=True)
 
         # Load the JSON output into Python
@@ -332,7 +338,7 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
     finally:
         # delete temp file
         os.remove(output_path)
-        path = "D:\MASTER\TMF\somef\temp"
+        #path = "D:\\MASTER\\TMF\\somef\\temp"
         for entry in os.scandir(path):
             entry_path = entry.path
             if entry.is_dir(follow_symlinks=False):
