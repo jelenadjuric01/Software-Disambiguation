@@ -10,6 +10,8 @@ from typing import Dict, Any, List
 import re
 from bs4 import BeautifulSoup
 from rake_nltk import Rake
+import shutil
+
 
 BLACKLIST = {"Development Status", "License", "Programming Language", "Topic", "Framework"}
 MIN_LEN   = 3
@@ -285,7 +287,8 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
             "-r", repo_url,
             "-o", output_path,
             "-t", "0.93",
-            "-m"
+            "-m",
+            "-kt D:\MASTER\TMF\somef\temp"
         ], cwd=somef_path, check=True)
 
         # Load the JSON output into Python
@@ -329,6 +332,13 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
     finally:
         # delete temp file
         os.remove(output_path)
+        path = "D:\MASTER\TMF\somef\temp"
+        for entry in os.scandir(path):
+            entry_path = entry.path
+            if entry.is_dir(follow_symlinks=False):
+                shutil.rmtree(entry_path)
+            else:
+                os.remove(entry_path)
 
 #Function that handles the generic website metadata extraction
 def extract_website_metadata(url: str) -> dict:
