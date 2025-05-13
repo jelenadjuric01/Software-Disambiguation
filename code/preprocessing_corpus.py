@@ -6,8 +6,9 @@ import os
 from fetching_medata_from_cantidate_url import get_metadata  
 import re
 import csv
-from similarity_metrics import compute_similarity_df, get_average_min_max
+from similarity_metrics import compute_similarity_df, get_average_min_max, synonym_name_similarity
 from evaluation import split_by_avg_min_max, group_by_candidates, evaluation, split_by_summary
+
     
 def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
     """Extract and cache metadata for all unique candidate URLs in a DataFrame.
@@ -465,4 +466,26 @@ if __name__ == "__main__":
     df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated_positives.csv")
     filtered = select_rows_below_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'],0.1)
     filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")"""
+    #Version 3.1 adding synonyms similarity
+    '''similarities_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/similarities.csv"
+    updated_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/updated_with_metadata_file.csv"
+    df = pd.read_csv(similarities_path)
+    df_updated = pd.read_csv(updated_path)
+    df_updated = df_updated.dropna(subset=['metadata_name']).copy()
+    df['synonyms']=df_updated["synonyms"]
+    df['synonym_metric'] = df.apply(
+        lambda row: synonym_name_similarity(
+            row['metadata_name'],
+            row['synonyms']
+        ),
+        axis=1
+    )
+    df.to_csv(similarities_path, index=False)
+    model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
+    model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
+    
+
+    
+    
+
     

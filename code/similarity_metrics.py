@@ -1,7 +1,7 @@
 import re
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
-from typing import Optional
+from typing import List, Optional
 import numpy as np
 import pandas as pd
 import textdistance
@@ -157,7 +157,30 @@ def software_name_similarity(name1: str, name2: str) -> float:
     n2 = normalize_software_name(name2)
     return textdistance.jaro_winkler(n1, n2)
 
+def synonym_name_similarity(name1: str, names: str) -> float:
+    """Compute Jaro–Winkler similarity between software name and list of synonyms.
 
+
+    Args:
+        name1 (str): First software name.
+        names List(str): List of synonyms.
+
+    Returns:
+        float: Jaro–Winkler similarity ∈ [0.0, 1.0] that is average of the similarities.
+    """
+    if not names or pd.isna(names) or not name1 or pd.isna(name1):
+        return np.nan
+    # After stripping, if either is empty
+    names = names.split(",")
+
+    # Normalize the first name
+    n1 = normalize_software_name(name1)
+    # Normalize the list of synonyms
+    n2 = [normalize_software_name(name) for name in names]
+    # Compute Jaro-Winkler similarity for each synonym
+    similarities = [textdistance.jaro_winkler(n1, name) for name in n2]
+    # Return the average similarity
+    return np.mean(similarities)
 def programming_language_similarity(lang1: Optional[str],
                                     lang2: Optional[str]) -> float:
     """Compute a simple equality-based similarity between two languages.

@@ -1,4 +1,5 @@
 {
+  "https://www.github.com/expersso/pdftables": {},
   "https://cran.r-project.org/package=nanostringr": {
     "name": "nanostringr",
     "description": "Provides quality control (QC), normalization, and batch\neffect correction operations for 'NanoString nCounter' data, Talhouk\net al. (2016) <doi:10.1371/journal.pone.0153844>.  Various metrics are\nused to determine which samples passed or failed QC.  Gene expression\nshould first be normalized to housekeeping genes, before a\nreference-based approach is used to adjust for batch effects.  Raw\nNanoString data can be imported in the form of Reporter Code Count\n(RCC) files.",
@@ -834,7 +835,6 @@
     ],
     "language": "C++"
   },
-  "https://www.github.com/expersso/pdftables": {},
   "https://cran.r-project.org/package=atable": {
     "name": "atable",
     "description": "Create Tables for Reporting Clinical Trials.\nCalculates descriptive statistics and hypothesis tests,\narranges the results in a table ready for reporting with LaTeX, HTML or Word.",
