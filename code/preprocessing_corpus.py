@@ -6,8 +6,9 @@ import os
 from fetching_medata_from_cantidate_url import get_metadata  
 import re
 import csv
-from similarity_metrics import compute_similarity_df, get_average_min_max, synonym_name_similarity
+from similarity_metrics import compute_similarity_df, get_average_min_max, keyword_similarity_with_fallback, synonym_name_similarity
 from evaluation import split_by_avg_min_max, group_by_candidates, evaluation, split_by_summary
+from rake_nltk import Rake
 
     
 def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
@@ -359,7 +360,31 @@ def select_rows_below_threshold(
     below = df[cols].lt(threshold).fillna(False).any(axis=1)
     # Select only those rows
     return df.loc[below].reset_index(drop=True)
+def keywords_from_paper_rake(text:str) -> List[str]:
+    """Extract keywords from a text using RAKE algorithm.
 
+    Args:
+        text (str): Input text to extract keywords from.
+
+    Returns:
+        List[str]: List of extracted keywords.
+    """
+    r = Rake(min_length=1, max_length=3)
+    r.extract_keywords_from_text(text)
+    kws = r.get_ranked_phrases()[:5]
+
+    # 4c) clean & filter
+    cleaned = []
+    for kw in kws:
+        # strip stray punctuation/quotes and lowercase
+        tag = kw.strip(' "\'.,').lower()
+        # keep only multi-word, alphanumeric phrases
+        if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+            cleaned.append(tag)
+    # dedupe
+    seen = set()
+    kws = [t for t in cleaned if not (t in seen or seen.add(t))]
+    return ','.join(kws)
     
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
@@ -486,21 +511,17 @@ if __name__ == "__main__":
     model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3.xlsx"
     output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/pairs.csv"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/pairs.csv"
+    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/model_input.csv"
     df = pd.read_csv(output_path)
     sim=pd.read_csv(output_path_similarities)
-    df.dropna(subset=['metadata_name'], inplace=True)
-    sim['synonyms']=df["synonyms"]
-    sim['synonym_metric'] = sim.apply(
-        lambda row: synonym_name_similarity(
-            row['metadata_name'],
-            row['synonyms']
-        ),
-        axis=1
-    )
-    sim.to_csv(output_path_similarities, index=False)
-    model_input = sim[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
-    model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)
-    
+    corpus = pd.read_excel(excel_path)
+    df = corpus
+    with open(output_json_path, "r", encoding="utf-8") as f:
+                metadata_cache = json.load(f)
+                
+    df = make_pairs(df,output_path_pairs)
+
+    add_metadata(df, metadata_cache, output_path)

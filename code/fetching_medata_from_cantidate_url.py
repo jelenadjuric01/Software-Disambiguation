@@ -200,7 +200,7 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
     raw_kw = data.get("Keywords") or ""
     kws    = [w.strip() for w in re.split(r"[,\s]+", raw_kw) if w.strip()]
     if not kws:
-        r = Rake(min_length=2, max_length=3)
+        r = Rake(min_length=1, max_length=3)
         r.extract_keywords_from_text(description)
         kws = r.get_ranked_phrases()[:5]
 

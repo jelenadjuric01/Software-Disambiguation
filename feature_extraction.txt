@@ -54,3 +54,33 @@ Version 3
 8   language_metric_missing    0.025671
 6  paragraph_metric_missing    0.015222
 7   keywords_metric_missing    0.007520
+
+
+Version 3.2
+### Univariate Feature Scores ###
+                     feature       score         pvalue
+0                name_metric  972.479881  8.533589e-196        
+2           paragraph_metric  923.393982  8.904752e-187        
+4            language_metric  293.297488   5.359059e-64        
+6      author_metric_missing  180.509528   1.776622e-40        
+1            keywords_metric  168.132021   7.320109e-38        
+7   paragraph_metric_missing   64.968438   9.373929e-16        
+8    keywords_metric_missing   27.686776   1.483847e-07        
+5             synonym_metric   20.425907   6.336588e-06        
+9    language_metric_missing   19.443741   1.057057e-05        
+3              author_metric   12.171328   4.893371e-04        
+10    synonym_metric_missing    1.210588   2.712669e-01        
+
+### Multivariate Feature Importances ###
+                     feature  importance
+0                name_metric    0.492605
+2           paragraph_metric    0.154941
+5             synonym_metric    0.075114
+3              author_metric    0.072452
+1            keywords_metric    0.068539
+4            language_metric    0.055042
+6      author_metric_missing    0.029793
+9    language_metric_missing    0.022463
+7   paragraph_metric_missing    0.015343
+8    keywords_metric_missing    0.008609
+10    synonym_metric_missing    0.005097
