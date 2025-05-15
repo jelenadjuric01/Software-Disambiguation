@@ -3,3 +3,5 @@ Version 2 - everything from Version 1 with added cleaned Kai Li Prism mentions (
 Version 3 - it is the same as version 2, but all URLs which are not GitHub, CRAN or PyPi are removed from ground truth as well as from candidates, for this version programming language metric was added
 Version 3.1 - the same as version 3, but with added synonyms 
 Version 3.2 - the same as version 3.1, but keywords from paper aren't fetched using openAlex tool, but using RAKE on paragraph surrounding software mention
+Version 3.3 - the same as version 3.2, but for missing keywords from github we use RAKE 
+Version 3.4 - the same as version 3.3, but instead of using TOPIC classifiers for missing keywords from PyPi, we use Rake

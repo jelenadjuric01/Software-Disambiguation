@@ -177,7 +177,7 @@ if __name__ == "__main__":
         evaluation(pd.DataFrame({"true_label": y_test.values, "prediction": y_pred}))
 
     print("\n### CV (selected features) ###")
-    selected_columns = ['name_metric', 'paragraph_metric', 'keywords_metric','language_metric','synonym_metric']
+    selected_columns = ['name_metric', 'paragraph_metric', 'keywords_metric','language_metric']
     print(f"Selected columns: {selected_columns}")
     selected_columns_imp=selected_columns+[col+"_missing" for col in selected_columns if col !="name_metric"]
     print(f"Selected columns (imputed): {selected_columns_imp}")

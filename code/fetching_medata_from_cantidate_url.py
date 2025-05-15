@@ -3,6 +3,7 @@ import json
 import sys
 import tempfile
 import os
+import pandas as pd
 import requests
 import re
 from urllib.parse import urlparse
@@ -101,6 +102,91 @@ def extract_pypi_metadata(url: str) -> Dict[str, Any]:
         "authors"     : authors,
         "language"  : "Python"
     }
+
+def extract_pypi_metadata_RAKE(url: str) -> Dict[str, Any]:
+    """Fetch metadata for a PyPI package given its project URL.
+
+    Parses the package name from the URL, retrieves info from the PyPI JSON API,
+    and extracts:
+      - name       : package name
+      - description: summary string
+      - keywords   : list from JSON or derived from Trove classifiers
+      - authors    : combined author + maintainer names
+      - language   : always "Python"
+
+    Args:
+        url: PyPI project URL (e.g. "https://pypi.org/project/foo").
+
+    Returns:
+        A dict with keys:
+          name (str), description (str), keywords (List[str]),
+          authors (List[str]), language (str).
+        On error, returns {"error": "..."}.
+    """
+    # 1) extract package name
+    parsed = urlparse(url)
+    parts = parsed.path.strip("/").split("/")
+    if len(parts) >= 2 and parts[0] in ("project", "simple"):
+        pkg = parts[1]
+    else:
+        pkg = parts[0] if parts else None
+
+    if not pkg:
+        return {"error": f"Cannot parse PyPI package name from URL: {url}"}
+
+    # 2) fetch JSON metadata
+    api_url = f"https://pypi.org/pypi/{pkg}/json"
+    resp    = requests.get(api_url)
+    if resp.status_code == 404:
+        return {"error": f"Package '{pkg}' not found on PyPI"}
+    resp.raise_for_status()
+    info = resp.json().get("info", {})
+
+    # 3) parse authors
+    def split_authors(raw: str) -> List[str]:
+        clean = re.sub(r"<[^>]+>", "", raw or "")
+        parts = re.split(r",| and |;", clean)
+        return [p.strip() for p in parts if p.strip()]
+
+    authors = split_authors(info.get("author", ""))
+    for m in split_authors(info.get("maintainer", "")):
+        if m not in authors:
+            authors.append(m)
+
+    # 4) summary & description
+    summary     = info.get("summary", "").strip()
+
+    # 5) JSON keywords (almost always empty)
+    raw_kw   = info.get("keywords") or ""
+    kw_parts = re.split(r"[,\s]+", raw_kw.strip())
+    keywords = [w for w in kw_parts if w]
+    if not keywords:
+        r = Rake(min_length=2, max_length=3)
+        r.extract_keywords_from_text(summary)
+        kws = r.get_ranked_phrases()[:5]
+
+        # 4c) clean & filter
+        cleaned = []
+        for kw in kws:
+            # strip stray punctuation/quotes and lowercase
+            tag = kw.strip(' "\'.,').lower()
+            # keep only multi-word, alphanumeric phrases
+            if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+                cleaned.append(tag)
+        # dedupe
+        seen = set()
+        kws = [t for t in cleaned if not (t in seen or seen.add(t))]
+        keywords = kws
+    
+    
+    return {
+        "name"        : info.get("name", pkg),
+        "description" : summary,
+        "keywords"    : keywords,
+        "authors"     : authors,
+        "language"  : "Python"
+    }
+
 
 def parse_authors_r(authors_r: str) -> List[str]:
     """Parse an R Authors@R DESCRIPTION field into author names.
@@ -347,6 +433,115 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
             else:
                 os.remove(entry_path)
 
+
+def extract_somef_metadata_with_RAKE(repo_url: str, somef_path: str = r"D:/MASTER/TMF/somef") -> dict:
+    """Run the SOMEF tool on a GitHub repository to extract metadata.
+
+    Invokes `poetry run somef describe` in a temp file, then reads JSON to extract:
+      - name        : project name
+      - description : text description
+      - keywords    : list of keywords
+      - authors     : list containing the GitHub repo owner’s display name
+      - language    : primary programming language by code size
+
+    Args:
+        repo_url:   URL of the GitHub repository.
+        somef_path: Path to the SOMEF project directory where `poetry run somef` is available.
+
+    Returns:
+        A dict with keys:
+          name (str), description (str), keywords (List[str]), authors (List[str]), language (str).
+        Returns an empty dict on failure.
+    """
+    # Create a temp file to store the output
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
+        output_path = tmp_file.name
+
+    try:
+        # Run SOMEF with poetry from its own directory
+        path = "D:\\MASTER\\TMF\\somef\\temp"
+        os.makedirs(path, exist_ok=True)
+        if sys.platform == "win32":
+        # note: in a Python string literal this is "\\\\?\\"
+            path = "\\\\?\\" + path
+        subprocess.run([
+            "poetry", "run", "somef", "describe",
+            "-r", repo_url,
+            "-o", output_path,
+            "-t", "0.93",
+            "-m",
+            "-kt", path
+        ], cwd=somef_path, check=True)
+
+        # Load the JSON output into Python
+        with open(output_path, "r", encoding="utf-8") as f:
+            metadata = json.load(f)
+
+        def get_first_value(key):
+            return metadata.get(key, [{}])[0].get("result", {}).get("value", "")
+
+        # Split keywords string into list
+        raw_keywords = get_first_value("keywords")
+        text = get_first_value("description")
+        keywords = [kw.strip() for kw in raw_keywords.split(",")] if raw_keywords else []
+        if len(keywords)==0:
+            kws = []
+            if not pd.isna(text) and text:
+                r = Rake(min_length=2, max_length=3)
+                r.extract_keywords_from_text(text)
+                kws = r.get_ranked_phrases()[:5]
+
+                # 4c) clean & filter
+                cleaned = []
+                for kw in kws:
+                    # strip stray punctuation/quotes and lowercase
+                    tag = kw.strip(' "\'.,').lower()
+                    # keep only multi-word, alphanumeric phrases
+                    if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+                        cleaned.append(tag)
+                # dedupe
+                seen = set()
+                kws = [t for t in cleaned if not (t in seen or seen.add(t))]
+                keywords = kws
+        # "owner" is treated as author (GitHub username)
+        owner = get_first_value("owner")
+        #get language
+        langs = metadata.get("programming_languages", [])
+        primary_language = "" 
+        if langs:
+            # pick the entry with the largest "size" under result
+            primary = max(
+                langs,
+                key=lambda x: x.get("result", {}).get("size", 0)
+            )
+            primary_language = primary.get("result", {}).get("value", "")
+        #gets only first description, could be multiple
+        return {
+            "name": get_first_value("name"),
+            "description": get_first_value("description"),
+            "keywords": keywords,
+            "authors": [get_github_user_data(owner)] if owner else [],
+            "language": primary_language
+
+        }
+
+
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to extract metadata for {repo_url}: {e}")
+        return {}
+
+    finally:
+        # delete temp file
+        os.remove(output_path)
+        #path = "D:\\MASTER\\TMF\\somef\\temp"
+        for entry in os.scandir(path):
+            entry_path = entry.path
+            if entry.is_dir(follow_symlinks=False):
+                shutil.rmtree(entry_path) 
+            else:
+                os.remove(entry_path)
+
+
 #Function that handles the generic website metadata extraction
 def extract_website_metadata(url: str) -> dict:
     """
@@ -402,6 +597,6 @@ def get_metadata(url: str) -> dict:
     
 if __name__ == "__main__":
     # Example usage
-    url = "https://github.com/scikit-learn/scikit-learn"
-    metadata = get_metadata(url)
+    url = "https://github.com/sachsmc/stdReg2"
+    metadata = extract_somef_metadata_with_RAKE(url)
     print(metadata)

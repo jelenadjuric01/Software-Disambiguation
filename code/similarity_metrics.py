@@ -282,7 +282,7 @@ def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFra
     Returns:
         pd.DataFrame: Subset DataFrame with original columns plus the five metrics.
     """
-    for col in ['name_metric','author_metric','paragraph_metric','keywords_metric',"language_metric"]:
+    for col in ['name_metric','author_metric','paragraph_metric','keywords_metric',"language_metric",'synonym_metric']:
         if col not in df.columns:
             df[col] = np.nan
 
@@ -334,12 +334,20 @@ def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFra
         ),
         axis=1
     )
+    sm = valid & df['synonym_metric'].isna()
+    df.loc[sm, 'synonym_metric'] = df.loc[sm].apply(
+        lambda r: synonym_name_similarity(
+            r['metadata_name'],
+            r['synonyms']
+        ),
+        axis=1
+    )
     # 6) Build the “sub” DataFrame you originally returned
     cols = [
         'id','name','doi','paragraph','authors','field/topic/keywords','language',
-        'url (ground truth)','candidate_urls',
+        'url (ground truth)','candidate_urls','synonyms',
         'metadata_name','metadata_authors','metadata_keywords','metadata_description','metadata_language',
-        'name_metric','author_metric','paragraph_metric','keywords_metric','language_metric','true_label'
+        'name_metric','author_metric','paragraph_metric','keywords_metric','language_metric','synonym_metric','true_label'
     ]
     # 7) Add the true_label column
     df['true_label'] = [

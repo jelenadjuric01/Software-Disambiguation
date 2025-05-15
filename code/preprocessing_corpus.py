@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 from typing import List, Tuple, Dict, Optional
 import os
-from fetching_medata_from_cantidate_url import get_metadata  
+from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, get_metadata  
 import re
 import csv
 from similarity_metrics import compute_similarity_df, get_average_min_max, keyword_similarity_with_fallback, synonym_name_similarity
@@ -377,7 +377,38 @@ def keywords_from_paper_rake(text: str, top_n: int = 5) -> str:
     phrases = rake.get_ranked_phrases()[:top_n]
     # 5) Join and return
     return ",".join(phrases)
-    
+def missing_github_RAKE(metadata:dict):
+    """
+    If the URL is a GitHub link, extract keywords using RAKE.
+    Otherwise, return an empty string.
+    """
+    for url in metadata.keys():
+        if "github.com" in url:
+            # Extract the text from the metadata
+            text = metadata[url].get("description", "")
+            keywords = metadata[url].get("keywords", "")
+            if len(keywords)==0:
+                kws = []
+                if not kws and not pd.isna(text) and text:
+                    r = Rake(min_length=2, max_length=3)
+                    r.extract_keywords_from_text(text)
+                    kws = r.get_ranked_phrases()[:5]
+
+                    # 4c) clean & filter
+                    cleaned = []
+                    for kw in kws:
+                        # strip stray punctuation/quotes and lowercase
+                        tag = kw.strip(' "\'.,').lower()
+                        # keep only multi-word, alphanumeric phrases
+                        if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+                            cleaned.append(tag)
+                    # dedupe
+                    seen = set()
+                    kws = [t for t in cleaned if not (t in seen or seen.add(t))]
+                    metadata[url]["keywords"] = kws
+                    print(f"Extracted keywords from GitHub URL: {url}, {kws}")
+            
+
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
     """'''
@@ -503,11 +534,20 @@ if __name__ == "__main__":
     model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_2.xlsx"
     output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/pairs.csv"
-    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/model_input.csv"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/pairs.csv"
+    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/model_input.csv"
     #df = pd.read_csv(output_path)
     df = pd.read_excel(excel_path)
-    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
-    
+    with open(output_json_path, "r", encoding="utf-8") as f:
+        try:
+            metadata_cache = json.load(f)
+        except json.JSONDecodeError:
+            print("⚠️ Warning: The JSON file is empty or malformed.")
+            metadata_cache = {}
+    for url in metadata_cache.keys():
+        if "pypi.org" in url or "pypi.python.org" in url:
+            metadata_cache[url]=extract_pypi_metadata_RAKE(url)
+    with open('D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_4.json', "w", encoding="utf-8") as f:
+        json.dump(metadata_cache, f, indent=4)
