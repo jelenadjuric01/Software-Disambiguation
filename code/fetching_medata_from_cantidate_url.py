@@ -199,8 +199,9 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
     # 4) KEYWORDS: DESCRIPTION Keywords → Task Views HTML fallback
     raw_kw = data.get("Keywords") or ""
     kws    = [w.strip() for w in re.split(r"[,\s]+", raw_kw) if w.strip()]
+
     if not kws:
-        r = Rake(min_length=1, max_length=3)
+        r = Rake(min_length=2, max_length=3)
         r.extract_keywords_from_text(description)
         kws = r.get_ranked_phrases()[:5]
 
@@ -210,7 +211,7 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
             # strip stray punctuation/quotes and lowercase
             tag = kw.strip(' "\'.,').lower()
             # keep only multi-word, alphanumeric phrases
-            if len(tag.split()) >= 1 and re.match(r'^[\w\s]+$', tag):
+            if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
                 cleaned.append(tag)
         # dedupe
         seen = set()

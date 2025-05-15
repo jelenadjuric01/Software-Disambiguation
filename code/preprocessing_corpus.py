@@ -507,21 +507,7 @@ if __name__ == "__main__":
     output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/similarities.csv"
     output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/pairs.csv"
     model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/model_input.csv"
-    df = pd.read_csv(output_path)
-    sim = pd.read_csv(output_path_similarities)
-    corpus = pd.read_excel(excel_path)
-    df.dropna(subset=['metadata_name'], inplace=True)
-    sim['field/topic/keywords'] = df['field/topic/keywords']
-    sim["metadata_keywords"] = df["metadata_keywords"]
-    sim['keywords_metric'] = sim.apply(
-        lambda row: keyword_similarity_with_fallback(
-            row['field/topic/keywords'],
-            row['metadata_keywords'],
-            row['paragraph']
-        ),
-        axis=1
-    )
-    sim.to_csv(output_path_similarities, index=False)
-    model_input = sim[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
-    model_input.to_csv(model_input_path, index=False)
+    #df = pd.read_csv(output_path)
+    df = pd.read_excel(excel_path)
+    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
     
