@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 from typing import List, Tuple, Dict, Optional
 import os
-from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, get_metadata  
+from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, extract_pypi_metadata_RAKE_class, get_metadata  
 import re
 import csv
 from similarity_metrics import compute_similarity_df, get_average_min_max, keyword_similarity_with_fallback, synonym_name_similarity
@@ -533,21 +533,22 @@ if __name__ == "__main__":
     model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
     model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_2.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/pairs.csv"
-    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/model_input.csv"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_4.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.5/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.5/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.5/pairs.csv"
+    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.5/model_input.csv"
     #df = pd.read_csv(output_path)
     df = pd.read_excel(excel_path)
     with open(output_json_path, "r", encoding="utf-8") as f:
-        try:
-            metadata_cache = json.load(f)
-        except json.JSONDecodeError:
-            print("⚠️ Warning: The JSON file is empty or malformed.")
-            metadata_cache = {}
+        metadata_cache = json.load(f)
     for url in metadata_cache.keys():
         if "pypi.org" in url or "pypi.python.org" in url:
-            metadata_cache[url]=extract_pypi_metadata_RAKE(url)
-    with open('D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_4.json', "w", encoding="utf-8") as f:
-        json.dump(metadata_cache, f, indent=4)
+            metadata_cache[url] = extract_pypi_metadata_RAKE_class(url)
+    with open("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_5.json", "w", encoding="utf-8") as f:
+        json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
+    df = make_pairs(df,output_path_pairs)
+    add_metadata(df,metadata_cache, output_path)
+    df = compute_similarity_df(df,output_path_similarities)
+    model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
+    model_input.to_csv(model_input_path, index=False)

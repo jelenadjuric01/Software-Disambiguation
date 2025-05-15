@@ -187,6 +187,107 @@ def extract_pypi_metadata_RAKE(url: str) -> Dict[str, Any]:
         "language"  : "Python"
     }
 
+def extract_pypi_metadata_RAKE_class(url: str) -> Dict[str, Any]:
+    """Fetch metadata for a PyPI package given its project URL.
+
+    Parses the package name from the URL, retrieves info from the PyPI JSON API,
+    and extracts:
+      - name       : package name
+      - description: summary string
+      - keywords   : list from JSON or derived from Trove classifiers
+      - authors    : combined author + maintainer names
+      - language   : always "Python"
+
+    Args:
+        url: PyPI project URL (e.g. "https://pypi.org/project/foo").
+
+    Returns:
+        A dict with keys:
+          name (str), description (str), keywords (List[str]),
+          authors (List[str]), language (str).
+        On error, returns {"error": "..."}.
+    """
+    # 1) extract package name
+    parsed = urlparse(url)
+    parts = parsed.path.strip("/").split("/")
+    if len(parts) >= 2 and parts[0] in ("project", "simple"):
+        pkg = parts[1]
+    else:
+        pkg = parts[0] if parts else None
+
+    if not pkg:
+        return {"error": f"Cannot parse PyPI package name from URL: {url}"}
+
+    # 2) fetch JSON metadata
+    api_url = f"https://pypi.org/pypi/{pkg}/json"
+    resp    = requests.get(api_url)
+    if resp.status_code == 404:
+        return {"error": f"Package '{pkg}' not found on PyPI"}
+    resp.raise_for_status()
+    info = resp.json().get("info", {})
+
+    # 3) parse authors
+    def split_authors(raw: str) -> List[str]:
+        clean = re.sub(r"<[^>]+>", "", raw or "")
+        parts = re.split(r",| and |;", clean)
+        return [p.strip() for p in parts if p.strip()]
+
+    authors = split_authors(info.get("author", ""))
+    for m in split_authors(info.get("maintainer", "")):
+        if m not in authors:
+            authors.append(m)
+
+    # 4) summary & description
+    summary     = info.get("summary", "").strip()
+
+    # 5) JSON keywords (almost always empty)
+    raw_kw   = info.get("keywords") or ""
+    kw_parts = re.split(r"[,\s]+", raw_kw.strip())
+    keywords = [w for w in kw_parts if w]
+    if not keywords:
+        r = Rake(min_length=2, max_length=3)
+        r.extract_keywords_from_text(summary)
+        kws = r.get_ranked_phrases()[:5]
+
+        # 4c) clean & filter
+        cleaned = []
+        for kw in kws:
+            # strip stray punctuation/quotes and lowercase
+            tag = kw.strip(' "\'.,').lower()
+            # keep only multi-word, alphanumeric phrases
+            if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+                cleaned.append(tag)
+        # dedupe
+        seen = set()
+        kws = [t for t in cleaned if not (t in seen or seen.add(t))]
+        if not kws:
+            classifiers = info.get("classifiers", [])
+
+    # 7) derive fallback keywords from classifiers if JSON was empty
+            if classifiers:
+                derived = []
+                for c in classifiers:
+                    # keep only Topic-related classifiers
+                    if not c.startswith("Topic ::"):
+                        continue
+                    tag = c.split("::")[-1].strip()
+                    # length filter + blacklist
+                    if len(tag) < MIN_LEN or tag in BLACKLIST:
+                        continue
+                    derived.append(tag)
+                # dedupe while preserving order
+                seen = set()
+                keywords = [t for t in derived if not (t in seen or seen.add(t))]
+    
+    
+    return {
+        "name"        : info.get("name", pkg),
+        "description" : summary,
+        "keywords"    : keywords,
+        "authors"     : authors,
+        "language"  : "Python"
+    }
+
 
 def parse_authors_r(authors_r: str) -> List[str]:
     """Parse an R Authors@R DESCRIPTION field into author names.
