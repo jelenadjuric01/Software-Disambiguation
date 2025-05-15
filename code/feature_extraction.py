@@ -17,7 +17,7 @@ from models import MedianImputerWithIndicator, make_model, split_data, get_prepr
 
 if __name__ == "__main__":
     # Load & split
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.5/model_input.csv")
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.6/model_input.csv")
     X_trainval, X_test, y_trainval, y_test = split_data(df, "true_label", test_size=0.2)
     cols_to_impute = ['author_metric', 'paragraph_metric', 'keywords_metric', 'language_metric','synonym_metric']
     X_tree_train = X_trainval.copy()
