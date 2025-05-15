@@ -120,8 +120,8 @@ Version 3.4
 ### Univariate Feature Scores ###
                      feature       score         pvalue
 0                name_metric  977.111739  1.213030e-196
-1            keywords_metric  974.278891  3.999266e-196
 2           paragraph_metric  909.873088  2.796653e-184
+1            keywords_metric  646.003072  2.144799e-134
 5             synonym_metric  399.481909   1.133756e-85
 4            language_metric  282.003032   1.149601e-61
 6      author_metric_missing  176.991228   9.821232e-40
@@ -133,14 +133,14 @@ Version 3.4
 
 ### Multivariate Feature Importances ###
                      feature  importance
-0                name_metric    0.436522
-5             synonym_metric    0.127902
-1            keywords_metric    0.122014
-2           paragraph_metric    0.119368
-3              author_metric    0.070861
-4            language_metric    0.048177
-6      author_metric_missing    0.029346
-9    language_metric_missing    0.019076
-7   paragraph_metric_missing    0.013390
-8    keywords_metric_missing    0.008537
-10    synonym_metric_missing    0.004808
+0                name_metric    0.444254
+5             synonym_metric    0.135562
+2           paragraph_metric    0.133105
+1            keywords_metric    0.097956
+3              author_metric    0.069980
+4            language_metric    0.047535
+6      author_metric_missing    0.026934
+9    language_metric_missing    0.019189
+7   paragraph_metric_missing    0.011616
+8    keywords_metric_missing    0.008329
+10    synonym_metric_missing    0.005540

@@ -2,7 +2,11 @@
   "https://github.com/bsonnino/FinCalc": {
     "name": "FinCalc",
     "description": "This project shows a Financial Calc in Delphi to be published to the Windows Store",
-    "keywords": [],
+    "keywords": [
+      "windows store",
+      "project shows",
+      "financial calc"
+    ],
     "authors": [
       "Bruno Sonnino"
     ],
@@ -11,7 +15,9 @@
   "https://github.com/biopython/biopython.github.io": {
     "name": "biopython.github.io",
     "description": "Source of biopython.org website, migrated from MediaWiki",
-    "keywords": [],
+    "keywords": [
+      "org website"
+    ],
     "authors": [
       "Biopython Project"
     ],
@@ -46,7 +52,9 @@
   "https://pypi.org/project/patchwork/": {
     "name": "patchwork",
     "description": "Deployment/sysadmin operations, powered by Fabric",
-    "keywords": [],
+    "keywords": [
+      "sysadmin operations"
+    ],
     "authors": [
       "Jeff Forcier"
     ],
@@ -64,7 +72,11 @@
   "https://github.com/lawremi/rtracklayer": {
     "name": "rtracklayer",
     "description": "R interface to genome annotation files and the UCSC genome browser",
-    "keywords": [],
+    "keywords": [
+      "ucsc genome browser",
+      "genome annotation files",
+      "r interface"
+    ],
     "authors": [
       "Michael Lawrence"
     ],
@@ -91,7 +103,9 @@
   "https://github.com/cran/funFEM": {
     "name": "funFEM",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  funFEM — Clustering in the Discriminative Functional Subspace  ",
-    "keywords": [],
+    "keywords": [
+      "discriminative functional subspace"
+    ],
     "authors": [
       "cran"
     ],
@@ -100,7 +114,10 @@
   "https://github.com/goslim56/CoAPthon": {
     "name": "CoAPthon",
     "description": "CoAPthon is a python library to the CoAP protocol. ",
-    "keywords": [],
+    "keywords": [
+      "python library",
+      "coap protocol"
+    ],
     "authors": [
       "goslim56"
     ],
@@ -153,7 +170,9 @@
   "https://github.com/cran/tidyr": {
     "name": "tidyr",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  tidyr — Tidy Messy Data. Homepage: https://tidyr.tidyverse.org, https://github.com/tidyverse/tidyr  Report bugs for this package: https://github.com/tidyverse/tidyr/issues",
-    "keywords": [],
+    "keywords": [
+      "tidyr report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -162,7 +181,10 @@
   "https://github.com/cuixueshe/earthworm": {
     "name": "earthworm",
     "description": "Learning English through the method of constructing sentences with conjunctions",
-    "keywords": [],
+    "keywords": [
+      "learning english",
+      "constructing sentences"
+    ],
     "authors": [
       "cuixueshe"
     ],
@@ -171,7 +193,9 @@
   "https://github.com/RickKoster/gdsCAD": {
     "name": "gdsCAD",
     "description": "A simple Python package for creating or reading GDSII layout files.",
-    "keywords": [],
+    "keywords": [
+      "simple python package"
+    ],
     "authors": [
       "RickKoster"
     ],
@@ -180,7 +204,9 @@
   "https://github.com/cran/mirt": {
     "name": "mirt",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  mirt — Multidimensional Item Response Theory. Homepage: https://philchalmers.github.io/mirt/, https://github.com/philchalmers/mirt/wiki, https://groups.google.com/forum/#!forum/mirt-package  Report bugs for this package: https://github.com/phil ...",
-    "keywords": [],
+    "keywords": [
+      "package report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -189,7 +215,11 @@
   "https://pypi.org/project/sklearn/": {
     "name": "sklearn",
     "description": "deprecated sklearn package, use scikit-learn instead",
-    "keywords": [],
+    "keywords": [
+      "deprecated sklearn package",
+      "use scikit",
+      "learn instead"
+    ],
     "authors": [],
     "language": "Python"
   },
@@ -217,7 +247,11 @@
   "https://github.com/himanshugangal/GillespieSSA": {
     "name": "GillespieSSA",
     "description": "Implementation of gillespie stochastic simulation algorithm on reaction-diffusion mechanisms. Uses theoretical background of chemical kinetics. ",
-    "keywords": [],
+    "keywords": [
+      "uses theoretical background",
+      "diffusion mechanisms",
+      "chemical kinetics"
+    ],
     "authors": [
       "Himanshu Gangal"
     ],
@@ -226,7 +260,9 @@
   "https://github.com/conda-forge/r-sfsmisc-feedstock": {
     "name": "r-sfsmisc-feedstock",
     "description": "A conda-smithy repository for r-sfsmisc.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -244,7 +280,9 @@
   "https://github.com/cran/venn": {
     "name": "venn",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  venn — Draw Venn Diagrams. Homepage: https://github.com/dusadrian/venn  Report bugs for this package: https://github.com/dusadrian/venn/issues",
-    "keywords": [],
+    "keywords": [
+      "venn report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -267,7 +305,9 @@
   "https://github.com/fabianp/mord": {
     "name": "mord",
     "description": "Ordinal regression algorithms",
-    "keywords": [],
+    "keywords": [
+      "ordinal regression algorithms"
+    ],
     "authors": [
       "Fabian Pedregosa"
     ],
@@ -276,7 +316,9 @@
   "https://github.com/JeffFessler/mirt": {
     "name": "mirt",
     "description": "Michigan Image Reconstruction Toolbox (MIRT) - Matlab version",
-    "keywords": [],
+    "keywords": [
+      "matlab version"
+    ],
     "authors": [
       "Jeff Fessler"
     ],
@@ -285,7 +327,9 @@
   "https://pypi.org/project/pSyCH/": {
     "name": "pSyCH",
     "description": "LaTeX generation for tables, math and figures",
-    "keywords": [],
+    "keywords": [
+      "latex generation"
+    ],
     "authors": [
       "Nishad Mandlik"
     ],
@@ -303,7 +347,9 @@
   "https://github.com/cran/intsvy": {
     "name": "intsvy",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  intsvy — International Assessment Data Manager. Homepage: https://daniel-caro.com/r-intsvy/, https://github.com/eldafani/intsvy  Report bugs for this package: https://github.com/eldafani/intsvy/issues",
-    "keywords": [],
+    "keywords": [
+      "intsvy report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -357,7 +403,9 @@
   "https://github.com/smstele/RainbowRat": {
     "name": "RainbowRat",
     "description": "Advanced android spyware",
-    "keywords": [],
+    "keywords": [
+      "advanced android spyware"
+    ],
     "authors": [
       "smstele"
     ],
@@ -379,7 +427,9 @@
   "https://github.com/cran/furniture": {
     "name": "furniture",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  furniture — Furniture for Quantitative Scientists  ",
-    "keywords": [],
+    "keywords": [
+      "quantitative scientists"
+    ],
     "authors": [
       "cran"
     ],
@@ -404,7 +454,11 @@
   "https://github.com/cran/knitr": {
     "name": "knitr",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  knitr — A General-Purpose Package for Dynamic Report Generation in R. Homepage: https://yihui.org/knitr/  Report bugs for this package: https://github.com/yihui/knitr/issues",
-    "keywords": [],
+    "keywords": [
+      "dynamic report generation",
+      "report bugs",
+      "purpose package"
+    ],
     "authors": [
       "cran"
     ],
@@ -413,7 +467,9 @@
   "https://github.com/cran/ads": {
     "name": "ads",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ads — Spatial Point Patterns Analysis. Homepage: https://forge.ird.fr/amap/ads  Report bugs for this package: https://forge.ird.fr/amap/ads/-/issues",
-    "keywords": [],
+    "keywords": [
+      "ads report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -450,7 +506,9 @@
   "https://github.com/cytoflow/cytoflow-examples": {
     "name": "cytoflow-examples",
     "description": "Example data sets for cytoflow",
-    "keywords": [],
+    "keywords": [
+      "example data sets"
+    ],
     "authors": [
       "cytoflow"
     ],
@@ -501,7 +559,9 @@
   "https://github.com/cran/cellranger": {
     "name": "cellranger",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  cellranger — Translate Spreadsheet Cell Ranges to Rows and Columns. Homepage: https://github.com/rsheets/cellranger  Report bugs for this package: https://github.com/rsheets/cellranger/issues",
-    "keywords": [],
+    "keywords": [
+      "cellranger report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -510,7 +570,11 @@
   "https://github.com/crazyhottommy/pyflow-cellranger": {
     "name": "pyflow-cellranger",
     "description": "A Snakemake pipeline for cellranger to process 10x single-cell RNAseq data",
-    "keywords": [],
+    "keywords": [
+      "process 10x single",
+      "cell rnaseq data",
+      "snakemake pipeline"
+    ],
     "authors": [
       "Ming Tang"
     ],
@@ -519,7 +583,10 @@
   "https://github.com/mmulvahill/berd009_ropensci_cregulomereview": {
     "name": "berd009_ropensci_cregulomereview",
     "description": "Package review of cRegulome for ROpenSci's onbaording process",
-    "keywords": [],
+    "keywords": [
+      "package review",
+      "onbaording process"
+    ],
     "authors": [
       "Matt Mulvahill"
     ],
@@ -537,7 +604,9 @@
   "https://github.com/cran/PresenceAbsence": {
     "name": "PresenceAbsence",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  PresenceAbsence — Presence-Absence Model Evaluation  ",
-    "keywords": [],
+    "keywords": [
+      "absence model evaluation"
+    ],
     "authors": [
       "cran"
     ],
@@ -564,7 +633,9 @@
   "https://github.com/strands-project/strands_perception_people": {
     "name": "strands_perception_people",
     "description": "long-term detection, tracking and recognition of people",
-    "keywords": [],
+    "keywords": [
+      "term detection"
+    ],
     "authors": [
       "STRANDS"
     ],
@@ -716,7 +787,9 @@
   "https://github.com/daniel-nagy/md-data-table": {
     "name": "md-data-table",
     "description": "Material Design Data Table for Angular Material",
-    "keywords": [],
+    "keywords": [
+      "angular material"
+    ],
     "authors": [
       "Daniel Nagy"
     ],
@@ -749,7 +822,9 @@
   "https://github.com/Sanakan8472/copy-dialog-lunar-lander": {
     "name": "copy-dialog-lunar-lander",
     "description": "Play lunar lander in you windows file copy dialog",
-    "keywords": [],
+    "keywords": [
+      "play lunar lander"
+    ],
     "authors": [
       "Sanakan8472"
     ],
@@ -808,7 +883,10 @@
   "https://github.com/cran/ggnewscale": {
     "name": "ggnewscale",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ggnewscale — Multiple Fill and Colour Scales in 'ggplot2'. Homepage: https://eliocamp.github.io/ggnewscale/, https://github.com/eliocamp/ggnewscale  Report bugs for this package: https://github.com/eliocamp/ggnewscale/issues",
-    "keywords": [],
+    "keywords": [
+      "ggnewscale report bugs",
+      "colour scales"
+    ],
     "authors": [
       "cran"
     ],
@@ -843,7 +921,9 @@
   "https://pypi.org/project/tandem/": {
     "name": "tandem",
     "description": "Look at data in different ways",
-    "keywords": [],
+    "keywords": [
+      "different ways"
+    ],
     "authors": [
       "Philipp Eller"
     ],
@@ -852,7 +932,10 @@
   "https://github.com/bistromath/gr-air-modes": {
     "name": "gr-air-modes",
     "description": "Gnuradio Mode-S/ADS-B radio",
-    "keywords": [],
+    "keywords": [
+      "gnuradio mode",
+      "b radio"
+    ],
     "authors": [
       "Nick Foster"
     ],
@@ -861,7 +944,10 @@
   "https://github.com/leeshawn/SPAtest": {
     "name": "SPAtest",
     "description": "Score Test Based on Saddlepoint Approximation",
-    "keywords": [],
+    "keywords": [
+      "score test based",
+      "saddlepoint approximation"
+    ],
     "authors": [
       "Seunggeun (Shawn) Lee"
     ],
@@ -907,7 +993,9 @@
   "https://github.com/Erland366/edd_utils": {
     "name": "edd_utils",
     "description": "A brief description of your framework",
-    "keywords": [],
+    "keywords": [
+      "brief description"
+    ],
     "authors": [
       "Edd"
     ],
@@ -928,7 +1016,9 @@
   "https://pypi.org/project/statistix/": {
     "name": "statistix",
     "description": "Coming soon",
-    "keywords": [],
+    "keywords": [
+      "coming soon"
+    ],
     "authors": [],
     "language": "Python"
   },
@@ -936,7 +1026,9 @@
   "https://github.com/conda-forge/r-nlsic-feedstock": {
     "name": "r-nlsic-feedstock",
     "description": "A conda-smithy repository for r-nlsic.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -945,7 +1037,10 @@
   "https://github.com/samueltc/ABBYY": {
     "name": "ABBYY",
     "description": "Simple Python wrapper for ABBYY Cloud OCR",
-    "keywords": [],
+    "keywords": [
+      "simple python wrapper",
+      "abbyy cloud ocr"
+    ],
     "authors": [
       "Samuel Cossette"
     ],
@@ -977,7 +1072,12 @@
   "https://pypi.org/project/TreeToReads/": {
     "name": "TreeToReads",
     "description": "Tree to Reads - A python script to to read a tree, resolve polytomies, generate mutations and simulate NGS reads.",
-    "keywords": [],
+    "keywords": [
+      "simulate ngs reads",
+      "resolve polytomies",
+      "python script",
+      "generate mutations"
+    ],
     "authors": [
       "Emily Jane McTavish"
     ],
@@ -986,7 +1086,9 @@
   "https://github.com/xanzy/go-gitlab": {
     "name": "go-gitlab",
     "description": "GitLab Go SDK",
-    "keywords": [],
+    "keywords": [
+      "gitlab go sdk"
+    ],
     "authors": [
       "xanzy"
     ],
@@ -995,7 +1097,9 @@
   "https://github.com/pyscf/mpi4pyscf": {
     "name": "mpi4pyscf",
     "description": "MPI parallelization for PySCF",
-    "keywords": [],
+    "keywords": [
+      "mpi parallelization"
+    ],
     "authors": [
       "pyscf"
     ],
@@ -1016,7 +1120,10 @@
   "https://github.com/cran/WeightedROC": {
     "name": "WeightedROC",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  WeightedROC — Fast, Weighted ROC Curves. Homepage: https://github.com/tdhock/WeightedROC  Report bugs for this package: https://github.com/tdhock/WeightedROC/issues",
-    "keywords": [],
+    "keywords": [
+      "weightedroc report bugs",
+      "weighted roc curves"
+    ],
     "authors": [
       "cran"
     ],
@@ -1057,7 +1164,10 @@
   "https://github.com/Tanganelli/CoAPthon": {
     "name": "CoAPthon",
     "description": "CoAPthon is a python library to the CoAP protocol aligned with the RFC",
-    "keywords": [],
+    "keywords": [
+      "coap protocol aligned",
+      "python library"
+    ],
     "authors": [
       "Giacomo Tanganelli"
     ],
@@ -1066,7 +1176,9 @@
   "https://github.com/alexdobin/STAR": {
     "name": "STAR",
     "description": "RNA-seq aligner",
-    "keywords": [],
+    "keywords": [
+      "seq aligner"
+    ],
     "authors": [
       "Alexander Dobin"
     ],
@@ -1143,7 +1255,9 @@
   "https://github.com/tiagoantao/biopython-notebook": {
     "name": "biopython-notebook",
     "description": "Notebooks to introduce biopython",
-    "keywords": [],
+    "keywords": [
+      "introduce biopython"
+    ],
     "authors": [
       "Tiago Antao"
     ],
@@ -1240,7 +1354,9 @@
   "https://pypi.org/project/whoa/": {
     "name": "whoa",
     "description": "defn: define infrastructure",
-    "keywords": [],
+    "keywords": [
+      "define infrastructure"
+    ],
     "authors": [],
     "language": "Python"
   },
@@ -1261,7 +1377,9 @@
   "https://pypi.org/project/modes/": {
     "name": "modes",
     "description": "Photonic mode solver.",
-    "keywords": [],
+    "keywords": [
+      "photonic mode solver"
+    ],
     "authors": [
       "Jean-Luc Tambasco"
     ],
@@ -1307,7 +1425,9 @@
   "https://github.com/r2dt-bio/r2dt.bio": {
     "name": "r2dt.bio",
     "description": "Website deployed at r2dt.bio",
-    "keywords": [],
+    "keywords": [
+      "website deployed"
+    ],
     "authors": [
       "R2DT"
     ],
@@ -1328,7 +1448,10 @@
   "https://github.com/yingstat/intePareto-Supplementary": {
     "name": "intePareto-Supplementary",
     "description": "files and scripts for case study in intePareto paper",
-    "keywords": [],
+    "keywords": [
+      "intepareto paper",
+      "case study"
+    ],
     "authors": [
       "Ying"
     ],
@@ -1355,7 +1478,9 @@
   "https://github.com/hynd/heka-tsutils-plugins": {
     "name": "heka-tsutils-plugins",
     "description": "Some work-in-progress Heka plugins",
-    "keywords": [],
+    "keywords": [
+      "progress heka plugins"
+    ],
     "authors": [
       "Kieren Hynd"
     ],
@@ -1393,7 +1518,9 @@
   "https://github.com/bmsimons/NetflixStatistix": {
     "name": "NetflixStatistix",
     "description": "Avans Informatica - Netflix Statistix Java Application",
-    "keywords": [],
+    "keywords": [
+      "avans informatica"
+    ],
     "authors": [
       "Bart Simons"
     ],
@@ -1418,7 +1545,9 @@
   "https://github.com/cran/readr": {
     "name": "readr",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  readr — Read Rectangular Text Data. Homepage: https://readr.tidyverse.org, https://github.com/tidyverse/readr  Report bugs for this package: https://github.com/tidyverse/readr/issues",
-    "keywords": [],
+    "keywords": [
+      "readr report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -1427,7 +1556,9 @@
   "https://github.com/ljdursi/poapy": {
     "name": "poapy",
     "description": "A simple Partial Order Aligner based on Lee, Grasso and Sharlow (2002), for education/demonstration purposes",
-    "keywords": [],
+    "keywords": [
+      "demonstration purposes"
+    ],
     "authors": [
       "Jonathan Dursi"
     ],
@@ -1436,7 +1567,9 @@
   "https://github.com/cran/deepredeff": {
     "name": "deepredeff",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  deepredeff — Deep Learning Prediction of Effectors. Homepage: https://github.com/ruthkr/deepredeff/  Report bugs for this package: https://github.com/ruthkr/deepredeff/issues/",
-    "keywords": [],
+    "keywords": [
+      "report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -1490,7 +1623,9 @@
   "https://github.com/cran/tensorflow": {
     "name": "tensorflow",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  tensorflow — R Interface to 'TensorFlow'. Homepage: https://github.com/rstudio/tensorflow  Report bugs for this package: https://github.com/rstudio/tensorflow/issues",
-    "keywords": [],
+    "keywords": [
+      "tensorflow report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -1499,7 +1634,9 @@
   "https://github.com/conda-forge/r-ggsci-feedstock": {
     "name": "r-ggsci-feedstock",
     "description": "A conda-smithy repository for r-ggsci.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -1508,7 +1645,10 @@
   "https://github.com/cran/PVR": {
     "name": "PVR",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  PVR — Phylogenetic Eigenvectors Regression and Phylogentic Signal-Representation Curve  ",
-    "keywords": [],
+    "keywords": [
+      "representation curve",
+      "phylogentic signal"
+    ],
     "authors": [
       "cran"
     ],
@@ -1532,7 +1672,10 @@
   "https://github.com/expersso/pdftables": {
     "name": "pdftables",
     "description": "Programmatic Conversion of PDF Tables With R",
-    "keywords": [],
+    "keywords": [
+      "programmatic conversion",
+      "pdf tables"
+    ],
     "authors": [
       "EP"
     ],
@@ -1570,7 +1713,10 @@
   "https://github.com/cran/sfsmisc": {
     "name": "sfsmisc",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  sfsmisc — Utilities from 'Seminar fuer Statistik' ETH Zurich. Homepage: https://github.com/mmaechler/sfsmisc  Report bugs for this package: https://github.com/mmaechler/sfsmisc/issues",
-    "keywords": [],
+    "keywords": [
+      "sfsmisc report bugs",
+      "seminar fuer statistik"
+    ],
     "authors": [
       "cran"
     ],
@@ -1579,7 +1725,10 @@
   "https://github.com/ensemble-core/NdLinear": {
     "name": "NdLinear",
     "description": "NdLinear is a simple drop-in replacement for nn.Linear that makes your models smaller, faster, and better. It works for any model.  Join the community: https://discord.gg/6DWHusWN",
-    "keywords": [],
+    "keywords": [
+      "simple drop",
+      "models smaller"
+    ],
     "authors": [
       "Ensemble AI"
     ],
@@ -1632,7 +1781,9 @@
   "https://github.com/fxgames/pvrtextool_wrapper": {
     "name": "pvrtextool_wrapper",
     "description": "PVRTexTool wrapper for Unity3D ",
-    "keywords": [],
+    "keywords": [
+      "pvrtextool wrapper"
+    ],
     "authors": [
       "FX Games"
     ],
@@ -1657,7 +1808,9 @@
   "https://pypi.org/project/CoAPthon/": {
     "name": "CoAPthon",
     "description": "CoAPthon is an implementation of the CoAP protocol.",
-    "keywords": [],
+    "keywords": [
+      "coap protocol"
+    ],
     "authors": [
       "Giacomo Tanganelli"
     ],
@@ -1715,7 +1868,10 @@
   "https://github.com/cran/assignPOP": {
     "name": "assignPOP",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  assignPOP — Population Assignment using Genetic, Non-Genetic or Integrated Data in a Machine Learning Framework. Homepage: https://github.com/alexkychen/assignPOP  ",
-    "keywords": [],
+    "keywords": [
+      "machine learning framework",
+      "integrated data"
+    ],
     "authors": [
       "cran"
     ],
@@ -1724,7 +1880,11 @@
   "https://github.com/WHU-USI3DV/SparseDC": {
     "name": "SparseDC",
     "description": "[Information Fusion 2024] SparseDC: Depth Completion From Sparse and Non-uniform Inputs",
-    "keywords": [],
+    "keywords": [
+      "information fusion 2024",
+      "uniform inputs",
+      "depth completion"
+    ],
     "authors": [
       "WHU-USI3DV"
     ],
@@ -1746,7 +1906,9 @@
   "https://pypi.org/project/tsutils/": {
     "name": "tsutils",
     "description": "A collection of helper commands for Red-DiscordBot",
-    "keywords": [],
+    "keywords": [
+      "helper commands"
+    ],
     "authors": [
       "The Tsubotki Team"
     ],
@@ -1755,7 +1917,11 @@
   "https://pypi.org/project/dae/": {
     "name": "dae",
     "description": "da Engine that provides toolbox and namespace extensions for writing modular cherrypy applications.",
-    "keywords": [],
+    "keywords": [
+      "provides toolbox",
+      "namespace extensions",
+      "da engine"
+    ],
     "authors": [
       "Daniel Skinner"
     ],
@@ -1820,7 +1986,11 @@
   "https://github.com/qcluster/QCluster": {
     "name": "QCluster",
     "description": "Flow Scheduling is crucial in data centers, as it directly influences user experience of applications. Many flow scheduling solutions leverage priority queues of commodity switches to enforce their scheduling policies. Given the limited number of priority queues, e.g., 8, flow scheduling solutions should choose the most appropriate queue for each outgoing packet. According to different assumptions and design goals, there are four typical flow scheduling problems: SRPT, LAS, Fair Queuing, and Deadline-Aware Scheduling. Most existing works often address one scheduling problem, and seldom handle a key challenge: how to set an appropriate threshold for each queue. This paper unifies the flow scheduling problem as a clustering problem: how to cluster outgoing packets into k queues? To address this problem, we propose a generic framework, namely QCluster, which can address the above challenge. Based on k-means, QCluster clusters packets with the similar weights into the same queue at line rate. For different flow scheduling problems, packet weight has different definitions (e.g., remaining size, bytes sent). QCluster has two key differences with existing works: 1) QCluster is easy to be deployed with two options: only deployed in programmable switches; or only deployed in end hosts. 2) QCluster can automatically adjust the thresholds of queues for each switch at line rate. Experimental results on testbeds with P4Switch and ns-2 show that QCluster achieves comparable or better performance compared with the best algorithm for each scheduling problem. QCluster can reduce the overall average flow completion time (FCT) up to 21.7%, and reduce the average FCT for short flows up to 56.6% over existing solutions.\n",
-    "keywords": [],
+    "keywords": [
+      "better performance compared",
+      "qcluster clusters packets",
+      "qcluster achieves comparable"
+    ],
     "authors": [
       "qcluster"
     ],
@@ -1865,7 +2035,10 @@
   "https://github.com/hadley/ggplot2-book": {
     "name": "ggplot2-book",
     "description": "ggplot2: elegant graphics for data analysis",
-    "keywords": [],
+    "keywords": [
+      "elegant graphics",
+      "data analysis"
+    ],
     "authors": [
       "Hadley Wickham"
     ],
@@ -1896,7 +2069,9 @@
   "https://github.com/cran/patchwork": {
     "name": "patchwork",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  patchwork — The Composer of Plots. Homepage: https://patchwork.data-imaginist.com, https://github.com/thomasp85/patchwork  Report bugs for this package: https://github.com/thomasp85/patchwork/issues",
-    "keywords": [],
+    "keywords": [
+      "patchwork report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -1914,7 +2089,13 @@
   "https://github.com/trnnick/tsutils/": {
     "name": "tsutils",
     "description": "The tsutils package for R provides functions to support various aspects of time series and forecasting modelling.",
-    "keywords": [],
+    "keywords": [
+      "support various aspects",
+      "r provides functions",
+      "tsutils package",
+      "time series",
+      "forecasting modelling"
+    ],
     "authors": [
       "trnnick"
     ],
@@ -1948,7 +2129,10 @@
   "https://github.com/noamr/velvette": {
     "name": "velvette",
     "description": "Common patterns for CSS view-transitions",
-    "keywords": [],
+    "keywords": [
+      "css view",
+      "common patterns"
+    ],
     "authors": [
       "Noam Rosenthal"
     ],
@@ -2026,7 +2210,9 @@
   "https://github.com/cran/relaimpo": {
     "name": "relaimpo",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  relaimpo — Relative Importance of Regressors in Linear Models. Homepage: https://prof.bht-berlin.de/groemping/relaimpo/, https://prof.bht-berlin.de/groemping/  ",
-    "keywords": [],
+    "keywords": [
+      "linear models"
+    ],
     "authors": [
       "cran"
     ],
@@ -2035,7 +2221,13 @@
   "https://github.com/writer/writing-in-the-margins": {
     "name": "writing-in-the-margins",
     "description": "\"Writing in the Margins\" (WiM) is a new approach that leverages the chunked prefilling of the KV-Cache to perform a segment-wise inference, which enable efficient processing of extensive context along with generation and classification of intermediate information (\"margins\"), that guide the model towards specific tasks. This method increases computation marginally while significantly enhancing the performance of off-the-shelf models without the need for fine-tuning Additionally, we show how the proposed pattern fits into interactive retrieval design that provides end- users with ongoing updates about the progress of context processing and pinpoints the integration of relevant information into the final response.\n",
-    "keywords": [],
+    "keywords": [
+      "shelf models without",
+      "proposed pattern fits",
+      "interactive retrieval design",
+      "extensive context along",
+      "enable efficient processing"
+    ],
     "authors": [
       "Writer"
     ],
@@ -2071,7 +2263,9 @@
   "https://github.com/DeronW/beautifulsoup": {
     "name": "beautifulsoup",
     "description": "Beautifulsoup docs in Chinese",
-    "keywords": [],
+    "keywords": [
+      "beautifulsoup docs"
+    ],
     "authors": [
       "delong.wang"
     ],
@@ -2140,7 +2334,9 @@
   "https://pypi.org/project/ngCGH/": {
     "name": "ngCGH",
     "description": "Pseudo-cgh of next-generation sequencing data",
-    "keywords": [],
+    "keywords": [
+      "generation sequencing data"
+    ],
     "authors": [
       "Sean Davis"
     ],
@@ -2246,7 +2442,9 @@
   "https://pypi.org/project/BeautifulSoup/": {
     "name": "BeautifulSoup",
     "description": "Screen-scraping library",
-    "keywords": [],
+    "keywords": [
+      "scraping library"
+    ],
     "authors": [
       "Leonard Richardson"
     ],
@@ -2294,7 +2492,9 @@
   "https://github.com/molpopgen/fwdpy11_arg_example": {
     "name": "fwdpy11_arg_example",
     "description": "Example of tracking the ARG during forward simulations.  Implementation is a Python package using fwdpp, fwdpy11, msprime, and pybind11.",
-    "keywords": [],
+    "keywords": [
+      "forward simulations"
+    ],
     "authors": [
       "Kevin R. Thornton"
     ],
@@ -2303,7 +2503,9 @@
   "https://github.com/chrisdemars/bulp-starter-package": {
     "name": "bulp-starter-package",
     "description": "Starter package for Bulp.",
-    "keywords": [],
+    "keywords": [
+      "starter package"
+    ],
     "authors": [
       "Chris DeMars"
     ],
@@ -2342,7 +2544,9 @@
   "https://pypi.org/project/libmesh/": {
     "name": "libmesh",
     "description": "This library can get answers from uchebnik.mos.ru",
-    "keywords": [],
+    "keywords": [
+      "get answers"
+    ],
     "authors": [
       "superdima05",
       "kinda-cookie-monster"
@@ -2352,7 +2556,9 @@
   "https://github.com/svunit/svmock": {
     "name": "svmock",
     "description": "A mock framework for use with SVUnit",
-    "keywords": [],
+    "keywords": [
+      "mock framework"
+    ],
     "authors": [
       "SVUnit"
     ],
@@ -2361,7 +2567,9 @@
   "https://pypi.org/project/biopy/": {
     "name": "biopy",
     "description": "DomainTranslation toolkit",
-    "keywords": [],
+    "keywords": [
+      "domaintranslation toolkit"
+    ],
     "authors": [
       "BioPyTeam"
     ],
@@ -2395,7 +2603,10 @@
   "https://pypi.org/project/strand/": {
     "name": "strand",
     "description": "Easy creation of non-blocking tasks",
-    "keywords": [],
+    "keywords": [
+      "easy creation",
+      "blocking tasks"
+    ],
     "authors": [
       "OtoSense"
     ],
@@ -2404,7 +2615,11 @@
   "https://github.com/epierson9/multiphenotype_methods": {
     "name": "multiphenotype_methods",
     "description": "Methods for inferring low-dimensional representations of high-dimensional phenotype spaces. ",
-    "keywords": [],
+    "keywords": [
+      "dimensional phenotype spaces",
+      "dimensional representations",
+      "inferring low"
+    ],
     "authors": [
       "epierson9"
     ],
@@ -2461,7 +2676,10 @@
   "https://github.com/tudortimi/vgm_svunit_utils": {
     "name": "vgm_svunit_utils",
     "description": "Incubation area for new SVUnit features",
-    "keywords": [],
+    "keywords": [
+      "new svunit features",
+      "incubation area"
+    ],
     "authors": [
       "Tudor Timi"
     ],
@@ -2488,7 +2706,9 @@
   "https://github.com/cran/ggplot2": {
     "name": "ggplot2",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ggplot2 — Create Elegant Data Visualisations Using the Grammar of Graphics. Homepage: https://ggplot2.tidyverse.org, https://github.com/tidyverse/ggplot2  Report bugs for this package: https://github.com/tidyverse/ggplot2/issues",
-    "keywords": [],
+    "keywords": [
+      "ggplot2 report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -2506,7 +2726,9 @@
   "https://github.com/cran/DiagrammeRsvg": {
     "name": "DiagrammeRsvg",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  DiagrammeRsvg — Export DiagrammeR Graphviz Graphs as SVG. Homepage: https://github.com/rich-iannone/DiagrammeRsvg  Report bugs for this package: https://github.com/rich-iannone/DiagrammeRsvg/issues",
-    "keywords": [],
+    "keywords": [
+      "diagrammersvg report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -2524,7 +2746,10 @@
   "https://github.com/darcyabjones/deepredeff-py": {
     "name": "deepredeff-py",
     "description": "A python port of the deepredeff R-package",
-    "keywords": [],
+    "keywords": [
+      "python port",
+      "deepredeff r"
+    ],
     "authors": [
       "Darcy Jones"
     ],
@@ -2546,7 +2771,9 @@
   "https://github.com/cran/tigerstats": {
     "name": "tigerstats",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  tigerstats — R Functions for Elementary Statistics  ",
-    "keywords": [],
+    "keywords": [
+      "elementary statistics"
+    ],
     "authors": [
       "cran"
     ],
@@ -2566,7 +2793,10 @@
   "https://github.com/michal-stuglik/django-blastplus": {
     "name": "django-blastplus",
     "description": "simple django app for blast search",
-    "keywords": [],
+    "keywords": [
+      "simple django app",
+      "blast search"
+    ],
     "authors": [
       "Michał Stuglik"
     ],
@@ -2575,7 +2805,10 @@
   "https://github.com/ShadowMario/FNF-PsychEngine": {
     "name": "FNF-PsychEngine",
     "description": "Engine originally used on Mind Games mod",
-    "keywords": [],
+    "keywords": [
+      "mind games mod",
+      "engine originally used"
+    ],
     "authors": [
       "ShadowMario"
     ],
@@ -2648,7 +2881,10 @@
   "https://github.com/osmdatar/osmdatar": {
     "name": "osmdatar",
     "description": "R package for downloading OSM data",
-    "keywords": [],
+    "keywords": [
+      "downloading osm data",
+      "r package"
+    ],
     "authors": [
       "osmdatar"
     ],
@@ -2657,7 +2893,10 @@
   "https://github.com/cran/whoa": {
     "name": "whoa",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  whoa — Evaluation of Genotyping Error in Genotype-by-Sequencing Data  ",
-    "keywords": [],
+    "keywords": [
+      "sequencing data",
+      "genotyping error"
+    ],
     "authors": [
       "cran"
     ],
@@ -2711,7 +2950,10 @@
   "https://github.com/tmcd82070/Rdistance/wiki": {
     "name": "Rdistance",
     "description": "An R package for simple, regression-like, distance-based analyses",
-    "keywords": [],
+    "keywords": [
+      "r package",
+      "based analyses"
+    ],
     "authors": [
       "Trent"
     ],
@@ -2731,7 +2973,9 @@
   "https://github.com/davicaetano/anocva": {
     "name": "anocva",
     "description": "ANalysis Of Cluster structure Variability",
-    "keywords": [],
+    "keywords": [
+      "cluster structure variability"
+    ],
     "authors": [
       "Davi Caetano"
     ],
@@ -2740,7 +2984,10 @@
   "https://github.com/s-k/nlmeans": {
     "name": "nlmeans",
     "description": "OpenCV adaptation of the non-local means Matlab implementation by Dirk-Jan Kroon. (https://www.mathworks.com/matlabcentral/fileexchange/27395-fast-non-local-means-1d-2d-color-and-3d)",
-    "keywords": [],
+    "keywords": [
+      "opencv adaptation",
+      "jan kroon"
+    ],
     "authors": [
       "Stephen Kockentiedt"
     ],
@@ -2749,7 +2996,9 @@
   "https://github.com/cran/BCEA": {
     "name": "BCEA",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  BCEA — Bayesian Cost Effectiveness Analysis. Homepage: https://gianluca.statistica.it/software/bcea/, https://gianluca.statistica.it/, https://github.com/giabaio/BCEA/, https://n8thangreen.github.io/BCEA/  Report bugs for this package: https:// ...",
-    "keywords": [],
+    "keywords": [
+      "report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -2767,7 +3016,9 @@
   "https://pypi.org/project/matplotlib/": {
     "name": "matplotlib",
     "description": "Python plotting package",
-    "keywords": [],
+    "keywords": [
+      "python plotting package"
+    ],
     "authors": [
       "John D. Hunter",
       "Michael Droettboom"
@@ -2802,7 +3053,9 @@
   "https://github.com/GlitchedPolygons/eddsa-utils": {
     "name": "eddsa-utils",
     "description": "EdDSA CLI utilities",
-    "keywords": [],
+    "keywords": [
+      "eddsa cli utilities"
+    ],
     "authors": [
       "Glitched Polygons GmbH"
     ],
@@ -2811,7 +3064,10 @@
   "https://github.com/MAVENSDC/PyTplot": {
     "name": "PyTplot",
     "description": "A python version of the IDL tplot libraries",
-    "keywords": [],
+    "keywords": [
+      "idl tplot libraries",
+      "python version"
+    ],
     "authors": [
       "MAVEN SDC"
     ],
@@ -2860,7 +3116,9 @@
   "https://github.com/iracooke/ampir_shiny": {
     "name": "ampir_shiny",
     "description": "Shiny Web App for ampir",
-    "keywords": [],
+    "keywords": [
+      "shiny web app"
+    ],
     "authors": [
       "Ira Cooke"
     ],
@@ -2909,7 +3167,10 @@
   "https://github.com/MAVENSDC/pytplot": {
     "name": "PyTplot",
     "description": "A python version of the IDL tplot libraries",
-    "keywords": [],
+    "keywords": [
+      "idl tplot libraries",
+      "python version"
+    ],
     "authors": [
       "MAVEN SDC"
     ],
@@ -2918,7 +3179,10 @@
   "https://github.com/boku7/StringReaper": {
     "name": "StringReaper",
     "description": "Reaping treasures from strings in remote processes memory ",
-    "keywords": [],
+    "keywords": [
+      "remote processes memory",
+      "reaping treasures"
+    ],
     "authors": [
       "Bobby Cooke"
     ],
@@ -2927,7 +3191,10 @@
   "https://github.com/francescoalemanno/LogSpline.jl": {
     "name": "LogSpline.jl",
     "description": "A Julia reimplementation of the popular \"logspline\" method for density estimation",
-    "keywords": [],
+    "keywords": [
+      "julia reimplementation",
+      "density estimation"
+    ],
     "authors": [
       "Francesco Alemanno"
     ],
@@ -2936,7 +3203,13 @@
   "https://github.com/SudhakarBasu/GWAS-using-mrMLM": {
     "name": "GWAS-using-mrMLM",
     "description": "This repository hosts an R-based tool that utilizes the `mrMLM.GUI` package for multi-locus random-SNP-effect mixed linear model analysis. The tool is designed to provide a user-friendly graphical interface to facilitate the analysis of genetic data, making it accessible to geneticists and researchers with varying levels of computational expertise.\n\nThe GUI simplifies the complex process of configuring and running genetic models, thereby improving the efficiency and effectiveness of genetic data analysis.\n",
-    "keywords": [],
+    "keywords": [
+      "friendly graphical interface",
+      "running genetic models",
+      "genetic data analysis",
+      "genetic data",
+      "varying levels"
+    ],
     "authors": [
       "Sudhakar Reddy Basu"
     ],
@@ -2945,7 +3218,9 @@
   "https://github.com/rcannood/GillespieSSA2": {
     "name": "GillespieSSA2",
     "description": "Gillespie’s Stochastic Simulation Algorithm for Impatient People ⌛",
-    "keywords": [],
+    "keywords": [
+      "stochastic simulation algorithm"
+    ],
     "authors": [
       "Robrecht Cannoodt"
     ],
@@ -2963,7 +3238,11 @@
   "https://github.com/cran/mrMLM.GUI": {
     "name": "mrMLM.GUI",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  mrMLM.GUI — Multi-Locus Random-SNP-Effect Mixed Linear Model Tools for Genome-Wide Association Study with Graphical User Interface  ",
-    "keywords": [],
+    "keywords": [
+      "wide association study",
+      "graphical user interface",
+      "locus random"
+    ],
     "authors": [
       "cran"
     ],
@@ -2972,7 +3251,9 @@
   "https://github.com/cran/Rtrack": {
     "name": "Rtrack",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  Rtrack — Spatial Navigation Strategy Analysis. Homepage: https://rupertoverall.net/Rtrack/, https://github.com/rupertoverall/Rtrack  Report bugs for this package: https://github.com/rupertoverall/Rtrack/issues",
-    "keywords": [],
+    "keywords": [
+      "rtrack report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -2981,7 +3262,10 @@
   "https://github.com/rOpenHealth/rClinicalCodes": {
     "name": "rClinicalCodes",
     "description": "R tools for integrating with the www.clinicalcodes.org repository",
-    "keywords": [],
+    "keywords": [
+      "r tools",
+      "org repository"
+    ],
     "authors": [
       "rOpenHealth"
     ],
@@ -2990,7 +3274,9 @@
   "https://pypi.org/project/swirl/": {
     "name": "swirl",
     "description": "Some sugar for asynchronous Tornado code",
-    "keywords": [],
+    "keywords": [
+      "asynchronous tornado code"
+    ],
     "authors": [
       "Eric Naeseth"
     ],
@@ -3010,7 +3296,9 @@
   "https://github.com/tomasbulva/spatest": {
     "name": "spatest",
     "description": "most basic examples of 4 spa framework usage",
-    "keywords": [],
+    "keywords": [
+      "basic examples"
+    ],
     "authors": [
       "Tomas Bulva"
     ],
@@ -3019,7 +3307,10 @@
   "https://github.com/Murray2015/r_swirlify": {
     "name": "r_swirlify",
     "description": "A swirl course for climate scientists",
-    "keywords": [],
+    "keywords": [
+      "swirl course",
+      "climate scientists"
+    ],
     "authors": [
       "Dr. Murray Hoggett"
     ],
@@ -3095,7 +3386,13 @@
   "https://github.com/mln27/MGDrivE_Disease-Induced-Mortality": {
     "name": "MGDrivE_Disease-Induced-Mortality",
     "description": "This project is a expansion of the basic [MGDrivE](https://cran.r-project.org/package=MGDrivE2) \npackage. Upgrades expand significantly the biological functionality and provide \ncomputational improvements.\n\n15 new inheritance patterns have been added to this package. All of these gene drives \nare versions of the self-excision mechanism ([S.E.M.](https://doi.org/10.1098/rstb.2019.0804)) - \none potential direction for autonomous removal of a gene-drive system. These inheritance \npatterns represent the state-of-the-art for controllable gene drives. There are 5 \nmechanistically-unique designs with 3 computationally-different versions of each. \nAdditionally, the possibility for disease-impacts on mortality has been included.\n\nBeyond biological extensions, several software updates have been performed. \nCode duplication has been reduced, function APIs and documentation has been cleaned \nand improved, and novel plotting and analysis routines have been added. Finally, \nalgorithm improvements provide a 5-10x improvement in simulation run time. \n",
-    "keywords": [],
+    "keywords": [
+      "upgrades expand significantly",
+      "simulation run time",
+      "several software updates",
+      "provide computational improvements",
+      "one potential direction"
+    ],
     "authors": [
       "mndeffo"
     ],
@@ -3149,7 +3446,9 @@
   "https://github.com/nutterb/HydeNet": {
     "name": "HydeNet",
     "description": "Hybrid Decision Networks in R",
-    "keywords": [],
+    "keywords": [
+      "hybrid decision networks"
+    ],
     "authors": [
       "Benjamin"
     ],
@@ -3183,7 +3482,10 @@
   "https://github.com/italo-granato/snpReady": {
     "name": "snpReady",
     "description": "A tool to assist breeders in genomic analysis",
-    "keywords": [],
+    "keywords": [
+      "genomic analysis",
+      "assist breeders"
+    ],
     "authors": [
       "Italo Granato"
     ],
@@ -3209,7 +3511,9 @@
   "https://github.com/ZhangYongChang/cytoflow": {
     "name": "cytoflow",
     "description": "A Vue.js project",
-    "keywords": [],
+    "keywords": [
+      "js project"
+    ],
     "authors": [
       "yczhang"
     ],
@@ -3218,7 +3522,9 @@
   "https://github.com/cran/geobr": {
     "name": "geobr",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  geobr — Download Official Spatial Data Sets of Brazil. Homepage: https://ipeagit.github.io/geobr/, https://github.com/ipeaGIT/geobr  Report bugs for this package: https://github.com/ipeaGIT/geobr/issues",
-    "keywords": [],
+    "keywords": [
+      "geobr report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -3227,7 +3533,9 @@
   "https://github.com/cran/optrees": {
     "name": "optrees",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  optrees — Optimal Trees in Weighted Graphs  ",
-    "keywords": [],
+    "keywords": [
+      "weighted graphs"
+    ],
     "authors": [
       "cran"
     ],
@@ -3277,7 +3585,11 @@
   "https://github.com/hohlraum/gdsCAD": {
     "name": "gdsCAD",
     "description": "A simple but powerful Python package for creating photolithography masks in the GDSII format.",
-    "keywords": [],
+    "keywords": [
+      "powerful python package",
+      "creating photolithography masks",
+      "gdsii format"
+    ],
     "authors": [
       "hohlraum"
     ],
@@ -3286,7 +3598,9 @@
   "https://github.com/jakevdp/sklearn_tutorial": {
     "name": "sklearn_tutorial",
     "description": "Materials for my scikit-learn tutorial",
-    "keywords": [],
+    "keywords": [
+      "learn tutorial"
+    ],
     "authors": [
       "Jake Vanderplas"
     ],
@@ -3295,7 +3609,9 @@
   "https://pypi.org/project/treehouse/": {
     "name": "treehouse",
     "description": "High-performance tree traversal",
-    "keywords": [],
+    "keywords": [
+      "performance tree traversal"
+    ],
     "authors": [
       "Jason R. Coombs"
     ],
@@ -3385,7 +3701,11 @@
   "https://github.com/emonetlab/kontroller": {
     "name": "kontroller",
     "description": "A MATLAB package for NI-DAQ to help you do experiments. Kontroller has a easy-to-use GUI, with support for automation and is fully programmable.",
-    "keywords": [],
+    "keywords": [
+      "use gui",
+      "matlab package",
+      "fully programmable"
+    ],
     "authors": [
       "Emonet Lab"
     ],
@@ -3430,7 +3750,9 @@
   "https://github.com/tdhock/WeightedROC": {
     "name": "WeightedROC",
     "description": "Fast, weighted ROC curves",
-    "keywords": [],
+    "keywords": [
+      "weighted roc curves"
+    ],
     "authors": [
       "Toby Dylan Hocking"
     ],
@@ -3487,7 +3809,10 @@
   "https://github.com/feizhoustat/interep": {
     "name": "interep",
     "description": "Interaction Analysis of Repeated Measure Data",
-    "keywords": [],
+    "keywords": [
+      "repeated measure data",
+      "interaction analysis"
+    ],
     "authors": [
       "Fei Zhou"
     ],
@@ -3496,7 +3821,9 @@
   "https://github.com/linshideng/SMNet": {
     "name": "SMNet",
     "description": "low-light image enhancement",
-    "keywords": [],
+    "keywords": [
+      "light image enhancement"
+    ],
     "authors": [
       "linshideng"
     ],
@@ -3505,7 +3832,9 @@
   "https://github.com/cran/shiny": {
     "name": "shiny",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  shiny — Web Application Framework for R. Homepage: https://shiny.posit.co/, https://github.com/rstudio/shiny  Report bugs for this package: https://github.com/rstudio/shiny/issues",
-    "keywords": [],
+    "keywords": [
+      "shiny report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -3540,7 +3869,10 @@
   "https://pypi.org/project/sets/": {
     "name": "sets",
     "description": "Read datasets in a standard way.",
-    "keywords": [],
+    "keywords": [
+      "standard way",
+      "read datasets"
+    ],
     "authors": [
       "Danijar Hafner"
     ],
@@ -3556,7 +3888,11 @@
   "https://github.com/jeff-hughes/paramtest": {
     "name": "paramtest",
     "description": "R package for varying parameters in simulations or other iterative processes",
-    "keywords": [],
+    "keywords": [
+      "varying parameters",
+      "r package",
+      "iterative processes"
+    ],
     "authors": [
       "Jeff Hughes"
     ],
@@ -3565,7 +3901,10 @@
   "https://github.com/dcomtois/summarytools-python": {
     "name": "summarytools-python",
     "description": "A Python implementation of the summarytools R package",
-    "keywords": [],
+    "keywords": [
+      "summarytools r package",
+      "python implementation"
+    ],
     "authors": [
       "Dominic Comtois"
     ],
@@ -3583,7 +3922,9 @@
   "https://github.com/conda-forge/r-ggpmisc-feedstock": {
     "name": "r-ggpmisc-feedstock",
     "description": "A conda-smithy repository for r-ggpmisc.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -3592,7 +3933,9 @@
   "https://github.com/conda-forge/r-ggnewscale-feedstock": {
     "name": "r-ggnewscale-feedstock",
     "description": "A conda-smithy repository for r-ggnewscale.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -3610,7 +3953,9 @@
   "https://github.com/fffonion/httplib2-exp": {
     "name": "httplib2-exp",
     "description": "Some httplib2 scripts; using modified httplib2->https://github.com/fffonion/httplib2-plus",
-    "keywords": [],
+    "keywords": [
+      "httplib2 scripts"
+    ],
     "authors": [
       "Wangchong Zhou"
     ],
@@ -3668,7 +4013,10 @@
   "https://github.com/cran/strand": {
     "name": "strand",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  strand — A Framework for Investment Strategy Simulation. Homepage: https://github.com/strand-tech/strand  Report bugs for this package: https://github.com/strand-tech/strand/issues",
-    "keywords": [],
+    "keywords": [
+      "investment strategy simulation",
+      "strand report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -3677,7 +4025,10 @@
   "https://github.com/phylipweb/phylip": {
     "name": "phylip",
     "description": "Main site for distribution of the PHYLIP package",
-    "keywords": [],
+    "keywords": [
+      "phylip package",
+      "main site"
+    ],
     "authors": [
       "phylipweb"
     ],
@@ -3726,7 +4077,11 @@
   "https://github.com/JLSteenwyk/treehouse": {
     "name": "treehouse",
     "description": "A shiny R application to prune phylogenies in our database or user input and obtain a subtree",
-    "keywords": [],
+    "keywords": [
+      "shiny r application",
+      "user input",
+      "prune phylogenies"
+    ],
     "authors": [
       "Jacob L. Steenwyk"
     ],
@@ -3735,7 +4090,10 @@
   "https://github.com/cran/SeuratObject": {
     "name": "SeuratObject",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  SeuratObject — Data Structures for Single Cell Data. Homepage: https://satijalab.github.io/seurat-object/, https://github.com/satijalab/seurat-object  Report bugs for this package: https://github.com/satijalab/seurat-object/issues",
-    "keywords": [],
+    "keywords": [
+      "single cell data",
+      "object report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -3770,7 +4128,9 @@
   "https://github.com/cran/rBayesianOptimization": {
     "name": "rBayesianOptimization",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  rBayesianOptimization — Bayesian Optimization of Hyperparameters. Homepage: https://github.com/yanyachen/rBayesianOptimization  Report bugs for this package: https://github.com/yanyachen/rBayesianOptimization/issues",
-    "keywords": [],
+    "keywords": [
+      "rbayesianoptimization report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -3779,7 +4139,10 @@
   "https://github.com/rupertoverall/Rtrack": {
     "name": "Rtrack",
     "description": "Analysis of spatial tracking data and strategy classification.",
-    "keywords": [],
+    "keywords": [
+      "spatial tracking data",
+      "strategy classification"
+    ],
     "authors": [
       "Rupert Overall"
     ],
@@ -3806,7 +4169,9 @@
   "https://github.com/swirldev/swirlify": {
     "name": "swirlify",
     "description": ":books: A toolbox for writing swirl courses",
-    "keywords": [],
+    "keywords": [
+      "writing swirl courses"
+    ],
     "authors": [
       "swirl development team"
     ],
@@ -3833,7 +4198,9 @@
   "https://github.com/conda-forge/r-spacesxyz-feedstock": {
     "name": "r-spacesxyz-feedstock",
     "description": "A conda-smithy repository for r-spacesxyz.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -3864,7 +4231,10 @@
   "https://github.com/ndless-nspire/Ndless": {
     "name": "Ndless",
     "description": "The TI-Nspire calculator extension for native applications",
-    "keywords": [],
+    "keywords": [
+      "nspire calculator extension",
+      "native applications"
+    ],
     "authors": [
       "Ndless"
     ],
@@ -3873,7 +4243,10 @@
   "https://github.com/cran/summarytools": {
     "name": "summarytools",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  summarytools — Tools to Quickly and Neatly Summarize Data. Homepage: https://github.com/dcomtois/summarytools  Report bugs for this package: https://github.com/dcomtois/summarytools/issues",
-    "keywords": [],
+    "keywords": [
+      "summarytools report bugs",
+      "neatly summarize data"
+    ],
     "authors": [
       "cran"
     ],
@@ -3941,7 +4314,10 @@
   "https://pypi.org/project/venn/": {
     "name": "venn",
     "description": "Venn diagrams for 2, 3, 4, 5, 6 sets",
-    "keywords": [],
+    "keywords": [
+      "venn diagrams",
+      "6 sets"
+    ],
     "authors": [
       "Kirill Grigorev"
     ],
@@ -3950,7 +4326,10 @@
   "https://pypi.org/project/hab/": {
     "name": "hab",
     "description": "An environment configuration and launcher system",
-    "keywords": [],
+    "keywords": [
+      "launcher system",
+      "environment configuration"
+    ],
     "authors": [],
     "language": "Python"
   },
@@ -3992,7 +4371,9 @@
   "https://github.com/cran/MGDrivE": {
     "name": "MGDrivE",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  MGDrivE — Mosquito Gene Drive Explorer. Homepage: https://marshalllab.github.io/MGDrivE/, https://www.marshalllab.com/  Report bugs for this package: https://github.com/MarshallLab/MGDrivE/issues",
-    "keywords": [],
+    "keywords": [
+      "report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -4001,7 +4382,9 @@
   "https://github.com/conda-forge/r-presenceabsence-feedstock": {
     "name": "r-presenceabsence-feedstock",
     "description": "A conda-smithy repository for r-presenceabsence.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -4010,7 +4393,9 @@
   "https://github.com/granatumx/gbox-mnnpy": {
     "name": "gbox-mnnpy",
     "description": "> `gbox-py` is a gbox that provides a number of gboxes from Python. It is part of the standard gbox set. \n",
-    "keywords": [],
+    "keywords": [
+      "standard gbox set"
+    ],
     "authors": [
       "granatumx"
     ],
@@ -4055,7 +4440,10 @@
   "https://github.com/cran/Rdistance": {
     "name": "Rdistance",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  Rdistance — Density and Abundance from Distance-Sampling Surveys. Homepage: https://github.com/tmcd82070/Rdistance/wiki  Report bugs for this package: https://github.com/tmcd82070/Rdistance/issues",
-    "keywords": [],
+    "keywords": [
+      "wiki report bugs",
+      "sampling surveys"
+    ],
     "authors": [
       "cran"
     ],
@@ -4064,7 +4452,9 @@
   "https://github.com/cran/beepr": {
     "name": "beepr",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  beepr — Easily Play Notification Sounds on any Platform. Homepage: https://github.com/rasmusab/beepr  Report bugs for this package: https://github.com/rasmusab/beepr/issues",
-    "keywords": [],
+    "keywords": [
+      "beepr report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -4082,7 +4472,10 @@
   "https://github.com/wention/BeautifulSoup4": {
     "name": "BeautifulSoup4",
     "description": "git mirror for Beautiful Soup 4.3.2",
-    "keywords": [],
+    "keywords": [
+      "beautiful soup 4",
+      "git mirror"
+    ],
     "authors": [
       "WENTION"
     ],
@@ -4100,7 +4493,10 @@
   "https://github.com/lg626/Mokken": {
     "name": "Mokken",
     "description": "Genetic Algorithm for performing Mokken Scale Analysis on questionnaire data.",
-    "keywords": [],
+    "keywords": [
+      "questionnaire data",
+      "genetic algorithm"
+    ],
     "authors": [
       "Luiza Georgieva"
     ],
@@ -4109,7 +4505,10 @@
   "https://github.com/cran/paramtest": {
     "name": "paramtest",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  paramtest — Run a Function Iteratively While Varying Parameters  ",
-    "keywords": [],
+    "keywords": [
+      "varying parameters",
+      "function iteratively"
+    ],
     "authors": [
       "cran"
     ],
@@ -4127,7 +4526,9 @@
   "https://github.com/homerhanumat/tigerstats": {
     "name": "tigerstats",
     "description": "An R package for the teaching of statistics",
-    "keywords": [],
+    "keywords": [
+      "r package"
+    ],
     "authors": [
       "Homer White"
     ],
@@ -4180,7 +4581,9 @@
   "https://github.com/coolbutuseless/dplyr-cli": {
     "name": "dplyr-cli",
     "description": "Manipulate CSV files on the command line using dplyr",
-    "keywords": [],
+    "keywords": [
+      "manipulate csv files"
+    ],
     "authors": [
       "mikefc"
     ],
@@ -4189,14 +4592,19 @@
   "https://pypi.org/project/Flask/": {
     "name": "Flask",
     "description": "A simple framework for building complex web applications.",
-    "keywords": [],
+    "keywords": [
+      "simple framework"
+    ],
     "authors": [],
     "language": "Python"
   },
   "https://github.com/clvoloshin/COBS": {
     "name": "COBS",
     "description": "OPE Tools based on Empirical Study of Off Policy Policy Estimation paper.",
-    "keywords": [],
+    "keywords": [
+      "ope tools based",
+      "empirical study"
+    ],
     "authors": [
       "clvoloshin"
     ],
@@ -4205,7 +4613,9 @@
   "https://github.com/MathsCell/nlsic": {
     "name": "nlsic",
     "description": "Non Linear Least Squares with Inequality Constraints",
-    "keywords": [],
+    "keywords": [
+      "inequality constraints"
+    ],
     "authors": [
       "MathsCell"
     ],
@@ -4214,7 +4624,9 @@
   "https://github.com/cran/GillespieSSA": {
     "name": "GillespieSSA",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  GillespieSSA — Gillespie's Stochastic Simulation Algorithm (SSA). Homepage: https://github.com/rcannood/GillespieSSA  ",
-    "keywords": [],
+    "keywords": [
+      "stochastic simulation algorithm"
+    ],
     "authors": [
       "cran"
     ],
@@ -4223,7 +4635,9 @@
   "https://github.com/ross/requests-futures": {
     "name": "requests-futures",
     "description": "Asynchronous Python HTTP Requests for Humans using Futures",
-    "keywords": [],
+    "keywords": [
+      "humans using futures"
+    ],
     "authors": [
       "Ross McFarland"
     ],
@@ -4233,7 +4647,10 @@
   "https://github.com/InsolenceWillow/insolencetvgo": {
     "name": "insolencetvgo",
     "description": "This is a list full of m3u8s I made, you can use them in your site to share the free streams!\n \n",
-    "keywords": [],
+    "keywords": [
+      "list full",
+      "free streams"
+    ],
     "authors": [
       "InsolenceWillow"
     ],
@@ -4251,7 +4668,9 @@
   "https://github.com/plutoinc/scinapse-web-client": {
     "name": "scinapse-web-client",
     "description": "Scinapse web client",
-    "keywords": [],
+    "keywords": [
+      "scinapse web client"
+    ],
     "authors": [
       "Pluto"
     ],
@@ -4260,7 +4679,11 @@
   "https://pypi.org/project/lunar/": {
     "name": "lunar",
     "description": "lunar is a WSGI based webframework in pure Python, without any third-party dependency.",
-    "keywords": [],
+    "keywords": [
+      "wsgi based webframework",
+      "pure python",
+      "party dependency"
+    ],
     "authors": [
       "jasonlyu"
     ],
@@ -4269,7 +4692,10 @@
   "https://pypi.org/project/finCal/": {
     "name": "finCal",
     "description": "finCal creates calendar for stock and futures exchanges",
-    "keywords": [],
+    "keywords": [
+      "fincal creates calendar",
+      "futures exchanges"
+    ],
     "authors": [
       "The PyData Development Team"
     ],
@@ -4278,7 +4704,12 @@
   "https://github.com/Salomon21/MGDrivE_Graph_Tool": {
     "name": "MGDrivE_Graph_Tool",
     "description": "MGDrivE Graph Tool is a stand-alone application developed in Python which allows the user to automate the generation of graphic symulations using the output of the landscape module of [MGDrivE](https://chipdelmal.github.io/researchprojects/MGDrivE.html).\n \n",
-    "keywords": [],
+    "keywords": [
+      "mgdrive graph tool",
+      "graphic symulations using",
+      "alone application developed",
+      "landscape module"
+    ],
     "authors": [
       "Salomón Olivera Abud"
     ],
@@ -4287,7 +4718,11 @@
   "https://github.com/geobricks/geobricks_qgis_plugin_faostat": {
     "name": "geobricks_qgis_plugin_faostat",
     "description": "QGIS Plugin to fetch FAOSTAT data and create thematic maps.",
-    "keywords": [],
+    "keywords": [
+      "fetch faostat data",
+      "create thematic maps",
+      "qgis plugin"
+    ],
     "authors": [
       "Geobricks"
     ],
@@ -4305,7 +4740,9 @@
   "https://github.com/jheled/biopy": {
     "name": "biopy",
     "description": "Automatically exported from code.google.com/p/biopy",
-    "keywords": [],
+    "keywords": [
+      "automatically exported"
+    ],
     "authors": [
       "Joseph Heled"
     ],
@@ -4314,7 +4751,10 @@
   "https://github.com/mmaechler/sfsmisc": {
     "name": "sfsmisc",
     "description": "R package sfsmisc  (from *old* code, partly in RCS and backup files)",
-    "keywords": [],
+    "keywords": [
+      "r package sfsmisc",
+      "backup files"
+    ],
     "authors": [
       "Martin Mächler"
     ],
@@ -4323,7 +4763,9 @@
   "https://github.com/Poil/CGraphz": {
     "name": "CGraphz",
     "description": "Collectd Graphz",
-    "keywords": [],
+    "keywords": [
+      "collectd graphz"
+    ],
     "authors": [
       "Poil"
     ],
@@ -4332,7 +4774,10 @@
   "https://github.com/mozy/mordor": {
     "name": "mordor",
     "description": "Mordor is a high performance I/O library based on fibers.",
-    "keywords": [],
+    "keywords": [
+      "library based",
+      "high performance"
+    ],
     "authors": [
       "Mozy"
     ],
@@ -4341,7 +4786,13 @@
   "https://github.com/YuanmingZhang65/mrMLM": {
     "name": "mrMLM",
     "description": "7 multi-locus GWAS methods are available to identify QTNs, including BLUPmrMLM (new) that has fast computational speed (similar to EMMAX & GEMMA), high power & accuracy, and low false positive rate.",
-    "keywords": [],
+    "keywords": [
+      "locus gwas methods",
+      "fast computational speed",
+      "including blupmrmlm",
+      "identify qtns",
+      "7 multi"
+    ],
     "authors": [
       "Yuan-Ming Zhang"
     ],
@@ -4350,7 +4801,9 @@
   "https://pypi.org/project/gdsCAD/": {
     "name": "gdsCAD",
     "description": "A simple Python package for creating or reading GDSII layout files.",
-    "keywords": [],
+    "keywords": [
+      "simple python package"
+    ],
     "authors": [
       "Andrew G. Mark"
     ],
@@ -4359,7 +4812,12 @@
   "https://github.com/MarshallLab/MGDrivE": {
     "name": "MGDrivE",
     "description": "\n**MGDrivE** is a model designed to be a reliable testbed where various gene drive interventions for mosquito-borne diseases control. It is being developed to accommodate the use of various mosquito-specific gene drive systems within a population dynamics framework that allows migration of individuals between patches in landscape. \n",
-    "keywords": [],
+    "keywords": [
+      "population dynamics framework",
+      "borne diseases control",
+      "various mosquito",
+      "reliable testbed"
+    ],
     "authors": [
       "Marshall Lab"
     ],
@@ -4409,7 +4867,12 @@
   "https://github.com/ZachGoldberg/Startup-CTO-Handbook": {
     "name": "Startup-CTO-Handbook",
     "description": "The Startup CTO's Handbook, a book covering leadership, management and technical topics for leaders of software engineering teams",
-    "keywords": [],
+    "keywords": [
+      "software engineering teams",
+      "book covering leadership",
+      "technical topics",
+      "startup cto"
+    ],
     "authors": [
       "Zach Goldberg"
     ],
@@ -4418,14 +4881,19 @@
   "https://pypi.org/project/spektral/": {
     "name": "spektral",
     "description": "Graph Neural Networks with Keras and TensorFlow.",
-    "keywords": [],
+    "keywords": [
+      "graph neural networks"
+    ],
     "authors": [],
     "language": "Python"
   },
   "https://github.com/cran/scCATCH": {
     "name": "scCATCH",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  scCATCH — Single Cell Cluster-Based Annotation Toolkit for Cellular Heterogeneity. Homepage: https://github.com/ZJUFanLab/scCATCH  ",
-    "keywords": [],
+    "keywords": [
+      "based annotation toolkit",
+      "cellular heterogeneity"
+    ],
     "authors": [
       "cran"
     ],
@@ -4477,7 +4945,10 @@
   "https://github.com/collegue1337/BeautifulSoup4": {
     "name": "BeautifulSoup4",
     "description": "BeautifulSoup 4 for Python 3.3",
-    "keywords": [],
+    "keywords": [
+      "python 3",
+      "beautifulsoup 4"
+    ],
     "authors": [
       "collegue1337"
     ],
@@ -4509,7 +4980,9 @@
   "https://github.com/ergohaven/velvet": {
     "name": "velvet",
     "description": "Velvet keyboard files",
-    "keywords": [],
+    "keywords": [
+      "velvet keyboard files"
+    ],
     "authors": [
       "ergohaven"
     ],
@@ -4518,7 +4991,9 @@
   "https://github.com/ZaixuCui/PANDA": {
     "name": "PANDA",
     "description": "Pipeline software \"Pipeline for Analyzing braiN Diffusion imAges\" for processing diffusion MRI data.",
-    "keywords": [],
+    "keywords": [
+      "pipeline software"
+    ],
     "authors": [
       "Zaixu Cui"
     ],
@@ -4536,7 +5011,9 @@
   "https://github.com/cran/MultiPhen": {
     "name": "MultiPhen",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  MultiPhen — A Package to Test for Multi-Trait Association  ",
-    "keywords": [],
+    "keywords": [
+      "trait association"
+    ],
     "authors": [
       "cran"
     ],
@@ -4545,7 +5022,11 @@
   "https://github.com/jcao89757/SCINA": {
     "name": "SCINA",
     "description": "SCINA: A Semi-Supervised Subtyping Algorithm of Single Cells and Bulk Samples",
-    "keywords": [],
+    "keywords": [
+      "supervised subtyping algorithm",
+      "single cells",
+      "bulk samples"
+    ],
     "authors": [
       "Ze Zhang"
     ],
@@ -4565,7 +5046,9 @@
   "https://github.com/ampir-nn/android_kernel_leeco_msm8976-9.x": {
     "name": "android_kernel_leeco_msm8976-9.x",
     "description": "Interface with the Linux profiling infrastructure",
-    "keywords": [],
+    "keywords": [
+      "linux profiling infrastructure"
+    ],
     "authors": [
       "ampir-nn"
     ],
@@ -4599,7 +5082,9 @@
   "https://github.com/scitran-apps/pyafq": {
     "name": "pyafq",
     "description": "Python implementation of AFQ",
-    "keywords": [],
+    "keywords": [
+      "python implementation"
+    ],
     "authors": [
       "scitran-apps"
     ],
@@ -4608,7 +5093,11 @@
   "https://github.com/arjangosens/NetflixStatistix": {
     "name": "NetflixStatistix",
     "description": "Trio-opdracht Rel. DB 2 & Programmeren 2",
-    "keywords": [],
+    "keywords": [
+      "programmeren 2",
+      "opdracht rel",
+      "db 2"
+    ],
     "authors": [
       "Arjan Gosens"
     ],
@@ -4617,7 +5106,9 @@
   "https://pypi.org/project/chemometrics/": {
     "name": "chemometrics",
     "description": "package for chemometric data analysis",
-    "keywords": [],
+    "keywords": [
+      "chemometric data analysis"
+    ],
     "authors": [
       "Matthias Rüdt"
     ],
@@ -4637,7 +5128,9 @@
   "https://github.com/strand-tech/strand": {
     "name": "strand",
     "description": "strand: A framework for investment strategy simulation",
-    "keywords": [],
+    "keywords": [
+      "investment strategy simulation"
+    ],
     "authors": [
       "strand-tech"
     ],
@@ -4646,7 +5139,11 @@
   "https://github.com/PPgp/HIV.LifeTables": {
     "name": "HIV.LifeTables",
     "description": "R package: Model Life Tables for Countries with Generalized HIV Epidemics",
-    "keywords": [],
+    "keywords": [
+      "model life tables",
+      "generalized hiv epidemics",
+      "r package"
+    ],
     "authors": [
       "Probabilistic Projections Group"
     ],
@@ -4655,7 +5152,10 @@
   "https://github.com/cran/RAINBOWR": {
     "name": "RAINBOWR",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  RAINBOWR — Genome-Wide Association Study with SNP-Set Methods  ",
-    "keywords": [],
+    "keywords": [
+      "wide association study",
+      "set methods"
+    ],
     "authors": [
       "cran"
     ],
@@ -4673,7 +5173,9 @@
   "https://github.com/mrossini-ethz/camera-calibration-pvr": {
     "name": "camera-calibration-pvr",
     "description": "Blender Add-On: Camera Calibration using Perspective Views of Rectangles",
-    "keywords": [],
+    "keywords": [
+      "blender add"
+    ],
     "authors": [
       "Marco Rossini"
     ],
@@ -4812,7 +5314,9 @@
   "https://github.com/iwer/OSMDataAssets": {
     "name": "OSMDataAssets",
     "description": "Unreal Engine Plugin to import Openstreetmap Data Assets.",
-    "keywords": [],
+    "keywords": [
+      "unreal engine plugin"
+    ],
     "authors": [
       "Iwer"
     ],
@@ -4886,7 +5390,9 @@
   "https://github.com/cran/TunePareto": {
     "name": "TunePareto",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  TunePareto — Multi-Objective Parameter Tuning for Classifiers  ",
-    "keywords": [],
+    "keywords": [
+      "objective parameter tuning"
+    ],
     "authors": [
       "cran"
     ],
@@ -4895,7 +5401,13 @@
   "https://github.com/NHERI-SimCenter/R2DTool": {
     "name": "R2DTool",
     "description": "The computations are performed in a workflow application. That is, the\nnumerical simulations are actually performed by a number of different\napplications. The rWHALE backend software runs these different\napplications for the user, taking the outputs from some programs and\nproviding them as inputs to others. The design of the R2D\napplication is such that researchers are able to modify the backend\napplications to utilize their own application in the workflow\ncomputations. This will ensure researchers are not limited to using\nthe default applications we provide and will be enthused to provide\ntheir own applications for others to use. \nThis application is under active development. Researchers are encouraged to comment on what additional\nfeatures and applications they would like to see in this\napplication. If you want it, chances are many of your colleagues also\nwould benefit from it. \n",
-    "keywords": [],
+    "keywords": [
+      "would like",
+      "workflow computations",
+      "workflow application",
+      "r2d application",
+      "numerical simulations"
+    ],
     "authors": [
       "NHERI-SimCenter"
     ],
@@ -4904,7 +5416,10 @@
   "https://github.com/cran/catmap": {
     "name": "catmap",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  catmap — Case-Control and TDT Meta-Analysis Package. Homepage: http://github.com/tpq/catmap  Report bugs for this package: http://github.com/tpq/catmap/issues",
-    "keywords": [],
+    "keywords": [
+      "catmap report bugs",
+      "tdt meta"
+    ],
     "authors": [
       "cran"
     ],
@@ -4922,7 +5437,10 @@
   "https://github.com/yeatmanlab/pyAFQ": {
     "name": "pyAFQ",
     "description": "Please visit our new location: https://github.com/tractometry/pyAFQ",
-    "keywords": [],
+    "keywords": [
+      "please visit",
+      "new location"
+    ],
     "authors": [
       "Yeatman Lab"
     ],
@@ -4942,7 +5460,12 @@
   "https://github.com/abuanwar072/Furniture-App-UI-2-Flutter": {
     "name": "Furniture-App-UI-2-Flutter",
     "description": "We design a responsive furniture app UI using flutter, all of the data come from API so that you can learn how to use API on flutter. There are two pages Home page which contains a horizontal category list then the list of recommended products.\n \n",
-    "keywords": [],
+    "keywords": [
+      "horizontal category list",
+      "use api",
+      "recommended products",
+      "data come"
+    ],
     "authors": [
       "Abu Anwar"
     ],
@@ -5022,7 +5545,10 @@
   "https://github.com/QsonLabs/qcluster": {
     "name": "qcluster",
     "description": "Quick Cluster - a simple service registry for failover and replication",
-    "keywords": [],
+    "keywords": [
+      "simple service registry",
+      "quick cluster"
+    ],
     "authors": [
       "Qson Labs"
     ],
@@ -5064,7 +5590,11 @@
   "http://github.com/tpq/catmap": {
     "name": "catmap",
     "description": "[OFFICIAL] Modified code from the catmap package, edited to work with R version 3.2",
-    "keywords": [],
+    "keywords": [
+      "r version 3",
+      "modified code",
+      "catmap package"
+    ],
     "authors": [
       "Thom Quinn"
     ],
@@ -5117,7 +5647,10 @@
   "https://github.com/sst/sst": {
     "name": "sst",
     "description": "Build full-stack apps on your own infrastructure.",
-    "keywords": [],
+    "keywords": [
+      "stack apps",
+      "build full"
+    ],
     "authors": [
       "SST"
     ],
@@ -5139,7 +5672,9 @@
   "https://github.com/cran/osmdata": {
     "name": "osmdata",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  osmdata — Import 'OpenStreetMap' Data as Simple Features or Spatial Objects. Homepage: https://docs.ropensci.org/osmdata/ (website) https://github.com/ropensci/osmdata/ (devel)  Report bugs for this package: https://github.com/ropensci/osmdata/ ...",
-    "keywords": [],
+    "keywords": [
+      "spatial objects"
+    ],
     "authors": [
       "cran"
     ],
@@ -5201,7 +5736,9 @@
   "https://github.com/interep-project/interep.js": {
     "name": "interep.js",
     "description": "A monorepo of InterRep JavaScript libraries.",
-    "keywords": [],
+    "keywords": [
+      "interrep javascript libraries"
+    ],
     "authors": [
       "Interep"
     ],
@@ -5210,7 +5747,9 @@
   "https://github.com/geobricks/geobricks_qgis_plugin_trmm": {
     "name": "geobricks_qgis_plugin_trmm",
     "description": "Download TRMM rainfall estimates data and create thematic maps.",
-    "keywords": [],
+    "keywords": [
+      "create thematic maps"
+    ],
     "authors": [
       "Geobricks"
     ],
@@ -5219,7 +5758,9 @@
   "https://github.com/gitpan/B-OptreeShortestPath": {
     "name": "B-OptreeShortestPath",
     "description": "Read-only release history for B-OptreeShortestPath",
-    "keywords": [],
+    "keywords": [
+      "release history"
+    ],
     "authors": [
       "Gitpan"
     ],
@@ -5323,7 +5864,9 @@
   "https://github.com/jcgregorio/httplib2": {
     "name": "httplib2",
     "description": "The former official repository for httplib2. Now see https://github.com/httplib2.",
-    "keywords": [],
+    "keywords": [
+      "former official repository"
+    ],
     "authors": [
       "Joe Gregorio"
     ],
@@ -5367,7 +5910,13 @@
   "https://github.com/sathish-deevi/modes-Package": {
     "name": "modes-Package",
     "description": "An R package that calculates various mode and modal measures for complex distributions and big data.",
-    "keywords": [],
+    "keywords": [
+      "calculates various mode",
+      "r package",
+      "modal measures",
+      "complex distributions",
+      "big data"
+    ],
     "authors": [
       "Sathish Deevi"
     ],
@@ -5376,7 +5925,10 @@
   "https://github.com/soffes/sstoolkit": {
     "name": "sstoolkit",
     "description": "A collection of well-documented iOS classes for making life easier",
-    "keywords": [],
+    "keywords": [
+      "making life easier",
+      "documented ios classes"
+    ],
     "authors": [
       "Sam Soffes"
     ],
@@ -5490,7 +6042,10 @@
   "https://github.com/DPLYR-dev/SplashScreenFlutterPackage": {
     "name": "SplashScreenFlutterPackage",
     "description": "A small splashscreen used as intro for flutter applications easily with a lot of customizations ❤️🥳",
-    "keywords": [],
+    "keywords": [
+      "small splashscreen used",
+      "flutter applications easily"
+    ],
     "authors": [
       "DPLYR"
     ],
@@ -5499,7 +6054,12 @@
   "https://github.com/felixfan/FinCal": {
     "name": "FinCal",
     "description": "Package for time value of money calculation, time series analysis and computational finance",
-    "keywords": [],
+    "keywords": [
+      "time series analysis",
+      "time value",
+      "money calculation",
+      "computational finance"
+    ],
     "authors": [
       "Yanhui Fan"
     ],
@@ -5594,7 +6154,10 @@
   "https://github.com/jvns/pandas-cookbook": {
     "name": "pandas-cookbook",
     "description": "Recipes for using Python's pandas library",
-    "keywords": [],
+    "keywords": [
+      "using python",
+      "pandas library"
+    ],
     "authors": [
       "Julia Evans"
     ],
@@ -5616,7 +6179,10 @@
   "https://github.com/cran/SentimentAnalysis": {
     "name": "SentimentAnalysis",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  SentimentAnalysis — Dictionary-Based Sentiment Analysis. Homepage: https://github.com/sfeuerriegel/SentimentAnalysis  Report bugs for this package: https://github.com/sfeuerriegel/SentimentAnalysis/issues",
-    "keywords": [],
+    "keywords": [
+      "sentimentanalysis report bugs",
+      "based sentiment analysis"
+    ],
     "authors": [
       "cran"
     ],
@@ -5634,7 +6200,13 @@
   "https://github.com/jacquesf/COBS-Consistent-Overhead-Byte-Stuffing": {
     "name": "COBS-Consistent-Overhead-Byte-Stuffing",
     "description": "[Consistent Overhead Byte Stuffing](http://en.wikipedia.org/wiki/Consistent_Overhead_Byte_Stuffing) is an encoding that removes all 0 bytes\nfrom arbitrary binary data. The encoded data consists only of bytes with values from 0x01 to 0xFF. This is useful for preparing data for\ntransmission over a serial link (RS-232 or RS-485 for example), as the 0 byte can be used to unambiguously indicate packet boundaries. COBS\nalso has the advantage of adding very little overhead (at least 1 byte, plus up to an additional byte per 254 bytes of data). For messages\nsmaller than 254 bytes, the overhead is constant. \nThis is an implementation of COBS for C. It is designed to be both efficient and robust. The code is implemented in modern C99. The decoder\nis designed to detect  malformed input data and report an error upon detection. A test suite is included to validate the encoder and decoder. \n",
-    "keywords": [],
+    "keywords": [
+      "error upon detection",
+      "least 1 byte",
+      "encoded data consists",
+      "arbitrary binary data",
+      "preparing data"
+    ],
     "authors": [
       "Jacques Fortier"
     ],
@@ -5643,7 +6215,13 @@
   "https://github.com/genxium/ReactNativeStarterPackage": {
     "name": "ReactNativeStarterPackage",
     "description": "A pet project that combines react-native and react-native-web to help create cross-platform (hmm, not quite, only iOS, Android and web clients supported) apps conveniently.",
-    "keywords": [],
+    "keywords": [
+      "web clients supported",
+      "help create cross",
+      "pet project",
+      "combines react",
+      "apps conveniently"
+    ],
     "authors": [
       "Wing"
     ],
@@ -5691,7 +6269,10 @@
   "https://github.com/mfontcada/optrees": {
     "name": "optrees",
     "description": "Optimal Trees in Weighted Graphs",
-    "keywords": [],
+    "keywords": [
+      "weighted graphs",
+      "optimal trees"
+    ],
     "authors": [
       "mfontcada"
     ],
@@ -5727,7 +6308,10 @@
   "https://github.com/rwehrens/ChemometricsWithR": {
     "name": "ChemometricsWithR",
     "description": "R package accompanying the second edition of \"Chemometrics with R\", Springer",
-    "keywords": [],
+    "keywords": [
+      "r package accompanying",
+      "second edition"
+    ],
     "authors": [
       "Ron Wehrens"
     ],
@@ -5736,7 +6320,9 @@
   "https://github.com/bbolker/margins": {
     "name": "margins",
     "description": "An R Port of Stata's 'margins' Command",
-    "keywords": [],
+    "keywords": [
+      "r port"
+    ],
     "authors": [
       "Ben Bolker"
     ],
@@ -5745,7 +6331,10 @@
   "https://github.com/cran/stars": {
     "name": "stars",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  stars — Spatiotemporal Arrays, Raster and Vector Data Cubes. Homepage: https://r-spatial.github.io/stars/, https://github.com/r-spatial/stars/  Report bugs for this package: https://github.com/r-spatial/stars/issues/",
-    "keywords": [],
+    "keywords": [
+      "vector data cubes",
+      "report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -5763,7 +6352,9 @@
   "https://github.com/JBEI/edd-utils": {
     "name": "edd-utils",
     "description": "A set of utilities for working with Experiment Data Depot instances from python and the command line.",
-    "keywords": [],
+    "keywords": [
+      "command line"
+    ],
     "authors": [
       "Joint BioEnergy Institute"
     ],
@@ -5828,7 +6419,9 @@
   "https://github.com/Ylianst/LibMeshCtrl": {
     "name": "LibMeshCtrl",
     "description": "MeshCentral control module for developers",
-    "keywords": [],
+    "keywords": [
+      "meshcentral control module"
+    ],
     "authors": [
       "Ylian Saint-Hilaire"
     ],
@@ -5891,7 +6484,9 @@
   "https://github.com/tensorflow/models": {
     "name": "models",
     "description": "Models and examples built with TensorFlow",
-    "keywords": [],
+    "keywords": [
+      "examples built"
+    ],
     "authors": [
       "tensorflow"
     ],
@@ -5914,7 +6509,10 @@
   "https://github.com/peterjc/biopython_workshop": {
     "name": "biopython_workshop",
     "description": "A basic introduction to Biopython, intended for a classroom based workshop. Now on Codeberg.",
-    "keywords": [],
+    "keywords": [
+      "classroom based workshop",
+      "basic introduction"
+    ],
     "authors": [
       "Peter Cock"
     ],
@@ -5923,7 +6521,10 @@
   "https://github.com/Darkmux/SETSMS": {
     "name": "SETSMS",
     "description": "Es una herramienta de automatización de spam de mensajes de texto a un número telefónico de manera gratuita y anónima. Utiliza las herramientas (Quack - Impulse) para realizar el spam, además, tiene la función de guardar números telefónicos en una lista negra (blacklist) y realizar el spam a todos los números de la lista negra consecutivamente.",
-    "keywords": [],
+    "keywords": [
+      "utiliza las herramientas",
+      "realizar el spam"
+    ],
     "authors": [
       "Darkmux"
     ],
@@ -5932,7 +6533,9 @@
   "https://pypi.org/project/tripal/": {
     "name": "tripal",
     "description": "Tripal library",
-    "keywords": [],
+    "keywords": [
+      "tripal library"
+    ],
     "authors": [
       "Anthony Bretaudeau"
     ],
@@ -6008,7 +6611,13 @@
   "https://github.com/arraypress/edd-utils": {
     "name": "edd-utils",
     "description": "A collection of essential utilities for Easy Digital Downloads (EDD) plugin development, filling gaps in core functionalities to streamline add-on creation.",
-    "keywords": [],
+    "keywords": [
+      "easy digital downloads",
+      "streamline add",
+      "plugin development",
+      "filling gaps",
+      "essential utilities"
+    ],
     "authors": [
       "David Michael"
     ],
@@ -6034,7 +6643,9 @@
   "https://github.com/r-forge/mrmlm": {
     "name": "mrmlm",
     "description": "Read-only mirror of \"mrmlm\" from r-forge SVN.",
-    "keywords": [],
+    "keywords": [
+      "forge svn"
+    ],
     "authors": [
       " R-Forge"
     ],
@@ -6043,7 +6654,9 @@
   "https://github.com/conda-forge/r-seuratobject-feedstock": {
     "name": "r-seuratobject-feedstock",
     "description": "A conda-smithy repository for r-seuratobject.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -6067,7 +6680,9 @@
   "https://github.com/MG-RAST/matR": {
     "name": "matR",
     "description": "Metagenomics Analysis Tools",
-    "keywords": [],
+    "keywords": [
+      "metagenomics analysis tools"
+    ],
     "authors": [
       "MG-RAST"
     ],
@@ -6099,7 +6714,11 @@
   "https://github.com/brandonlw/Psychson": {
     "name": "Psychson",
     "description": "Phison 2251-03 (2303) Custom Firmware & Existing Firmware Patches (BadUSB)",
-    "keywords": [],
+    "keywords": [
+      "existing firmware patches",
+      "custom firmware",
+      "phison 2251"
+    ],
     "authors": [
       "brandonlw"
     ],
@@ -6126,7 +6745,9 @@
   "https://github.com/thomasp85/ggplot2_workshop": {
     "name": "ggplot2_workshop",
     "description": "Material for \"Drawing Anything with ggplot2\" workshop",
-    "keywords": [],
+    "keywords": [
+      "drawing anything"
+    ],
     "authors": [
       "Thomas Lin Pedersen"
     ],
@@ -6144,7 +6765,11 @@
   "https://github.com/S-Spektrum-M/SpektralThreads": {
     "name": "SpektralThreads",
     "description": "A lightweight pooling, logging, and cache optimization library, focused on minimizing cache rewrites.",
-    "keywords": [],
+    "keywords": [
+      "minimizing cache rewrites",
+      "cache optimization library",
+      "lightweight pooling"
+    ],
     "authors": [
       "Siddharth Mohanty"
     ],
@@ -6153,7 +6778,9 @@
   "https://github.com/dill/RDistanceBook": {
     "name": "RDistanceBook",
     "description": "A book about distance sampling in R",
-    "keywords": [],
+    "keywords": [
+      "distance sampling"
+    ],
     "authors": [
       "DL Miller"
     ],
@@ -6200,7 +6827,10 @@
   "https://github.com/brainlife/app-pyafq-segment": {
     "name": "app-pyafq-segment",
     "description": "The secondary output of this app is `product.json`. This file allows web interfaces, DB and API calls on the results of the processing.\n \n",
-    "keywords": [],
+    "keywords": [
+      "secondary output",
+      "api calls"
+    ],
     "authors": [
       "brainlife.io"
     ],
@@ -6209,7 +6839,9 @@
   "https://github.com/snacktavish/TreeToReads": {
     "name": "TreeToReads",
     "description": "Pipeline to generate NGS reads from a phylogeny",
-    "keywords": [],
+    "keywords": [
+      "generate ngs reads"
+    ],
     "authors": [
       "Emily Jane McTavish"
     ],
@@ -6218,7 +6850,10 @@
   "https://github.com/cran/SPAtest": {
     "name": "SPAtest",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  SPAtest — Score Test and Meta-Analysis Based on Saddlepoint Approximation  ",
-    "keywords": [],
+    "keywords": [
+      "saddlepoint approximation",
+      "analysis based"
+    ],
     "authors": [
       "cran"
     ],
@@ -6227,7 +6862,12 @@
   "https://github.com/msboufanzi/ParamTest_Project": {
     "name": "ParamTest_Project",
     "description": "This C++ project tests how many function parameters can be accepted before encountering memory errors or instability. It progressively increases parameter counts until limits are reached, documenting errors encountered due to machine architecture and memory management.",
-    "keywords": [],
+    "keywords": [
+      "many function parameters",
+      "encountering memory errors",
+      "memory management",
+      "machine architecture"
+    ],
     "authors": [
       "Mohamed said Boufanzi"
     ],
@@ -6236,7 +6876,10 @@
   "https://github.com/djnavarro/rainbowr": {
     "name": "rainbowr",
     "description": "Makes LGBT hexes and flags using R",
-    "keywords": [],
+    "keywords": [
+      "makes lgbt hexes",
+      "flags using r"
+    ],
     "authors": [
       "Danielle Navarro"
     ],
@@ -6245,7 +6888,10 @@
   "https://github.com/r-tidy-remote-sensing/tidyrgee": {
     "name": "tidyrgee",
     "description": "Create tidyverse methods for dealing with GEE image and imageCollections.",
-    "keywords": [],
+    "keywords": [
+      "create tidyverse methods",
+      "gee image"
+    ],
     "authors": [
       "r-tidy-remote-sensing"
     ],
@@ -6254,7 +6900,13 @@
   "https://github.com/jerryn70/GoodbyeAds": {
     "name": "GoodbyeAds",
     "description": "      \nA programmatically expanded list of hosts used for advertisements, Malware and tracking. Use this list to block ads trackers malwares. This is my primary list and I recommend using it.         \n         \n| Format | Links | Can be used for |\n|:-------|:-----|:----------------| \n| Hosts    | [Link](https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt)<br>[Mirror](https://cdn.jsdelivr.net/gh/jerryn70/GoodbyeAds@master/Hosts/GoodbyeAds.txt) | Blocky, eBlocker, AdAway, Blokada, RethinkDNS, uMatrix, DNS66, GasMask, HostFileEditor, OpenSnitch, NetGuard, PiHole, Blocky, eBlocker, Diversion, OpenSnitch, PersonalDNSfilter, pfBlockerNG, PersonalBlocklist, TechnitiumDNS              |\n| Adblock  | [Link](https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Formats/GoodbyeAds-AdBlock-Filter.txt)<br>[Mirror](https://cdn.jsdelivr.net/gh/jerryn70/GoodbyeAds@master/Formats/GoodbyeAds-AdBlock-Filter.txt) | AdGuard, AdGuard Home, eBlocker, uBlock, AdBlock, AdBlock Plus, Opera, Vivaldi, Brave, TechnitiumDNS |\n \n",
-    "keywords": [],
+    "keywords": [
+      "programmatically expanded list",
+      "primary list",
+      "recommend using",
+      "hosts used",
+      "adguard home"
+    ],
     "authors": [
       "Jerry Joseph"
     ],
@@ -6263,7 +6915,9 @@
   "https://github.com/billahmasumcu/stdreg": {
     "name": "stdreg",
     "description": "It's a android project using Java 8. Student's can registered and login using this application. They can put their attendance on their class.",
-    "keywords": [],
+    "keywords": [
+      "login using"
+    ],
     "authors": [
       "MD MASUM BILLAH"
     ],
@@ -6272,7 +6926,9 @@
   "https://github.com/r-forge/truncreg": {
     "name": "truncreg",
     "description": "Read-only mirror of \"truncreg\" from r-forge SVN.",
-    "keywords": [],
+    "keywords": [
+      "forge svn"
+    ],
     "authors": [
       " R-Forge"
     ],
@@ -6281,7 +6937,9 @@
   "https://github.com/conda-forge/r-anocva-feedstock": {
     "name": "r-anocva-feedstock",
     "description": "A conda-smithy repository for r-anocva.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -6290,7 +6948,9 @@
   "https://github.com/cran/powerGWASinteraction": {
     "name": "powerGWASinteraction",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  powerGWASinteraction — Power Calculations for GxE and GxG Interactions for GWAS  ",
-    "keywords": [],
+    "keywords": [
+      "gxg interactions"
+    ],
     "authors": [
       "cran"
     ],
@@ -6319,7 +6979,9 @@
   "https://github.com/XiaonaZhao/ggsci": {
     "name": "ggsci",
     "description": "ggsci for MATLAB inspired by R",
-    "keywords": [],
+    "keywords": [
+      "matlab inspired"
+    ],
     "authors": [
       "Nona Zhao"
     ],
@@ -6357,7 +7019,9 @@
   "https://github.com/Legana/ampir": {
     "name": "ampir",
     "description": "antimicrobial peptide prediction in R",
-    "keywords": [],
+    "keywords": [
+      "antimicrobial peptide prediction"
+    ],
     "authors": [
       "Legana Fingerhut"
     ],
@@ -6366,7 +7030,9 @@
   "https://github.com/Cpetter1/Pysiology": {
     "name": "Pysiology",
     "description": "Lab 11 graph",
-    "keywords": [],
+    "keywords": [
+      "lab 11 graph"
+    ],
     "authors": [
       "Cpetter1"
     ],
@@ -6384,7 +7050,11 @@
   "https://github.com/plutonbacon/summarytools.rb": {
     "name": "summarytools.rb",
     "description": "A pure Ruby port of Dominic Comtois' excellent R package",
-    "keywords": [],
+    "keywords": [
+      "pure ruby port",
+      "excellent r package",
+      "dominic comtois"
+    ],
     "authors": [
       "plutonbacon"
     ],
@@ -6393,7 +7063,9 @@
   "https://github.com/adrienhaxaire/funfem": {
     "name": "funfem",
     "description": "funfem is a finite element library written in the functional language Haskell.",
-    "keywords": [],
+    "keywords": [
+      "functional language haskell"
+    ],
     "authors": [
       "Adrien Haxaire"
     ],
@@ -6409,7 +7081,11 @@
   "https://github.com/idleberg/base16-pygments": {
     "name": "base16-pygments",
     "description": "Pygments styles based on Chris Kempson's Base16 colour scheme",
-    "keywords": [],
+    "keywords": [
+      "pygments styles based",
+      "base16 colour scheme",
+      "chris kempson"
+    ],
     "authors": [
       "Jan T. Sott"
     ],
@@ -6447,7 +7123,12 @@
   "https://github.com/Zeitsperre/tigerstats": {
     "name": "tigerstats",
     "description": "Scripts for creating a PostGIS database, loading data and calculating finance-related spatial stats",
-    "keywords": [],
+    "keywords": [
+      "related spatial stats",
+      "postgis database",
+      "loading data",
+      "calculating finance"
+    ],
     "authors": [
       "Trevor James Smith"
     ],
@@ -6478,7 +7159,9 @@
   "https://github.com/conda-forge/r-fastdummies-feedstock": {
     "name": "r-fastdummies-feedstock",
     "description": "A conda-smithy repository for r-fastdummies.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -6494,7 +7177,10 @@
   "https://github.com/cran/nlsic": {
     "name": "nlsic",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  nlsic — Non Linear Least Squares with Inequality Constraints. Homepage: https://github.com/MathsCell/nlsic  Report bugs for this package: https://github.com/MathsCell/nlsic/issues",
-    "keywords": [],
+    "keywords": [
+      "nlsic report bugs",
+      "inequality constraints"
+    ],
     "authors": [
       "cran"
     ],
@@ -6503,7 +7189,9 @@
   "https://github.com/cran/cRegulome": {
     "name": "cRegulome",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  cRegulome — Obtain and Visualize Regulome-Gene Expression Correlations in Cancer. Homepage: https://docs.ropensci.org/cRegulome, https://github.com/ropensci/cRegulome  Report bugs for this package: https://github.com/ropensci/cRegulome/issues",
-    "keywords": [],
+    "keywords": [
+      "gene expression correlations"
+    ],
     "authors": [
       "cran"
     ],
@@ -6512,7 +7200,10 @@
   "https://github.com/fatmasevinck/enetLTS": {
     "name": "enetLTS",
     "description": "Robust and sparse methods for high diemnsional data including gaussian, binomial and multinomial families",
-    "keywords": [],
+    "keywords": [
+      "sparse methods",
+      "multinomial families"
+    ],
     "authors": [
       "Fatma Sevinc KURNAZ"
     ],
@@ -6521,7 +7212,9 @@
   "https://github.com/cran/tidyverse": {
     "name": "tidyverse",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  tidyverse — Easily Install and Load the 'Tidyverse'. Homepage: https://tidyverse.tidyverse.org, https://github.com/tidyverse/tidyverse  Report bugs for this package: https://github.com/tidyverse/tidyverse/issues",
-    "keywords": [],
+    "keywords": [
+      "tidyverse report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -6564,7 +7257,9 @@
   "https://github.com/burritomaps/catmapper": {
     "name": "catmapper",
     "description": "geospatially referencing cats",
-    "keywords": [],
+    "keywords": [
+      "geospatially referencing cats"
+    ],
     "authors": [
       "BurritoMap™ Templates"
     ],
@@ -6573,7 +7268,10 @@
   "https://github.com/cran/interep": {
     "name": "interep",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  interep — Interaction Analysis of Repeated Measure Data. Homepage: https://github.com/feizhoustat/interep  Report bugs for this package: https://github.com/feizhoustat/interep/issues",
-    "keywords": [],
+    "keywords": [
+      "repeated measure data",
+      "interep report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -6606,7 +7304,9 @@
   "https://github.com/cran/snpReady": {
     "name": "snpReady",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  snpReady — Preparing Genotypic Datasets in Order to Run Genomic Analysis. Homepage:   ",
-    "keywords": [],
+    "keywords": [
+      "run genomic analysis"
+    ],
     "authors": [
       "cran"
     ],
@@ -6743,7 +7443,12 @@
   "https://pypi.org/project/django-blastplus/": {
     "name": "django-blastplus",
     "description": "A simple Django app to conduct web-based blast+ local alignment search.",
-    "keywords": [],
+    "keywords": [
+      "simple django app",
+      "local alignment search",
+      "conduct web",
+      "based blast"
+    ],
     "authors": [
       "Michal Stuglik"
     ],
@@ -6752,7 +7457,9 @@
   "https://github.com/dzerbino/velvet": {
     "name": "velvet",
     "description": "Short read de novo assembler using de Bruijn graphs, as published in: D.R. Zerbino and E. Birney. 2008. Velvet: algorithms for de novo short read assembly using de Bruijn graphs. Genome Research, 18: 821-829",
-    "keywords": [],
+    "keywords": [
+      "genome research"
+    ],
     "authors": [
       "Daniel Zerbino"
     ],
@@ -6761,7 +7468,10 @@
   "https://github.com/felsenst/phylip": {
     "name": "phylip",
     "description": "PHYLIP package starting with version 4.0a",
-    "keywords": [],
+    "keywords": [
+      "phylip package starting",
+      "version 4"
+    ],
     "authors": [
       "Joe Felsenstein"
     ],
@@ -6805,7 +7515,11 @@
   "https://github.com/geobricks/geobricks_qgis_plugin_world_bank": {
     "name": "geobricks_qgis_plugin_world_bank",
     "description": "Plugin for Qgis 2.x. Creates thematic maps with World Bank data.",
-    "keywords": [],
+    "keywords": [
+      "world bank data",
+      "creates thematic maps",
+      "qgis 2"
+    ],
     "authors": [
       "Geobricks"
     ],
@@ -6839,7 +7553,9 @@
   "https://github.com/jtoy/awesome-tensorflow": {
     "name": "awesome-tensorflow",
     "description": "TensorFlow - A curated list of dedicated resources http://tensorflow.org",
-    "keywords": [],
+    "keywords": [
+      "curated list"
+    ],
     "authors": [
       "jtoy"
     ],
@@ -6874,7 +7590,9 @@
   "https://github.com/cran/mrMLM": {
     "name": "mrMLM",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  mrMLM — Multi-Locus Random-SNP-Effect Mixed Linear Model Tools for GWAS  ",
-    "keywords": [],
+    "keywords": [
+      "locus random"
+    ],
     "authors": [
       "cran"
     ],
@@ -6883,7 +7601,9 @@
   "https://github.com/dariyasydykova/tidyroc": {
     "name": "tidyroc",
     "description": "This is a repository for an R package `tidyroc`. `tidyroc` is currently under development, and I plan to release it this summer (summer 2019).\n \n",
-    "keywords": [],
+    "keywords": [
+      "r package"
+    ],
     "authors": [
       "Dariya Sydykova"
     ],
@@ -6909,7 +7629,10 @@
   "https://github.com/mrlacey/StringResourceVisualizer": {
     "name": "StringResourceVisualizer",
     "description": "Visual Studio extension that shows the text of a string resource (.resx) when used inline in code.",
-    "keywords": [],
+    "keywords": [
+      "visual studio extension",
+      "used inline"
+    ],
     "authors": [
       "Matt Lacey"
     ],
@@ -6918,7 +7641,9 @@
   "https://github.com/CAPHTECH/ParamTestSwift": {
     "name": "ParamTestSwift",
     "description": "ParameterizedTest macro for Swift",
-    "keywords": [],
+    "keywords": [
+      "parameterizedtest macro"
+    ],
     "authors": [
       "CAPH TECH"
     ],
@@ -6958,7 +7683,9 @@
   "https://pypi.org/project/ads/": {
     "name": "ads",
     "description": "A Python module for NASA's ADS that doesn't suck.",
-    "keywords": [],
+    "keywords": [
+      "python module"
+    ],
     "authors": [
       "Andrew R. Casey"
     ],
@@ -7027,7 +7754,9 @@
   "https://github.com/r-forge/rlidar": {
     "name": "rlidar",
     "description": "Read-only mirror of \"rlidar\" from r-forge SVN.",
-    "keywords": [],
+    "keywords": [
+      "forge svn"
+    ],
     "authors": [
       " R-Forge"
     ],
@@ -7036,7 +7765,9 @@
   "https://github.com/cran/SparseDC": {
     "name": "SparseDC",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  SparseDC — Implementation of SparseDC Algorithm  ",
-    "keywords": [],
+    "keywords": [
+      "sparsedc algorithm"
+    ],
     "authors": [
       "cran"
     ],
@@ -7061,7 +7792,9 @@
   "https://github.com/dusadrian/venn": {
     "name": "venn",
     "description": "Draw Venn Diagrams",
-    "keywords": [],
+    "keywords": [
+      "draw venn diagrams"
+    ],
     "authors": [
       "Adrian Dușa"
     ],
@@ -7084,7 +7817,10 @@
   "https://github.com/MG-RAST/Shock": {
     "name": "Shock",
     "description": "An object store for scientific data",
-    "keywords": [],
+    "keywords": [
+      "scientific data",
+      "object store"
+    ],
     "authors": [
       "MG-RAST"
     ],
@@ -7093,7 +7829,9 @@
   "https://github.com/piotrgrabowski2501/Statistix": {
     "name": "Statistix",
     "description": "Practical functions",
-    "keywords": [],
+    "keywords": [
+      "practical functions"
+    ],
     "authors": [
       "Piotr Grabowski"
     ],
@@ -7127,14 +7865,18 @@
   "https://pypi.org/project/shiny/": {
     "name": "shiny",
     "description": "A web development framework for Python.",
-    "keywords": [],
+    "keywords": [
+      "web development framework"
+    ],
     "authors": [],
     "language": "Python"
   },
   "https://github.com/jimhester/knitrBootstrap": {
     "name": "knitrBootstrap",
     "description": "A framework to create bootstrap styled HTML reports from knitr Rmarkdown.",
-    "keywords": [],
+    "keywords": [
+      "knitr rmarkdown"
+    ],
     "authors": [
       "Jim Hester"
     ],
@@ -7152,7 +7894,9 @@
   "https://github.com/snowflakedb/dplyr-snowflakedb": {
     "name": "dplyr-snowflakedb",
     "description": "SnowflakeDB backend for dplyr",
-    "keywords": [],
+    "keywords": [
+      "snowflakedb backend"
+    ],
     "authors": [
       "Snowflake Computing"
     ],
@@ -7170,7 +7914,9 @@
   "https://github.com/cran/svUnit": {
     "name": "svUnit",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  svUnit — 'SciViews' - Unit, Integration and System Testing. Homepage: https://github.com/SciViews/svUnit, https://www.sciviews.org/svUnit/  Report bugs for this package: https://github.com/SciViews/svUnit/issues",
-    "keywords": [],
+    "keywords": [
+      "system testing"
+    ],
     "authors": [
       "cran"
     ],
@@ -7197,7 +7943,9 @@
   "https://github.com/cran/nlme": {
     "name": "nlme",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  nlme — Linear and Nonlinear Mixed Effects Models. Homepage: https://svn.r-project.org/R-packages/trunk/nlme/  Report bugs for this package: https://bugs.r-project.org",
-    "keywords": [],
+    "keywords": [
+      "report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -7268,7 +8016,12 @@
   "https://github.com/ZJUFanLab/scCATCH_performance_comparison": {
     "name": "scCATCH_performance_comparison",
     "description": "The source code and results of performance comparison on the detail of the process among scCATCH, CellAssign, Garnett, SingleR, scMap and CHETAH, and CellMatch database",
-    "keywords": [],
+    "keywords": [
+      "process among sccatch",
+      "source code",
+      "performance comparison",
+      "cellmatch database"
+    ],
     "authors": [
       "Dr. FAN, Xiaohui"
     ],
@@ -7308,7 +8061,10 @@
   "https://github.com/swirldev/swirl_courses": {
     "name": "swirl_courses",
     "description": ":mortar_board: A collection of interactive courses for the swirl R package.",
-    "keywords": [],
+    "keywords": [
+      "swirl r package",
+      "interactive courses"
+    ],
     "authors": [
       "swirl development team"
     ],
@@ -7326,7 +8082,11 @@
   "https://github.com/cran/enetLTS": {
     "name": "enetLTS",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  enetLTS — Robust and Sparse Methods for High Dimensional Linear and Binary and Multinomial Regression  ",
-    "keywords": [],
+    "keywords": [
+      "high dimensional linear",
+      "sparse methods",
+      "multinomial regression"
+    ],
     "authors": [
       "cran"
     ],
@@ -7362,7 +8122,10 @@
   "https://github.com/FiloSottile/whoami.filippo.io": {
     "name": "whoami.filippo.io",
     "description": "A ssh server that knows who you are. $ ssh whoami.filippo.io",
-    "keywords": [],
+    "keywords": [
+      "ssh whoami",
+      "ssh server"
+    ],
     "authors": [
       "Filippo Valsorda"
     ],
@@ -7371,7 +8134,10 @@
   "https://github.com/cran/pdftables": {
     "name": "pdftables",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  pdftables — Programmatic Conversion of PDF Tables. Homepage: https://www.github.com/expersso/pdftables , https://pdftables.com  Report bugs for this package: https://www.github.com/expersso/pdftables/issues",
-    "keywords": [],
+    "keywords": [
+      "com report bugs",
+      "pdf tables"
+    ],
     "authors": [
       "cran"
     ],
@@ -7380,7 +8146,10 @@
   "https://github.com/cran/anocva": {
     "name": "anocva",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  anocva — A Non-Parametric Statistical Test to Compare Clustering Structures  ",
-    "keywords": [],
+    "keywords": [
+      "parametric statistical test",
+      "compare clustering structures"
+    ],
     "authors": [
       "cran"
     ],
@@ -7439,7 +8208,9 @@
   "https://github.com/adsbypasser/adsbypasser": {
     "name": "adsbypasser",
     "description": "Bypass ad counter if possible.",
-    "keywords": [],
+    "keywords": [
+      "bypass ad counter"
+    ],
     "authors": [
       "adsbypasser"
     ],
@@ -7448,7 +8219,10 @@
   "https://github.com/google/web-starter-kit": {
     "name": "web-starter-kit",
     "description": "Web Starter Kit - a workflow for multi-device websites",
-    "keywords": [],
+    "keywords": [
+      "web starter kit",
+      "device websites"
+    ],
     "authors": [
       "Google"
     ],
@@ -7457,7 +8231,9 @@
   "https://github.com/cran/dae": {
     "name": "dae",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  dae — Functions Useful in the Design and ANOVA of Experiments. Homepage: http://chris.brien.name  Report bugs for this package: https://github.com/briencj/dae/issues",
-    "keywords": [],
+    "keywords": [
+      "name report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -7466,7 +8242,9 @@
   "https://github.com/mattprecious/swirl": {
     "name": "swirl",
     "description": "Android's animated fingerprint icon provided in a simple, standalone library.",
-    "keywords": [],
+    "keywords": [
+      "standalone library"
+    ],
     "authors": [
       "Matthew Precious"
     ],
@@ -7503,7 +8281,10 @@
   "https://github.com/eldafani/intsvy": {
     "name": "intsvy",
     "description": "A working copy of the CRAN intsvy package",
-    "keywords": [],
+    "keywords": [
+      "cran intsvy package",
+      "working copy"
+    ],
     "authors": [
       "Daniel Caro"
     ],
@@ -7512,7 +8293,9 @@
   "https://github.com/galaxy-genome-annotation/docker-tripal": {
     "name": "docker-tripal",
     "description": "Docker container for Tripal",
-    "keywords": [],
+    "keywords": [
+      "docker container"
+    ],
     "authors": [
       "Galaxy Genome Annotation"
     ],
@@ -7561,7 +8344,11 @@
   "https://github.com/MG-RAST/MG-RAST-Tools": {
     "name": "MG-RAST-Tools",
     "description": "Repository of script tools, examples, and contributed code for using the MG-RAST API",
-    "keywords": [],
+    "keywords": [
+      "script tools",
+      "rast api",
+      "contributed code"
+    ],
     "authors": [
       "MG-RAST"
     ],
@@ -7577,7 +8364,9 @@
   "https://pypi.org/project/pdftables/": {
     "name": "pdftables",
     "description": "Parses PDFs and extracts what it believes to be tables.",
-    "keywords": [],
+    "keywords": [
+      "parses pdfs"
+    ],
     "authors": [
       "ScraperWiki Ltd"
     ],
@@ -7602,7 +8391,12 @@
   "https://github.com/Tanganelli/CoAPthon3": {
     "name": "CoAPthon3",
     "description": "CoAPthon3 is a porting to python3 of my CoAPthon library. CoAPthon3 is a python3 library to the CoAP protocol compliant with the RFC. Branch is available for the Twisted framework.",
-    "keywords": [],
+    "keywords": [
+      "coap protocol compliant",
+      "twisted framework",
+      "python3 library",
+      "coapthon library"
+    ],
     "authors": [
       "Giacomo Tanganelli"
     ],
@@ -7635,7 +8429,9 @@
   "https://github.com/cran/fastDummies": {
     "name": "fastDummies",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  fastDummies — Fast Creation of Dummy (Binary) Columns and Rows from Categorical Variables. Homepage: https://github.com/jacobkap/fastDummies, https://jacobkap.github.io/fastDummies/  Report bugs for this package: https://github.com/jacobkap/fas ...",
-    "keywords": [],
+    "keywords": [
+      "report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -7716,7 +8512,9 @@
   "https://github.com/cran/dplyr": {
     "name": "dplyr",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  dplyr — A Grammar of Data Manipulation. Homepage: https://dplyr.tidyverse.org, https://github.com/tidyverse/dplyr  Report bugs for this package: https://github.com/tidyverse/dplyr/issues",
-    "keywords": [],
+    "keywords": [
+      "dplyr report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -7734,7 +8532,10 @@
   "https://github.com/libMesh/Documents": {
     "name": "Documents",
     "description": "A repository for publicly available documents and presentations related to libMesh",
-    "keywords": [],
+    "keywords": [
+      "publicly available documents",
+      "presentations related"
+    ],
     "authors": [
       "libMesh - C++ Finite Element Library"
     ],
@@ -7743,7 +8544,10 @@
   "https://github.com/drj11/pdftables": {
     "name": "pdftables",
     "description": "A library for extracting tables from PDF files",
-    "keywords": [],
+    "keywords": [
+      "pdf files",
+      "extracting tables"
+    ],
     "authors": [
       "David Jones"
     ],
@@ -7792,7 +8596,10 @@
   "https://github.com/signalbash/how_are_we_stranded_here": {
     "name": "how_are_we_stranded_here",
     "description": "Check strandedness of RNA-Seq fastq files",
-    "keywords": [],
+    "keywords": [
+      "seq fastq files",
+      "check strandedness"
+    ],
     "authors": [
       "signalbash"
     ],
@@ -7801,7 +8608,10 @@
   "https://github.com/Benson-Genomics-Lab/TRF": {
     "name": "TRF",
     "description": "Tandem Repeats Finder: a program to analyze DNA sequences",
-    "keywords": [],
+    "keywords": [
+      "tandem repeats finder",
+      "analyze dna sequences"
+    ],
     "authors": [
       "Benson-Genomics-Lab"
     ],
@@ -7810,7 +8620,10 @@
   "https://github.com/cran/lubridate": {
     "name": "lubridate",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  lubridate — Make Dealing with Dates a Little Easier. Homepage: https://lubridate.tidyverse.org, https://github.com/tidyverse/lubridate  Report bugs for this package: https://github.com/tidyverse/lubridate/issues",
-    "keywords": [],
+    "keywords": [
+      "lubridate report bugs",
+      "little easier"
+    ],
     "authors": [
       "cran"
     ],
@@ -7837,7 +8650,13 @@
   "https://github.com/KosukeHamazaki/RAINBOWR": {
     "name": "RAINBOWR",
     "description": "Reliable Association INference By Optimizing Weights with R (R package for SNP-set GWAS and multi-kernel mixed model)",
-    "keywords": [],
+    "keywords": [
+      "reliable association inference",
+      "kernel mixed model",
+      "set gwas",
+      "r package",
+      "optimizing weights"
+    ],
     "authors": [
       "Kosuke Hamazaki"
     ],
@@ -7846,7 +8665,9 @@
   "https://github.com/xxpCodiing/spaTest": {
     "name": "spaTest",
     "description": "my spa testDamo",
-    "keywords": [],
+    "keywords": [
+      "spa testdamo"
+    ],
     "authors": [
       "spaTest"
     ],
@@ -7887,7 +8708,9 @@
   "https://github.com/facebookresearch/StarSpace": {
     "name": "StarSpace",
     "description": "Learning embeddings for classification, retrieval and ranking.",
-    "keywords": [],
+    "keywords": [
+      "learning embeddings"
+    ],
     "authors": [
       "Meta Research"
     ],
@@ -7923,7 +8746,9 @@
   "https://github.com/Jhonve/HairStrandsRendering": {
     "name": "HairStrandsRendering",
     "description": "A hair strand rendering tool using the Dear ImGui.",
-    "keywords": [],
+    "keywords": [
+      "dear imgui"
+    ],
     "authors": [
       "Yuefan Shen"
     ],
@@ -7956,7 +8781,11 @@
   "https://pypi.org/project/pandas/": {
     "name": "pandas",
     "description": "Powerful data structures for data analysis, time series, and statistics",
-    "keywords": [],
+    "keywords": [
+      "powerful data structures",
+      "data analysis",
+      "time series"
+    ],
     "authors": [],
     "language": "Python"
   },
@@ -7986,7 +8815,9 @@
   "https://github.com/cran/psych": {
     "name": "psych",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  psych — Procedures for Psychological, Psychometric, and Personality Research. Homepage: https://personality-project.org/r/psych/ https://personality-project.org/r/psych-manual.pdf  ",
-    "keywords": [],
+    "keywords": [
+      "personality research"
+    ],
     "authors": [
       "cran"
     ],
@@ -8015,7 +8846,9 @@
   "https://github.com/cran/HydeNet": {
     "name": "HydeNet",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  HydeNet — Hybrid Bayesian Networks Using R and JAGS. Homepage: https://github.com/nutterb/HydeNet,  Report bugs for this package: https://github.com/nutterb/HydeNet/issues",
-    "keywords": [],
+    "keywords": [
+      "report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -8064,7 +8897,10 @@
   "https://github.com/cran/SCINA": {
     "name": "SCINA",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  SCINA — A Semi-Supervised Category Identification and Assignment Tool. Homepage: http://lce.biohpc.swmed.edu/scina/ https://github.com/jcao89757/SCINA  ",
-    "keywords": [],
+    "keywords": [
+      "supervised category identification",
+      "assignment tool"
+    ],
     "authors": [
       "cran"
     ],
@@ -8122,7 +8958,10 @@
   "https://github.com/hale/rdistance": {
     "name": "rdistance",
     "description": "Ruby implementation of minimum-edit-distance algorithms",
-    "keywords": [],
+    "keywords": [
+      "ruby implementation",
+      "distance algorithms"
+    ],
     "authors": [
       "Phil Hale"
     ],
@@ -8192,7 +9031,9 @@
   "https://github.com/eriqande/whoa": {
     "name": "whoa",
     "description": "Where's my Heterozygotes at? Observations on genotyping Accuracy",
-    "keywords": [],
+    "keywords": [
+      "genotyping accuracy"
+    ],
     "authors": [
       "Eric C. Anderson"
     ],
@@ -8214,7 +9055,9 @@
   "https://github.com/cran/stringr": {
     "name": "stringr",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  stringr — Simple, Consistent Wrappers for Common String Operations. Homepage: https://stringr.tidyverse.org, https://github.com/tidyverse/stringr  Report bugs for this package: https://github.com/tidyverse/stringr/issues",
-    "keywords": [],
+    "keywords": [
+      "stringr report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -8223,7 +9066,10 @@
   "https://github.com/revive-adserver/revive-adserver": {
     "name": "revive-adserver",
     "description": "The world's most popular free, open source ad serving system. You can download the latest release at:",
-    "keywords": [],
+    "keywords": [
+      "popular free",
+      "latest release"
+    ],
     "authors": [
       "Revive Adserver"
     ],
@@ -8241,7 +9087,11 @@
   "https://github.com/CominLab/QCluster": {
     "name": "QCluster",
     "description": "The data volume generated by next-generation sequencing (NGS) technologies is growing at a pace that is now challenging the storage and data processing capacities of modern computer systems. In this context an important aspect is the reduction of data complexity by collapsing redundant reads in a single cluster to improve the run time, memory requirements, and quality of post-processing steps like assembly. Several alignment-free measures, based on k-mers counts, have been used to cluster reads. Quality scores produced by NGS platforms are fundamental for various analysis of NGS data: reads mapping; error detection; etc. Moreover future-generation sequencing reads promise to contain a large number of erroneous bases (up to 10$\\%$). Thus it will be fundamental to exploit quality value information within the alignment-free framework. We have introduced a family of alignment-free measures, called $D^q$-type, that incorporate quality value information and k-mers counts for the comparison of reads data. A set of experiments on simulated and real reads data confirm that the new measures are superior to other classical alignment-free statistics, especially when erroneous reads are considered. \nWhere dist_type is the distance used for the clustering, num_cluster is the number of partitions in which you want to divide the set of sequences and kmer_length is the length of the words used by the algorithm. The input file (file_fastq) must be in fastq format, as it is defined in Illumina 1.8+ (Phred+33). The program returns on standard output the list of sequences with the number of the corresponding cluster. With the '-w' option the program also outputs the clusters in different files. Use the option '-h' to get the complete list of options. \n",
-    "keywords": [],
+    "keywords": [
+      "quality scores produced",
+      "modern computer systems",
+      "program also outputs"
+    ],
     "authors": [
       "Matteo Comin"
     ],
@@ -8250,7 +9100,9 @@
   "https://github.com/brunokim/cgraph": {
     "name": "cgraph",
     "description": "My graph library in C.",
-    "keywords": [],
+    "keywords": [
+      "graph library"
+    ],
     "authors": [
       "Bruno Kim Medeiros Cesar"
     ],
@@ -8259,7 +9111,10 @@
   "https://github.com/cran/margins": {
     "name": "margins",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  margins — Marginal Effects for Model Objects. Homepage: https://github.com/bbolker/margins  Report bugs for this package: https://github.com/bbolker/margins/issues",
-    "keywords": [],
+    "keywords": [
+      "margins report bugs",
+      "model objects"
+    ],
     "authors": [
       "cran"
     ],
@@ -8268,7 +9123,9 @@
   "https://github.com/cran/lunar": {
     "name": "lunar",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  lunar — Calculate Lunar Phase & Distance, Seasons and Related Environmental Factors  ",
-    "keywords": [],
+    "keywords": [
+      "related environmental factors"
+    ],
     "authors": [
       "cran"
     ],
@@ -8277,7 +9134,9 @@
   "https://pypi.org/project/furniture/": {
     "name": "furniture",
     "description": "Typesetting and layout utilities for drawing and animating in DrawBot",
-    "keywords": [],
+    "keywords": [
+      "layout utilities"
+    ],
     "authors": [
       "Rob Stenson"
     ],
@@ -8311,7 +9170,9 @@
   "https://github.com/tpneill/nanoKontroller": {
     "name": "nanoKontroller",
     "description": "Use Korg nanoKONTROL2 controller to perform actions in Linux",
-    "keywords": [],
+    "keywords": [
+      "perform actions"
+    ],
     "authors": [
       "Thomas Neill"
     ],
@@ -8320,7 +9181,10 @@
   "https://github.com/flask-restful/flask-restful": {
     "name": "flask-restful",
     "description": "Simple framework for creating REST APIs",
-    "keywords": [],
+    "keywords": [
+      "creating rest apis",
+      "simple framework"
+    ],
     "authors": [
       "flask-restful"
     ],
@@ -8329,7 +9193,10 @@
   "https://github.com/gsk3/bootLR": {
     "name": "bootLR",
     "description": "Bootstrapped confidence intervals for (negative) likelihood ratio tests.",
-    "keywords": [],
+    "keywords": [
+      "likelihood ratio tests",
+      "bootstrapped confidence intervals"
+    ],
     "authors": [
       "Ari Friedman"
     ],
@@ -8338,7 +9205,9 @@
   "https://github.com/cran/HIV.LifeTables": {
     "name": "HIV.LifeTables",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  HIV.LifeTables — HIV calibrated model life tables for countries with generalized HIV epidemics  ",
-    "keywords": [],
+    "keywords": [
+      "generalized hiv epidemics"
+    ],
     "authors": [
       "cran"
     ],
@@ -8347,7 +9216,9 @@
   "https://github.com/jperge/pysiology": {
     "name": "pysiology",
     "description": "A framework for physiological experiments and their analysis",
-    "keywords": [],
+    "keywords": [
+      "physiological experiments"
+    ],
     "authors": [
       "Janos Perge"
     ],
@@ -8356,7 +9227,9 @@
   "https://pypi.org/project/edd-utils/": {
     "name": "edd-utils",
     "description": "Download Studies from an Experiment Data Depot Instance",
-    "keywords": [],
+    "keywords": [
+      "download studies"
+    ],
     "authors": [
       "Zak Costello",
       "William Morrell",
@@ -8369,7 +9242,9 @@
   "https://pypi.org/project/mord/": {
     "name": "mord",
     "description": "Ordinal regression models",
-    "keywords": [],
+    "keywords": [
+      "ordinal regression models"
+    ],
     "authors": [
       "Fabian Pedregosa"
     ],
@@ -8378,7 +9253,10 @@
   "https://pypi.org/project/numpy/": {
     "name": "numpy",
     "description": "Fundamental package for array computing in Python",
-    "keywords": [],
+    "keywords": [
+      "fundamental package",
+      "array computing"
+    ],
     "authors": [
       "Travis E. Oliphant et al."
     ],
@@ -8387,7 +9265,9 @@
   "https://pypi.org/project/requests/": {
     "name": "requests",
     "description": "Python HTTP for Humans.",
-    "keywords": [],
+    "keywords": [
+      "python http"
+    ],
     "authors": [
       "Kenneth Reitz"
     ],
@@ -8438,7 +9318,11 @@
   "https://github.com/Marswin/MarsDaemon": {
     "name": "MarsDaemon",
     "description": "A lite library, you can make your project depend it easily, and your project will be UNDEAD (contains api from 9 to 23, lol).",
-    "keywords": [],
+    "keywords": [
+      "project depend",
+      "lite library",
+      "contains api"
+    ],
     "authors": [
       "Marswin Kwok"
     ],
@@ -8447,7 +9331,10 @@
   "https://github.com/bpdurham/Culture_Metabolomics_PresenceAbsence": {
     "name": "Culture_Metabolomics_PresenceAbsence",
     "description": "code for hierarchical clustering, NMDS, and MCA of presence-absence metabolomics data",
-    "keywords": [],
+    "keywords": [
+      "absence metabolomics data",
+      "hierarchical clustering"
+    ],
     "authors": [
       "Bryndan Durham"
     ],
@@ -8491,7 +9378,9 @@
   "https://github.com/pvskand/NLMeansSpeckleFilter": {
     "name": "NLMeansSpeckleFilter",
     "description": "Non Local Means Speckle Filtering of Ultrasound Images",
-    "keywords": [],
+    "keywords": [
+      "ultrasound images"
+    ],
     "authors": [
       "Skand"
     ],
@@ -8509,7 +9398,9 @@
   "https://github.com/cran/spacesXYZ": {
     "name": "spacesXYZ",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  spacesXYZ — CIE XYZ and some of Its Derived Color Spaces  ",
-    "keywords": [],
+    "keywords": [
+      "derived color spaces"
+    ],
     "authors": [
       "cran"
     ],
@@ -8632,7 +9523,10 @@
   "https://github.com/rsheets/cellranger": {
     "name": "cellranger",
     "description": "Helper functions to work with spreadsheets and the \"A1:D10\" style of cell range specification ",
-    "keywords": [],
+    "keywords": [
+      "cell range specification",
+      "helper functions"
+    ],
     "authors": [
       "rsheets"
     ],
@@ -8641,7 +9535,9 @@
   "https://github.com/cran/rmarkdown": {
     "name": "rmarkdown",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  rmarkdown — Dynamic Documents for R. Homepage: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/  Report bugs for this package: https://github.com/rstudio/rmarkdown/issues",
-    "keywords": [],
+    "keywords": [
+      "report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -8650,7 +9546,9 @@
   "https://github.com/cran/logspline": {
     "name": "logspline",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  logspline — Routines for Logspline Density Estimation  ",
-    "keywords": [],
+    "keywords": [
+      "logspline density estimation"
+    ],
     "authors": [
       "cran"
     ],
@@ -8684,7 +9582,9 @@
   "https://github.com/GameDevBuddies/Death-Stranding-Terrain-Scan": {
     "name": "Death-Stranding-Terrain-Scan",
     "description": "Repository containing files for the Death Stranding Terrain Scan YouTube video.",
-    "keywords": [],
+    "keywords": [
+      "repository containing files"
+    ],
     "authors": [
       "Game Dev Buddies"
     ],
@@ -8693,7 +9593,9 @@
   "https://github.com/ruthkr/deepredeff": {
     "name": "deepredeff",
     "description": "predict effector protein",
-    "keywords": [],
+    "keywords": [
+      "predict effector protein"
+    ],
     "authors": [
       "Ruth Kristianingsih"
     ],
@@ -8702,7 +9604,9 @@
   "https://github.com/sureshmopidevi/SMNetworkManager": {
     "name": "SMNetworkManager",
     "description": "Network manger with Alamofire",
-    "keywords": [],
+    "keywords": [
+      "network manger"
+    ],
     "authors": [
       "Suresh M"
     ],
@@ -8711,7 +9615,9 @@
   "https://github.com/justmarkham/dplyr-tutorial": {
     "name": "dplyr-tutorial",
     "description": "Tutorials for the dplyr package in R",
-    "keywords": [],
+    "keywords": [
+      "dplyr package"
+    ],
     "authors": [
       "Kevin Markham"
     ],
@@ -8746,7 +9652,9 @@
   "https://github.com/conda-forge/r-diagrammersvg-feedstock": {
     "name": "r-diagrammersvg-feedstock",
     "description": "A conda-smithy repository for r-diagrammersvg.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -8788,7 +9696,11 @@
   "https://github.com/rich-iannone/DiagrammeRsvg": {
     "name": "DiagrammeRsvg",
     "description": "A utility package for providing SVG export to DiagrammeR graph diagrams",
-    "keywords": [],
+    "keywords": [
+      "providing svg export",
+      "diagrammer graph diagrams",
+      "utility package"
+    ],
     "authors": [
       "Richard Iannone"
     ],
@@ -8797,7 +9709,11 @@
   "https://github.com/Dario-Galanti/multipheno_GWAS": {
     "name": "multipheno_GWAS",
     "description": "Scripts for running multi-phenotype GWAS using mixed models with the R package \"rrBLUP\". Additional functionality includes phenotype transformations and enrichment of a-priori candidate genes.",
-    "keywords": [],
+    "keywords": [
+      "priori candidate genes",
+      "running multi",
+      "r package"
+    ],
     "authors": [
       "Dario Galanti"
     ],
@@ -8815,7 +9731,9 @@
   "https://github.com/tripal/tripal_synview": {
     "name": "tripal_synview",
     "description": "synteny viewer",
-    "keywords": [],
+    "keywords": [
+      "synteny viewer"
+    ],
     "authors": [
       "Tripal"
     ],
@@ -8833,7 +9751,9 @@
   "https://github.com/lava/matplotlib-cpp": {
     "name": "matplotlib-cpp",
     "description": "Extremely simple yet powerful header-only C++ plotting library built on the popular matplotlib",
-    "keywords": [],
+    "keywords": [
+      "popular matplotlib"
+    ],
     "authors": [
       "Benno Evers"
     ],
@@ -8859,7 +9779,11 @@
   "https://github.com/EBjerrum/Deep-Chemometrics": {
     "name": "Deep-Chemometrics",
     "description": "Using deep learning approaches and convolutional neural networks (CNN) for spectroscopical data (deep chemometrics)",
-    "keywords": [],
+    "keywords": [
+      "convolutional neural networks",
+      "spectroscopical data",
+      "deep chemometrics"
+    ],
     "authors": [
       "Esben Jannik Bjerrum"
     ],
@@ -8869,7 +9793,9 @@
   "https://github.com/cran/ggpmisc": {
     "name": "ggpmisc",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ggpmisc — Miscellaneous Extensions to 'ggplot2'. Homepage: https://docs.r4photobiology.info/ggpmisc/, https://github.com/aphalo/ggpmisc  Report bugs for this package: https://github.com/aphalo/ggpmisc/issues",
-    "keywords": [],
+    "keywords": [
+      "ggpmisc report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -8907,7 +9833,9 @@
   "https://github.com/cran/data.table": {
     "name": "data.table",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  data.table — Extension of `data.frame`. Homepage: https://r-datatable.com, https://Rdatatable.gitlab.io/data.table, https://github.com/Rdatatable/data.table  Report bugs for this package: https://github.com/Rdatatable/data.table/issues",
-    "keywords": [],
+    "keywords": [
+      "table report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -8916,7 +9844,13 @@
   "https://github.com/rcannood/GillespieSSA": {
     "name": "GillespieSSA",
     "description": "**GillespieSSA** provides a simple to use, intuitive, and extensible interface to several stochastic simulation algorithms for generating simulated trajectories of finite population continuous-time model. Currently it implements Gillespie's exact stochastic simulation algorithm (Direct method) and several approximate methods (Explicit tau-leap, Binomial tau-leap, and Optimized tau-leap).  \n",
-    "keywords": [],
+    "keywords": [
+      "several approximate methods",
+      "generating simulated trajectories",
+      "finite population continuous",
+      "time model",
+      "optimized tau"
+    ],
     "authors": [
       "Robrecht Cannoodt"
     ],
@@ -8934,7 +9868,11 @@
   "https://github.com/MeganBeckett/lubridate-heatmaps_tutorial": {
     "name": "lubridate-heatmaps_tutorial",
     "description": "Lubridate tutorial and dataviz project of running data",
-    "keywords": [],
+    "keywords": [
+      "running data",
+      "lubridate tutorial",
+      "dataviz project"
+    ],
     "authors": [
       "Megan Rogers"
     ],
@@ -8943,7 +9881,9 @@
   "https://github.com/cran/intePareto": {
     "name": "intePareto",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  intePareto — Integrative Analysis of RNA-Seq and ChIP-Seq Data  ",
-    "keywords": [],
+    "keywords": [
+      "seq data"
+    ],
     "authors": [
       "cran"
     ],
@@ -8952,14 +9892,19 @@
   "https://pypi.org/project/Django/": {
     "name": "Django",
     "description": "A high-level Python web framework that encourages rapid development and clean, pragmatic design.",
-    "keywords": [],
+    "keywords": [
+      "encourages rapid development",
+      "pragmatic design"
+    ],
     "authors": [],
     "language": "Python"
   },
   "https://github.com/max-mapper/geobrowser": {
     "name": "geobrowser",
     "description": "generic openlayers interface to opensearch formatted geojson apis",
-    "keywords": [],
+    "keywords": [
+      "generic openlayers interface"
+    ],
     "authors": [
       "Max"
     ],
@@ -8979,7 +9924,12 @@
   "https://github.com/stevenconnorg/rlidar-accuracy": {
     "name": "rlidar-accuracy",
     "description": "Uses spatial joins to calculate precision, recall, and f-score assessments of lidar-derived Canopy Height Models using varying parameters (fixed-window size, CHM smoothing-window size, and lidar pulse densities) using the Local Maxima algorithm as implemented in the 'rLiDAR' R package.",
-    "keywords": [],
+    "keywords": [
+      "uses spatial joins",
+      "local maxima algorithm",
+      "lidar pulse densities",
+      "window size"
+    ],
     "authors": [
       "Steven C. Gonzalez"
     ],
@@ -8988,7 +9938,13 @@
   "https://github.com/svunit/svunit": {
     "name": "svunit",
     "description": "SVUnit is an open-source test framework for ASIC and FPGA developers writing Verilog/SystemVerilog\ncode. SVUnit is automated, fast, lightweight and easy to use making it the only SystemVerilog test\nframework in existence suited to both design and verification engineers that aspire to high quality\ncode and low bug rates. \n",
-    "keywords": [],
+    "keywords": [
+      "source test framework",
+      "low bug rates",
+      "systemverilog test framework",
+      "high quality code",
+      "systemverilog code"
+    ],
     "authors": [
       "SVUnit"
     ],
@@ -9105,7 +10061,10 @@
   "https://github.com/chrisdev/pdftables": {
     "name": "pdftables",
     "description": "forked from the scraperwiki pdftables (0.0.4) project which was removed Github",
-    "keywords": [],
+    "keywords": [
+      "scraperwiki pdftables",
+      "removed github"
+    ],
     "authors": [
       "Christopher  Clarke"
     ],
@@ -9114,7 +10073,9 @@
   "https://github.com/cran/ggsci": {
     "name": "ggsci",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ggsci — Scientific Journal and Sci-Fi Themed Color Palettes for 'ggplot2'. Homepage: https://nanx.me/ggsci/, https://github.com/nanxstats/ggsci  Report bugs for this package: https://github.com/nanxstats/ggsci/issues",
-    "keywords": [],
+    "keywords": [
+      "ggsci report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -9123,7 +10084,9 @@
   "https://github.com/cran/biosignalEMG": {
     "name": "biosignalEMG",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  biosignalEMG — Tools for Electromyogram Signals (EMG) Analysis  ",
-    "keywords": [],
+    "keywords": [
+      "electromyogram signals"
+    ],
     "authors": [
       "cran"
     ],
@@ -9132,7 +10095,10 @@
   "https://github.com/cran/rglobi": {
     "name": "rglobi",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  rglobi — Interface to Global Biotic Interactions. Homepage: https://docs.ropensci.org/rglobi/, https://github.com/ropensci/rglobi  Report bugs for this package: https://github.com/ropensci/rglobi/issues",
-    "keywords": [],
+    "keywords": [
+      "rglobi report bugs",
+      "global biotic interactions"
+    ],
     "authors": [
       "cran"
     ],
@@ -9141,7 +10107,10 @@
   "https://pypi.org/project/cGraph/": {
     "name": "cGraph",
     "description": "Graph C extension with fast diameter computations.",
-    "keywords": [],
+    "keywords": [
+      "graph c extension",
+      "fast diameter computations"
+    ],
     "authors": [
       "UNKNOWN"
     ],
@@ -9150,7 +10119,11 @@
   "https://github.com/elsander/PresenceAbsenceNetworks": {
     "name": "PresenceAbsenceNetworks",
     "description": "Code needed to use methods and replicate results from Sander and Allesina (in prep.).",
-    "keywords": [],
+    "keywords": [
+      "use methods",
+      "replicate results",
+      "code needed"
+    ],
     "authors": [
       "Eli Sander"
     ],
@@ -9177,7 +10150,9 @@
   "https://github.com/ropensci-docs/cRegulome": {
     "name": "cRegulome",
     "description": "auto-generated pkgdown website for: cRegulome",
-    "keywords": [],
+    "keywords": [
+      "generated pkgdown website"
+    ],
     "authors": [
       "rOpenSci docs"
     ],
@@ -9219,7 +10194,10 @@
   "https://github.com/google/earthengine-api": {
     "name": "earthengine-api",
     "description": "Python and JavaScript bindings for calling the Earth Engine API.",
-    "keywords": [],
+    "keywords": [
+      "earth engine api",
+      "javascript bindings"
+    ],
     "authors": [
       "Google"
     ],
@@ -9255,7 +10233,9 @@
   "https://github.com/conda-forge/r-relaimpo-feedstock": {
     "name": "r-relaimpo-feedstock",
     "description": "A conda-smithy repository for r-relaimpo.",
-    "keywords": [],
+    "keywords": [
+      "smithy repository"
+    ],
     "authors": [
       "conda-forge"
     ],
@@ -9281,7 +10261,11 @@
   "https://github.com/grummble-ai/PathOfExile-SkillGemMargins": {
     "name": "PathOfExile-SkillGemMargins",
     "description": "This program fetched poe.ninja skill gem data for a game called Path of Exile and shows you the best gems to level for profit.  ",
-    "keywords": [],
+    "keywords": [
+      "program fetched poe",
+      "game called path",
+      "best gems"
+    ],
     "authors": [
       "grummble-ai"
     ],
@@ -9290,7 +10274,9 @@
   "https://github.com/spektral/havencore": {
     "name": "havencore",
     "description": "PyBattle, the most awesomest game ever to be written by humans!",
-    "keywords": [],
+    "keywords": [
+      "awesomest game ever"
+    ],
     "authors": [
       "Christofer Odén"
     ],
@@ -9362,7 +10348,11 @@
   "https://pypi.org/project/scikit-learn/": {
     "name": "scikit-learn",
     "description": "A set of python modules for machine learning and data mining",
-    "keywords": [],
+    "keywords": [
+      "python modules",
+      "machine learning",
+      "data mining"
+    ],
     "authors": [],
     "language": "Python"
   },
@@ -9391,7 +10381,11 @@
   "https://github.com/FullFact/claim-review-schema-wordpress-plugin": {
     "name": "claim-review-schema-wordpress-plugin",
     "description": "An open source project to create a Wordpress plugin for claim review schema. ",
-    "keywords": [],
+    "keywords": [
+      "open source project",
+      "claim review schema",
+      "wordpress plugin"
+    ],
     "authors": [
       "Full Fact"
     ],
@@ -9400,7 +10394,9 @@
   "https://github.com/libMesh/TIMPI": {
     "name": "TIMPI",
     "description": "Templated Interface to MPI",
-    "keywords": [],
+    "keywords": [
+      "templated interface"
+    ],
     "authors": [
       "libMesh - C++ Finite Element Library"
     ],
@@ -9409,7 +10405,9 @@
   "https://github.com/samdoiron/WhoAmI": {
     "name": "WhoAmI",
     "description": "A mind-reading website.",
-    "keywords": [],
+    "keywords": [
+      "reading website"
+    ],
     "authors": [
       "Samuel Doiron"
     ],
@@ -9427,7 +10425,10 @@
   "https://github.com/tmcd82070/Rdistance": {
     "name": "Rdistance",
     "description": "An R package for simple, regression-like, distance-based analyses",
-    "keywords": [],
+    "keywords": [
+      "r package",
+      "based analyses"
+    ],
     "authors": [
       "Trent"
     ],
@@ -9445,7 +10446,9 @@
   "https://github.com/cran/mixKernel": {
     "name": "mixKernel",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  mixKernel — Omics Data Integration Using Kernel Methods. Homepage: http://mixkernel.clementine.wf  Report bugs for this package: https://forgemia.inra.fr/genotoul-bioinfo/mixKernel/-/issues",
-    "keywords": [],
+    "keywords": [
+      "wf report bugs"
+    ],
     "authors": [
       "cran"
     ],
@@ -9454,7 +10457,11 @@
   "https://github.com/CominLab/Qcluster": {
     "name": "QCluster",
     "description": "The data volume generated by next-generation sequencing (NGS) technologies is growing at a pace that is now challenging the storage and data processing capacities of modern computer systems. In this context an important aspect is the reduction of data complexity by collapsing redundant reads in a single cluster to improve the run time, memory requirements, and quality of post-processing steps like assembly. Several alignment-free measures, based on k-mers counts, have been used to cluster reads. Quality scores produced by NGS platforms are fundamental for various analysis of NGS data: reads mapping; error detection; etc. Moreover future-generation sequencing reads promise to contain a large number of erroneous bases (up to 10$\\%$). Thus it will be fundamental to exploit quality value information within the alignment-free framework. We have introduced a family of alignment-free measures, called $D^q$-type, that incorporate quality value information and k-mers counts for the comparison of reads data. A set of experiments on simulated and real reads data confirm that the new measures are superior to other classical alignment-free statistics, especially when erroneous reads are considered. \nWhere dist_type is the distance used for the clustering, num_cluster is the number of partitions in which you want to divide the set of sequences and kmer_length is the length of the words used by the algorithm. The input file (file_fastq) must be in fastq format, as it is defined in Illumina 1.8+ (Phred+33). The program returns on standard output the list of sequences with the number of the corresponding cluster. With the '-w' option the program also outputs the clusters in different files. Use the option '-h' to get the complete list of options. \n",
-    "keywords": [],
+    "keywords": [
+      "quality scores produced",
+      "modern computer systems",
+      "program also outputs"
+    ],
     "authors": [
       "Matteo Comin"
     ],
@@ -9463,7 +10470,10 @@
   "https://github.com/julesjacobs/cgraphs": {
     "name": "cgraphs",
     "description": "Deadlock freedom by type checking",
-    "keywords": [],
+    "keywords": [
+      "type checking",
+      "deadlock freedom"
+    ],
     "authors": [
       "julesjacobs"
     ],
@@ -9541,7 +10551,9 @@
   "https://github.com/burningdrop/fastDummiesDot": {
     "name": "fastDummiesDot",
     "description": "this is exactly the same package as fastDummies but with a \".\" (dot) as group separator",
-    "keywords": [],
+    "keywords": [
+      "group separator"
+    ],
     "authors": [
       "burningdrop"
     ],
@@ -9590,7 +10602,9 @@
   "https://github.com/ropensci-docs/rglobi": {
     "name": "rglobi",
     "description": "auto-generated pkgdown website for:rglobi",
-    "keywords": [],
+    "keywords": [
+      "generated pkgdown website"
+    ],
     "authors": [
       "rOpenSci docs"
     ],
@@ -9631,7 +10645,11 @@
   "https://github.com/yingstat/intePareto": {
     "name": "intePareto",
     "description": "Prioritize genes with consistent changes in RNA-Seq and ChIP-Seq data of different histone modifications betweeen different conditions using Pareto optimization",
-    "keywords": [],
+    "keywords": [
+      "seq data",
+      "prioritize genes",
+      "consistent changes"
+    ],
     "authors": [
       "Ying"
     ],
@@ -9640,7 +10658,10 @@
   "https://github.com/cran/FinCal": {
     "name": "FinCal",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  FinCal — Time Value of Money, Time Series Analysis and Computational Finance. Homepage: http://felixfan.github.io/FinCal/  ",
-    "keywords": [],
+    "keywords": [
+      "time series analysis",
+      "computational finance"
+    ],
     "authors": [
       "cran"
     ],
@@ -9649,7 +10670,10 @@
   "https://github.com/sachsmc/stdReg2": {
     "name": "stdReg2",
     "description": "Regression Standardization for Causal Inference",
-    "keywords": [],
+    "keywords": [
+      "regression standardization",
+      "causal inference"
+    ],
     "authors": [
       "Michael Sachs"
     ],
@@ -9658,7 +10682,9 @@
   "https://github.com/dannguyen/abbyy-finereader-ocr-senate": {
     "name": "abbyy-finereader-ocr-senate",
     "description": "Evaluating the performance and accuracy of ABBYY FineReader's OCR on Senate Financial Disclosure scanned forms",
-    "keywords": [],
+    "keywords": [
+      "abbyy finereader"
+    ],
     "authors": [
       "Dan Nguyen"
     ],
@@ -9701,7 +10727,11 @@
   "https://github.com/Trio-opdracht-P2RD2/Netflix-statistix": {
     "name": "Netflix-statistix",
     "description": "Netflix statistix java-application for the assignment of Programming 2 and Relational Databases 2",
-    "keywords": [],
+    "keywords": [
+      "netflix statistix java",
+      "relational databases 2",
+      "programming 2"
+    ],
     "authors": [
       "Trio-opdracht P2RD2"
     ],
@@ -9719,7 +10749,9 @@
   "https://pypi.org/project/QCluster/": {
     "name": "QCluster",
     "description": "An SDK to enable quick clustering of microservices.",
-    "keywords": [],
+    "keywords": [
+      "enable quick clustering"
+    ],
     "authors": [
       "Aaron Rohrbaugh + (See GitHub)",
       "Chris O'Connor"
@@ -9767,7 +10799,9 @@
   "https://github.com/sfeuerriegel/SentimentAnalysis": {
     "name": "SentimentAnalysis",
     "description": "Dictionary-based sentiment analysis",
-    "keywords": [],
+    "keywords": [
+      "based sentiment analysis"
+    ],
     "authors": [
       "sfeuerriegel"
     ],
@@ -9785,7 +10819,10 @@
   "https://github.com/cran/sets": {
     "name": "sets",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  sets — Sets, Generalized Sets, Customizable Sets and Intervals  ",
-    "keywords": [],
+    "keywords": [
+      "generalized sets",
+      "customizable sets"
+    ],
     "authors": [
       "cran"
     ],
@@ -9794,7 +10831,11 @@
   "https://github.com/basille/hab": {
     "name": "hab",
     "description": "A set of functions related to habitat selection and movement analyses.",
-    "keywords": [],
+    "keywords": [
+      "movement analyses",
+      "habitat selection",
+      "functions related"
+    ],
     "authors": [
       "Mathieu Basille"
     ],
@@ -9803,7 +10844,12 @@
   "https://github.com/Ereza/CustomActivityOnCrash": {
     "name": "CustomActivityOnCrash",
     "description": "Android library that allows launching a custom activity when your app crashes, instead of showing the hated \"Unfortunately, X has stopped\" dialog.",
-    "keywords": [],
+    "keywords": [
+      "custom activity",
+      "app crashes",
+      "android library",
+      "allows launching"
+    ],
     "authors": [
       "Eduard Ereza Martínez"
     ],
@@ -9823,7 +10869,9 @@
   "https://github.com/cran/bootLR": {
     "name": "bootLR",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  bootLR — Bootstrapped Confidence Intervals for (Negative) Likelihood Ratio Tests  ",
-    "keywords": [],
+    "keywords": [
+      "likelihood ratio tests"
+    ],
     "authors": [
       "cran"
     ],
@@ -9897,7 +10945,9 @@
   "https://github.com/hyperopt/hyperopt-sklearn": {
     "name": "hyperopt-sklearn",
     "description": "Hyper-parameter optimization for sklearn",
-    "keywords": [],
+    "keywords": [
+      "parameter optimization"
+    ],
     "authors": [
       "hyperopt"
     ],
@@ -9906,7 +10956,11 @@
   "https://github.com/interep-project/voting-app": {
     "name": "voting-app",
     "description": "Simple demo to allow only users of gold groups to vote anonymously in a ballot.",
-    "keywords": [],
+    "keywords": [
+      "vote anonymously",
+      "simple demo",
+      "gold groups"
+    ],
     "authors": [
       "Interep"
     ],
@@ -9915,7 +10969,9 @@
   "https://github.com/yanyachen/rBayesianOptimization": {
     "name": "rBayesianOptimization",
     "description": "Bayesian Optimization of Hyperparameters",
-    "keywords": [],
+    "keywords": [
+      "bayesian optimization"
+    ],
     "authors": [
       "Yachen Yan"
     ],
@@ -9960,7 +11016,9 @@
   "https://github.com/mratsim/ReactFincal": {
     "name": "ReactFincal",
     "description": "iOS/Android Financial Calculator written in React Native + Typescript",
-    "keywords": [],
+    "keywords": [
+      "react native"
+    ],
     "authors": [
       "Mamy Ratsimbazafy"
     ],
@@ -9969,7 +11027,9 @@
   "https://github.com/vim-pandoc/vim-rmarkdown": {
     "name": "vim-rmarkdown",
     "description": "Rmarkdown support for vim",
-    "keywords": [],
+    "keywords": [
+      "rmarkdown support"
+    ],
     "authors": [
       "vim-pandoc"
     ],
@@ -9978,7 +11038,11 @@
   "https://github.com/CambridgeAssessmentResearch/intsvyExtras": {
     "name": "intsvyExtras",
     "description": "Extra functionality to work alongside the R package instvy",
-    "keywords": [],
+    "keywords": [
+      "r package instvy",
+      "work alongside",
+      "extra functionality"
+    ],
     "authors": [
       "CambridgeAssessmentResearch"
     ],
@@ -10028,7 +11092,9 @@
   "https://github.com/cran/cumSeg": {
     "name": "cumSeg",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  cumSeg — Change Point Detection in Genomic Sequences  ",
-    "keywords": [],
+    "keywords": [
+      "genomic sequences"
+    ],
     "authors": [
       "cran"
     ],
@@ -10037,7 +11103,9 @@
   "https://github.com/hanmq/MachineLearning_Zhouzhihua_ProblemSets": {
     "name": "MachineLearning_Zhouzhihua_ProblemSets",
     "description": "Exercises answers to the book \"machine-learning\" written by Zhou Zhihua。周志华《机器学习》课后习题，个人解答。各算法都拿numpy和pandas实现了一遍",
-    "keywords": [],
+    "keywords": [
+      "exercises answers"
+    ],
     "authors": [
       "hanmq"
     ],
@@ -10055,7 +11123,9 @@
   "https://github.com/cran/rClinicalCodes": {
     "name": "rClinicalCodes",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  rClinicalCodes — R tools for integrating with the www.clinicalcodes.org repository  ",
-    "keywords": [],
+    "keywords": [
+      "org repository"
+    ],
     "authors": [
       "cran"
     ],

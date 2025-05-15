@@ -533,7 +533,7 @@ if __name__ == "__main__":
     model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
     model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_2.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_4.json"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_5.json"
     output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.5/updated_with_metadata_file.csv"
     output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.5/similarities.csv"
     output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.5/pairs.csv"
@@ -542,11 +542,6 @@ if __name__ == "__main__":
     df = pd.read_excel(excel_path)
     with open(output_json_path, "r", encoding="utf-8") as f:
         metadata_cache = json.load(f)
-    for url in metadata_cache.keys():
-        if "pypi.org" in url or "pypi.python.org" in url:
-            metadata_cache[url] = extract_pypi_metadata_RAKE_class(url)
-    with open("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_5.json", "w", encoding="utf-8") as f:
-        json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
     df = make_pairs(df,output_path_pairs)
     add_metadata(df,metadata_cache, output_path)
     df = compute_similarity_df(df,output_path_similarities)

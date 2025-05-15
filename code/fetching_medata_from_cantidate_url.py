@@ -260,6 +260,7 @@ def extract_pypi_metadata_RAKE_class(url: str) -> Dict[str, Any]:
         # dedupe
         seen = set()
         kws = [t for t in cleaned if not (t in seen or seen.add(t))]
+        keywords = kws
         if not kws:
             classifiers = info.get("classifiers", [])
 
