@@ -9,6 +9,7 @@ import csv
 from similarity_metrics import compute_similarity_df, get_average_min_max, keyword_similarity_with_fallback, synonym_name_similarity
 from evaluation import split_by_avg_min_max, group_by_candidates, evaluation, split_by_summary
 from rake_nltk import Rake
+import string
 
     
 def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
@@ -360,31 +361,22 @@ def select_rows_below_threshold(
     below = df[cols].lt(threshold).fillna(False).any(axis=1)
     # Select only those rows
     return df.loc[below].reset_index(drop=True)
-def keywords_from_paper_rake(text:str) -> List[str]:
-    """Extract keywords from a text using RAKE algorithm.
-
-    Args:
-        text (str): Input text to extract keywords from.
-
-    Returns:
-        List[str]: List of extracted keywords.
+def keywords_from_paper_rake(text: str, top_n: int = 5) -> str:
     """
-    r = Rake(min_length=1, max_length=3)
-    r.extract_keywords_from_text(text)
-    kws = r.get_ranked_phrases()[:5]
-
-    # 4c) clean & filter
-    cleaned = []
-    for kw in kws:
-        # strip stray punctuation/quotes and lowercase
-        tag = kw.strip(' "\'.,').lower()
-        # keep only multi-word, alphanumeric phrases
-        if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
-            cleaned.append(tag)
-    # dedupe
-    seen = set()
-    kws = [t for t in cleaned if not (t in seen or seen.add(t))]
-    return ','.join(kws)
+    Remove all punctuation from `text`, then run RAKE and
+    return the top_n phrases joined by commas.
+    """
+    # 1) Guard against None
+    raw = text or ""
+    # 2) Remove punctuation
+    clean = raw.translate(str.maketrans("", "", string.punctuation))
+    # 3) Run RAKE
+    rake = Rake()  # you can pass min_length, max_length if you like
+    rake.extract_keywords_from_text(clean)
+    # 4) Grab top_n phrases
+    phrases = rake.get_ranked_phrases()[:top_n]
+    # 5) Join and return
+    return ",".join(phrases)
     
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
@@ -509,19 +501,27 @@ if __name__ == "__main__":
     df.to_csv(similarities_path, index=False)
     model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
     model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
-    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3.xlsx"
+    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_2.xlsx"
     output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/updated_with_metadata_file.csv"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/updated_with_metadata_file.csv"
     output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.3/pairs.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/pairs.csv"
     model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.2/model_input.csv"
     df = pd.read_csv(output_path)
-    sim=pd.read_csv(output_path_similarities)
+    sim = pd.read_csv(output_path_similarities)
     corpus = pd.read_excel(excel_path)
-    df = corpus
-    with open(output_json_path, "r", encoding="utf-8") as f:
-                metadata_cache = json.load(f)
-                
-    df = make_pairs(df,output_path_pairs)
-
-    add_metadata(df, metadata_cache, output_path)
+    df.dropna(subset=['metadata_name'], inplace=True)
+    sim['field/topic/keywords'] = df['field/topic/keywords']
+    sim["metadata_keywords"] = df["metadata_keywords"]
+    sim['keywords_metric'] = sim.apply(
+        lambda row: keyword_similarity_with_fallback(
+            row['field/topic/keywords'],
+            row['metadata_keywords'],
+            row['paragraph']
+        ),
+        axis=1
+    )
+    sim.to_csv(output_path_similarities, index=False)
+    model_input = sim[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
+    model_input.to_csv(model_input_path, index=False)
+    

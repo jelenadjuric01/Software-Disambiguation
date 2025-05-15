@@ -210,7 +210,7 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
             # strip stray punctuation/quotes and lowercase
             tag = kw.strip(' "\'.,').lower()
             # keep only multi-word, alphanumeric phrases
-            if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+            if len(tag.split()) >= 1 and re.match(r'^[\w\s]+$', tag):
                 cleaned.append(tag)
         # dedupe
         seen = set()

@@ -36,7 +36,7 @@ def _encode_and_cosine(model: SentenceTransformer, texts1, texts2) -> float:
 def keyword_similarity_with_fallback(
     paper_keywords: Optional[str],
     site_keywords: Optional[str],
-    software_description: str
+    software_description: Optional[str]
 ) -> float:
     """Compute a keyword-based similarity with a description fallback.
 
