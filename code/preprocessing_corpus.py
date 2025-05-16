@@ -6,7 +6,7 @@ import os
 from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, extract_pypi_metadata_RAKE_class, extract_pypi_metadata_Rake_after, get_metadata  
 import re
 import csv
-from similarity_metrics import compute_similarity_df, get_average_min_max, keyword_similarity_with_fallback, keyword_similarity_with_fallback_SBERT, synonym_name_similarity
+from similarity_metrics import compute_similarity_df, get_average_min_max, keyword_similarity_with_fallback, keyword_similarity_with_fallback_SBERT, software_name_similarity_levenshtein, synonym_name_similarity
 from evaluation import split_by_avg_min_max, group_by_candidates, evaluation, split_by_summary
 from rake_nltk import Rake
 import string
@@ -542,5 +542,14 @@ if __name__ == "__main__":
     #df = pd.read_excel(excel_path)
     sim = pd.read_csv(output_path_similarities)
     
+    sim['keywords_metric'] = sim.apply(
+        lambda r: keyword_similarity_with_fallback_SBERT(
+            r['field/topic/keywords'],
+            r['metadata_keywords'],
+            r['metadata_description']
+        ),
+        axis=1
+    )
+    sim.to_csv(output_path_similarities, index=False)
     model_input = sim[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
     model_input.to_csv(model_input_path, index=False)

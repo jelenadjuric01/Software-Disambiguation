@@ -181,6 +181,24 @@ def normalize_software_name(name: str) -> str:
     tokens = [tok for tok in s.split() if tok not in COMMON_AFFIXES]
     # 4. Re-join and collapse whitespace
     return " ".join(tokens)
+def software_name_similarity_levenshtein(name1: str, name2: str) -> float:
+    """Measure normalized Levenshtein similarity between two software names.
+
+    Returns a float in [0.0, 1.0], where 1.0 means identical (post-normalization).
+    """
+    n1 = normalize_software_name(name1)
+    n2 = normalize_software_name(name2)
+
+    # If both normalized names are empty, consider them identical
+    if not n1 and not n2:
+        return 1.0
+
+    # Raw Levenshtein distance
+    dist = textdistance.levenshtein.distance(n1, n2)
+    max_len = max(len(n1), len(n2))
+
+    # Convert to similarity: 1.0 = identical, 0.0 = completely different
+    return 1.0 - (dist / max_len)
 
 def software_name_similarity(name1: str, name2: str) -> float:
     """Measure Jaro–Winkler similarity between two software names.
