@@ -6,7 +6,7 @@ import os
 from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, extract_pypi_metadata_RAKE_class, extract_pypi_metadata_Rake_after, get_metadata  
 import re
 import csv
-from similarity_metrics import compute_similarity_df, get_average_min_max, keyword_similarity_with_fallback, synonym_name_similarity
+from similarity_metrics import compute_similarity_df, get_average_min_max, keyword_similarity_with_fallback, keyword_similarity_with_fallback_SBERT, synonym_name_similarity
 from evaluation import split_by_avg_min_max, group_by_candidates, evaluation, split_by_summary
 from rake_nltk import Rake
 import string
@@ -533,22 +533,14 @@ if __name__ == "__main__":
     model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
     model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_2.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_3.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.6/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.6/similarities.csv"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_6.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.7/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.7/similarities.csv"
     output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.6/pairs.csv"
-    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.6/model_input.csv"
-    #df = pd.read_csv(output_path)
-    df = pd.read_excel(excel_path)
-    with open(output_json_path, "r", encoding="utf-8") as f:
-        metadata_cache = json.load(f)
-    for url in metadata_cache.keys():
-        if "pypi.org" in url or "pypi.python.org" in url:
-            metadata_cache[url] = extract_pypi_metadata_Rake_after(url)
-    with open("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_6.json", "w", encoding="utf-8") as f:
-        json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
-    df = make_pairs(df,output_path_pairs)
-    add_metadata(df,metadata_cache, output_path)
-    df = compute_similarity_df(df,output_path_similarities)
-    model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
+    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.7/model_input.csv"
+    df = pd.read_csv(output_path)
+    #df = pd.read_excel(excel_path)
+    sim = pd.read_csv(output_path_similarities)
+    
+    model_input = sim[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
     model_input.to_csv(model_input_path, index=False)

@@ -1,5 +1,5 @@
 import re
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, util
 from sklearn.metrics.pairwise import cosine_similarity
 from typing import List, Optional
 import numpy as np
@@ -11,6 +11,9 @@ import textdistance
 #    - A larger RoBERTa for fallback (keywords vs. description) and description vs. paragraph
 _BERT_MODEL = SentenceTransformer('all-MiniLM-L6-v2')
 _ROBERTA_MODEL = SentenceTransformer('sentence-transformers/all-roberta-large-v1')
+_KW_MODEL = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+# More powerful SBERT for description fallback
+_DESC_MODEL = SentenceTransformer('all-mpnet-base-v2')
 
 def _encode_and_cosine(model: SentenceTransformer, texts1, texts2) -> float:
     """Encode two lists of texts and return the mean cosine similarity.
@@ -86,6 +89,44 @@ def keyword_similarity_with_fallback(
     text2 = [" ".join(sk_list)]
     return _encode_and_cosine(_BERT_MODEL, text1, text2)
 
+def keyword_similarity_with_fallback_SBERT(
+    paper_keywords: Optional[str],
+    site_keywords: Optional[str],
+    software_description: Optional[str]
+) -> float:
+    """Compute a keyword-based similarity with a description fallback using SBERT."""
+    if pd.isna(paper_keywords):
+        return np.nan
+
+    def _normalize_list(s: str) -> list[str]:
+        return [kw.strip().lower() for kw in s.split(',') if kw.strip()]
+
+    pk_list = _normalize_list(str(paper_keywords))
+    if not pk_list:
+        return np.nan
+
+    text_pk = " ".join(pk_list)
+
+    # If site_keywords are present, use the lightweight model on keywords–keywords
+    if site_keywords and not pd.isna(site_keywords) and site_keywords.strip():
+        sk_list = _normalize_list(site_keywords)
+        if not sk_list:
+            return np.nan
+        text_sk = " ".join(sk_list)
+        emb_pk = _KW_MODEL.encode([text_pk], convert_to_tensor=True)
+        emb_sk = _KW_MODEL.encode([text_sk], convert_to_tensor=True)
+    else:
+        # Fallback: compare paper keywords vs. description **with the same powerful model**
+        if not software_description or pd.isna(software_description) or not software_description.strip():
+            return np.nan
+        text_desc = software_description.strip()
+        emb_pk = _DESC_MODEL.encode([text_pk], convert_to_tensor=True)
+        emb_sk = _DESC_MODEL.encode([text_desc], convert_to_tensor=True)
+
+    sim = util.cos_sim(emb_pk, emb_sk)
+    return float(sim.item())
+
+    
 def paragraph_description_similarity(text1: str, text2: str) -> float:
     """Compute semantic similarity between two texts via RoBERTa embeddings.
 
