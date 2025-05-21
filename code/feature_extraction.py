@@ -17,7 +17,7 @@ from models import MedianImputerWithIndicator, make_model, split_data, get_prepr
 
 if __name__ == "__main__":
     # Load & split
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.7/model_input.csv")
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/model_input.csv")
     X_trainval, X_test, y_trainval, y_test = split_data(df, "true_label", test_size=0.2)
     cols_to_impute = ['author_metric', 'paragraph_metric', 'keywords_metric', 'language_metric','synonym_metric']
     X_tree_train = X_trainval.copy()
@@ -177,7 +177,7 @@ if __name__ == "__main__":
         evaluation(pd.DataFrame({"true_label": y_test.values, "prediction": y_pred}))
  
     print("\n### CV (selected features) ###")
-    selected_columns = ['name_metric', 'paragraph_metric','language_metric','synonym_metric']
+    selected_columns = ['name_metric', 'paragraph_metric','language_metric','synonym_metric','keywords_metric','author_metric']
     print(f"Selected columns: {selected_columns}")
     selected_columns_imp=selected_columns+[col+"_missing" for col in selected_columns if col !="name_metric"]
     print(f"Selected columns (imputed): {selected_columns_imp}")

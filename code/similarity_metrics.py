@@ -126,7 +126,33 @@ def keyword_similarity_with_fallback_SBERT(
     sim = util.cos_sim(emb_pk, emb_sk)
     return float(sim.item())
 
-    
+def paragraph_description_similarity_BERT(text1: str, text2: str) -> float:
+    """Compute semantic similarity between two texts via SBERT embeddings.
+
+    Strips and validates `text1` and `text2`, encodes both with SBERT,
+    and returns their cosine similarity.
+
+    Args:
+        text1 (str): Arbitrary text (e.g., a paper paragraph).
+        text2 (str): Another text (e.g., software description).
+
+    Returns:
+        float: Cosine similarity ∈ [-1.0, 1.0], or `np.nan` if either input is empty.
+    """
+    # validate inputs
+    if not text1 or pd.isna(text1) or not (text1 := text1.strip()):
+        return np.nan
+    if not text2 or pd.isna(text2) or not (text2 := text2.strip()):
+        return np.nan
+
+    # encode both texts to BERT embeddings (as PyTorch tensors)
+    embeddings = _BERT_MODEL.encode([text1, text2], convert_to_tensor=True)
+    # compute cosine similarity
+    sim = util.pytorch_cos_sim(embeddings[0], embeddings[1])
+
+    # .item() to get Python float, ensure non-negative [0,1] range
+    return float(sim.item())
+
 def paragraph_description_similarity(text1: str, text2: str) -> float:
     """Compute semantic similarity between two texts via RoBERTa embeddings.
 
@@ -215,6 +241,35 @@ def software_name_similarity(name1: str, name2: str) -> float:
     n1 = normalize_software_name(name1)
     n2 = normalize_software_name(name2)
     return textdistance.jaro_winkler(n1, n2)
+def synonym_name_similarity_levenshtein(name1: str, names: str) -> float:
+    """Compute Levenshtein similarity between software name and list of synonyms.
+
+
+    Args:
+        name1 (str): First software name.
+        names List(str): List of synonyms.
+
+    Returns:
+        float: Levenshtein similarity ∈ [0.0, 1.0] that is average of the similarities.
+    """
+    if not names or pd.isna(names) or not name1 or pd.isna(name1):
+        return np.nan
+
+    # split the comma-separated synonyms
+    synonyms = names.split(",")
+
+    # normalize both target and synonyms
+    n1 = normalize_software_name(name1)
+    normalized_syns = [normalize_software_name(s) for s in synonyms]
+
+    # compute normalized Levenshtein similarity (0–1) for each synonym
+    sims = [
+        textdistance.levenshtein.normalized_similarity(n1, syn)
+        for syn in normalized_syns
+    ]
+
+    # return the average similarity
+    return np.mean(sims)
 
 def synonym_name_similarity(name1: str, names: str) -> float:
     """Compute Jaro–Winkler similarity between software name and list of synonyms.

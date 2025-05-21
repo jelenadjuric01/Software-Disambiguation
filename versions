@@ -9,3 +9,7 @@ Version 3.5 - the same as version 3.4, only when Rake returns missing keywords, 
 Version 3.6 - the same as version 3.5, but for PyPI metadata, if keywords are missing we first fetch TOPIC and if that is missing, then we use Rake
 Version 3.7 - the same as version 3.6, but now we use SBERT model to calculate similarities between keywords, not BERT and RoBERTA
 Version 3.8 - the same as version 3.6, but now we calculate similarities between names using Levenshtein 
+Version 3.9 - the same as version 3.6, but the synonym similarity is calculated using Levenshtein
+Version 3.10 - mix of version 3.8 and 3.9, all similarities like in the version 3.6, but name and synonyms calculated using Levenshtein
+Version 3.11 - mix of versions 3.7 and 3.10, using SBERT for keywords, Levenshtein for name and synonyms
+Version 3.12 - the same as version 3.6, but using BERT for paragraph similarity
