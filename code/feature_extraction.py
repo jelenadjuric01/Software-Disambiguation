@@ -1,7 +1,9 @@
+import itertools
 from typing import List, Optional, Tuple
 import pandas as pd
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.metrics import f1_score, precision_score, recall_score
 from sklearn.model_selection import train_test_split, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -177,7 +179,7 @@ if __name__ == "__main__":
         evaluation(pd.DataFrame({"true_label": y_test.values, "prediction": y_pred}))
  
     print("\n### CV (selected features) ###")
-    selected_columns = ['name_metric', 'paragraph_metric','language_metric','synonym_metric','keywords_metric','author_metric']
+    selected_columns = ['name_metric', 'paragraph_metric','language_metric','synonym_metric','author_metric']
     print(f"Selected columns: {selected_columns}")
     selected_columns_imp=selected_columns+[col+"_missing" for col in selected_columns if col !="name_metric"]
     print(f"Selected columns (imputed): {selected_columns_imp}")
@@ -217,3 +219,109 @@ if __name__ == "__main__":
         y_pred = model.predict(X_te_sel)
         print(f"\n--- Test results for {name} ---")
         evaluation(pd.DataFrame({"true_label": y_test.values, "prediction": y_pred}))
+    # 3) Feature Combination Evaluation
+    '''metrics = ['name_metric', 'paragraph_metric', 'language_metric',
+           'synonym_metric', 'keywords_metric', 'author_metric']
+
+    # Store results in a list of dicts
+    results = []
+
+    # iterate over combination sizes: 1 to N
+    for k in range(1, len(metrics) + 1):
+        for combo in itertools.combinations(metrics, k):
+            combo = list(combo)
+            combo_str = ",".join(combo)
+
+            # prepare imputed feature names for non-tree models
+            imp_features = combo + [col + '_missing' for col in combo if col != 'name_metric']
+
+            # ----- Cross-validation -----
+            for name in models_to_try:
+                y_true_oof, y_pred_oof = [], []
+
+                for train_idx, val_idx in cv.split(X_trainval, y_trainval):
+                    X_tr_raw = X_trainval.iloc[train_idx]
+                    X_val_raw = X_trainval.iloc[val_idx]
+                    y_tr = y_trainval.iloc[train_idx].values
+                    y_val = y_trainval.iloc[val_idx].values
+
+                    if name in ("XGBoost", "LightGBM"):
+                        X_tr = X_tr_raw[combo].copy()
+                        X_val = X_val_raw[combo].copy()
+                    else:
+                        imp = MedianImputerWithIndicator(cols=cols_to_impute)
+                        X_tr_imp = pd.DataFrame(
+                            imp.fit_transform(X_tr_raw),
+                            columns=imp.get_feature_names_out()
+                        )
+                        X_val_imp = pd.DataFrame(
+                            imp.transform(X_val_raw),
+                            columns=imp.get_feature_names_out()
+                        )
+
+                        X_tr_sel = X_tr_imp[imp_features]
+                        X_val_sel = X_val_imp[imp_features]
+
+                        scaler = StandardScaler()
+                        X_tr = pd.DataFrame(
+                            scaler.fit_transform(X_tr_sel),
+                            columns=imp_features
+                        )
+                        X_val = pd.DataFrame(
+                            scaler.transform(X_val_sel),
+                            columns=imp_features
+                        )
+
+                    model = make_model(name, y_tr)
+                    model.fit(X_tr, y_tr)
+                    y_pred = model.predict(X_val)
+
+                    y_true_oof.extend(y_val)
+                    y_pred_oof.extend(y_pred)
+
+                # compute CV metrics
+                results.append({
+                    'phase': 'CV',
+                    'model': name,
+                    'metrics_used': combo_str,
+                    'precision': precision_score(y_true_oof, y_pred_oof, zero_division=0),
+                    'recall': recall_score(y_true_oof, y_pred_oof, zero_division=0),
+                    'f1': f1_score(y_true_oof, y_pred_oof, zero_division=0)
+                })
+
+            # ----- Test evaluation -----
+            for name in models_to_try:
+                if name in ("XGBoost", "LightGBM"):
+                    X_tr_sel = X_trainval[combo]
+                    X_te_sel = X_test[combo]
+                else:
+                    X_tr_sel = X_train_imp[imp_features]
+                    X_te_sel = X_test_imp[imp_features]
+                    scaler = StandardScaler()
+                    X_tr_sel = pd.DataFrame(
+                        scaler.fit_transform(X_tr_sel),
+                        columns=imp_features
+                    )
+                    X_te_sel = pd.DataFrame(
+                        scaler.transform(X_te_sel),
+                        columns=imp_features
+                    )
+
+                model = make_model(name, y_trainval.values)
+                model.fit(X_tr_sel, y_trainval.values)
+                y_pred_test = model.predict(X_te_sel)
+
+                # compute test metrics
+                results.append({
+                    'phase': 'Test',
+                    'model': name,
+                    'metrics_used': combo_str,
+                    'precision': precision_score(y_test.values, y_pred_test, zero_division=0),
+                    'recall': recall_score(y_test.values, y_pred_test, zero_division=0),
+                    'f1': f1_score(y_test.values, y_pred_test, zero_division=0)
+                })
+
+    # save all results to CSV
+    results_df = pd.DataFrame(results)
+    results_df.to_csv('metric_combinations_results.csv', index=False)
+    print("Saved results to 'metric_combinations_results.csv'")'''
