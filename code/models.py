@@ -17,8 +17,21 @@ from evaluation import evaluation
 
 class MedianImputerWithIndicator(BaseEstimator, TransformerMixin):
     """
-    Updated version with correct get_feature_names_out implementation
-    """
+Impute missing values using column medians and add binary missing indicators.
+
+This transformer:
+- Replaces NaNs with the median value per column
+- Adds a new binary column <col>_missing to indicate missingness
+- Supports feature name tracking via get_feature_names_out()
+
+Args:
+    cols (List[str], optional): List of numeric columns to impute. If None,
+        selects all numeric columns at fit time.
+
+Returns:
+    pd.DataFrame: Transformed DataFrame with imputed values and indicator columns.
+"""
+
     def __init__(self, cols: Optional[List[str]] = None):
         self.cols = cols
         self.medians_: dict = {}
@@ -56,18 +69,24 @@ class MedianImputerWithIndicator(BaseEstimator, TransformerMixin):
 
 def make_model(name: str, y_train_fold: np.ndarray, params: dict = None) -> ClassifierMixin:
     """
-    Factory to build a classifier by name with built-in class-imbalance handling.
+Create a classification model by name with built-in handling of class imbalance.
 
-    Args:
-        name:           one of
-                        ['logistic regression','random forest','xgboost',
-                         'lightgbm','neural net'] (case-insensitive)
-        y_train_fold:   1d array of training labels (for computing class weights)
-        params:         optional dict mapping model-name → dict of override kwargs
+Supports model-specific default hyperparameters and class weighting:
+- Logistic Regression and Random Forest use `class_weight='balanced'`
+- XGBoost uses `scale_pos_weight` based on label distribution
+- LightGBM uses dictionary-based class weights
+- MLP does not apply any class imbalance correction directly
 
-    Returns:
-        An unfit sklearn-compatible estimator ready for .fit().
-    """
+Args:
+    name (str): Model name (case-insensitive). One of:
+        ['logistic regression', 'random forest', 'xgboost', 'lightgbm', 'neural net']
+    y_train_fold (np.ndarray): Labels used to compute class imbalance adjustments
+    params (dict, optional): Dictionary with model-specific override parameters.
+
+Returns:
+    ClassifierMixin: An untrained sklearn-compatible classifier.
+"""
+
     if params is None:
         params = {}
     key = name.strip().lower()
@@ -130,7 +149,23 @@ def split_data(
     test_size: float = 0.2,
     random_state: int = 42
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
-    """[Same as before]"""
+    """
+Split a DataFrame into stratified train/validation and test sets.
+
+Args:
+    df (pd.DataFrame): Input dataset.
+    target_col (str): Name of the target column for prediction.
+    test_size (float): Proportion of the dataset to include in the test split.
+    random_state (int): Random seed for reproducibility.
+
+Returns:
+    Tuple:
+        - X_trainval (pd.DataFrame): Features for training and validation
+        - X_test (pd.DataFrame): Features for test set
+        - y_trainval (pd.Series): Labels for training and validation
+        - y_test (pd.Series): Labels for test set
+"""
+
     X = df.drop(columns=[target_col])
     y = df[target_col]
     X_trainval, X_test, y_trainval, y_test = train_test_split(
@@ -142,7 +177,20 @@ def split_data(
     return X_trainval, X_test, y_trainval, y_test
 
 def get_preprocessing_pipeline(cols_to_impute: List[str]) -> Pipeline:
-    """Create a pipeline that preserves feature names"""
+    """
+Build a preprocessing pipeline for numerical features.
+
+The pipeline includes:
+- Median imputation with missing indicators
+- Standard scaling
+
+Args:
+    cols_to_impute (List[str]): List of column names to impute and scale.
+
+Returns:
+    sklearn.Pipeline: A pipeline object with feature name tracking.
+"""
+
     return Pipeline([
         ('imputer', MedianImputerWithIndicator(cols=cols_to_impute)),
         ('scaler', StandardScaler())

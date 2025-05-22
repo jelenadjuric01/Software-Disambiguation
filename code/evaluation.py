@@ -4,17 +4,19 @@ from sklearn.metrics import precision_score, recall_score, f1_score, classificat
 
 def split_by_avg_min_max(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """
-    Given a DataFrame `df` with columns:
-      id, name, doi, paragraph, authors, field/topic/keywords,
-      url (ground truth), candidate_urls, probability (ground truth),
-      metadata_name, metadata_authors, metadata_keywords, metadata_description,
-      name_metric, author_metric, paragraph_metric, keywords_metric,
-      average, min, max
+    Split a DataFrame into three subsets using average, min, and max predicted scores.
 
-    Returns three DataFrames (df_avg, df_min, df_max), each containing
-    the first 17 columns plus a new 'predicted_probability' column taken
-    respectively from 'average', 'min', and 'max'.
-    """
+    Each returned DataFrame contains a fixed set of metadata and feature columns,
+    with one additional column: 'predicted_probability', populated from
+    'average', 'min', or 'max' respectively.
+
+    Args:
+        df (pd.DataFrame): Input DataFrame with at least the required columns.
+
+    Returns:
+        Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+            Three DataFrames: (df_avg, df_min, df_max)
+"""
     base_cols = [
         'id',
         'name',
@@ -51,27 +53,23 @@ def split_by_avg_min_max(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, 
     return df_avg, df_min, df_max
 
 def group_by_candidates(df: pd.DataFrame, output_path:str) -> pd.DataFrame:
-    """Rank and aggregate candidate URLs by predicted probability.
+    """
+    Rank and aggregate candidate URLs by predicted probability.
 
-    Groups rows by ('name','doi','paragraph'), orders each group
-    by descending 'predicted_probability', then aggregates:
-      • id                    : first id
-      • authors               : first authors
-      • field/topic/keywords  : first topic
-      • url (ground truth)    : first ground-truth URL
-      • candidate_urls        : comma-joined URLs in rank order
-      • probability_ranked    : comma-joined probabilities in same order
+    Groups rows by ('name', 'doi', 'paragraph'), then within each group:
+    - Sorts by 'predicted_probability' (descending)
+    - Aggregates:
+        • id, authors, and ground-truth URL: take first entry
+        • candidate_urls: comma-separated ranked URLs
+        • predicted probabilities: comma-separated, same order
 
     Args:
-        df: DataFrame with a 'predicted_probability' column.
-        output_path: If non-empty, path to CSV for saving the result.
+        df (pd.DataFrame): Must contain 'predicted_probability' and candidate info.
+        output_path (str): Optional. If provided, saves result to CSV.
 
     Returns:
-        A DataFrame with columns
-        ['id','name','doi','paragraph','authors',
-         'field/topic/keywords','url (ground truth)',
-         'candidate_urls','probability_ranked'].
-    """
+        pd.DataFrame: Aggregated candidates with rankings per group.
+"""
     # 1) Sort so that within each (name, doi, paragraph) block,
     #    highest predicted_probability comes first.
     df_sorted = df.sort_values(
@@ -115,20 +113,19 @@ def group_by_candidates(df: pd.DataFrame, output_path:str) -> pd.DataFrame:
 
 
 def split_by_summary(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Split DataFrame into three versions using average, min, and max scores.
+    """
+    Generate binary predictions based on average, min, and max scores.
 
-    Expects `df` to have at least these columns:
-      id, name, doi, paragraph, authors,
-      field/topic/keywords, url (ground truth),
-      candidate_urls, probability (ground truth),
-      metadata_*, *_metric for name, author, paragraph, keywords, language,
-      average, min, max
+    Creates three DataFrames with the same base columns and a new
+    'prediction' column, where a value of 1 means score > 0.5.
+
+    Args:
+        df (pd.DataFrame): Must contain 'average', 'min', and 'max' columns.
 
     Returns:
-        A tuple of three DataFrames (df_avg, df_min, df_max), each with
-        all base columns plus:
-          'predicted_probability' ← one of 'average', 'min', or 'max'.
-    """
+        Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+            DataFrames with binary predictions from average, min, and max scores.
+"""
     base_cols = [
         'id','name','doi','paragraph','authors',
         'field/topic/keywords','url (ground truth)','candidate_urls'
@@ -231,33 +228,20 @@ def r_precision(df: pd.DataFrame) -> float:
 
 
 def evaluation(df: pd.DataFrame) -> None:
-    """Compute and print classification metrics for a binary match task.
-
-    For each row in `df`, compares the single `candidate_urls` entry
-    against the comma-separated ground truth set in `url (ground truth)`
-    to form `true_label`.  Uses the `prediction` column as the predicted label.
-
-    Args:
-        df: A DataFrame with columns
-            - 'candidate_urls': single-URL string per row
-            - 'url (ground truth)': comma-separated list of correct URLs
-            - 'prediction': 0 or 1 model output
-
-    Prints:
-        Precision, recall, F1-score (to 2 decimal places), and
-        a full classification report.
     """
+        Compute and print binary classification metrics for a match task.
 
-    y_true = df['true_label']
-    y_pred = df['prediction']
+        Assumes that the ground-truth label (column 'true_label') is already provided,
+        with value 1 if the candidate URL is among the correct URLs, and 0 otherwise.
+
+        Args:
+            df (pd.DataFrame): Must contain:
+                - 'prediction': binary model prediction (0 or 1)
+                - 'true_label': binary ground-truth label (0 or 1)
+
+        Prints:
+            - Precision, recall, and F1-score (rounded to 2 decimals)
+            - Full sklearn classification report
+"""
+
     
-    p = precision_score(y_true, y_pred, zero_division=0)
-    r = recall_score(y_true, y_pred, zero_division=0)
-    f1 = f1_score(y_true, y_pred, zero_division=0)
-    
-    print(f"Precision: {p:.2f}")
-    print(f"Recall:    {r:.2f}")
-    print(f"F1-score:  {f1:.2f}\n")
-    # if you want the full breakdown:
-    print(classification_report(y_true, y_pred, target_names=['non-match','match']))
-    print()

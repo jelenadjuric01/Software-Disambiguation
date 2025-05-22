@@ -94,7 +94,23 @@ def keyword_similarity_with_fallback_SBERT(
     site_keywords: Optional[str],
     software_description: Optional[str]
 ) -> float:
-    """Compute a keyword-based similarity with a description fallback using SBERT."""
+    """
+Compute a keyword-based similarity with a description fallback using SBERT.
+
+Compares `paper_keywords` to either `site_keywords` or `software_description`
+depending on availability. Uses a keyword-optimized SBERT model when
+comparing keywords, and a more powerful SBERT model when falling back
+to description comparison.
+
+Args:
+    paper_keywords (Optional[str]): Comma-separated list from the paper.
+    site_keywords (Optional[str]): Comma-separated list from metadata.
+    software_description (Optional[str]): Full text description.
+
+Returns:
+    float: Cosine similarity score ∈ [0.0, 1.0], or np.nan if invalid inputs.
+"""
+
     if pd.isna(paper_keywords):
         return np.nan
 
@@ -208,10 +224,26 @@ def normalize_software_name(name: str) -> str:
     # 4. Re-join and collapse whitespace
     return " ".join(tokens)
 def software_name_similarity_levenshtein(name1: str, name2: str) -> float:
-    """Measure normalized Levenshtein similarity between two software names.
-
-    Returns a float in [0.0, 1.0], where 1.0 means identical (post-normalization).
     """
+Compute Levenshtein similarity between two normalized software names.
+
+Each name is first normalized by:
+- Lowercasing and stripping
+- Removing version tokens (e.g., "v1.0", "2021")
+- Removing punctuation
+- Removing common affixes (e.g., "Pro", "Suite")
+
+Then Levenshtein distance is calculated and converted to similarity:
+similarity = 1 - (distance / max_length)
+
+Args:
+    name1 (str): First software name.
+    name2 (str): Second software name.
+
+Returns:
+    float: Levenshtein similarity score in [0.0, 1.0], or 1.0 if both are empty after normalization.
+"""
+
     n1 = normalize_software_name(name1)
     n2 = normalize_software_name(name2)
 
@@ -242,16 +274,21 @@ def software_name_similarity(name1: str, name2: str) -> float:
     n2 = normalize_software_name(name2)
     return textdistance.jaro_winkler(n1, n2)
 def synonym_name_similarity_levenshtein(name1: str, names: str) -> float:
-    """Compute Levenshtein similarity between software name and list of synonyms.
-
-
-    Args:
-        name1 (str): First software name.
-        names List(str): List of synonyms.
-
-    Returns:
-        float: Levenshtein similarity ∈ [0.0, 1.0] that is average of the similarities.
     """
+Compute Levenshtein similarity between a software name and a list of synonyms.
+
+The input synonyms string is comma-separated. Each synonym and the main name
+are normalized before comparison. The final similarity score is the average
+over all pairwise comparisons.
+
+Args:
+    name1 (str): Software name to compare.
+    names (str): Comma-separated synonyms.
+
+Returns:
+    float: Average similarity ∈ [0.0, 1.0], or np.nan on invalid input.
+"""
+
     if not names or pd.isna(names) or not name1 or pd.isna(name1):
         return np.nan
 
@@ -272,16 +309,21 @@ def synonym_name_similarity_levenshtein(name1: str, names: str) -> float:
     return np.mean(sims)
 
 def synonym_name_similarity(name1: str, names: str) -> float:
-    """Compute Jaro–Winkler similarity between software name and list of synonyms.
-
-
-    Args:
-        name1 (str): First software name.
-        names List(str): List of synonyms.
-
-    Returns:
-        float: Jaro–Winkler similarity ∈ [0.0, 1.0] that is average of the similarities.
     """
+Compute Levenshtein similarity between a software name and a list of synonyms.
+
+The input synonyms string is comma-separated. Each synonym and the main name
+are normalized before comparison. The final similarity score is the average
+over all pairwise comparisons.
+
+Args:
+    name1 (str): Software name to compare.
+    names (str): Comma-separated synonyms.
+
+Returns:
+    float: Average similarity ∈ [0.0, 1.0], or np.nan on invalid input.
+"""
+
     if not names or pd.isna(names) or not name1 or pd.isna(name1):
         return np.nan
     # After stripping, if either is empty
@@ -297,18 +339,22 @@ def synonym_name_similarity(name1: str, names: str) -> float:
     return np.mean(similarities)
 def programming_language_similarity(lang1: Optional[str],
                                     lang2: Optional[str]) -> float:
-    """Compute a simple equality-based similarity between two languages.
-
-    Returns 1.0 if both non-empty names match case-insensitively,
-    0.0 if both present but differ, or `np.nan` if either is missing.
-
-    Args:
-        lang1 (Optional[str]): First language name.
-        lang2 (Optional[str]): Second language name.
-
-    Returns:
-        float: Similarity score or `np.nan` for missing data.
     """
+Compare two programming language names using Jaro–Winkler similarity.
+
+Returns:
+- 1.0 if both normalized names are equal (case-insensitive)
+- 0.0 if both are present but differ
+- np.nan if either value is missing or empty
+
+Args:
+    lang1 (Optional[str]): First language name.
+    lang2 (Optional[str]): Second language name.
+
+Returns:
+    float: Similarity score ∈ [0.0, 1.0], or np.nan if data is missing.
+"""
+
     # 1) Missing → nan
     if pd.isna(lang1) or pd.isna(lang2):
         return np.nan
@@ -380,22 +426,28 @@ def author_name_similarity(name1: str, name2: str) -> float:
 
 
 def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFrame:
-    """Compute and collect multiple similarity metrics for each candidate.
-
-    For rows with valid `metadata_name`, computes:
-      - `name_metric`       via `software_name_similarity`
-      - `author_metric`     via `author_name_similarity`
-      - `paragraph_metric`  via `paragraph_description_similarity`
-      - `keywords_metric`   via `keyword_similarity_with_fallback`
-      - `language_metric`   via `programming_language_similarity`
-
-    Args:
-        df (pd.DataFrame): Input with metadata and source columns.
-        output_path (str, optional): If given, CSV filepath to save results.
-
-    Returns:
-        pd.DataFrame: Subset DataFrame with original columns plus the five metrics.
     """
+Compute similarity metrics between paper entries and candidate metadata.
+
+For each row where `metadata_name` is present, this function:
+- Computes up to six similarity metrics (if not already filled):
+    • `name_metric`: software_name_similarity
+    • `author_metric`: author_name_similarity
+    • `paragraph_metric`: paragraph_description_similarity
+    • `keywords_metric`: keyword_similarity_with_fallback
+    • `language_metric`: programming_language_similarity
+    • `synonym_metric`: synonym_name_similarity
+- Adds a binary `true_label` indicating whether the candidate URL matches any ground-truth URLs
+- Optionally saves the output to CSV
+
+Args:
+    df (pd.DataFrame): Input dataframe containing paper and metadata fields.
+    output_path (str, optional): File path to save the result CSV. Default is None.
+
+Returns:
+    pd.DataFrame: Filtered and updated dataframe with all computed metrics and `true_label`.
+"""
+
     for col in ['name_metric','author_metric','paragraph_metric','keywords_metric',"language_metric",'synonym_metric']:
         if col not in df.columns:
             df[col] = np.nan

@@ -301,20 +301,21 @@ def find_nearest_language_for_softwares(
     text: str,
     software_names: str
 ) -> Optional[str]: 
-    """Find the programming language mention closest to a software name.
-
-    Uses `get_language_positions` to locate all language/IDE mentions,
-    finds the first occurrence of `software_names`, and returns the
-    nearest language by character‐distance.
-
-    Args:
-        text (str): Document text to search.
-        software_names (str): The software name to locate in `text`.
-
-    Returns:
-        Optional[str]: Closest language (e.g. 'Python', 'R'), or `None`
-        if no software or language match is found.
     """
+Identify the programming language mentioned closest to a software name.
+
+Uses character-level proximity to find which programming language or IDE
+is mentioned nearest to the given software name within the provided text.
+
+Args:
+    text (str): Full paragraph of text to search.
+    software_names (str): The name of the software to find.
+
+Returns:
+    Optional[str]: Name of the closest language (e.g. "Python"), or None
+    if no valid software or language is found.
+"""
+
     languages = COMMON_LANGUAGES
     ide_mapping = IDE_MAPPING
     lang_positions = get_language_positions(text)
@@ -363,9 +364,22 @@ def select_rows_below_threshold(
     return df.loc[below].reset_index(drop=True)
 def keywords_from_paper_rake(text: str, top_n: int = 5) -> str:
     """
-    Remove all punctuation from `text`, then run RAKE and
-    return the top_n phrases joined by commas.
-    """
+Extract keyword phrases from input text using RAKE after punctuation removal.
+
+This function cleans the input by removing all punctuation, then applies
+the RAKE (Rapid Automatic Keyword Extraction) algorithm to identify key
+multi-word phrases. It returns the top-ranked phrases joined as a
+comma-separated string.
+
+Args:
+    text (str): Input text from which to extract keywords.
+    top_n (int): Number of top-ranked phrases to return. Default is 5.
+
+Returns:
+    str: A comma-separated string of up to `top_n` keyword phrases.
+         If no keywords are found or input is empty, returns an empty string.
+"""
+
     # 1) Guard against None
     raw = text or ""
     # 2) Remove punctuation
@@ -379,9 +393,20 @@ def keywords_from_paper_rake(text: str, top_n: int = 5) -> str:
     return ",".join(phrases)
 def missing_github_RAKE(metadata:dict):
     """
-    If the URL is a GitHub link, extract keywords using RAKE.
-    Otherwise, return an empty string.
-    """
+Enrich GitHub repository metadata with keywords using RAKE if missing.
+
+For each GitHub URL in the metadata dictionary:
+- Checks if the `keywords` field is missing or empty
+- If so, applies RAKE to the description to generate up to 5 keywords
+- Updates the `metadata[url]["keywords"]` field in place
+
+Args:
+    metadata (dict): A dictionary mapping URLs to metadata dictionaries.
+
+Returns:
+    None: This function modifies the metadata dictionary in place.
+"""
+
     for url in metadata.keys():
         if "github.com" in url:
             # Extract the text from the metadata

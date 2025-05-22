@@ -2,20 +2,25 @@ import itertools
 from typing import List, Optional, Tuple
 import pandas as pd
 import numpy as np
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.metrics import f1_score, precision_score, recall_score
-from sklearn.model_selection import train_test_split, StratifiedKFold
+from sklearn.model_selection import  StratifiedKFold
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-from xgboost import XGBClassifier
-from lightgbm import LGBMClassifier
-from sklearn.neural_network import MLPClassifier
-from sklearn.utils.class_weight import compute_class_weight
-from sklearn.pipeline import Pipeline
+
 from sklearn.feature_selection import SelectKBest, f_classif, SelectFromModel
 from evaluation import evaluation
 from models import MedianImputerWithIndicator, make_model, split_data, get_preprocessing_pipeline
+
+"""
+Script for evaluating classification models with baseline and selected features.
+
+Performs:
+- Baseline training with all features
+- Univariate feature selection with ANOVA F-score
+- Multivariate selection using RandomForest importance
+- Cross-validation and test set evaluation for multiple models
+
+Models used: Logistic Regression, Random Forest, XGBoost, LightGBM, Neural Net
+"""
 
 if __name__ == "__main__":
     # Load & split
