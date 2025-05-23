@@ -6,8 +6,8 @@ import os
 from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, extract_pypi_metadata_RAKE_class, extract_pypi_metadata_Rake_after, get_metadata  
 import re
 import csv
-from similarity_metrics import compute_similarity_df, get_average_min_max, keyword_similarity_with_fallback, keyword_similarity_with_fallback_SBERT, paragraph_description_similarity_BERT, software_name_similarity_levenshtein, synonym_name_similarity, synonym_name_similarity_levenshtein
-from evaluation import split_by_avg_min_max, group_by_candidates, evaluation, split_by_summary
+from similarity_metrics import compute_similarity_df,  keyword_similarity_with_fallback, keyword_similarity_with_fallback_SBERT, paragraph_description_similarity_BERT, software_name_similarity_levenshtein, synonym_name_similarity, synonym_name_similarity_levenshtein
+from evaluation import  evaluation
 from rake_nltk import Rake
 import string
 

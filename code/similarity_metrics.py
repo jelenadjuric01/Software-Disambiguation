@@ -528,36 +528,6 @@ Returns:
         print(f"📄 Similarity metrics saved to {output_path}")
 
     return sub
-def get_average_min_max(df: pd.DataFrame, output_path: str = None) -> None:
-    """Add per-row and overall average/min/max of similarity metrics.
-
-    1. Adds columns `average`, `min`, and `max` across
-       ['name_metric', 'author_metric', 'paragraph_metric',
-        'keywords_metric', 'language_metric'].
-    2. Prints overall statistics for each metric.
-    3. Optionally saves the augmented DataFrame to `output_path`.
-
-    Args:
-        df (pd.DataFrame): Must contain the five metric columns.
-        output_path (str, optional): CSV filepath to write the updated DataFrame.
-
-    Returns:
-        None
-    """
-    # Calculate average, min, and max for each candidate URL
-    df['average'] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric",'language_metric']].mean(axis=1,skipna=True)
-    df["min"] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric",'language_metric']].min(axis=1)
-    df["max"] = df[['name_metric', 'author_metric', 'paragraph_metric',"keywords_metric","language_metric"]].max(axis=1)
-    metrics = ["name_metric","author_metric",'paragraph_metric','keywords_metric', "language_metric","average","min","max"]
-# 2) Or, if you prefer one‐by‐one formatting:
-    for m in metrics:
-        avg = df[m].mean()
-        mn  = df[m].min()
-        mx  = df[m].max()
-        print(f"{m:15s} →  avg: {avg:.4f}   min: {mn:.4f}   max: {mx:.4f}")
-    if output_path:
-        df.to_csv(output_path, index=False)
-        print(f"📄 Average, min, and max metrics saved to {output_path}")
 
 if __name__ == "__main__":
     # Example usage

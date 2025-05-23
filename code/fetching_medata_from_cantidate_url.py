@@ -603,7 +603,7 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
         # Split keywords string into list
         raw_keywords = get_first_value("keywords")
         keywords = [kw.strip() for kw in raw_keywords.split(",")] if raw_keywords else []
-
+        
         # "owner" is treated as author (GitHub username)
         owner = get_first_value("owner")
         #get language
@@ -794,7 +794,7 @@ def get_metadata(url: str) -> dict:
 
     # GitHub repo
     if "github.com" in domain:
-        return extract_somef_metadata(url)
+        return extract_somef_metadata_with_RAKE(url)
 
     # CRAN package (common formats: cran.r-project.org or pkg.go.dev/r)
     if domain == "cran.r-project.org" and (
@@ -803,7 +803,7 @@ def get_metadata(url: str) -> dict:
     ):        return extract_cran_metadata(url)
     ## PyPI package (common formats: pypi.org or pypi.python.org)
     if "pypi.org" in domain or "pypi.python.org" in domain:
-        return extract_pypi_metadata(url)
+        return extract_pypi_metadata_Rake_after(url)
     # Generic website fallback
     return extract_website_metadata(url)
     
