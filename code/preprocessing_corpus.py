@@ -442,8 +442,8 @@ if __name__ == "__main__":
     output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.7/updated_with_metadata_file.csv"
     output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/similarities.csv"
     output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.6/pairs.csv"
-    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/model_input.csv"
-    model_input = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/model_input_no_keywords.csv"
+    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.9/model_input.csv"
+    model_input = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.9/model_input_no_keywords.csv"
     '''df = pd.read_excel(excel_path)
     metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
     df = make_pairs(df,output_path_pairs)

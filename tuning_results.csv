@@ -2,3 +2,6 @@ version,model,best_params,precision,recall,f1
 3.6,Random Forest,"{""max_depth"": null, ""min_samples_leaf"": 1, ""min_samples_split"": 2, ""n_estimators"": 500}",0.8961038961038961,0.9230769230769231,0.9093904448105437
 3.8,Random Forest,"{""model__max_depth"": null, ""model__min_samples_leaf"": 1, ""model__min_samples_split"": 2, ""model__n_estimators"": 500}",0.8910256410256411,0.9297658862876255,0.9099836333878887
 3.12,Random Forest,"{""model__max_depth"": 20, ""model__min_samples_leaf"": 1, ""model__min_samples_split"": 2, ""model__n_estimators"": 500}",0.9013157894736842,0.9163879598662207,0.9087893864013267
+3.9,XGBoost,"{""colsample_bytree"": 0.6, ""learning_rate"": 0.1, ""max_depth"": 9, ""n_estimators"": 200, ""subsample"": 1.0}",0.8662613981762918,0.9531772575250836,0.9076433121019108
+3.12,XGBoost,"{""colsample_bytree"": 0.6, ""learning_rate"": 0.1, ""max_depth"": 6, ""n_estimators"": 200, ""subsample"": 1.0}",0.8761609907120743,0.9464882943143813,0.909967845659164
+3.12,LightGBM,"{""learning_rate"": 0.1, ""min_child_samples"": 20, ""n_estimators"": 100, ""num_leaves"": 31}",0.8792569659442725,0.9498327759197325,0.9131832797427653

@@ -10,12 +10,6 @@ $script = 'd:/MASTER/TMF/Software-Disambiguation/code/fine_tuning.py'
 
 Write-Host "Starting hyperparameter tuning runs..."
 
-# v3.8 → Random Forest only
-Write-Host "`nRunning v3.8 (Random Forest)"
-& $python $script `
-    --data "D:\MASTER\TMF\Software-Disambiguation\corpus\temp\v3.8\model_input_no_keywords.csv" `
-    --models "Random Forest" `
-    --cols-to-impute paragraph_metric author_metric language_metric synonym_metric
 
 # v3.9 → XGBoost only
 Write-Host "`nRunning v3.9 (XGBoost)"
@@ -27,7 +21,7 @@ Write-Host "`nRunning v3.9 (XGBoost)"
 Write-Host "`nRunning v3.12 (Random Forest, XGBoost, LightGBM)"
 & $python $script `
     --data "D:\MASTER\TMF\Software-Disambiguation\corpus\temp\v3.12\model_input_no_keywords.csv" `
-    --models "Random Forest" XGBoost LightGBM `
+    --models XGBoost LightGBM `
     --cols-to-impute paragraph_metric author_metric language_metric synonym_metric
 
 Write-Host "`nAll runs completed. Results appended to tuning_results.csv."
