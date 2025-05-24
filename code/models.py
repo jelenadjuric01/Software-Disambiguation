@@ -198,11 +198,19 @@ Returns:
 
 if __name__ == "__main__":
     # 1) Load & split
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/model_input.csv")
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/model_input_no_keywords.csv")
     X_trainval, X_test, y_trainval, y_test = split_data(df, "true_label", test_size=0.2)
-    
+    best_params = {
+    "random forest": {
+        "n_estimators": 500,
+        "max_depth": 20,
+        "min_samples_split": 2,
+        "min_samples_leaf": 1
+    }
+    # you could put XGBoost or LightGBM dicts here too
+}
     # Columns to impute (only these will be processed)
-    cols_to_impute = ['author_metric', 'paragraph_metric', 'keywords_metric', 'language_metric']
+    cols_to_impute = [ 'paragraph_metric','language_metric','synonym_metric','author_metric']
     
     # 2) Prepare the raw tree-based view (no preprocessing)
     X_tree_train = X_trainval.copy()
@@ -210,7 +218,7 @@ if __name__ == "__main__":
 
     # 3) 5-fold cross-validation on the 80% train+val only:
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-    models_to_try = ['Logistic Regression', 'Random Forest', 'XGBoost', 'LightGBM', 'Neural Net']
+    models_to_try = ['Random Forest']
 
     for name in models_to_try:
         y_true_oof, y_pred_oof = [], []
@@ -245,7 +253,7 @@ if __name__ == "__main__":
                 y_val = y_val.values
 
             # Train model
-            model = make_model(name, y_tr)
+            model = make_model(name, y_tr,best_params)
             model.fit(X_tr, y_tr)
             
             # Predict
@@ -278,7 +286,7 @@ if __name__ == "__main__":
             X_tr_full = pd.DataFrame(X_tr_full, columns=feature_names)
             X_test_view = pd.DataFrame(X_test_view, columns=feature_names)
 
-        model = make_model(name, y_trainval)
+        model = make_model(name, y_trainval,best_params)
         model.fit(X_tr_full, y_trainval)
         y_pred_test = model.predict(X_test_view)
         

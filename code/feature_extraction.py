@@ -24,9 +24,9 @@ Models used: Logistic Regression, Random Forest, XGBoost, LightGBM, Neural Net
 
 if __name__ == "__main__":
     # Load & split
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/model_input.csv")
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/model_input_no_keywords.csv")
     X_trainval, X_test, y_trainval, y_test = split_data(df, "true_label", test_size=0.2)
-    cols_to_impute = ['author_metric', 'paragraph_metric', 'keywords_metric', 'language_metric','synonym_metric']
+    cols_to_impute = [ 'paragraph_metric','language_metric','synonym_metric','author_metric']
     X_tree_train = X_trainval.copy()
     X_tree_test = X_test.copy()
 

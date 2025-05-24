@@ -436,146 +436,23 @@ Returns:
 
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
-    """'''
-    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v1.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/updated_with_metadata_file_v1.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv"
-    # Build metadata cache from Excel
-
-    # Load the DataFrame again to add metadata
-    df = pd.read_excel(excel_path)
-    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
-    print(metadata_cache)
-    df = make_pairs(df)
-
-    add_metadata(df,metadata_cache, output_path)
-    df = compute_similarity_df(df,output_path_similarities)
-    output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/calculated_version_1.csv"
-    # Load the DataFrame again to see the results
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv")
-    # Get the average, min, and max for each metric
-    get_average_min_max(df, output_path_calculated_version_1)
     
-
-    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 2
-    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v2.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/pairs.csv"
-    output_path_calculated = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv"
-
-    # Build metadata cache from Excel
-    
-    # Load the DataFrame again to add metadata
-    df = pd.read_excel(excel_path)
-    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
-    print(metadata_cache)
-    df = make_pairs(df,output_path_pairs)
-
-    add_metadata(df,metadata_cache, output_path)
-    df = compute_similarity_df(df,output_path_similarities)
-    # Load the DataFrame again to see the results
-    df = pd.read_csv(output_path_similarities)
-    # Get the average, min, and max for each metric
-    get_average_min_max(df, output_path_calculated)
-    outputh_avg_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/average_ranked.csv"
-    outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/min_ranked.csv"
-    outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/max_ranked.csv"
-    #Get ranked candidates and save the updated file version 2
-    df = pd.read_csv(output_path_calculated)
-    df_avg, df_min, df_max = split_by_avg_min_max(df)
-    df_avg = group_by_candidates(df_avg, outputh_avg_ranked)
-    df_min = group_by_candidates(df_min, outputh_min_ranked)
-    df_max = group_by_candidates(df_max, outputh_max_ranked)
-    print("Evaluation  of average")
-    evaluation(df_avg)
-    print("Evaluation  of min")
-    evaluation(df_min)
-    print("Evaluation  of max")
-    evaluation(df_max)
-    #Version 3
-    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 3
-    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/pairs.csv"
-    output_path_calculated = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv"
-    df = pd.read_excel(excel_path)
-    df['language'] = df.apply(
-    lambda row: find_nearest_language_for_softwares(
-        text=row['paragraph'],
-        software_names=row['name']
-
-    ),
-    axis=1
-)
-    df['language'] = df['language'].fillna('')
-    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
-    df = make_pairs(df,output_path_pairs)
-
-    add_metadata(df,metadata_cache, output_path)
-    df = compute_similarity_df(df,output_path_similarities)
-    # Load the DataFrame again to see the results
-    df = pd.read_csv(output_path_similarities)
-    # Get the average, min, and max for each metric
-    get_average_min_max(df, output_path_calculated)
-    outputh_avg_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/average_ranked.csv"
-    outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/min_ranked.csv"
-    outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/max_ranked.csv"
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv")
-    df_avg, df_min, df_max = split_by_summary(df)
-    print("Evaluation  of average")
-    evaluation(df_avg)
-    print("Evaluation  of min")
-    evaluation(df_min)
-    print("Evaluation  of max")
-    evaluation(df_max)
-    df_avg.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/average_ranked.csv")
-    df_min.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/min_ranked.csv")
-    df_max.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/max_ranked.csv")
-   
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated_positives.csv")
-    filtered = select_rows_below_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'],0.1)
-    filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")"""
-    #Version 3.1 adding synonyms similarity
-    '''similarities_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/similarities.csv"
-    updated_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/updated_with_metadata_file.csv"
-    df = pd.read_csv(similarities_path)
-    df_updated = pd.read_csv(updated_path)
-    df_updated = df_updated.dropna(subset=['metadata_name']).copy()
-    df['synonyms']=df_updated["synonyms"]
-    df['synonym_metric'] = df.apply(
-        lambda row: synonym_name_similarity(
-            row['metadata_name'],
-            row['synonyms']
-        ),
-        axis=1
-    )
-    df.to_csv(similarities_path, index=False)
-    model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
-    model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_2.xlsx"
     output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_6.json"
     output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.7/updated_with_metadata_file.csv"
     output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/similarities.csv"
     output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.6/pairs.csv"
     model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/model_input.csv"
-    #df = pd.read_csv(output_path)
-    #df = pd.read_excel(excel_path)
-    sim = pd.read_csv(output_path_similarities)
+    model_input = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/model_input_no_keywords.csv"
+    '''df = pd.read_excel(excel_path)
+    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
+    df = make_pairs(df,output_path_pairs)
 
-    sim['paragraph_metric'] = sim.apply(
-        lambda r: paragraph_description_similarity_BERT(
-            r['paragraph'],
-            r['metadata_description']
-            
-        ),
-        axis=1
-    )
-    
-    sim.to_csv(output_path_similarities, index=False)
-    model_input = sim[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
-    model_input.to_csv(model_input_path, index=False)
+    add_metadata(df,metadata_cache, output_path)
+    df = compute_similarity_df(df,output_path_similarities)
+
+    model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
+    model_input.to_csv(model_input_path, index=False)'''
+    df = pd.read_csv(model_input_path)
+    df.drop(columns=['keywords_metric'], inplace=True)
+    df[['name_metric', 'paragraph_metric','language_metric','synonym_metric','author_metric','true_label']].to_csv(model_input, index=False)
