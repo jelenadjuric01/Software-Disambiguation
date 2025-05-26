@@ -1,8 +1,11 @@
+from SPARQLWrapper import JSON, SPARQLWrapper
 import pandas as pd
 from pathlib import Path
 import json
 from typing import List, Tuple, Dict, Optional
 import os
+
+import requests
 from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, extract_pypi_metadata_RAKE_class, extract_pypi_metadata_Rake_after, get_metadata  
 import re
 import csv
@@ -433,7 +436,121 @@ Returns:
                     metadata[url]["keywords"] = kws
                     print(f"Extracted keywords from GitHub URL: {url}, {kws}")
             
+def get_authors(doi):
+    # Set the URL for the OpenAlex API
+    url = "https://api.openalex.org/works/https://doi.org/"
+    # Set the headers
+    headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    }
+    # Set the parameters for the query
+    #params = {
+    #    'query': 'your_query_here',  # Replace 'your_query_here' with your actual query
+    #    'apikey': 'your_api_key_here',  # Replace 'your_api_key_here' with your actual API key
+    #}
+    response = requests.get(url+str(doi), headers=headers)
+    json_response = response.json()
+    return_value = {"doi":doi}
+    if(json_response["authorships"] is not None):
+        return_authors = []
+        for author in json_response["authorships"]:
+            if(author["author"]):
+                a = author["author"]
+                return_authors.append(a["display_name"])
+    return_value["authors"] = return_authors
+    return return_value
 
+def get_synonyms_from_CZI(df, dictionary):
+    for key in dictionary.keys():
+        if dictionary[key] != set():
+            continue
+        # Find matching rows in synonyms_df where the software mention matches the dictionary key
+        matches = df[df["software_mention"].str.lower() == key]["synonym"].tolist()
+        # Store synonyms as a list
+        dictionary[key].update(matches)
+
+def get_synonyms_from_SoftwareKG(dictionary):
+    # Define the SPARQL endpoint
+    sparql = SPARQLWrapper("https://data.gesis.org/somesci/sparql")
+    # Execute the query
+    for key in dictionary.keys():
+        if dictionary[key] != set():
+            continue
+        query = f"""
+    PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
+PREFIX sms: <http://data.gesis.org/somesci/>
+PREFIX its: <http://www.w3.org/2005/11/its/rdf#>
+
+SELECT DISTINCT ?synonym
+WHERE {{
+    # Find the software entity associated with the given spelling
+    ?sw_phrase a nif:Phrase ;
+               its:taClassRef [ rdfs:subClassOf sms:Software ] ;
+               its:taIdentRef ?sw_identity ;
+               nif:anchorOf "{key}" .  # Replace "Excel" with the desired software name
+
+    # Retrieve other spellings linked to the same software identity
+    ?other_phrase its:taIdentRef ?sw_identity ;
+                  nif:anchorOf ?synonym .
+    
+    FILTER (?synonym != "{key}")  # Exclude the original input spelling from results
+}}
+ORDER BY ?synonym
+    """
+        try:
+            # Set query and return format
+            sparql.setQuery(query)
+            sparql.setReturnFormat(JSON)
+            results = sparql.query().convert()
+
+            # Process results
+            for result in results["results"]["bindings"]:
+                synonym = result.get("synonym", {}).get("value")
+                if synonym:
+                    dictionary[key].add(synonym)
+
+        except Exception as e:
+            print(f"Error retrieving synonyms for {key}: {e}")
+def get_synonyms(dictionary, CZI = 1, SoftwareKG = 1,CZI_df:pd.DataFrame = None) -> Dict[str, set]:
+    if CZI == 1:
+        get_synonyms_from_CZI(CZI_df, dictionary)
+    if SoftwareKG == 1:
+        get_synonyms_from_SoftwareKG(dictionary)
+    dictionary = {key: list(value) for key, value in dictionary.items()}
+    return dictionary
+
+def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFrame, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame = None) -> pd.DataFrame:
+    """Load synonyms from a CSV file into a DataFrame.
+
+    Args:
+        file_path (str): Path to the CSV file containing synonyms.
+
+    Returns:
+        pd.DataFrame: A DataFrame mapping software names to lists of synonyms.
+    """
+    if os.path.exists(synonym_file_location) and os.path.getsize(synonym_file_location) > 0:
+        with open(synonym_file_location, "r", encoding="utf-8") as f:
+            try:
+                benchmark_dictonary = json.load(f)
+            except json.JSONDecodeError:
+                print("⚠️ Warning: Could not decode existing JSON. Starting with empty cache.")
+                benchmark_dictonary = {name.lower(): set() for name in benchmark_df["name"].unique()}
+    else:
+            benchmark_dictonary = {name.lower(): set() for name in benchmark_df["name"].unique()}
+    benchmark_dictonary= get_synonyms(benchmark_dictonary, CZI=CZI, SoftwareKG=SoftwareKG,CZI_df=CZI_df)
+    # Save the updated dictionary to a JSON file
+    with open(synonym_file_location, "w", encoding="utf-8") as f:
+        json.dump(benchmark_dictonary, f, ensure_ascii=False, indent=4)
+    benchmark_df["synonyms"] = (benchmark_df["name"]
+    .str.lower()
+    .map(benchmark_dictonary)
+    .str.join(",")
+)
+    return benchmark_df
+
+# Save the updated DataFrame to a CSV file
+    benchmark_df.to_csv("../temp/v3.2/updated_with_metadata_file.csv", index=False)
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
     
