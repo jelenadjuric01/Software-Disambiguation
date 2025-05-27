@@ -122,7 +122,7 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
         None
     """
     # Ensure metadata columns exist
-    for col in ["metadata_name", "metadata_authors", "metadata_keywords", "metadata_description","metadata_language"]:
+    for col in ["metadata_name", "metadata_authors", "metadata_description","metadata_language"]:
         if col not in df.columns:
             df[col] = ""
 
@@ -149,11 +149,6 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
         authors = meta.get("authors") or []
         authors_str = ", ".join(authors) if isinstance(authors, list) else ""
         df.at[idx, "metadata_authors"] = sanitize_text_for_csv(authors_str)
-
-        # 3) Keywords (list → comma‑sep string)
-        keywords = meta.get("keywords") or []
-        kw_str = ", ".join(keywords) if isinstance(keywords, list) else ""
-        df.at[idx, "metadata_keywords"] = sanitize_text_for_csv(kw_str)
 
         # 4) Description
         raw_desc = meta.get("description", "") or ""
@@ -548,6 +543,14 @@ def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFram
     .str.join(",")
 )
     return benchmark_df
+def aggregate_group(subdf):
+    return pd.Series({
+        'synonyms': ', '.join(subdf['synonyms'].dropna().astype(str).unique()),
+        'language': ', '.join(subdf['language'].dropna().astype(str).unique()),
+        'authors': ', '.join(subdf['authors'].dropna().astype(str).unique()),
+        'urls': ', '.join(subdf.loc[subdf['prediction'] == 1, 'candidate_urls'].dropna().astype(str)),
+        'not_urls': ', '.join(subdf.loc[subdf['prediction'] == 0, 'candidate_urls'].dropna().astype(str)),
+    })
 
 # Save the updated DataFrame to a CSV file
     benchmark_df.to_csv("../temp/v3.2/updated_with_metadata_file.csv", index=False)

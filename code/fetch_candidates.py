@@ -263,7 +263,7 @@ def update_candidate_cache(
                     u = u.strip()
                     if u:
                         candidates[name].add(u)
-
+        
         # 4) fetch & add new ones
         new = set(fetcher(name))
         # only do the network hit if there’s something new to add

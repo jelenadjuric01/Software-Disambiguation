@@ -26,7 +26,7 @@
     "https://github.com/asaluau292922129017/Karthi_BCEAAC2CB95E3B785A04DBFC7140965A",
     "https://github.com/clippit/Paw-BCEAuthDynamicValue",
     "https://github.com/cran/BCEA",
-    "https://github.com/giabaio/BCEA/",
+    "https://github.com/giabaio/BCEA",
     "https://github.com/giabaio/BCEAweb"
   ],
   "BeautifulSoup": [
@@ -439,6 +439,7 @@
     "https://github.com/anycodes/SentimentAnalysis",
     "https://github.com/barissayil/SentimentAnalysis",
     "https://github.com/cran/SentimentAnalysis",
+    "https://github.com/ppzhenghua/SentimentAnalysisDictionary",
     "https://github.com/sfeuerriegel/SentimentAnalysis",
     "https://github.com/virgoC0der/SentimentAnalysisOfProductReview",
     "https://pypi.org/project/SentimentAnalysis/"
@@ -490,6 +491,7 @@
     "https://github.com/bmsimons/NetflixStatistix",
     "https://github.com/coenribbens/Netflix-statistix",
     "https://github.com/piotrgrabowski2501/Statistix",
+    "https://github.com/van-sprundel/Netflix-statistix",
     "https://pypi.org/project/statistix/"
   ],
   "TreeToReads": [
@@ -516,6 +518,7 @@
     "https://github.com/dzerbino/velvet",
     "https://github.com/ergohaven/velvet",
     "https://github.com/noamr/velvette",
+    "https://github.com/velvet-os/imagebuilder",
     "https://github.com/vitalight/Velvet",
     "https://pypi.org/project/velvet/"
   ],
@@ -632,6 +635,7 @@
     "https://cran.r-project.org/package=bootLR",
     "https://cran.r-project.org/package=bootUR",
     "https://github.com/7srikanth7/SpringBootlrn",
+    "https://github.com/Gustavolmo/Bootlr-client",
     "https://github.com/Gustavolmo/bootlr",
     "https://github.com/cran/bootLR",
     "https://github.com/gsk3/bootLR",
@@ -877,6 +881,7 @@
     "https://cran.r-project.org/package=wdpar",
     "https://cran.r-project.org/package=widyr",
     "https://github.com/BCFZzw/rerun_fwdpy",
+    "https://github.com/ForwardSimulation/fwdpy11_recipes",
     "https://github.com/molpopgen/fwdpy",
     "https://github.com/molpopgen/fwdpy11",
     "https://github.com/molpopgen/fwdpy11_arg_example",
@@ -1064,6 +1069,7 @@
     "https://cran.r-project.org/package=calibmsm",
     "https://cran.r-project.org/package=clime",
     "https://cran.r-project.org/package=libgeos",
+    "https://cran.r-project.org/package=libimath",
     "https://cran.r-project.org/package=lime",
     "https://cran.r-project.org/package=limexhub",
     "https://github.com/LoicMarechal/libMeshb",
@@ -1080,6 +1086,7 @@
     "https://cran.r-project.org/package=polspline",
     "https://github.com/OpenMandrivaAssociation/R-logspline",
     "https://github.com/clearlinux-pkgs/R-logspline",
+    "https://github.com/conda-forge/r-logspline-feedstock",
     "https://github.com/cran/logspline",
     "https://github.com/francescoalemanno/LogSpline.jl",
     "https://github.com/mlr3learners/mlr3learners.logspline"
@@ -1155,7 +1162,7 @@
     "https://github.com/cran/mirt",
     "https://github.com/guanhuaw/MIRTorch",
     "https://github.com/mirth-lang/mirth",
-    "https://github.com/philchalmers/mirt/"
+    "https://github.com/philchalmers/mirt"
   ],
   "mixKernel": [
     "https://cran.r-project.org/package=GoFKernel",
@@ -1203,7 +1210,6 @@
   ],
   "mord": [
     "https://cran.r-project.org/package=mod",
-    "https://cran.r-project.org/package=mvord",
     "https://cran.r-project.org/package=nord",
     "https://cran.r-project.org/package=ordr",
     "https://cran.r-project.org/package=tmod",
@@ -1221,8 +1227,8 @@
     "https://cran.r-project.org/package=mappoly",
     "https://cran.r-project.org/package=mi4p",
     "https://github.com/jbornschein/mpi4py-examples",
+    "https://github.com/mpi4py/mpi4py",
     "https://github.com/mpi4py/mpi4py-fft",
-    "https://github.com/mpi4py/mpi4py/",
     "https://github.com/mpi4py/setup-mpi",
     "https://github.com/pyscf/mpi4pyscf",
     "https://pypi.org/project/mpi4py/"
@@ -1275,6 +1281,7 @@
     "https://cran.r-project.org/package=onls",
     "https://cran.r-project.org/package=poldis",
     "https://github.com/CSchoel/nolds",
+    "https://github.com/Noldskie08/Noldskie08",
     "https://github.com/abel8260/noldsys_dev",
     "https://github.com/arnold-O/NoldStores",
     "https://github.com/arnold-O/Noldstore",
@@ -1375,6 +1382,7 @@
     "https://cran.r-project.org/package=paramtest",
     "https://cran.r-project.org/package=permutest",
     "https://github.com/CAPHTECH/ParamTestSwift",
+    "https://github.com/SherrySnowLiu/ParamTest",
     "https://github.com/Shin-Matsuoka/paramTest",
     "https://github.com/cran/paramtest",
     "https://github.com/hpgrahsl/junit5-paramtests-json",
@@ -1619,6 +1627,7 @@
     "https://pypi.org/project/scikit-learn/"
   ],
   "sets": [
+    "https://cran.r-project.org/package=CardioDataSets",
     "https://cran.r-project.org/package=airGRdatasets",
     "https://cran.r-project.org/package=cinaRgenesets",
     "https://cran.r-project.org/package=cluster.datasets",
@@ -1785,6 +1794,7 @@
     "https://cran.r-project.org/package=stdReg",
     "https://cran.r-project.org/package=stdReg2",
     "https://cran.r-project.org/package=tvReg",
+    "https://github.com/TeamratKidu/stdreg",
     "https://github.com/billahmasumcu/stdreg",
     "https://github.com/cran/stdReg",
     "https://github.com/sachsmc/stdReg2",
@@ -1824,6 +1834,7 @@
     "https://cran.r-project.org/package=suntools",
     "https://cran.r-project.org/package=urltools",
     "https://github.com/6chaoran/jupyter-summarytools",
+    "https://github.com/bee0060/SummaryTools",
     "https://github.com/cran/summarytools",
     "https://github.com/dcomtois/summarytools",
     "https://github.com/dcomtois/summarytools-python",
@@ -1863,6 +1874,7 @@
     "https://github.com/Murray2015/r_swirlify",
     "https://github.com/cran/swirlify",
     "https://github.com/ignaciolynchb/SWIRLIFY-CARPENTRIES-COURSE",
+    "https://github.com/jmcurbelo/Cursos_Swirlify",
     "https://github.com/slidify/swirlifyDemo",
     "https://github.com/swirldev/swirl",
     "https://github.com/swirldev/swirlify"
@@ -1905,6 +1917,7 @@
     "https://github.com/cran/tidyr",
     "https://github.com/dariyasydykova/tidyroc",
     "https://github.com/edgarnadal/vue-tidyroutes",
+    "https://github.com/r-lgbtq/tidyrainbow",
     "https://github.com/r-tidy-remote-sensing/tidyrgee",
     "https://github.com/tidyverse/tidyr"
   ],
@@ -1980,7 +1993,7 @@
     "https://github.com/cran/tsutils",
     "https://github.com/htinaunglu/tsutils",
     "https://github.com/hynd/heka-tsutils-plugins",
-    "https://github.com/trnnick/tsutils/",
+    "https://github.com/trnnick/tsutils",
     "https://pypi.org/project/tsutils/"
   ],
   "venn": [
