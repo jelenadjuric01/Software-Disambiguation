@@ -681,7 +681,7 @@ def extract_website_metadata(url: str) -> dict:
     return {}
 
 #Function that retrieves the metadata from any link
-def get_metadata(url: str) -> dict:
+def get_metadata(url: str, somef_path: str) -> dict:
     """Dispatch metadata extraction based on the URL’s domain.
 
     Routes to the appropriate extractor:
@@ -707,7 +707,7 @@ def get_metadata(url: str) -> dict:
 
     # GitHub repo
     if "github.com" in domain:
-        return extract_somef_metadata_with_RAKE(url)
+        return extract_somef_metadata_with_RAKE(url,somef_path)
 
     # CRAN package (common formats: cran.r-project.org or pkg.go.dev/r)
     if domain == "cran.r-project.org" and (

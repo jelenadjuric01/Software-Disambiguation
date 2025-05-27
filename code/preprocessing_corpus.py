@@ -15,7 +15,7 @@ from rake_nltk import Rake
 import string
 
     
-def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
+def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json", somef_path:str = r"D:/MASTER/TMF/somef") -> Dict[str, dict]:
     """Extract and cache metadata for all unique candidate URLs in a DataFrame.
 
     This function:
@@ -59,9 +59,9 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
         num_dict = len(metadata_cache)
         for url in url_set:
             if url not in metadata_cache or metadata_cache[url] in [None, {}]:
-                print(f"🔍 Processing: {identifier}/{num_url-num_dict}")
+                #print(f"🔍 Processing: {identifier}/{num_url-num_dict}")
                 print(f"🔍 Processing: {url}")
-                metadata_cache[url] = get_metadata(url)
+                metadata_cache[url] = get_metadata(url,somef_path)
             identifier += 1
 
     except Exception as e:
@@ -527,19 +527,26 @@ def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFram
     if os.path.exists(synonym_file_location) and os.path.getsize(synonym_file_location) > 0:
         with open(synonym_file_location, "r", encoding="utf-8") as f:
             try:
-                benchmark_dictonary = json.load(f)
+                benchmark_dictionary = json.load(f)
+                benchmark_dictionary = {k: set(v) for k, v in benchmark_dictionary.items()}
+                names = benchmark_df["name"].str.lower().unique()
+                # Ensure all names in benchmark_df are present in the dictionary
+                for name in names:
+                    if name not in benchmark_dictionary:
+                        benchmark_dictionary[name] = set()
+
             except json.JSONDecodeError:
                 print("⚠️ Warning: Could not decode existing JSON. Starting with empty cache.")
-                benchmark_dictonary = {name.lower(): set() for name in benchmark_df["name"].unique()}
+                benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
     else:
-            benchmark_dictonary = {name.lower(): set() for name in benchmark_df["name"].unique()}
-    benchmark_dictonary= get_synonyms(benchmark_dictonary, CZI=CZI, SoftwareKG=SoftwareKG,CZI_df=CZI_df)
+            benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
+    benchmark_dictionary = get_synonyms(benchmark_dictionary, CZI=CZI, SoftwareKG=SoftwareKG,CZI_df=CZI_df)
     # Save the updated dictionary to a JSON file
     with open(synonym_file_location, "w", encoding="utf-8") as f:
-        json.dump(benchmark_dictonary, f, ensure_ascii=False, indent=4)
+        json.dump(benchmark_dictionary, f, ensure_ascii=False, indent=4)
     benchmark_df["synonyms"] = (benchmark_df["name"]
     .str.lower()
-    .map(benchmark_dictonary)
+    .map(benchmark_dictionary)
     .str.join(",")
 )
     return benchmark_df
@@ -572,7 +579,12 @@ if __name__ == "__main__":
     df = compute_similarity_df(df,output_path_similarities)
 
     model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
-    model_input.to_csv(model_input_path, index=False)'''
+    model_input.to_csv(model_input_path, index=False)
     df = pd.read_csv(model_input_path)
     df.drop(columns=['keywords_metric'], inplace=True)
-    df[['name_metric', 'paragraph_metric','language_metric','synonym_metric','author_metric','true_label']].to_csv(model_input, index=False)
+    df[['name_metric', 'paragraph_metric','language_metric','synonym_metric','author_metric','true_label']].to_csv(model_input, index=False)'''
+    synonyms_file = 'D:/MASTER/TMF/Software-Disambiguation/code/synonym_dictionary.json'
+    input_dataframe = pd.read_csv('D:/MASTER/TMF/Software-Disambiguation/code/input.csv',delimiter=';')
+    CZI = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/demo/CZI/synonyms_matrix.csv")
+    input_dataframe=get_synonyms_from_file(synonyms_file, input_dataframe,CZI_df=CZI)
+    input_dataframe.to_csv('D:/MASTER/TMF/Software-Disambiguation/code/input_with_synonyms.csv', index=False)
