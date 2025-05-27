@@ -16280,5 +16280,66 @@
       "Brecht Baeten"
     ],
     "language": "Python"
+  },
+  "https://pypi.org/project/Imagery/": {
+    "name": "Imagery",
+    "description": "A package which aims at providing the basic intial steps required to image related operations.",
+    "authors": [
+      "Prakash"
+    ],
+    "language": "Python"
+  },
+  "https://pypi.org/project/pycsa": {
+    "name": "pycsa",
+    "description": "Python implementation of coupled simulated annealing (CSA)",
+    "authors": [
+      "Boudhayan Banerjee",
+      "Evan 'Pete' Walsh"
+    ],
+    "language": "Python"
+  },
+  "https://pypi.org/project/libensemble/": {
+    "name": "libensemble",
+    "description": "A Python toolkit for coordinating asynchronous and dynamic ensembles of calculations.",
+    "authors": [
+      "Jeffrey Larson",
+      "Stephen Hudson",
+      "Stefan M. Wild",
+      "David Bindel",
+      "John-Luke Navarro"
+    ],
+    "language": "Python"
+  },
+  "https://pypi.org/project/ecopy": {
+    "name": "ecopy",
+    "description": "EcoPy: Ecological Data Analysis in Python",
+    "authors": [
+      "Nathan Lemoine"
+    ],
+    "language": "Python"
+  },
+  "https://pypi.org/project/Axe/": {
+    "name": "Axe",
+    "description": "An Extendable Python Web Framework",
+    "authors": [
+      "Ju Lin"
+    ],
+    "language": "Python"
+  },
+  "https://pypi.org/project/plottools": {
+    "name": "plottools",
+    "description": "UNKNOWN",
+    "authors": [
+      "Brecht Baeten"
+    ],
+    "language": "Python"
+  },
+  "https://pypi.org/project/WeBIAS/": {
+    "name": "WeBIAS",
+    "description": "WeBIAS is a web server for publishing services. A service is a standalone command line program, which has to be supplied with certain parameters, and its output should be returned. Computations may require significant resources and time, and may have to be scheduled for later execution. Users are informed when their requests are finished and can peruse results at their convenience.",
+    "authors": [
+      "Pawel Daniluk"
+    ],
+    "language": "Python"
   }
 }
