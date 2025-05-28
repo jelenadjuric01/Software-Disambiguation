@@ -158,10 +158,52 @@ def extract_pypi_metadata_Rake_after(url: str) -> Dict[str, Any]:
     # 4) summary & description
     summary     = info.get("summary", "").strip()
 
-    
+    # 5) JSON keywords (almost always empty)
+    raw_kw   = info.get("keywords") or ""
+    kw_parts = re.split(r"[,\s]+", raw_kw.strip())
+    keywords = [w for w in kw_parts if w]
+
+    # 6) Trove classifiers (always present)
+    classifiers = info.get("classifiers", [])
+
+    # 7) derive fallback keywords from classifiers if JSON was empty
+    if not keywords and classifiers:
+        derived = []
+        for c in classifiers:
+            # keep only Topic-related classifiers
+            if not c.startswith("Topic ::"):
+                continue
+            tag = c.split("::")[-1].strip()
+            # length filter + blacklist
+            if len(tag) < MIN_LEN or tag in BLACKLIST:
+                continue
+            derived.append(tag)
+        # dedupe while preserving order
+        seen = set()
+        keywords = [t for t in derived if not (t in seen or seen.add(t))]
+    if not keywords:
+        r = Rake(min_length=2, max_length=3)
+        r.extract_keywords_from_text(summary)
+        kws = r.get_ranked_phrases()[:5]
+
+        # 4c) clean & filter
+        cleaned = []
+        for kw in kws:
+            # strip stray punctuation/quotes and lowercase
+            tag = kw.strip(' "\'.,').lower()
+            # keep only multi-word, alphanumeric phrases
+            if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+                cleaned.append(tag)
+        # dedupe
+        seen = set()
+        kws = [t for t in cleaned if not (t in seen or seen.add(t))]
+        keywords = kws
+        
+
     return {
         "name"        : info.get("name", pkg),
         "description" : summary,
+        "keywords"    : keywords,
         "authors"     : authors,
         "language"  : "Python"
     }
@@ -385,6 +427,7 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
     and extracts:
       - name       : package name
       - description: DESCRIPTION text
+      - keywords   : from DESCRIPTION, Task Views, or RAKE fallback
       - authors    : from Authors@R, Author field, or HTML fallback
       - language   : always "R"
 
@@ -449,11 +492,31 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
             authors = [p.strip() for p in parts if p.strip()]
 
     # 4) KEYWORDS: DESCRIPTION Keywords → Task Views HTML fallback
-    
+    raw_kw = data.get("Keywords") or ""
+    kws    = [w.strip() for w in re.split(r"[,\s]+", raw_kw) if w.strip()]
+
+    if not kws:
+        r = Rake(min_length=2, max_length=3)
+        r.extract_keywords_from_text(description)
+        kws = r.get_ranked_phrases()[:5]
+
+        # 4c) clean & filter
+        cleaned = []
+        for kw in kws:
+            # strip stray punctuation/quotes and lowercase
+            tag = kw.strip(' "\'.,').lower()
+            # keep only multi-word, alphanumeric phrases
+            if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+                cleaned.append(tag)
+        # dedupe
+        seen = set()
+        kws = [t for t in cleaned if not (t in seen or seen.add(t))]
+
 
     return {
         "name"       : name,
         "description": description,
+        "keywords"   : kws,
         "authors"    : authors,
         "language"   : "R"
     }
@@ -629,6 +692,29 @@ def extract_somef_metadata_with_RAKE(repo_url: str, somef_path: str = r"D:/MASTE
         def get_first_value(key):
             return metadata.get(key, [{}])[0].get("result", {}).get("value", "")
 
+        # Split keywords string into list
+        raw_keywords = get_first_value("keywords")
+        text = get_first_value("description")
+        keywords = [kw.strip() for kw in raw_keywords.split(",")] if raw_keywords else []
+        if len(keywords)==0:
+            kws = []
+            if not pd.isna(text) and text:
+                r = Rake(min_length=2, max_length=3)
+                r.extract_keywords_from_text(text)
+                kws = r.get_ranked_phrases()[:5]
+
+                # 4c) clean & filter
+                cleaned = []
+                for kw in kws:
+                    # strip stray punctuation/quotes and lowercase
+                    tag = kw.strip(' "\'.,').lower()
+                    # keep only multi-word, alphanumeric phrases
+                    if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+                        cleaned.append(tag)
+                # dedupe
+                seen = set()
+                kws = [t for t in cleaned if not (t in seen or seen.add(t))]
+                keywords = kws
         # "owner" is treated as author (GitHub username)
         owner = get_first_value("owner")
         #get language
@@ -645,6 +731,7 @@ def extract_somef_metadata_with_RAKE(repo_url: str, somef_path: str = r"D:/MASTE
         return {
             "name": get_first_value("name"),
             "description": get_first_value("description"),
+            "keywords": keywords,
             "authors": [get_github_user_data(owner)] if owner else [],
             "language": primary_language
 
@@ -681,7 +768,7 @@ def extract_website_metadata(url: str) -> dict:
     return {}
 
 #Function that retrieves the metadata from any link
-def get_metadata(url: str, somef_path: str) -> dict:
+def get_metadata(url: str) -> dict:
     """Dispatch metadata extraction based on the URL’s domain.
 
     Routes to the appropriate extractor:
@@ -707,7 +794,7 @@ def get_metadata(url: str, somef_path: str) -> dict:
 
     # GitHub repo
     if "github.com" in domain:
-        return extract_somef_metadata_with_RAKE(url,somef_path)
+        return extract_somef_metadata_with_RAKE(url)
 
     # CRAN package (common formats: cran.r-project.org or pkg.go.dev/r)
     if domain == "cran.r-project.org" and (
@@ -717,7 +804,8 @@ def get_metadata(url: str, somef_path: str) -> dict:
     ## PyPI package (common formats: pypi.org or pypi.python.org)
     if "pypi.org" in domain or "pypi.python.org" in domain:
         return extract_pypi_metadata_Rake_after(url)
-    
+    # Generic website fallback
+    return extract_website_metadata(url)
     
 if __name__ == "__main__":
     # Example usage

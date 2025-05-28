@@ -425,94 +425,6 @@ def author_name_similarity(name1: str, name2: str) -> float:
     return textdistance.jaro_winkler(n1, n2)
 
 
-def compute_similarity_test(df: pd.DataFrame,output_path:str = None) -> pd.DataFrame:
-    """
-Compute similarity metrics between paper entries and candidate metadata.
-
-For each row where `metadata_name` is present, this function:
-- Computes up to six similarity metrics (if not already filled):
-    • `name_metric`: software_name_similarity
-    • `author_metric`: author_name_similarity
-    • `paragraph_metric`: paragraph_description_similarity
-    • `keywords_metric`: keyword_similarity_with_fallback
-    • `language_metric`: programming_language_similarity
-    • `synonym_metric`: synonym_name_similarity
-- Adds a binary `true_label` indicating whether the candidate URL matches any ground-truth URLs
-- Optionally saves the output to CSV
-
-Args:
-    df (pd.DataFrame): Input dataframe containing paper and metadata fields.
-    output_path (str, optional): File path to save the result CSV. Default is None.
-
-Returns:
-    pd.DataFrame: Filtered and updated dataframe with all computed metrics and `true_label`.
-"""
-
-    for col in ['name_metric','author_metric','paragraph_metric',"language_metric",'synonym_metric']:
-        if col not in df.columns:
-            df[col] = np.nan
-
-    # 1) Mask of all rows that have valid metadata_name
-    valid = (
-        df['metadata_name'].notna() &
-        df['metadata_name'].astype(str).str.strip().astype(bool)
-    )
-
-    # 2) name_metric: only for valid rows where name_metric is still NaN
-    nm = valid & df['name_metric'].isna()
-    df.loc[nm, 'name_metric'] = df.loc[nm].apply(
-        lambda r: software_name_similarity(r['name'], r['metadata_name']),
-        axis=1
-    )
-
-    # 3) author_metric:
-    am = valid & df['author_metric'].isna()
-    df.loc[am, 'author_metric'] = df.loc[am].apply(
-        lambda r: author_name_similarity(r['authors'], r['metadata_authors']),
-        axis=1
-    )
-
-    # 4) paragraph_metric: only for rows with metadata_description & NaN
-    pm = valid & df['paragraph_metric'].isna()
-    df.loc[pm, 'paragraph_metric'] = df.loc[pm].apply(
-        lambda r: paragraph_description_similarity_BERT(
-            r['paragraph'], r['metadata_description']
-        ),
-        axis=1
-    )
-
-    lm = valid & df['language_metric'].isna()
-    df.loc[lm, 'language_metric'] = df.loc[lm].apply(
-        lambda r: programming_language_similarity(
-            r['language'],
-            r['metadata_language']
-        ),
-        axis=1
-    )
-    sm = valid & df['synonym_metric'].isna()
-    df.loc[sm, 'synonym_metric'] = df.loc[sm].apply(
-        lambda r: synonym_name_similarity(
-            r['metadata_name'],
-            r['synonyms']
-        ),
-        axis=1
-    )
-    # 6) Build the “sub” DataFrame you originally returned
-    cols = [
-        'id','name','doi','paragraph','authors','language','candidate_urls','synonyms',
-        'metadata_name','metadata_authors','metadata_description','metadata_language',
-        'name_metric','author_metric','paragraph_metric','language_metric','synonym_metric'
-    ]
-    
-    sub = df.loc[valid, cols].copy()
-
-    # 7) Optionally save
-    if output_path:
-        sub.to_csv(output_path, index=False)
-        print(f"📄 Similarity metrics saved to {output_path}")
-
-    return sub
-
 def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFrame:
     """
 Compute similarity metrics between paper entries and candidate metadata.
@@ -536,7 +448,7 @@ Returns:
     pd.DataFrame: Filtered and updated dataframe with all computed metrics and `true_label`.
 """
 
-    for col in ['name_metric','author_metric','paragraph_metric',"language_metric",'synonym_metric']:
+    for col in ['name_metric','author_metric','paragraph_metric','keywords_metric',"language_metric",'synonym_metric']:
         if col not in df.columns:
             df[col] = np.nan
 
@@ -569,6 +481,17 @@ Returns:
         axis=1
     )
 
+    # 5) keywords_metric: only for rows with both metadata_keywords & metadata_description & NaN
+   
+    km = valid & df['keywords_metric'].isna()
+    df.loc[km, 'keywords_metric'] = df.loc[km].apply(
+        lambda r: keyword_similarity_with_fallback(
+            r['field/topic/keywords'],
+            r['metadata_keywords'],
+            r['metadata_description']
+        ),
+        axis=1
+    )
     lm = valid & df['language_metric'].isna()
     df.loc[lm, 'language_metric'] = df.loc[lm].apply(
         lambda r: programming_language_similarity(

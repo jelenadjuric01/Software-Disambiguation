@@ -1,0 +1,1447 @@
+from SPARQLWrapper import JSON, SPARQLWrapper
+import pandas as pd
+import json
+from typing import Any, List, Set, Tuple, Dict, Optional
+import os
+import requests
+import re
+import csv
+import numpy as np
+import difflib
+import time
+import xmlrpc.client
+from functools import lru_cache
+import subprocess
+import sys
+import tempfile
+from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
+from bs4 import BeautifulSoup
+import shutil
+
+from sentence_transformers import SentenceTransformer, util
+from sklearn.metrics.pairwise import cosine_similarity
+
+import textdistance
+
+# 1. module import
+#    - A lightweight BERT for paragtraph similarity
+_BERT_MODEL = SentenceTransformer('all-MiniLM-L6-v2')
+
+
+
+def paragraph_description_similarity_BERT(text1: str, text2: str) -> float:
+    """Compute semantic similarity between two texts via SBERT embeddings.
+
+    Strips and validates `text1` and `text2`, encodes both with SBERT,
+    and returns their cosine similarity.
+
+    Args:
+        text1 (str): Arbitrary text (e.g., a paper paragraph).
+        text2 (str): Another text (e.g., software description).
+
+    Returns:
+        float: Cosine similarity ∈ [-1.0, 1.0], or `np.nan` if either input is empty.
+    """
+    # validate inputs
+    if not text1 or pd.isna(text1) or not (text1 := text1.strip()):
+        return np.nan
+    if not text2 or pd.isna(text2) or not (text2 := text2.strip()):
+        return np.nan
+
+    # encode both texts to BERT embeddings (as PyTorch tensors)
+    embeddings = _BERT_MODEL.encode([text1, text2], convert_to_tensor=True)
+    # compute cosine similarity
+    sim = util.pytorch_cos_sim(embeddings[0], embeddings[1])
+
+    # .item() to get Python float, ensure non-negative [0,1] range
+    return float(sim.item())
+
+
+
+# Define common software affixes to strip out
+COMMON_AFFIXES = {
+    "pro", "enterprise", "suite", "edition", "cloud", "desktop",
+    "online", "server", "client", "portable", "lite"
+}
+
+def normalize_software_name(name: str) -> str:
+    """Normalize a software name to a canonical lowercase token string.
+
+    Steps:
+      1. Lowercase and trim.
+      2. Remove version tokens (e.g., "v2.0", "2021").
+      3. Strip punctuation.
+      4. Remove common affixes (e.g., "Pro", "Suite").
+      5. Collapse whitespace.
+
+    Args:
+        name (str): Original software name.
+
+    Returns:
+        str: Normalized name.
+    """
+    s = name.lower().strip()
+    # 1. Remove version-like tokens (v1, 2.0, 2022)
+    s = re.sub(r"\b(v?\d+(\.\d+)*|\d{4})\b", " ", s)
+    # 2. Remove punctuation
+    s = re.sub(r"[^\w\s]", " ", s)
+    # 3. Tokenize and remove common affixes
+    tokens = [tok for tok in s.split() if tok not in COMMON_AFFIXES]
+    # 4. Re-join and collapse whitespace
+    return " ".join(tokens)
+
+def software_name_similarity(name1: str, name2: str) -> float:
+    """Measure Jaro–Winkler similarity between two software names.
+
+    Both names are first normalized via `normalize_software_name`.
+
+    Args:
+        name1 (str): First software name.
+        name2 (str): Second software name.
+
+    Returns:
+        float: Jaro–Winkler similarity ∈ [0.0, 1.0].
+    """
+    n1 = normalize_software_name(name1)
+    n2 = normalize_software_name(name2)
+    return textdistance.jaro_winkler(n1, n2)
+
+
+def synonym_name_similarity(name1: str, names: str) -> float:
+    """
+Compute Levenshtein similarity between a software name and a list of synonyms.
+
+The input synonyms string is comma-separated. Each synonym and the main name
+are normalized before comparison. The final similarity score is the average
+over all pairwise comparisons.
+
+Args:
+    name1 (str): Software name to compare.
+    names (str): Comma-separated synonyms.
+
+Returns:
+    float: Average similarity ∈ [0.0, 1.0], or np.nan on invalid input.
+"""
+
+    if not names or pd.isna(names) or not name1 or pd.isna(name1):
+        return np.nan
+    # After stripping, if either is empty
+    names = names.split(",")
+
+    # Normalize the first name
+    n1 = normalize_software_name(name1)
+    # Normalize the list of synonyms
+    n2 = [normalize_software_name(name) for name in names]
+    # Compute Jaro-Winkler similarity for each synonym
+    similarities = [textdistance.jaro_winkler(n1, name) for name in n2]
+    # Return the average similarity
+    return np.mean(similarities)
+def programming_language_similarity(lang1: Optional[str],
+                                    lang2: Optional[str]) -> float:
+    """
+Compare two programming language names using Jaro–Winkler similarity.
+
+Returns:
+- 1.0 if both normalized names are equal (case-insensitive)
+- 0.0 if both are present but differ
+- np.nan if either value is missing or empty
+
+Args:
+    lang1 (Optional[str]): First language name.
+    lang2 (Optional[str]): Second language name.
+
+Returns:
+    float: Similarity score ∈ [0.0, 1.0], or np.nan if data is missing.
+"""
+
+    # 1) Missing → nan
+    if pd.isna(lang1) or pd.isna(lang2):
+        return np.nan
+
+    # 2) Normalize to lowercase strings
+    l1 = str(lang1).strip().lower()
+    l2 = str(lang2).strip().lower()
+
+    # 3) Empty after stripping → nan
+    if not l1 or not l2:
+        return np.nan
+
+    return textdistance.jaro_winkler(l1, l2)
+
+
+def normalize_author_name(name: str) -> str:
+    """Normalize an author name to lowercase, first-last order, letters only.
+
+    Steps:
+      1. Flip "Last, First" → "First Last".
+      2. Expand initials (e.g., "J.K." → "J K").
+      3. Lowercase.
+      4. Remove non-letter characters.
+      5. Collapse spaces.
+
+    Args:
+        name (str): Raw author name.
+
+    Returns:
+        str: Normalized author name.
+    """
+    s = name.strip()
+    # 1. Flip "Last, First" to "First Last"
+    if ',' in s:
+        last, first = [p.strip() for p in s.split(',', 1)]
+        s = f"{first} {last}"
+    # 2. Expand initials with dots into space‑separated letters
+    #    e.g. "J.K." → "J K"
+    s = re.sub(r'\b([A-Za-z])\.\s*', r'\1 ', s)
+    # 3. Lowercase
+    s = s.lower()
+    # 4. Remove anything except letters and spaces
+    s = re.sub(r'[^a-z\s]', ' ', s)
+    # 5. Collapse whitespace into a single space
+    s = re.sub(r'\s+', ' ', s).strip()
+    return s
+
+def author_name_similarity(name1: str, name2: str) -> float:
+    """Compute Jaro–Winkler similarity between two normalized author names.
+
+    If either input is missing or blank, returns `np.nan` immediately.
+
+    Args:
+        name1 (str): First author name.
+        name2 (str): Second author name.
+
+    Returns:
+        float: Similarity ∈ [0.0, 1.0], or `np.nan` if either name is missing.
+    """
+    # Treat None as missing
+    if not name1 or not name2 or pd.isna(name1) or pd.isna(name2):
+        return np.nan
+    # After stripping, if either is empty
+    if not name1.strip() or not name2.strip():
+        return np.nan
+    n1 = normalize_author_name(name1)
+    n2 = normalize_author_name(name2)
+    return textdistance.jaro_winkler(n1, n2)
+
+
+def compute_similarity_test(df: pd.DataFrame,output_path:str = None) -> pd.DataFrame:
+    """
+Compute similarity metrics between paper entries and candidate metadata.
+
+For each row where `metadata_name` is present, this function:
+- Computes up to six similarity metrics (if not already filled):
+    • `name_metric`: software_name_similarity
+    • `author_metric`: author_name_similarity
+    • `paragraph_metric`: paragraph_description_similarity
+    • `keywords_metric`: keyword_similarity_with_fallback
+    • `language_metric`: programming_language_similarity
+    • `synonym_metric`: synonym_name_similarity
+- Adds a binary `true_label` indicating whether the candidate URL matches any ground-truth URLs
+- Optionally saves the output to CSV
+
+Args:
+    df (pd.DataFrame): Input dataframe containing paper and metadata fields.
+    output_path (str, optional): File path to save the result CSV. Default is None.
+
+Returns:
+    pd.DataFrame: Filtered and updated dataframe with all computed metrics and `true_label`.
+"""
+
+    for col in ['name_metric','author_metric','paragraph_metric',"language_metric",'synonym_metric']:
+        if col not in df.columns:
+            df[col] = np.nan
+
+    # 1) Mask of all rows that have valid metadata_name
+    valid = (
+        df['metadata_name'].notna() &
+        df['metadata_name'].astype(str).str.strip().astype(bool)
+    )
+
+    # 2) name_metric: only for valid rows where name_metric is still NaN
+    nm = valid & df['name_metric'].isna()
+    df.loc[nm, 'name_metric'] = df.loc[nm].apply(
+        lambda r: software_name_similarity(r['name'], r['metadata_name']),
+        axis=1
+    )
+
+    # 3) author_metric:
+    am = valid & df['author_metric'].isna()
+    df.loc[am, 'author_metric'] = df.loc[am].apply(
+        lambda r: author_name_similarity(r['authors'], r['metadata_authors']),
+        axis=1
+    )
+
+    # 4) paragraph_metric: only for rows with metadata_description & NaN
+    pm = valid & df['paragraph_metric'].isna()
+    df.loc[pm, 'paragraph_metric'] = df.loc[pm].apply(
+        lambda r: paragraph_description_similarity_BERT(
+            r['paragraph'], r['metadata_description']
+        ),
+        axis=1
+    )
+
+    lm = valid & df['language_metric'].isna()
+    df.loc[lm, 'language_metric'] = df.loc[lm].apply(
+        lambda r: programming_language_similarity(
+            r['language'],
+            r['metadata_language']
+        ),
+        axis=1
+    )
+    sm = valid & df['synonym_metric'].isna()
+    df.loc[sm, 'synonym_metric'] = df.loc[sm].apply(
+        lambda r: synonym_name_similarity(
+            r['metadata_name'],
+            r['synonyms']
+        ),
+        axis=1
+    )
+    # 6) Build the “sub” DataFrame you originally returned
+    cols = [
+        'id','name','doi','paragraph','authors','language','candidate_urls','synonyms',
+        'metadata_name','metadata_authors','metadata_description','metadata_language',
+        'name_metric','author_metric','paragraph_metric','language_metric','synonym_metric'
+    ]
+    
+    sub = df.loc[valid, cols].copy()
+
+    # 7) Optionally save
+    if output_path:
+        sub.to_csv(output_path, index=False)
+        print(f"📄 Similarity metrics saved to {output_path}")
+
+    return sub
+
+
+
+
+def extract_pypi_metadata(url: str) -> Dict[str, Any]:
+    """
+        Extract metadata for a PyPI package with layered keyword fallback.
+
+        This function retrieves package metadata and attempts to extract keywords
+        in a two-step fallback strategy. It first checks for JSON-defined keywords.
+        If none are found, it tries to derive keywords from Trove classifiers.
+        If classifiers also fail to provide valid keywords, it applies RAKE
+        to extract keyword phrases from the summary text.
+
+        Args:
+            url (str): A PyPI project URL (e.g. "https://pypi.org/project/example").
+
+        Returns:
+            dict: A dictionary containing:
+                - name (str): Package name
+                - description (str): Summary description
+                - keywords (List[str]): Extracted, derived, or RAKE-generated keywords
+                - authors (List[str]): Combined author and maintainer names
+                - language (str): Always "Python"
+            If extraction fails, returns {"error": "..."}.
+"""
+    # 1) extract package name
+    parsed = urlparse(url)
+    parts = parsed.path.strip("/").split("/")
+    if len(parts) >= 2 and parts[0] in ("project", "simple"):
+        pkg = parts[1]
+    else:
+        pkg = parts[0] if parts else None
+
+    if not pkg:
+        return {"error": f"Cannot parse PyPI package name from URL: {url}"}
+
+    # 2) fetch JSON metadata
+    api_url = f"https://pypi.org/pypi/{pkg}/json"
+    resp    = requests.get(api_url)
+    if resp.status_code == 404:
+        return {"error": f"Package '{pkg}' not found on PyPI"}
+    resp.raise_for_status()
+    info = resp.json().get("info", {})
+
+    # 3) parse authors
+    def split_authors(raw: str) -> List[str]:
+        clean = re.sub(r"<[^>]+>", "", raw or "")
+        parts = re.split(r",| and |;", clean)
+        return [p.strip() for p in parts if p.strip()]
+
+    authors = split_authors(info.get("author", ""))
+    for m in split_authors(info.get("maintainer", "")):
+        if m not in authors:
+            authors.append(m)
+
+    # 4) summary & description
+    summary     = info.get("summary", "").strip()
+
+    
+    return {
+        "name"        : info.get("name", pkg),
+        "description" : summary,
+        "authors"     : authors,
+        "language"  : "Python"
+    }
+
+def parse_authors_r(authors_r: str) -> List[str]:
+    """Parse an R Authors@R DESCRIPTION field into author names.
+
+    Finds all `person(...)` blocks in the string, extracts quoted tokens,
+    and joins given + family names into "Given Family" format.  Single-quoted
+    entries (organizations) are included as-is.
+
+    Args:
+        authors_r: Raw Authors@R field from a CRAN DESCRIPTION file.
+
+    Returns:
+        A list of author or organization names (e.g. ["First Last", "OrgName"]).
+    """
+    blocks = re.findall(r'person\((.*?)\)', authors_r, flags=re.DOTALL)
+    out = []
+    for block in blocks:
+        names = re.findall(r'"([^"]+)"', block)
+        if len(names) >= 2:
+            out.append(f"{names[0]} {names[1]}")
+        elif len(names) == 1:
+            out.append(names[0])
+    return out
+
+def extract_cran_metadata(url: str) -> Dict[str, Any]:
+    """Fetch metadata for a CRAN R package given its documentation URL.
+
+    Parses the package name from the URL or query, queries the CRANDB API,
+    and extracts:
+      - name       : package name
+      - description: DESCRIPTION text
+      - authors    : from Authors@R, Author field, or HTML fallback
+      - language   : always "R"
+
+    Args:
+        url: CRAN package URL, e.g.
+             "https://cran.r-project.org/web/packages/pkg/index.html"
+             or "?package=pkg".
+
+    Returns:
+        A dict with keys:
+          name (str), description (str), keywords (List[str]), authors (List[str]), language (str).
+        Raises ValueError if the package name cannot be parsed.
+    """
+    # 1) extract pkg name
+    parsed = urlparse(url)
+    qs     = parse_qs(parsed.query)
+    if "package" in qs:
+        pkg = qs["package"][0]
+    else:
+        m = re.search(r"/package=([^/]+)", parsed.path)
+        if m:
+            pkg = m.group(1)
+        else:
+            parts = parsed.path.strip("/").split("/")
+            if "packages" in parts:
+                pkg = parts[parts.index("packages") + 1]
+            else:
+                raise ValueError(f"Cannot parse package name from URL: {url}")
+
+    # 2) fetch JSON from CRANDB
+    api_url = f"https://crandb.r-pkg.org/{pkg}"
+    resp    = requests.get(api_url)
+    resp.raise_for_status()
+    data    = resp.json()
+
+    name        = data.get("Package", pkg)
+    description = data.get("Description", "")
+
+    # 3) AUTHORS: JSON Authors@R → DESCRIPTION Author → HTML fallback
+    authors: List[str] = []
+    if data.get("Authors@R"):
+        authors = parse_authors_r(data["Authors@R"])
+    elif data.get("Author"):
+        raw = data["Author"]
+        # strip out any <email> and [role,…] bits
+        raw = re.sub(r'<[^>]+>', '', raw)
+        raw = re.sub(r'\[.*?\]', '', raw)
+        # split on commas, semicolons or " and "
+        parts = re.split(r',|;| and ', raw)
+        authors = [p.strip() for p in parts if p.strip()]
+
+    if not authors:
+        # HTML fallback: scrape the <dt>Author:</dt> block
+        html = requests.get(f"https://cran.r-project.org/web/packages/{pkg}/index.html").text
+        soup = BeautifulSoup(html, "html.parser")
+        dt = soup.find("dt", string=re.compile(r"Author:", re.IGNORECASE))
+        if dt:
+            txt   = dt.find_next_sibling("dd").get_text()
+            txt   = re.sub(r'<[^>]+>', '', txt)
+            txt   = re.sub(r'\[.*?\]', '', txt)
+            parts = re.split(r',|;| and ', txt)
+            authors = [p.strip() for p in parts if p.strip()]
+
+    # 4) KEYWORDS: DESCRIPTION Keywords → Task Views HTML fallback
+    
+
+    return {
+        "name"       : name,
+        "description": description,
+        "authors"    : authors,
+        "language"   : "R"
+    }
+
+
+
+def get_github_user_data(username: str) -> str:
+    """Retrieve a GitHub user’s display name via the GitHub API.
+
+    Sends an authenticated request if GITHUB_TOKEN is set; otherwise unauthenticated.
+    Returns the “name” field from the API, falling back to the login on error or if blank.
+
+    Args:
+        username: GitHub login (e.g. "octocat").
+
+    Returns:
+        The user’s full name (str), or the original username if not found or on error.
+    """
+    url = f"https://api.github.com/users/{username}"
+    token = os.getenv("GITHUB_TOKEN")
+    headers = {"Authorization": f"token {token}"} if token else {}
+
+    try:
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            full_name = data.get("name", "")
+            return  full_name or username
+            
+ 
+    except Exception as e:
+        print(f"Failed to fetch GitHub user data for {username}: {e}")
+
+    # fallback
+    return username
+
+
+
+def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/somef") -> dict:
+    """
+    Extract metadata from a GitHub repository using SOMEF with RAKE fallback for keywords.
+
+    This function runs the SOMEF tool on the given repository and parses
+    metadata from the resulting JSON. If the extracted keywords field is empty,
+    it applies RAKE to extract up to 5 multi-word keywords from the description text.
+
+    Args:
+        repo_url (str): URL of the GitHub repository.
+        somef_path (str): Path to the SOMEF project directory where `poetry run somef` is available.
+
+    Returns:
+        dict: A dictionary containing:
+            - name (str)
+            - description (str)
+            - keywords (List[str]) — extracted from SOMEF or generated via RAKE
+            - authors (List[str]) — GitHub owner's name
+            - language (str) — most dominant programming language in the repo
+        Returns an empty dictionary on failure.
+"""
+
+    # Create a temp file to store the output
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
+        output_path = tmp_file.name
+
+    try:
+        # Run SOMEF with poetry from its own directory
+        path = "D:\\MASTER\\TMF\\somef\\temp"
+        os.makedirs(path, exist_ok=True)
+        if sys.platform == "win32":
+        # note: in a Python string literal this is "\\\\?\\"
+            path = "\\\\?\\" + path
+        subprocess.run([
+            "poetry", "run", "somef", "describe",
+            "-r", repo_url,
+            "-o", output_path,
+            "-t", "0.93",
+            "-m",
+            "-kt", path
+        ], cwd=somef_path, check=True)
+
+        # Load the JSON output into Python
+        with open(output_path, "r", encoding="utf-8") as f:
+            metadata = json.load(f)
+
+        def get_first_value(key):
+            return metadata.get(key, [{}])[0].get("result", {}).get("value", "")
+
+        # "owner" is treated as author (GitHub username)
+        owner = get_first_value("owner")
+        #get language
+        langs = metadata.get("programming_languages", [])
+        primary_language = "" 
+        if langs:
+            # pick the entry with the largest "size" under result
+            primary = max(
+                langs,
+                key=lambda x: x.get("result", {}).get("size", 0)
+            )
+            primary_language = primary.get("result", {}).get("value", "")
+        #gets only first description, could be multiple
+        return {
+            "name": get_first_value("name"),
+            "description": get_first_value("description"),
+            "authors": [get_github_user_data(owner)] if owner else [],
+            "language": primary_language
+
+        }
+
+
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to extract metadata for {repo_url}: {e}")
+        return {}
+
+    finally:
+        # delete temp file
+        os.remove(output_path)
+        #path = "D:\\MASTER\\TMF\\somef\\temp"
+        for entry in os.scandir(path):
+            entry_path = entry.path
+            if entry.is_dir(follow_symlinks=False):
+                shutil.rmtree(entry_path) 
+            else:
+                os.remove(entry_path)
+
+
+
+
+#Function that retrieves the metadata from any link
+def get_metadata(url: str, somef_path: str) -> dict:
+    """Dispatch metadata extraction based on the URL’s domain.
+
+    Routes to the appropriate extractor:
+      - GitHub repos      → extract_somef_metadata
+      - CRAN packages     → extract_cran_metadata
+      - PyPI packages     → extract_pypi_metadata
+      - Other websites    → extract_website_metadata
+
+    Args:
+        url: The URL from which to extract metadata.
+
+    Returns:
+        A metadata dict as returned by one of the specialized extractors,
+        or {"error": "..."} on invalid input or failure.
+    """
+    if not isinstance(url, str) or not url.strip():
+        return {"error": "Invalid URL"}
+
+    url = url.strip()
+    parsed = urlparse(url)
+    domain = urlparse(url).netloc.lower()
+    path   = parsed.path or ""
+
+    # GitHub repo
+    if "github.com" in domain:
+        return extract_somef_metadata(url,somef_path)
+
+    # CRAN package (common formats: cran.r-project.org or pkg.go.dev/r)
+    if domain == "cran.r-project.org" and (
+        path.startswith("/web/packages/") or
+        path.startswith("/package=")
+    ):        return extract_cran_metadata(url)
+    ## PyPI package (common formats: pypi.org or pypi.python.org)
+    if "pypi.org" in domain or "pypi.python.org" in domain:
+        return extract_pypi_metadata(url)
+    
+    
+
+
+
+GITHUB_API_URL = "https://api.github.com/search/repositories"
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+if not GITHUB_TOKEN:
+    raise ValueError("Please set the GITHUB_TOKEN environment variable.")
+
+HEADERS = {
+    "Authorization": f"token {GITHUB_TOKEN}",
+    "Accept":        "application/vnd.github.v3+json",
+    "User-Agent":    "my-software-disambiguator"  # any non-empty string
+}
+
+def fetch_github_urls(
+    name: str,
+    per_page: int = 5,
+    max_retries: int = 3
+) -> List[str]:
+    """
+    Return up to `per_page` GitHub repo URLs matching `name`, handling rate limits.
+    """
+    params = {
+        "q":        f"{name} in:name",
+        "sort":     "stars",
+        "order":    "desc",
+        "per_page": per_page
+    }
+
+    for attempt in range(1, max_retries + 1):
+        resp = requests.get(GITHUB_API_URL, params=params, headers=HEADERS, timeout=10)
+        # 403 could be a rate-limit on the Search API
+        if resp.status_code == 403:
+            reset_ts = int(resp.headers.get("X-RateLimit-Reset", time.time() + 60))
+            wait = max(reset_ts - time.time()+1, 1)
+            print(f"[Attempt {attempt}] Rate limited. Sleeping {int(wait)}s until reset…")
+            time.sleep(wait)
+            continue
+
+        # a 401 means bad token, 404 would be weird, anything else we raise
+        resp.raise_for_status()
+        items = resp.json().get("items", [])
+        return [item["html_url"] for item in items]
+
+    # If we exhausted retries
+    raise RuntimeError(f"GitHub search for '{name}' failed after {max_retries} attempts (last status: {resp.status_code})")
+
+
+PYPI_JSON_URL    = "https://pypi.org/pypi/{pkg}/json"
+PYPI_PROJECT_URL = "https://pypi.org/project/{pkg}/"
+
+@lru_cache(maxsize=512)
+def _get_pypi_info(pkg: str, timeout: float = 10.0) -> Dict:
+    """
+    Fetches the JSON info block for `pkg`, or returns {} on error.
+    """
+    try:
+        r = requests.get(PYPI_JSON_URL.format(pkg=pkg), timeout=timeout)
+        if r.status_code == 200:
+            return r.json().get("info", {})
+    except requests.RequestException:
+        pass
+    return {}
+
+@lru_cache(maxsize=256)
+def fetch_pypi_urls(
+    pkg_name: str,
+    max_results: int = 5,
+    timeout: float = 10.0
+) -> List[str]:
+    """
+    1) Exact lookup via JSON API → returns info['package_url'] (or info['project_url'])
+    2) Fuzzy lookup via XML‐RPC + JSON API per hit
+    """
+    urls: List[str] = []
+
+    # 1) Exact match
+    info = _get_pypi_info(pkg_name, timeout)
+    if info:
+        url = info.get("package_url") or info.get("project_url")
+        if url:
+            urls.append(url)
+
+    if len(urls) >= max_results:
+        return urls[:max_results]
+
+    # 2) Fuzzy search
+    try:
+        client = xmlrpc.client.ServerProxy("https://pypi.org/pypi")
+        hits = client.search({"name": pkg_name}, "or")
+        seen = set(pkg_name.lower())
+
+        for hit in hits:
+            name = hit.get("name")
+            key  = name.lower() if name else None
+            if not key or key in seen:
+                continue
+            seen.add(key)
+
+            # pull its JSON info to get the true URL
+            info = _get_pypi_info(name, timeout)
+            if info:
+                url = info.get("package_url") or info.get("project_url")
+                if url:
+                    urls.append(url)
+                    if len(urls) >= max_results:
+                        break
+                    continue
+
+            # fallback (should rarely be needed)
+            urls.append(PYPI_PROJECT_URL.format(pkg=name))
+            if len(urls) >= max_results:
+                break
+
+    except Exception:
+        pass
+
+    return urls[:max_results]
+
+
+CRAN_PACKAGES_URL = "https://cran.r-project.org/src/contrib/PACKAGES"
+CRAN_BASE_URL     = "https://cran.r-project.org/web/packages/{pkg}/index.html"
+CRAN_SHORT_URL    = "https://cran.r-project.org/package={pkg}"
+
+@lru_cache(maxsize=1)
+def _load_cran_packages(timeout: float = 10.0) -> List[str]:
+    """
+    Fetch and parse the CRAN PACKAGES index into a list of package names.
+    Cached in memory so we only download it once.
+    """
+    resp = requests.get(CRAN_PACKAGES_URL, timeout=timeout)
+    resp.raise_for_status()
+    pkgs = []
+    for line in resp.text.splitlines():
+        if line.startswith("Package:"):
+            pkgs.append(line.split(":", 1)[1].strip())
+    return pkgs
+
+@lru_cache(maxsize=256)
+def fetch_cran_urls(
+    name: str,
+    max_results: int = 5,
+    timeout: float = 10.0
+) -> List[str]:
+    """
+    Return up to `max_results` canonical CRAN URLs for packages matching `name`:
+      1) exact match
+      2) substring match
+      3) fuzzy match via difflib
+    """
+    pkgs = _load_cran_packages(timeout)
+    urls: List[str] = []
+    name_lower = name.lower()
+
+    # 1) Exact
+    if name in pkgs:
+        urls.append(CRAN_SHORT_URL.format(pkg=name))
+
+    # 2) Substring
+    if len(urls) < max_results:
+        subs = [p for p in pkgs if name_lower in p.lower() and p != name]
+        for p in subs:
+            if len(urls) >= max_results:
+                break
+            urls.append(CRAN_SHORT_URL.format(pkg=p))
+
+    # 3) Fuzzy
+    if len(urls) < max_results:
+        # cutoff=0.6 is a sensible default; tweak as needed
+        fuzzy = difflib.get_close_matches(name, pkgs, n=max_results, cutoff=0.6)
+        for p in fuzzy:
+            if len(urls) >= max_results:
+                break
+            if p not in [u.split("/")[-2] for u in urls]:
+                urls.append(CRAN_SHORT_URL.format(pkg=p))
+
+    return urls[:max_results]
+
+
+def fetch_candidate_urls(name: str) -> set[str]:
+    """
+    For each software name, fetch candidate URLs in this order:
+      1. GitHub
+      2. PyPI
+      3. CRAN
+    """
+    results = []
+
+    # GitHub
+    try:
+        results += fetch_github_urls(name)
+    except Exception as e:
+        print(f"[!] GitHub fetch failed for '{name}': {e}")
+
+    # PyPI
+    try:
+        results += fetch_pypi_urls(name)
+    except Exception as e:
+        print(f"[!] PyPI fetch failed for '{name}': {e}")
+
+    # CRAN
+    try:
+        results += fetch_cran_urls(name)
+    except Exception as e:
+        print(f"[!] CRAN check failed for '{name}': {e}")
+
+    # dedupe, preserve order
+    return set(results)
+
+def load_candidates(path: str) -> Dict[str, Set[str]]:
+    """Load a JSON cache of {name: [urls…]}, return {name: set(urls)…}."""
+    if os.path.exists(path) and os.path.getsize(path) > 0:
+        with open(path, "r", encoding="utf-8") as f:
+            try:
+                data = json.load(f)
+            except json.JSONDecodeError:
+                print("⚠️ Warning: corrupt JSON cache; starting fresh.")
+                data = {}
+    else:
+        data = {}
+
+    # convert lists→sets
+    return {name: set(urls) for name, urls in data.items()}
+
+def save_candidates(candidates: Dict[str, Set[str]], path: str):
+    """Convert sets→lists and write out a pretty JSON file."""
+    serializable = {name: sorted(list(urls)) for name, urls in candidates.items()}
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(serializable, f, indent=2, ensure_ascii=False)
+
+def update_candidate_cache(
+    corpus: pd.DataFrame,
+    fetcher,                # your fetch_candidate_urls(name) function
+    cache_path: str
+) -> Dict[str, Set[str]]:
+    # 1) load existing
+    candidates = load_candidates(cache_path)
+
+    # 2) iterate unique names
+    for name in corpus['name'].unique():
+        # initialize if needed
+        if name not in candidates:
+            candidates[name] = set()
+
+        # 3) add any pre-existing URLs from your dataframe
+        if 'candidate_urls' in corpus.columns:
+            urls_cell = corpus.loc[corpus['name'] == name, 'candidate_urls'].dropna().astype(str)
+            for cell in urls_cell:
+                for u in cell.split(','):
+                    u = u.strip()
+                    if u:
+                        candidates[name].add(u)
+        
+        # 4) fetch & add new ones
+        new = set(fetcher(name))
+        # only do the network hit if there’s something new to add
+        if not new.issubset(candidates[name]):
+            candidates[name].update(new)
+
+    # 5) persist back to JSON
+    save_candidates(candidates, cache_path)
+    return candidates
+
+from urllib.parse import urlparse, urlunparse
+from typing import Dict, Iterable, List
+
+def normalize_url(u: str) -> str:
+    p = urlparse(u)
+    scheme = "https"
+    netloc = p.netloc.lower()
+    path = p.path.rstrip("/")
+    # drop params, query, fragment
+    return urlunparse((scheme, netloc, path, "", "", ""))
+
+def dedupe_candidates(candidates: Dict[str, Iterable[str]]) -> None:
+    """
+    For each key in `candidates`, normalize its URLs and drop duplicates,
+    preferring the https version when http & https both appear.
+    Modifies `candidates` in place, replacing each value with a List[str].
+    """
+    for key, urls in candidates.items():
+        seen: Dict[str, str] = {}
+        for u in urls:
+            norm = normalize_url(u)
+            if norm not in seen:
+                # first time we see this normalized URL,
+                # store the original
+                seen[norm] = u
+            else:
+                # if we already have an http version, but now see an https one, upgrade it
+                if u.startswith("https") and not seen[norm].startswith("https"):
+                    seen[norm] = u
+        # replace with de-duplicated list
+        candidates[key] = list(seen.values())
+
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# 1) Blacklist of extensions to skip
+DISALLOWED_EXTENSIONS = {
+    '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx',
+    '.zip', '.rar', '.tar', '.gz', '.7z',
+    '.png', '.jpg', '.jpeg', '.gif', '.svg',
+    '.json', '.xml', '.csv', '.txt'
+}
+
+# 2) Create one Session for connection pooling
+session = requests.Session()
+adapter = requests.adapters.HTTPAdapter(pool_connections=100, pool_maxsize=100)
+session.mount('http://', adapter)
+session.mount('https://', adapter)
+
+def is_website_url(url, timeout=5):
+    """Return True if url passes extension + HEAD-test for HTML."""
+    path = urlparse(url).path.lower()
+    if os.path.splitext(path)[1] in DISALLOWED_EXTENSIONS:
+        return False
+    try:
+        resp = session.head(url, allow_redirects=True, timeout=timeout)
+        return 'text/html' in resp.headers.get('Content-Type', '')
+    except requests.RequestException:
+        return False
+
+def filter_url_dict_parallel(url_dict, max_workers=20):
+    # Flatten all URLs and dedupe
+    all_urls = {u for urls in url_dict.values() for u in urls}
+    
+    # Fire off checks in parallel
+    results = {}
+    with ThreadPoolExecutor(max_workers=max_workers) as exe:
+        futures = {exe.submit(is_website_url, u): u for u in all_urls}
+        for fut in as_completed(futures):
+            u = futures[fut]
+            try:
+                results[u] = fut.result()
+            except Exception:
+                results[u] = False
+    
+    # Rebuild filtered dict
+    return {
+        key: [u for u in urls if results.get(u)]
+        for key, urls in url_dict.items()
+    }
+
+
+PAT = re.compile(
+    r'^https?://search\.r-project\.org/CRAN/refmans/[^/]+/help/[^/]+\.html$'
+)
+match = PAT.match  # local reference to speed up lookups
+
+def filter_cran_refs(url_dict):
+    """
+    In-place filter of url_dict[software] lists,
+    removing any URL matching our CRAN-refman pattern.
+    """
+    for software, urls in url_dict.items():
+        # build a new list only once, using the local `match`
+        filtered = [u for u in urls if not match(u)]
+        url_dict[software] = filtered
+
+def get_candidate_urls(
+    input: pd.DataFrame,
+    cache_path: str = "candidate_urls.json",
+    fetcher=fetch_candidate_urls
+) -> pd.DataFrame:
+    """
+    Main entry point to update candidate URLs for each software in the corpus.
+    Returns a dictionary of {software_name: set(urls)}.
+    """
+    # 1) Update or load existing candidates
+    candidates = update_candidate_cache(input, fetcher, cache_path)
+
+    # 2) Normalize and deduplicate URLs
+    dedupe_candidates(candidates)
+
+    # 3) Filter out non-website URLs in parallel
+    candidates = filter_url_dict_parallel(candidates)
+
+    # 4) Filter out CRAN refman links
+    filter_cran_refs(candidates)
+    # 5) Save candidates
+    save_candidates(candidates, cache_path)
+    if 'candidate_urls' not in input.columns:
+        input['candidate_urls'] = np.nan
+    input['candidate_urls'] = input['name'].map(candidates).astype(str)
+    input['candidate_urls'] = input['candidate_urls'].str.replace("{", "").str.replace("}", "").str.replace("[", "").str.replace("]", "").str.replace("'", "").str.replace('"', '').str.replace(",", ",").str.replace(" ", "") # remove unwanted characters
+    input['candidate_urls'] = input['candidate_urls'].str.replace("'", "").str.replace('"', '').str.replace(",", ",").str.replace(" ", "")
+    return input
+
+    
+def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json", somef_path:str = r"D:/MASTER/TMF/somef") -> Dict[str, dict]:
+    """Extract and cache metadata for all unique candidate URLs in a DataFrame.
+
+    This function:
+      1. Gathers every non-empty URL from the `candidate_urls` column.
+      2. Loads an existing JSON cache from `output_json_path`, or starts a new one.
+      3. For each URL not already cached (or with empty metadata), calls `get_metadata(url)`
+         and updates the cache.
+      4. Writes the updated cache back to `output_json_path`.
+
+    Args:
+        df (pd.DataFrame): DataFrame with a `candidate_urls` column containing
+            comma-separated URL strings.
+        output_json_path (str): Path to the JSON file used for caching
+            URL → metadata mappings.
+
+    Returns:
+        Dict[str, dict]: A mapping from each URL (str) to its metadata dict.
+    """
+    # Step 1: Extract unique, non-empty URLs
+    url_set = set()
+    for cell in df["candidate_urls"].dropna():
+        if isinstance(cell, str):
+            urls = [url.strip() for url in cell.split(",") if url.strip()]
+            url_set.update(urls)
+
+    # Step 2: Load existing cache or initialize empty one
+    if os.path.exists(output_json_path) and os.path.getsize(output_json_path) > 0:
+        with open(output_json_path, "r", encoding="utf-8") as f:
+            try:
+                metadata_cache = json.load(f)
+            except json.JSONDecodeError:
+                print("⚠️ Warning: Could not decode existing JSON. Starting with empty cache.")
+                metadata_cache = {}
+    else:
+        metadata_cache = {}
+
+    # Step 3: Fetch and update missing metadata
+    try:
+        identifier = 0
+        num_url = len(url_set)
+        num_dict = len(metadata_cache)
+        for url in url_set:
+            if url not in metadata_cache or metadata_cache[url] in [None, {}]:
+                #print(f"🔍 Processing: {identifier}/{num_url-num_dict}")
+                print(f"🔍 Processing: {url}")
+                metadata_cache[url] = get_metadata(url,somef_path)
+            identifier += 1
+
+    except Exception as e:
+        # On first error: save and then re-raise
+        with open(output_json_path, "w", encoding="utf-8") as f:
+            json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
+        print(f"⚠️ Error at {url!r}: {e!r}  → cache saved to {output_json_path}")
+        raise
+
+    else:
+        # If we got here with no exceptions, save normally
+        with open(output_json_path, "w", encoding="utf-8") as f:
+            json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
+        print(f"✅ All done — cache saved to {output_json_path}")
+
+    return metadata_cache
+
+def sanitize_text_for_csv(text: str) -> str:
+    """Prepare a text string for safe CSV export.
+
+    Replaces control characters with spaces, escapes internal quotes,
+    and trims whitespace.
+
+    Args:
+        text: Raw input string.
+
+    Returns:
+        A cleaned string with no control characters and RFC-4180-compliant quotes.
+    """
+    # 1) Replace control chars (U+0000–U+001F, U+007F) with space
+    text = re.sub(r'[\x00-\x1F\x7F]+', ' ', text)
+    # 2) Escape any internal double‑quotes per RFC 4180: " → ""
+    text = text.replace('"', '""')
+    # 3) Trim leading/trailing whitespace
+    return text.strip()
+
+def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
+    """Populate a DataFrame in place with metadata for each candidate URL.
+
+    Ensures the columns
+    `metadata_name`, `metadata_authors`, `metadata_keywords`,
+    `metadata_description`, and `metadata_language` exist. Then for each row
+    missing `metadata_name`:
+      1. Looks up its URL in the `metadata` dict.
+      2. Sanitizes each field via `sanitize_text_for_csv`.
+      3. Writes the values into the DataFrame.
+    Optionally saves the updated DataFrame to CSV.
+
+    Args:
+        df (pd.DataFrame): DataFrame with `candidate_urls` and optional
+            metadata columns to fill.
+        metadata (Dict[str, dict]): Mapping URLs (str) → metadata dicts with keys
+            `"name"`, `"authors"`, `"keywords"`, `"description"`, `"language"`.
+        output_path (str, optional): If provided, path to write the updated
+            DataFrame as CSV using minimal quoting.
+
+    Returns:
+        None
+    """
+    # Ensure metadata columns exist
+    for col in ["metadata_name", "metadata_authors", "metadata_description","metadata_language"]:
+        if col not in df.columns:
+            df[col] = ""
+
+    for idx, row in df.iterrows():
+        # Skip rows where metadata_name is already present
+        name_cell = row.get("metadata_name", "")
+        if pd.notna(name_cell) and str(name_cell).strip():
+            continue
+
+        url = row.get("candidate_urls", "")
+        if not isinstance(url, str) or not url.strip():
+            print(f"Skipping row {idx}: missing or invalid URL")
+            continue
+
+        meta = metadata.get(url, {})
+        if not meta:
+            continue
+
+        # 1) Name
+        raw_name = meta.get("name", "") or ""
+        df.at[idx, "metadata_name"] = sanitize_text_for_csv(raw_name)
+
+        # 2) Authors (list → comma‑sep string)
+        authors = meta.get("authors") or []
+        authors_str = ", ".join(authors) if isinstance(authors, list) else ""
+        df.at[idx, "metadata_authors"] = sanitize_text_for_csv(authors_str)
+
+        # 4) Description
+        raw_desc = meta.get("description", "") or ""
+        df.at[idx, "metadata_description"] = sanitize_text_for_csv(raw_desc)
+
+        raw_lang = meta.get("language", "") or ""
+        df.at[idx, "metadata_language"] = sanitize_text_for_csv(raw_lang)
+
+        #print(f"Processed row {idx} for URL: {url}")
+
+    # Save to CSV if requested, using minimal quoting (fields with commas/quotes will be wrapped & escaped)
+    if output_path:
+        df.to_csv(output_path, index=False, quoting=csv.QUOTE_MINIMAL)
+        print(f"📄 Updated CSV file saved to {output_path}")
+
+def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
+    """Explode candidate URLs into one row per (mention, URL) pair and save to CSV.
+
+    1. Splits the `candidate_urls` column on commas and explodes each URL
+       into its own row.
+    2. Assigns a new unique integer `id` to each row.
+    3. Computes `probability (ground truth)` = 1 if the URL appears in
+       `url (ground truth)`, else 0.
+    4. Saves the exploded DataFrame to `output_path` and returns it.
+
+    Args:
+        df (pd.DataFrame): DataFrame with columns
+            `candidate_urls` (comma-separated URLs) and
+            `url (ground truth)`.
+        output_path (str): File path to save the exploded CSV.
+
+    Returns:
+        pd.DataFrame: Exploded DataFrame with new `id` and
+        `probability (ground truth)` columns.
+    """
+    df["candidate_urls"] = df["candidate_urls"].fillna('').apply(
+        lambda x: [url.strip() for url in str(x).split(',') if url.strip()]
+    )
+    df_exploded = df.explode("candidate_urls").reset_index(drop=True)
+    
+    # Assign new unique ID
+    df_exploded["id"] = range(1, len(df_exploded) + 1)
+    df_exploded.to_csv(output_path, index=False)  # Save the DataFrame to a temporary CSV file
+
+    return df_exploded
+
+
+
+
+
+# Reuse or customize these lists/mappings
+COMMON_LANGUAGES = [
+    "Python", "R", "Java", "C\\+\\+", "C#", "C", "JavaScript",
+    "TypeScript", "Ruby", "Go", "Rust", "Scala", "Haskell",
+    "MATLAB", "PHP", "Perl", "Swift", "Kotlin", "Dart", "Julia"
+]
+
+IDE_MAPPING = {
+    "rstudio": "R",
+    "pycharm": "Python",
+    "jupyter": "Python",
+    "spyder": "Python",
+    "eclipse": "Java",
+    "intellij": "Java",
+    "visual studio": "C#",
+    "netbeans": "Java",
+    "android studio": "Java",
+    # add more IDE→language pairs as needed
+}
+
+def get_language_positions(
+    text: str
+) -> List[Tuple[str, int, int]]:
+    """Detect programming language and IDE mentions in text with character spans.
+
+    Scans `text` for known language names and IDE keywords, recording
+    each match’s start and end indices.
+
+    Args:
+        text (str): Input document string.
+
+    Returns:
+        List[Tuple[str, int, int]]: A list of tuples
+        `(language, start_index, end_index)` for each mention.
+    """
+    
+    languages = COMMON_LANGUAGES
+    ide_mapping = IDE_MAPPING
+
+    positions: List[Tuple[str, int, int]] = []
+
+    # Detect explicit language names
+    for lang in languages:
+        pattern = rf"\b{lang}\b"
+        for m in re.finditer(pattern, text, flags=re.IGNORECASE):
+            name = lang.replace("\\+\\+", "++")
+            positions.append((name, m.start(), m.end()))
+
+    # Detect IDE mentions and map back to language
+    for ide, lang in ide_mapping.items():
+        pattern = rf"\b{re.escape(ide)}\b"
+        for m in re.finditer(pattern, text, flags=re.IGNORECASE):
+            positions.append((lang, m.start(), m.end()))
+
+    return positions
+
+def find_nearest_language_for_softwares(
+    text: str,
+    software_names: str
+) -> Optional[str]: 
+    """
+Identify the programming language mentioned closest to a software name.
+
+Uses character-level proximity to find which programming language or IDE
+is mentioned nearest to the given software name within the provided text.
+
+Args:
+    text (str): Full paragraph of text to search.
+    software_names (str): The name of the software to find.
+
+Returns:
+    Optional[str]: Name of the closest language (e.g. "Python"), or None
+    if no valid software or language is found.
+"""
+
+    languages = COMMON_LANGUAGES
+    ide_mapping = IDE_MAPPING
+    lang_positions = get_language_positions(text)
+
+  
+    # find first occurrence of software mention
+    match = re.search(rf"\b{re.escape(software_names)}\b", text, flags=re.IGNORECASE)
+    if not match:
+        return None
+        
+
+    center = (match.start() + match.end()) // 2
+
+        # pick the language with minimum distance to the software
+    nearest = min(
+        lang_positions,
+        key=lambda lp: abs(((lp[1] + lp[2]) // 2) - center),
+        default=None
+    )
+    result = nearest[0] if nearest else None
+
+    return result
+
+
+
+def get_authors(doi):
+    # Set the URL for the OpenAlex API
+    url = "https://api.openalex.org/works/https://doi.org/"
+    # Set the headers
+    headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    }
+    # Set the parameters for the query
+    #params = {
+    #    'query': 'your_query_here',  # Replace 'your_query_here' with your actual query
+    #    'apikey': 'your_api_key_here',  # Replace 'your_api_key_here' with your actual API key
+    #}
+    response = requests.get(url+str(doi), headers=headers)
+    json_response = response.json()
+    return_value = {"doi":doi}
+    if(json_response["authorships"] is not None):
+        return_authors = []
+        for author in json_response["authorships"]:
+            if(author["author"]):
+                a = author["author"]
+                return_authors.append(a["display_name"])
+    return_value["authors"] = return_authors
+    return return_value
+
+def get_synonyms_from_CZI(df, dictionary):
+    for key in dictionary.keys():
+        if dictionary[key] != set():
+            continue
+        # Find matching rows in synonyms_df where the software mention matches the dictionary key
+        matches = df[df["software_mention"].str.lower() == key]["synonym"].tolist()
+        # Store synonyms as a list
+        dictionary[key].update(matches)
+
+def get_synonyms_from_SoftwareKG(dictionary):
+    # Define the SPARQL endpoint
+    sparql = SPARQLWrapper("https://data.gesis.org/somesci/sparql")
+    # Execute the query
+    for key in dictionary.keys():
+        if dictionary[key] != set():
+            continue
+        query = f"""
+    PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
+PREFIX sms: <http://data.gesis.org/somesci/>
+PREFIX its: <http://www.w3.org/2005/11/its/rdf#>
+
+SELECT DISTINCT ?synonym
+WHERE {{
+    # Find the software entity associated with the given spelling
+    ?sw_phrase a nif:Phrase ;
+               its:taClassRef [ rdfs:subClassOf sms:Software ] ;
+               its:taIdentRef ?sw_identity ;
+               nif:anchorOf "{key}" .  # Replace "Excel" with the desired software name
+
+    # Retrieve other spellings linked to the same software identity
+    ?other_phrase its:taIdentRef ?sw_identity ;
+                  nif:anchorOf ?synonym .
+    
+    FILTER (?synonym != "{key}")  # Exclude the original input spelling from results
+}}
+ORDER BY ?synonym
+    """
+        try:
+            # Set query and return format
+            sparql.setQuery(query)
+            sparql.setReturnFormat(JSON)
+            results = sparql.query().convert()
+
+            # Process results
+            for result in results["results"]["bindings"]:
+                synonym = result.get("synonym", {}).get("value")
+                if synonym:
+                    dictionary[key].add(synonym)
+
+        except Exception as e:
+            print(f"Error retrieving synonyms for {key}: {e}")
+def get_synonyms(dictionary, CZI = 1, SoftwareKG = 1,CZI_df:pd.DataFrame = None) -> Dict[str, set]:
+    if CZI == 1:
+        get_synonyms_from_CZI(CZI_df, dictionary)
+    if SoftwareKG == 1:
+        get_synonyms_from_SoftwareKG(dictionary)
+    dictionary = {key: list(value) for key, value in dictionary.items()}
+    return dictionary
+
+def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFrame, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame = None) -> pd.DataFrame:
+    """Load synonyms from a CSV file into a DataFrame.
+
+    Args:
+        file_path (str): Path to the CSV file containing synonyms.
+
+    Returns:
+        pd.DataFrame: A DataFrame mapping software names to lists of synonyms.
+    """
+    if os.path.exists(synonym_file_location) and os.path.getsize(synonym_file_location) > 0:
+        with open(synonym_file_location, "r", encoding="utf-8") as f:
+            try:
+                benchmark_dictionary = json.load(f)
+                benchmark_dictionary = {k: set(v) for k, v in benchmark_dictionary.items()}
+                names = benchmark_df["name"].str.lower().unique()
+                # Ensure all names in benchmark_df are present in the dictionary
+                for name in names:
+                    if name not in benchmark_dictionary:
+                        benchmark_dictionary[name] = set()
+
+            except json.JSONDecodeError:
+                print("⚠️ Warning: Could not decode existing JSON. Starting with empty cache.")
+                benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
+    else:
+            benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
+    benchmark_dictionary = get_synonyms(benchmark_dictionary, CZI=CZI, SoftwareKG=SoftwareKG,CZI_df=CZI_df)
+    # Save the updated dictionary to a JSON file
+    with open(synonym_file_location, "w", encoding="utf-8") as f:
+        json.dump(benchmark_dictionary, f, ensure_ascii=False, indent=4)
+    benchmark_df["synonyms"] = (benchmark_df["name"]
+    .str.lower()
+    .map(benchmark_dictionary)
+    .str.join(",")
+)
+    return benchmark_df
+def aggregate_group(subdf):
+    return pd.Series({
+        'synonyms': ', '.join(subdf['synonyms'].dropna().astype(str).unique()),
+        'language': ', '.join(subdf['language'].dropna().astype(str).unique()),
+        'authors': ', '.join(subdf['authors'].dropna().astype(str).unique()),
+        'urls': ', '.join(subdf.loc[subdf['prediction'] == 1, 'candidate_urls'].dropna().astype(str)),
+        'not_urls': ', '.join(subdf.loc[subdf['prediction'] == 0, 'candidate_urls'].dropna().astype(str)),
+    })
+

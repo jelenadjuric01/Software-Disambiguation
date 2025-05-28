@@ -1,11 +1,8 @@
-from SPARQLWrapper import JSON, SPARQLWrapper
 import pandas as pd
 from pathlib import Path
 import json
 from typing import List, Tuple, Dict, Optional
 import os
-
-import requests
 from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, extract_pypi_metadata_RAKE_class, extract_pypi_metadata_Rake_after, get_metadata  
 import re
 import csv
@@ -15,7 +12,7 @@ from rake_nltk import Rake
 import string
 
     
-def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json", somef_path:str = r"D:/MASTER/TMF/somef") -> Dict[str, dict]:
+def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
     """Extract and cache metadata for all unique candidate URLs in a DataFrame.
 
     This function:
@@ -59,9 +56,9 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
         num_dict = len(metadata_cache)
         for url in url_set:
             if url not in metadata_cache or metadata_cache[url] in [None, {}]:
-                #print(f"🔍 Processing: {identifier}/{num_url-num_dict}")
+                print(f"🔍 Processing: {identifier}/{num_url-num_dict}")
                 print(f"🔍 Processing: {url}")
-                metadata_cache[url] = get_metadata(url,somef_path)
+                metadata_cache[url] = get_metadata(url)
             identifier += 1
 
     except Exception as e:
@@ -122,7 +119,7 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
         None
     """
     # Ensure metadata columns exist
-    for col in ["metadata_name", "metadata_authors", "metadata_description","metadata_language"]:
+    for col in ["metadata_name", "metadata_authors", "metadata_keywords", "metadata_description","metadata_language"]:
         if col not in df.columns:
             df[col] = ""
 
@@ -149,6 +146,11 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
         authors = meta.get("authors") or []
         authors_str = ", ".join(authors) if isinstance(authors, list) else ""
         df.at[idx, "metadata_authors"] = sanitize_text_for_csv(authors_str)
+
+        # 3) Keywords (list → comma‑sep string)
+        keywords = meta.get("keywords") or []
+        kw_str = ", ".join(keywords) if isinstance(keywords, list) else ""
+        df.at[idx, "metadata_keywords"] = sanitize_text_for_csv(kw_str)
 
         # 4) Description
         raw_desc = meta.get("description", "") or ""
@@ -431,160 +433,149 @@ Returns:
                     metadata[url]["keywords"] = kws
                     print(f"Extracted keywords from GitHub URL: {url}, {kws}")
             
-def get_authors(doi):
-    # Set the URL for the OpenAlex API
-    url = "https://api.openalex.org/works/https://doi.org/"
-    # Set the headers
-    headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-    }
-    # Set the parameters for the query
-    #params = {
-    #    'query': 'your_query_here',  # Replace 'your_query_here' with your actual query
-    #    'apikey': 'your_api_key_here',  # Replace 'your_api_key_here' with your actual API key
-    #}
-    response = requests.get(url+str(doi), headers=headers)
-    json_response = response.json()
-    return_value = {"doi":doi}
-    if(json_response["authorships"] is not None):
-        return_authors = []
-        for author in json_response["authorships"]:
-            if(author["author"]):
-                a = author["author"]
-                return_authors.append(a["display_name"])
-    return_value["authors"] = return_authors
-    return return_value
 
-def get_synonyms_from_CZI(df, dictionary):
-    for key in dictionary.keys():
-        if dictionary[key] != set():
-            continue
-        # Find matching rows in synonyms_df where the software mention matches the dictionary key
-        matches = df[df["software_mention"].str.lower() == key]["synonym"].tolist()
-        # Store synonyms as a list
-        dictionary[key].update(matches)
-
-def get_synonyms_from_SoftwareKG(dictionary):
-    # Define the SPARQL endpoint
-    sparql = SPARQLWrapper("https://data.gesis.org/somesci/sparql")
-    # Execute the query
-    for key in dictionary.keys():
-        if dictionary[key] != set():
-            continue
-        query = f"""
-    PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
-PREFIX sms: <http://data.gesis.org/somesci/>
-PREFIX its: <http://www.w3.org/2005/11/its/rdf#>
-
-SELECT DISTINCT ?synonym
-WHERE {{
-    # Find the software entity associated with the given spelling
-    ?sw_phrase a nif:Phrase ;
-               its:taClassRef [ rdfs:subClassOf sms:Software ] ;
-               its:taIdentRef ?sw_identity ;
-               nif:anchorOf "{key}" .  # Replace "Excel" with the desired software name
-
-    # Retrieve other spellings linked to the same software identity
-    ?other_phrase its:taIdentRef ?sw_identity ;
-                  nif:anchorOf ?synonym .
-    
-    FILTER (?synonym != "{key}")  # Exclude the original input spelling from results
-}}
-ORDER BY ?synonym
-    """
-        try:
-            # Set query and return format
-            sparql.setQuery(query)
-            sparql.setReturnFormat(JSON)
-            results = sparql.query().convert()
-
-            # Process results
-            for result in results["results"]["bindings"]:
-                synonym = result.get("synonym", {}).get("value")
-                if synonym:
-                    dictionary[key].add(synonym)
-
-        except Exception as e:
-            print(f"Error retrieving synonyms for {key}: {e}")
-def get_synonyms(dictionary, CZI = 1, SoftwareKG = 1,CZI_df:pd.DataFrame = None) -> Dict[str, set]:
-    if CZI == 1:
-        get_synonyms_from_CZI(CZI_df, dictionary)
-    if SoftwareKG == 1:
-        get_synonyms_from_SoftwareKG(dictionary)
-    dictionary = {key: list(value) for key, value in dictionary.items()}
-    return dictionary
-
-def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFrame, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame = None) -> pd.DataFrame:
-    """Load synonyms from a CSV file into a DataFrame.
-
-    Args:
-        file_path (str): Path to the CSV file containing synonyms.
-
-    Returns:
-        pd.DataFrame: A DataFrame mapping software names to lists of synonyms.
-    """
-    if os.path.exists(synonym_file_location) and os.path.getsize(synonym_file_location) > 0:
-        with open(synonym_file_location, "r", encoding="utf-8") as f:
-            try:
-                benchmark_dictionary = json.load(f)
-                benchmark_dictionary = {k: set(v) for k, v in benchmark_dictionary.items()}
-                names = benchmark_df["name"].str.lower().unique()
-                # Ensure all names in benchmark_df are present in the dictionary
-                for name in names:
-                    if name not in benchmark_dictionary:
-                        benchmark_dictionary[name] = set()
-
-            except json.JSONDecodeError:
-                print("⚠️ Warning: Could not decode existing JSON. Starting with empty cache.")
-                benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
-    else:
-            benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
-    benchmark_dictionary = get_synonyms(benchmark_dictionary, CZI=CZI, SoftwareKG=SoftwareKG,CZI_df=CZI_df)
-    # Save the updated dictionary to a JSON file
-    with open(synonym_file_location, "w", encoding="utf-8") as f:
-        json.dump(benchmark_dictionary, f, ensure_ascii=False, indent=4)
-    benchmark_df["synonyms"] = (benchmark_df["name"]
-    .str.lower()
-    .map(benchmark_dictionary)
-    .str.join(",")
-)
-    return benchmark_df
-def aggregate_group(subdf):
-    return pd.Series({
-        'synonyms': ', '.join(subdf['synonyms'].dropna().astype(str).unique()),
-        'language': ', '.join(subdf['language'].dropna().astype(str).unique()),
-        'authors': ', '.join(subdf['authors'].dropna().astype(str).unique()),
-        'urls': ', '.join(subdf.loc[subdf['prediction'] == 1, 'candidate_urls'].dropna().astype(str)),
-        'not_urls': ', '.join(subdf.loc[subdf['prediction'] == 0, 'candidate_urls'].dropna().astype(str)),
-    })
-
-# Save the updated DataFrame to a CSV file
-    benchmark_df.to_csv("../temp/v3.2/updated_with_metadata_file.csv", index=False)
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
+    """'''
+    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v1.xlsx"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/updated_with_metadata_file_v1.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv"
+    # Build metadata cache from Excel
+
+    # Load the DataFrame again to add metadata
+    df = pd.read_excel(excel_path)
+    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
+    print(metadata_cache)
+    df = make_pairs(df)
+
+    add_metadata(df,metadata_cache, output_path)
+    df = compute_similarity_df(df,output_path_similarities)
+    output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/calculated_version_1.csv"
+    # Load the DataFrame again to see the results
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv")
+    # Get the average, min, and max for each metric
+    get_average_min_max(df, output_path_calculated_version_1)
     
-    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_2.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_6.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.7/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.6/pairs.csv"
-    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.9/model_input.csv"
-    model_input = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.9/model_input_no_keywords.csv"
-    '''df = pd.read_excel(excel_path)
+
+    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 2
+    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v2.xlsx"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/pairs.csv"
+    output_path_calculated = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv"
+
+    # Build metadata cache from Excel
+    
+    # Load the DataFrame again to add metadata
+    df = pd.read_excel(excel_path)
+    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
+    print(metadata_cache)
+    df = make_pairs(df,output_path_pairs)
+
+    add_metadata(df,metadata_cache, output_path)
+    df = compute_similarity_df(df,output_path_similarities)
+    # Load the DataFrame again to see the results
+    df = pd.read_csv(output_path_similarities)
+    # Get the average, min, and max for each metric
+    get_average_min_max(df, output_path_calculated)
+    outputh_avg_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/average_ranked.csv"
+    outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/min_ranked.csv"
+    outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/max_ranked.csv"
+    #Get ranked candidates and save the updated file version 2
+    df = pd.read_csv(output_path_calculated)
+    df_avg, df_min, df_max = split_by_avg_min_max(df)
+    df_avg = group_by_candidates(df_avg, outputh_avg_ranked)
+    df_min = group_by_candidates(df_min, outputh_min_ranked)
+    df_max = group_by_candidates(df_max, outputh_max_ranked)
+    print("Evaluation  of average")
+    evaluation(df_avg)
+    print("Evaluation  of min")
+    evaluation(df_min)
+    print("Evaluation  of max")
+    evaluation(df_max)
+    #Version 3
+    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 3
+    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3.xlsx"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/pairs.csv"
+    output_path_calculated = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv"
+    df = pd.read_excel(excel_path)
+    df['language'] = df.apply(
+    lambda row: find_nearest_language_for_softwares(
+        text=row['paragraph'],
+        software_names=row['name']
+
+    ),
+    axis=1
+)
+    df['language'] = df['language'].fillna('')
     metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
     df = make_pairs(df,output_path_pairs)
 
     add_metadata(df,metadata_cache, output_path)
     df = compute_similarity_df(df,output_path_similarities)
-
+    # Load the DataFrame again to see the results
+    df = pd.read_csv(output_path_similarities)
+    # Get the average, min, and max for each metric
+    get_average_min_max(df, output_path_calculated)
+    outputh_avg_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/average_ranked.csv"
+    outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/min_ranked.csv"
+    outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/max_ranked.csv"
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv")
+    df_avg, df_min, df_max = split_by_summary(df)
+    print("Evaluation  of average")
+    evaluation(df_avg)
+    print("Evaluation  of min")
+    evaluation(df_min)
+    print("Evaluation  of max")
+    evaluation(df_max)
+    df_avg.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/average_ranked.csv")
+    df_min.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/min_ranked.csv")
+    df_max.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/max_ranked.csv")
+   
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated_positives.csv")
+    filtered = select_rows_below_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'],0.1)
+    filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")"""
+    #Version 3.1 adding synonyms similarity
+    '''similarities_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/similarities.csv"
+    updated_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/updated_with_metadata_file.csv"
+    df = pd.read_csv(similarities_path)
+    df_updated = pd.read_csv(updated_path)
+    df_updated = df_updated.dropna(subset=['metadata_name']).copy()
+    df['synonyms']=df_updated["synonyms"]
+    df['synonym_metric'] = df.apply(
+        lambda row: synonym_name_similarity(
+            row['metadata_name'],
+            row['synonyms']
+        ),
+        axis=1
+    )
+    df.to_csv(similarities_path, index=False)
     model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
+    model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
+    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_2.xlsx"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_6.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.7/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.6/pairs.csv"
+    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/model_input.csv"
+    #df = pd.read_csv(output_path)
+    #df = pd.read_excel(excel_path)
+    sim = pd.read_csv(output_path_similarities)
+
+    sim['paragraph_metric'] = sim.apply(
+        lambda r: paragraph_description_similarity_BERT(
+            r['paragraph'],
+            r['metadata_description']
+            
+        ),
+        axis=1
+    )
+    
+    sim.to_csv(output_path_similarities, index=False)
+    model_input = sim[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
     model_input.to_csv(model_input_path, index=False)
-    df = pd.read_csv(model_input_path)
-    df.drop(columns=['keywords_metric'], inplace=True)
-    df[['name_metric', 'paragraph_metric','language_metric','synonym_metric','author_metric','true_label']].to_csv(model_input, index=False)'''
-    synonyms_file = 'D:/MASTER/TMF/Software-Disambiguation/code/synonym_dictionary.json'
-    input_dataframe = pd.read_csv('D:/MASTER/TMF/Software-Disambiguation/code/input.csv',delimiter=';')
-    CZI = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/demo/CZI/synonyms_matrix.csv")
-    input_dataframe=get_synonyms_from_file(synonyms_file, input_dataframe,CZI_df=CZI)
-    input_dataframe.to_csv('D:/MASTER/TMF/Software-Disambiguation/code/input_with_synonyms.csv', index=False)
