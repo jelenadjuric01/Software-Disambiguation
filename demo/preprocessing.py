@@ -17,7 +17,7 @@ import tempfile
 from urllib.parse import urlparse
 from urllib.parse import urlparse, parse_qs
 from bs4 import BeautifulSoup
-import shutil
+import shutil, stat
 
 from sentence_transformers import SentenceTransformer, util
 from sklearn.metrics.pairwise import cosine_similarity
@@ -31,18 +31,20 @@ _BERT_MODEL = SentenceTransformer('all-MiniLM-L6-v2')
 
 
 def paragraph_description_similarity_BERT(text1: str, text2: str) -> float:
-    """Compute semantic similarity between two texts via SBERT embeddings.
-
-    Strips and validates `text1` and `text2`, encodes both with SBERT,
-    and returns their cosine similarity.
-
-    Args:
-        text1 (str): Arbitrary text (e.g., a paper paragraph).
-        text2 (str): Another text (e.g., software description).
-
-    Returns:
-        float: Cosine similarity ∈ [-1.0, 1.0], or `np.nan` if either input is empty.
     """
+Compute semantic similarity between two texts using SBERT embeddings.
+
+This function encodes both input texts using a lightweight SBERT model
+(`all-MiniLM-L6-v2`) and calculates the cosine similarity between them.
+
+Args:
+    text1 (str): First input string (e.g., a paragraph from a paper).
+    text2 (str): Second input string (e.g., software description).
+
+Returns:
+    float: Cosine similarity score in [0.0, 1.0], or `np.nan` if either input is invalid.
+"""
+
     # validate inputs
     if not text1 or pd.isna(text1) or not (text1 := text1.strip()):
         return np.nan
@@ -66,21 +68,23 @@ COMMON_AFFIXES = {
 }
 
 def normalize_software_name(name: str) -> str:
-    """Normalize a software name to a canonical lowercase token string.
-
-    Steps:
-      1. Lowercase and trim.
-      2. Remove version tokens (e.g., "v2.0", "2021").
-      3. Strip punctuation.
-      4. Remove common affixes (e.g., "Pro", "Suite").
-      5. Collapse whitespace.
-
-    Args:
-        name (str): Original software name.
-
-    Returns:
-        str: Normalized name.
     """
+Normalize a software name string by removing noise and standardizing format.
+
+Steps:
+  1. Lowercase and strip.
+  2. Remove version numbers (e.g., "v2.0", "2022").
+  3. Remove punctuation.
+  4. Remove known affixes (e.g., "Pro", "Suite").
+  5. Collapse whitespace.
+
+Args:
+    name (str): Raw software name string.
+
+Returns:
+    str: Cleaned and normalized software name.
+"""
+
     s = name.lower().strip()
     # 1. Remove version-like tokens (v1, 2.0, 2022)
     s = re.sub(r"\b(v?\d+(\.\d+)*|\d{4})\b", " ", s)
@@ -227,25 +231,21 @@ def author_name_similarity(name1: str, name2: str) -> float:
 
 def compute_similarity_test(df: pd.DataFrame,output_path:str = None) -> pd.DataFrame:
     """
-Compute similarity metrics between paper entries and candidate metadata.
+Compute multiple similarity metrics between software mentions and candidate metadata.
 
-For each row where `metadata_name` is present, this function:
-- Computes up to six similarity metrics (if not already filled):
-    • `name_metric`: software_name_similarity
-    • `author_metric`: author_name_similarity
-    • `paragraph_metric`: paragraph_description_similarity
-    • `keywords_metric`: keyword_similarity_with_fallback
-    • `language_metric`: programming_language_similarity
-    • `synonym_metric`: synonym_name_similarity
-- Adds a binary `true_label` indicating whether the candidate URL matches any ground-truth URLs
-- Optionally saves the output to CSV
+Metrics include:
+- `name_metric`: Jaro-Winkler similarity on normalized names.
+- `author_metric`: Similarity between author names.
+- `paragraph_metric`: SBERT-based semantic similarity.
+- `language_metric`: Similarity between programming language mentions.
+- `synonym_metric`: Similarity to known synonyms.
 
 Args:
-    df (pd.DataFrame): Input dataframe containing paper and metadata fields.
-    output_path (str, optional): File path to save the result CSV. Default is None.
+    df (pd.DataFrame): Input DataFrame with paper/software/metadata columns.
+    output_path (str, optional): If provided, saves resulting DataFrame as CSV.
 
 Returns:
-    pd.DataFrame: Filtered and updated dataframe with all computed metrics and `true_label`.
+    pd.DataFrame: DataFrame with similarity scores.
 """
 
     for col in ['name_metric','author_metric','paragraph_metric',"language_metric",'synonym_metric']:
@@ -318,14 +318,7 @@ Returns:
 
 def extract_pypi_metadata(url: str) -> Dict[str, Any]:
     """
-        Extract metadata for a PyPI package with layered keyword fallback.
-
-        This function retrieves package metadata and attempts to extract keywords
-        in a two-step fallback strategy. It first checks for JSON-defined keywords.
-        If none are found, it tries to derive keywords from Trove classifiers.
-        If classifiers also fail to provide valid keywords, it applies RAKE
-        to extract keyword phrases from the summary text.
-
+        Extract metadata for a PyPI package given its project URL.
         Args:
             url (str): A PyPI project URL (e.g. "https://pypi.org/project/example").
 
@@ -333,7 +326,6 @@ def extract_pypi_metadata(url: str) -> Dict[str, Any]:
             dict: A dictionary containing:
                 - name (str): Package name
                 - description (str): Summary description
-                - keywords (List[str]): Extracted, derived, or RAKE-generated keywords
                 - authors (List[str]): Combined author and maintainer names
                 - language (str): Always "Python"
             If extraction fails, returns {"error": "..."}.
@@ -369,7 +361,7 @@ def extract_pypi_metadata(url: str) -> Dict[str, Any]:
             authors.append(m)
 
     # 4) summary & description
-    summary     = info.get("summary", "").strip()
+    summary = (info.get("summary") or "").strip()
 
     
     return {
@@ -518,25 +510,23 @@ def get_github_user_data(username: str) -> str:
 
 def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/somef") -> dict:
     """
-    Extract metadata from a GitHub repository using SOMEF with RAKE fallback for keywords.
+Run SOMEF on a GitHub repository and extract metadata.
 
-    This function runs the SOMEF tool on the given repository and parses
-    metadata from the resulting JSON. If the extracted keywords field is empty,
-    it applies RAKE to extract up to 5 multi-word keywords from the description text.
+Extracted fields include:
+- name
+- description
+- authors (GitHub owner name)
+- language (most used in repo)
+If keywords are missing, fallback to RAKE extraction.
 
-    Args:
-        repo_url (str): URL of the GitHub repository.
-        somef_path (str): Path to the SOMEF project directory where `poetry run somef` is available.
+Args:
+    repo_url (str): GitHub repo URL.
+    somef_path (str): Path to SOMEF installation with Poetry.
 
-    Returns:
-        dict: A dictionary containing:
-            - name (str)
-            - description (str)
-            - keywords (List[str]) — extracted from SOMEF or generated via RAKE
-            - authors (List[str]) — GitHub owner's name
-            - language (str) — most dominant programming language in the repo
-        Returns an empty dictionary on failure.
+Returns:
+    dict: Metadata dictionary or empty dict on failure.
 """
+
 
     # Create a temp file to store the output
     with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
@@ -595,12 +585,22 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
         # delete temp file
         os.remove(output_path)
         #path = "D:\\MASTER\\TMF\\somef\\temp"
+        def _rm_rw(func, path, excinfo):
+            os.chmod(path, stat.S_IWRITE)
+            func(path)
+
+        # …
+
+        
         for entry in os.scandir(path):
             entry_path = entry.path
             if entry.is_dir(follow_symlinks=False):
-                shutil.rmtree(entry_path) 
-            else:
+                shutil.rmtree(entry_path, onexc=_rm_rw)
+        else:
+            try:
                 os.remove(entry_path)
+            except PermissionError:
+                _rm_rw(os.remove, entry_path, None)
 
 
 
@@ -613,7 +613,6 @@ def get_metadata(url: str, somef_path: str) -> dict:
       - GitHub repos      → extract_somef_metadata
       - CRAN packages     → extract_cran_metadata
       - PyPI packages     → extract_pypi_metadata
-      - Other websites    → extract_website_metadata
 
     Args:
         url: The URL from which to extract metadata.
@@ -664,8 +663,19 @@ def fetch_github_urls(
     max_retries: int = 3
 ) -> List[str]:
     """
-    Return up to `per_page` GitHub repo URLs matching `name`, handling rate limits.
-    """
+Query GitHub's Search API for repositories matching a given name.
+
+Handles rate limiting using retry logic.
+
+Args:
+    name (str): Name of the software or keyword to search.
+    per_page (int): Max number of repositories to fetch.
+    max_retries (int): Number of retry attempts in case of rate limiting.
+
+Returns:
+    List[str]: List of GitHub repository URLs.
+"""
+
     params = {
         "q":        f"{name} in:name",
         "sort":     "stars",
@@ -825,11 +835,23 @@ def fetch_cran_urls(
 
 def fetch_candidate_urls(name: str) -> set[str]:
     """
-    For each software name, fetch candidate URLs in this order:
-      1. GitHub
-      2. PyPI
-      3. CRAN
-    """
+Main entry function to retrieve and clean candidate software URLs.
+
+Performs the following steps:
+1. Update or load cached candidates.
+2. Deduplicate and normalize URLs.
+3. Filter non-website and CRAN-ref URLs.
+4. Save to file and return updated DataFrame.
+
+Args:
+    input (pd.DataFrame): Corpus with software names.
+    cache_path (str): Path to JSON cache file.
+    fetcher (callable): Function to fetch candidate URLs for a name.
+
+Returns:
+    pd.DataFrame: Updated corpus with `candidate_urls` column.
+"""
+
     results = []
 
     # GitHub
@@ -1009,9 +1031,19 @@ def get_candidate_urls(
     fetcher=fetch_candidate_urls
 ) -> pd.DataFrame:
     """
-    Main entry point to update candidate URLs for each software in the corpus.
-    Returns a dictionary of {software_name: set(urls)}.
-    """
+Extract metadata for all URLs found in a DataFrame and cache the results.
+
+Only fetches metadata for URLs not already cached. Uses `get_metadata` dispatcher.
+
+Args:
+    df (pd.DataFrame): DataFrame with `candidate_urls` column.
+    output_json_path (str): Path to metadata JSON cache.
+    somef_path (str): Path to SOMEF installation.
+
+Returns:
+    Dict[str, dict]: Mapping from URL to extracted metadata.
+"""
+
     # 1) Update or load existing candidates
     candidates = update_candidate_cache(input, fetcher, cache_path)
 

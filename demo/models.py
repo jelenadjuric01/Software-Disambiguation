@@ -1,9 +1,7 @@
-from typing import List, Optional, Tuple
+from typing import List, Optional
 import pandas as pd
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
@@ -16,20 +14,25 @@ from sklearn.pipeline import Pipeline
 
 class MedianImputerWithIndicator(BaseEstimator, TransformerMixin):
     """
-Impute missing values using column medians and add binary missing indicators.
+A custom scikit-learn transformer that imputes missing values using median values
+and appends binary indicators for missingness.
 
-This transformer:
-- Replaces NaNs with the median value per column
-- Adds a new binary column <col>_missing to indicate missingness
-- Supports feature name tracking via get_feature_names_out()
+This transformer performs two operations:
+1. Fills missing values in specified numeric columns with their respective medians.
+2. Adds binary columns named <col>_missing to flag rows with originally missing values.
 
-Args:
-    cols (List[str], optional): List of numeric columns to impute. If None,
-        selects all numeric columns at fit time.
+Attributes:
+    cols (List[str]): List of columns to impute. If None, inferred during `fit`.
+    medians_ (dict): Computed median values for each column during `fit`.
+    feature_names_in_ (List[str]): Names of the original input features.
+    feature_names_out_ (List[str]): Names of the transformed output features, including indicators.
 
-Returns:
-    pd.DataFrame: Transformed DataFrame with imputed values and indicator columns.
+Methods:
+    fit(X, y=None): Learns medians from the training data.
+    transform(X): Applies imputation and adds missingness indicators.
+    get_feature_names_out(input_features): Returns output feature names (including indicators).
 """
+
 
     def __init__(self, cols: Optional[List[str]] = None):
         self.cols = cols
@@ -68,23 +71,35 @@ Returns:
 
 def make_model(name: str, y_train_fold: np.ndarray, params: dict = None) -> ClassifierMixin:
     """
-Create a classification model by name with built-in handling of class imbalance.
+Create a classification model with optional hyperparameters and automatic handling of class imbalance.
 
-Supports model-specific default hyperparameters and class weighting:
-- Logistic Regression and Random Forest use `class_weight='balanced'`
-- XGBoost uses `scale_pos_weight` based on label distribution
-- LightGBM uses dictionary-based class weights
-- MLP does not apply any class imbalance correction directly
+Supports five types of classifiers with sensible defaults:
+- Logistic Regression
+- Random Forest
+- XGBoost
+- LightGBM
+- Neural Network (MLP)
+
+Class imbalance is handled automatically:
+- For LR and RF: `class_weight='balanced'`
+- For XGBoost: sets `scale_pos_weight` using label ratio
+- For LightGBM: computes `class_weight` dictionary
+- For MLP: no automatic class balancing (user responsibility)
 
 Args:
-    name (str): Model name (case-insensitive). One of:
-        ['logistic regression', 'random forest', 'xgboost', 'lightgbm', 'neural net']
-    y_train_fold (np.ndarray): Labels used to compute class imbalance adjustments
-    params (dict, optional): Dictionary with model-specific override parameters.
+    name (str): Name of the model to instantiate. One of:
+                ['logistic regression', 'random forest', 'xgboost', 'lightgbm', 'neural net']
+    y_train_fold (np.ndarray): Training labels used to compute class balancing.
+    params (dict, optional): Dictionary with model-specific parameter overrides.
+                             Keys should match lowercased model names.
 
 Returns:
-    ClassifierMixin: An untrained sklearn-compatible classifier.
+    ClassifierMixin: A scikit-learn compatible model instance.
+
+Raises:
+    ValueError: If the model name is unrecognized.
 """
+
 
     if params is None:
         params = {}
@@ -144,17 +159,17 @@ Returns:
 
 def get_preprocessing_pipeline(cols_to_impute: List[str]) -> Pipeline:
     """
-Build a preprocessing pipeline for numerical features.
+Construct a preprocessing pipeline for numerical features.
 
 The pipeline includes:
-- Median imputation with missing indicators
-- Standard scaling
+- Median imputation using `MedianImputerWithIndicator`, which adds missing flags.
+- Standardization via `StandardScaler`.
 
 Args:
-    cols_to_impute (List[str]): List of column names to impute and scale.
+    cols_to_impute (List[str]): List of numerical column names to impute and scale.
 
 Returns:
-    sklearn.Pipeline: A pipeline object with feature name tracking.
+    Pipeline: A scikit-learn `Pipeline` object with imputation and scaling.
 """
 
     return Pipeline([
