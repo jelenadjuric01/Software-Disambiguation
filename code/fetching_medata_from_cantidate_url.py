@@ -809,6 +809,6 @@ def get_metadata(url: str) -> dict:
     
 if __name__ == "__main__":
     # Example usage
-    url = "https://pypi.org/project/CoAPthon/"
-    metadata = extract_pypi_metadata_Rake_after(url)
+    url = "https://github.com/micli/MuscleFellow"
+    metadata = extract_somef_metadata(url)
     print(metadata)

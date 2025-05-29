@@ -596,11 +596,11 @@ Returns:
             entry_path = entry.path
             if entry.is_dir(follow_symlinks=False):
                 shutil.rmtree(entry_path, onexc=_rm_rw)
-        else:
-            try:
-                os.remove(entry_path)
-            except PermissionError:
-                _rm_rw(os.remove, entry_path, None)
+            else:
+                try:
+                    os.remove(entry_path)
+                except PermissionError:
+                    _rm_rw(os.remove, entry_path, None)
 
 
 
