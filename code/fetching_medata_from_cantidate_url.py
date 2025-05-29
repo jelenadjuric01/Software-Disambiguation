@@ -554,7 +554,8 @@ def get_github_user_data(username: str) -> str:
     return username
 
 
-def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/somef") -> dict:
+
+def extract_somef_metadata(repo_url: str, somef_path: str = "D:\\MASTER\\TMF\\somef") -> dict:
     """Run the SOMEF tool on a GitHub repository to extract metadata.
 
     Invokes `poetry run somef describe` in a temp file, then reads JSON to extract:
@@ -577,21 +578,39 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
     with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
         output_path = tmp_file.name
 
+    # Prepare the two command variants: with and without -kt
+    # Note: keep -t and -m in both
+    temp_dir = os.path.join(somef_path, "temp")
+    os.makedirs(temp_dir, exist_ok=True)
+    kt_path = temp_dir
+    if sys.platform == "win32":
+        # Windows long‐path prefix
+        kt_path = "\\\\?\\" + temp_dir
+
+    base_cmd = [
+        "poetry", "run", "somef", "describe",
+        "-r", repo_url,
+        "-o", output_path,
+        "-t", "0.93",
+        "-m"
+    ]
+    cmds = [
+        base_cmd + ["-kt", kt_path],  # first attempt
+        base_cmd                     # retry without -kt
+    ]
+
     try:
-        # Run SOMEF with poetry from its own directory
-        path = "D:\\MASTER\\TMF\\somef\\temp"
-        os.makedirs(path, exist_ok=True)
-        if sys.platform == "win32":
-        # note: in a Python string literal this is "\\\\?\\"
-            path = "\\\\?\\" + path
-        subprocess.run([
-            "poetry", "run", "somef", "describe",
-            "-r", repo_url,
-            "-o", output_path,
-            "-t", "0.93",
-            "-m",
-            "-kt", path
-        ], cwd=somef_path, check=True)
+        # Try each command in turn
+        for cmd in cmds:
+            try:
+                subprocess.run(cmd, cwd=somef_path, check=True)
+                break
+            except subprocess.CalledProcessError as e:
+                print(f"Command failed ({' '.join(cmd)}): {e}")
+        else:
+            # both attempts failed
+            print(f"All SOMEF attempts failed for {repo_url}")
+            return {}
 
         # Load the JSON output into Python
         with open(output_path, "r", encoding="utf-8") as f:
@@ -606,41 +625,39 @@ def extract_somef_metadata(repo_url: str, somef_path: str = r"D:/MASTER/TMF/some
         
         # "owner" is treated as author (GitHub username)
         owner = get_first_value("owner")
-        #get language
+
+        # Determine primary language by largest code size
         langs = metadata.get("programming_languages", [])
         primary_language = ""
         if langs:
-            # pick the entry with the largest "size" under result
-            primary = max(
-                langs,
-                key=lambda x: x.get("result", {}).get("size", 0)
-            )
+            primary = max(langs, key=lambda x: x.get("result", {}).get("size", 0))
             primary_language = primary.get("result", {}).get("value", "")
-        #gets only first description, could be multiple
+
         return {
             "name": get_first_value("name"),
             "description": get_first_value("description"),
             "keywords": keywords,
             "authors": [get_github_user_data(owner)] if owner else [],
             "language": primary_language
-
         }
 
-
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to extract metadata for {repo_url}: {e}")
-        return {}
-
     finally:
-        # delete temp file
-        os.remove(output_path)
-        #path = "D:\\MASTER\\TMF\\somef\\temp"
-        for entry in os.scandir(path):
-            entry_path = entry.path
-            if entry.is_dir(follow_symlinks=False):
-                shutil.rmtree(entry_path)
-            else:
-                os.remove(entry_path)
+        # Cleanup: delete temp JSON and clear out the temp directory
+        try:
+            os.remove(output_path)
+        except OSError:
+            pass
+
+        if os.path.isdir(temp_dir):
+            for entry in os.scandir(temp_dir):
+                path = entry.path
+                if entry.is_dir(follow_symlinks=False):
+                    shutil.rmtree(path, ignore_errors=True)
+                else:
+                    try:
+                        os.remove(path)
+                    except OSError:
+                        pass
 
 
 def extract_somef_metadata_with_RAKE(repo_url: str, somef_path: str = r"D:/MASTER/TMF/somef") -> dict:
@@ -809,6 +826,6 @@ def get_metadata(url: str) -> dict:
     
 if __name__ == "__main__":
     # Example usage
-    url = "https://github.com/micli/MuscleFellow"
+    url = "https://github.com/pbreheny/biglasso"
     metadata = extract_somef_metadata(url)
     print(metadata)
