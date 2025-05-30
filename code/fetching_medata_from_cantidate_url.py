@@ -575,12 +575,12 @@ def extract_somef_metadata(repo_url: str, somef_path: str = "D:\\MASTER\\TMF\\so
         Returns an empty dict on failure.
     """
     # Create a temp file to store the output
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
-        output_path = tmp_file.name
+    
 
     # Prepare the two command variants: with and without -kt
     # Note: keep -t and -m in both
     temp_dir = os.path.join(somef_path, "temp")
+    output_path = os.path.join(temp_dir, "metadata.json")
     os.makedirs(temp_dir, exist_ok=True)
     kt_path = temp_dir
     if sys.platform == "win32":
@@ -826,6 +826,6 @@ def get_metadata(url: str) -> dict:
     
 if __name__ == "__main__":
     # Example usage
-    url = "https://github.com/karamelikli/Eviews-NARDL"
+    url = "https://github.com/AIM-Harvard/foundation-cancer-image-biomarker"
     metadata = extract_somef_metadata(url)
     print(metadata)

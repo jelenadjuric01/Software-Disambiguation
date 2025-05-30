@@ -14244,7 +14244,14 @@
     ],
     "language": "C++"
   },
-  "https://github.com/facebook/hhvm": {},
+  "https://github.com/facebook/hhvm": {
+    "name": "hhvm",
+    "description": "A virtual machine for executing programs written in Hack.",
+    "authors": [
+      "Meta"
+    ],
+    "language": "C++"
+  },
   "https://github.com/MersenneForum/MersenneForumAliquot": {
     "name": "MersenneForumAliquot",
     "description": "The code used to run <http://www.rechenkraft.net/aliquot/AllSeq.html>, as well as the reservations script.",

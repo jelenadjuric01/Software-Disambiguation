@@ -2324,7 +2324,7 @@
     "https://github.com/Libensemble/libensemble",
     "https://github.com/conda-forge/libensemble-feedstock",
     "https://github.com/ytopt-team/ytopt-libensemble",
-    "https://pypi.org/project/libensemble/"
+    "https://pypi.org/project/libensemble"
   ],
   "stringdb": [
     "https://cran.r-project.org/package=lzstring",
@@ -2348,7 +2348,7 @@
     "https://github.com/NathanPB/WebIAS",
     "https://github.com/gabrielpdb/WebIASelfCar",
     "https://github.com/pawelld/webias",
-    "https://pypi.org/project/WeBIAS/"
+    "https://pypi.org/project/WeBIAS"
   ],
   "plottools": [
     "https://cran.r-project.org/package=PlotTools",
@@ -2362,7 +2362,7 @@
     "https://github.com/ethz-asl/fw_px4_plottools",
     "https://github.com/patrickbryant/PlotTools",
     "https://github.com/ronw/plottools",
-    "https://pypi.org/project/plottools"
+    "https://pypi.org/project/plottools/"
   ],
   "Imagery": [
     "https://cran.r-project.org/package=forImage",
