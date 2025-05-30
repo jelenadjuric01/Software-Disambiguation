@@ -826,6 +826,6 @@ def get_metadata(url: str) -> dict:
     
 if __name__ == "__main__":
     # Example usage
-    url = "https://github.com/pbreheny/biglasso"
+    url = "https://github.com/karamelikli/Eviews-NARDL"
     metadata = extract_somef_metadata(url)
     print(metadata)

@@ -558,7 +558,7 @@ def extract_somef_metadata(repo_url: str, somef_path: str = "D:\\MASTER\\TMF\\so
                 subprocess.run(cmd, cwd=somef_path, check=True)
                 break
             except subprocess.CalledProcessError as e:
-                print(f"Command failed ({' '.join(cmd)}): {e}")
+                print("")
         else:
             # both attempts failed
             print(f"All SOMEF attempts failed for {repo_url}")
