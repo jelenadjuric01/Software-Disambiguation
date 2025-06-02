@@ -602,9 +602,12 @@ Returns:
     cols = [
         'id','name','doi','paragraph','authors','language','candidate_urls','synonyms',
         'metadata_name','metadata_authors','metadata_description','metadata_language',
-        'name_metric','author_metric','paragraph_metric','language_metric','synonym_metric'
+        'name_metric','author_metric','paragraph_metric','language_metric','synonym_metric','true_label'
     ]
-    
+    df['true_label'] = [
+    int(c in [u.strip() for u in g.split(',')])
+    for c, g in zip(df['candidate_urls'], df['url (ground truth)'])
+    ] 
     sub = df.loc[valid, cols].copy()
 
     # 7) Optionally save

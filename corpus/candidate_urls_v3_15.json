@@ -79,8 +79,7 @@
     "https://github.com/felixfan/FinCal",
     "https://github.com/mratsim/ReactFincal",
     "https://github.com/pensierinmusica/fincalc",
-    "https://github.com/zgsrc/fincal",
-    "https://pypi.org/project/finCal/"
+    "https://github.com/zgsrc/fincal"
   ],
   "Flask": [
     "https://cran.r-project.org/package=DIFlasso",
@@ -92,6 +91,7 @@
     "https://github.com/humiaozuzu/awesome-flask",
     "https://github.com/miguelgrinberg/flasky",
     "https://github.com/pallets-eco/flask-admin",
+    "https://github.com/pallets/flask",
     "https://github.com/pallets/flask/",
     "https://pypi.org/project/Flask/"
   ],
@@ -109,7 +109,8 @@
     "https://cran.r-project.org/package=LifeTables",
     "https://cran.r-project.org/package=Lifertable",
     "https://cran.r-project.org/package=TideTables",
-    "https://cran.r-project.org/web/packages/HIV.LifeTables/index.html"
+    "https://cran.r-project.org/web/packages/HIV.LifeTables/index.html",
+    "https://github.com/cran/HIV.LifeTables"
   ],
   "HydeNet": [
     "https://cran.r-project.org/package=debest",
@@ -160,6 +161,7 @@
     "https://cran.r-project.org/package=Certara.Xpose.NLME",
     "https://cran.r-project.org/package=nlme",
     "https://github.com/LifangzhouSia/Colored-NLmeans-for-Infrared-Mixed-Noise-Removal",
+    "https://github.com/cran/nlme",
     "https://github.com/nonlocalmodels/NLMech",
     "https://github.com/npd/nlmeans",
     "https://github.com/pvskand/NLMeansSpeckleFilter",
@@ -175,8 +177,7 @@
     "https://github.com/guipsamora/pandas_exercises",
     "https://github.com/jvns/pandas-cookbook",
     "https://github.com/pandas-dev/pandas",
-    "https://github.com/sinaptik-ai/pandas-ai",
-    "https://pypi.org/project/panda/"
+    "https://github.com/sinaptik-ai/pandas-ai"
   ],
   "PANDA (Pipeline for Analyzing braiN Diffusion imAges)": [
     "https://github.com/ZaixuCui/PANDA"
@@ -210,14 +211,15 @@
   ],
   "PresenceAbsence": [
     "https://cran.r-project.org/package=PresenceAbsence",
-    "https://github.com/conda-forge/r-presenceabsence-feedstock"
+    "https://github.com/conda-forge/r-presenceabsence-feedstock",
+    "https://github.com/cran/PresenceAbsence"
   ],
   "PySiology": [
     "https://cran.r-project.org/package=AeRobiology",
+    "https://github.com/Gabrock94/Pysiology",
     "https://github.com/janaalkassar/pysiology",
     "https://github.com/jperge/pysiology",
-    "https://pypi.org/project/pysiology/",
-    "https://github.com/Gabrock94/Pysiology"
+    "https://pypi.org/project/pysiology/"
   ],
   "Pygments": [
     "https://cran.r-project.org/package=gets",
@@ -304,6 +306,7 @@
     "https://cran.r-project.org/package=distances",
     "https://cran.r-project.org/package=gdistance",
     "https://github.com/Chrisjb/RDistanceMatrix",
+    "https://github.com/cran/Rdistance",
     "https://github.com/dill/RDistanceBook",
     "https://github.com/hale/rdistance",
     "https://github.com/tmcd82070/Rdistance",
@@ -328,6 +331,7 @@
     "https://cran.r-project.org/package=SPINA",
     "https://github.com/PetterRuud/com.scinan.api",
     "https://github.com/Skarbo/hass-scinan-thermostat",
+    "https://github.com/cran/SCINA",
     "https://github.com/jcao89757/SCINA",
     "https://github.com/oleg-nenashev/FaaScinator",
     "https://github.com/plutoinc/scinapse-web-client"
@@ -352,6 +356,7 @@
     "https://cran.r-project.org/package=RSStest",
     "https://cran.r-project.org/package=SPAtest",
     "https://cran.r-project.org/package=SetTest",
+    "https://github.com/cran/SPAtest",
     "https://github.com/erickfelip/spatest",
     "https://github.com/leeshawn/SPAtest",
     "https://github.com/tomasbulva/spatest"
@@ -407,6 +412,7 @@
     "https://github.com/CUHKSZ-TQL/WeiboSpider_SentimentAnalysis",
     "https://github.com/Edward1Chou/SentimentAnalysis",
     "https://github.com/anycodes/SentimentAnalysis",
+    "https://github.com/arunkottilukkal/AnalyseSentiment",
     "https://github.com/barissayil/SentimentAnalysis",
     "https://github.com/cran/SentimentAnalysis",
     "https://github.com/sfeuerriegel/SentimentAnalysis",
@@ -418,6 +424,7 @@
     "https://cran.r-project.org/package=SeuratObject",
     "https://cran.r-project.org/package=eudract",
     "https://github.com/conda-forge/r-seuratobject-feedstock",
+    "https://github.com/cran/SeuratObject",
     "https://github.com/satijalab/seurat-object"
   ],
   "SparseDC": [
@@ -425,7 +432,8 @@
     "https://cran.r-project.org/package=SparseICA",
     "https://cran.r-project.org/package=SparseMDC",
     "https://cran.r-project.org/package=SparseVFC",
-    "https://github.com/WHU-USI3DV/SparseDC"
+    "https://github.com/WHU-USI3DV/SparseDC",
+    "https://github.com/cran/SparseDC"
   ],
   "Spliced Transcripts Alignment to Reference": [
     "https://github.com/alexdobin/STAR"
@@ -455,8 +463,7 @@
     "https://github.com/GuusLieben/Netflix-Statistix",
     "https://github.com/Trio-opdracht-P2RD2/Netflix-statistix",
     "https://github.com/arjangosens/NetflixStatistix",
-    "https://github.com/coenribbens/Netflix-statistix",
-    "https://pypi.org/project/statistix/"
+    "https://github.com/coenribbens/Netflix-statistix"
   ],
   "TreeToReads": [
     "https://cran.r-project.org/package=TreeTools",
@@ -469,7 +476,8 @@
     "https://cran.r-project.org/package=GPareto",
     "https://cran.r-project.org/package=Pareto",
     "https://cran.r-project.org/package=TunePareto",
-    "https://cran.r-project.org/package=rnetcarto"
+    "https://cran.r-project.org/package=rnetcarto",
+    "https://github.com/cran/TunePareto"
   ],
   "Velvet": [
     "https://cran.r-project.org/package=elect",
@@ -481,6 +489,7 @@
     "https://github.com/dzerbino/velvet",
     "https://github.com/ergohaven/velvet",
     "https://github.com/noamr/velvette",
+    "https://github.com/sgwoodjr/velvet",
     "https://github.com/vitalight/Velvet",
     "https://pypi.org/project/velvet/"
   ],
@@ -489,6 +498,7 @@
     "https://cran.r-project.org/package=weightedCL",
     "https://cran.r-project.org/package=weightedGCM",
     "https://cran.r-project.org/package=weightedRank",
+    "https://github.com/cran/WeightedROC",
     "https://github.com/tdhock/WeightedROC"
   ],
   "activity": [
@@ -499,10 +509,10 @@
     "https://cran.r-project.org/package=biologicalActivityIndices",
     "https://github.com/ActivityWatch/activitywatch",
     "https://github.com/Ereza/CustomActivityOnCrash",
+    "https://github.com/Shpota/github-activity-generator",
+    "https://github.com/cran/activity",
     "https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition",
-    "https://github.com/spatie/laravel-activitylog",
-    "https://pypi.org/project/activity/",
-    "https://github.com/Shpota/github-activity-generator"
+    "https://github.com/spatie/laravel-activitylog"
   ],
   "ads": [
     "https://cran.r-project.org/package=AdsorpR",
@@ -512,6 +522,8 @@
     "https://cran.r-project.org/package=appleadsR",
     "https://github.com/TG-Twilight/AWAvenue-Ads-Rule",
     "https://github.com/adsbypasser/adsbypasser",
+    "https://github.com/andycasey/ads",
+    "https://github.com/cran/ads",
     "https://github.com/jerryn70/GoodbyeAds",
     "https://github.com/kboghdady/youTube_ads_4_pi-hole",
     "https://github.com/revive-adserver/revive-adserver",
@@ -533,7 +545,8 @@
     "https://cran.r-project.org/package=granova",
     "https://cran.r-project.org/package=kanova",
     "https://cran.r-project.org/package=rofanova",
-    "https://github.com/conda-forge/r-anocva-feedstock"
+    "https://github.com/conda-forge/r-anocva-feedstock",
+    "https://github.com/cran/anocva"
   ],
   "assignPOP": [
     "https://cran.r-project.org/package=BayesDesign",
@@ -542,6 +555,7 @@
     "https://cran.r-project.org/package=assignR",
     "https://github.com/alexkychen/assignPOP",
     "https://github.com/cavega36/AssignPopModule",
+    "https://github.com/cran/assignPOP",
     "https://github.com/ishratc/Cross_Validation_and_AssignPop"
   ],
   "beautifulsoup4": [
@@ -569,6 +583,7 @@
     "https://cran.r-project.org/package=iopsych",
     "https://cran.r-project.org/package=mcbiopi",
     "https://cran.r-project.org/package=rbioapi",
+    "https://github.com/BioPyTeam/biopy",
     "https://github.com/bigwiv/Biopython-cn",
     "https://github.com/biopython/biopython",
     "https://github.com/biopython/biopython.github.io",
@@ -581,14 +596,16 @@
     "https://cran.r-project.org/package=biosignalEMG",
     "https://cran.r-project.org/package=gsignal",
     "https://cran.r-project.org/package=phylosignal",
-    "https://cran.r-project.org/package=signal"
+    "https://cran.r-project.org/package=signal",
+    "https://github.com/cran/biosignalEMG"
   ],
   "bootLR": [
     "https://cran.r-project.org/package=boot",
     "https://cran.r-project.org/package=bootLR",
     "https://cran.r-project.org/package=bootUR",
     "https://github.com/7srikanth7/SpringBootlrn",
-    "https://github.com/Gustavolmo/bootlr"
+    "https://github.com/Gustavolmo/bootlr",
+    "https://github.com/cran/bootLR"
   ],
   "cRegulome": [
     "https://cran.r-project.org/package=cglm",
@@ -633,8 +650,7 @@
     "https://github.com/Poil/CGraphz",
     "https://github.com/brunokim/cgraph",
     "https://github.com/julesjacobs/cgraphs",
-    "https://github.com/trailofbits/ObjCGraphView",
-    "https://pypi.org/project/cGraph/"
+    "https://github.com/trailofbits/ObjCGraphView"
   ],
   "chemometrics": [
     "https://cran.r-project.org/package=chemometrics",
@@ -644,6 +660,7 @@
     "https://github.com/EBjerrum/Deep-Chemometrics",
     "https://github.com/Gscorreia89/pyChemometrics",
     "https://github.com/caseykneale/ChemometricsTools.jl",
+    "https://github.com/cran/chemometrics",
     "https://github.com/maruedt/chemometrics",
     "https://github.com/rwehrens/ChemometricsWithR",
     "https://pypi.org/project/chemometrics/"
@@ -656,6 +673,7 @@
     "https://github.com/bingmann/cobs",
     "https://github.com/clvoloshin/COBS",
     "https://github.com/cmcqueen/cobs-c",
+    "https://github.com/cmcqueen/cobs-python",
     "https://github.com/cran/cobs",
     "https://github.com/jacquesf/COBS-Consistent-Overhead-Byte-Stuffing",
     "https://github.com/jamesmunns/cobs.rs",
@@ -665,7 +683,8 @@
     "https://cran.r-project.org/package=Ecume",
     "https://cran.r-project.org/package=ceg",
     "https://cran.r-project.org/package=crmReg",
-    "https://cran.r-project.org/package=cumSeg"
+    "https://cran.r-project.org/package=cumSeg",
+    "https://github.com/cran/cumSeg"
   ],
   "cytoflow": [
     "https://cran.r-project.org/package=cartograflow",
@@ -688,10 +707,10 @@
     "https://github.com/DustinBrett/daedalOS",
     "https://github.com/Marswin/MarsDaemon",
     "https://github.com/briencj/dae",
+    "https://github.com/cran/dae",
     "https://github.com/daeuniverse/dae",
     "https://github.com/sevlyar/go-daemon",
-    "https://github.com/xingda920813/HelloDaemon",
-    "https://pypi.org/project/dae/"
+    "https://github.com/xingda920813/HelloDaemon"
   ],
   "data.table": [
     "https://cran.r-project.org/package=atable",
@@ -745,11 +764,11 @@
     "https://cran.r-project.org/package=earthtones",
     "https://cran.r-project.org/package=rnaturalearth",
     "https://github.com/cambecc/earth",
+    "https://github.com/cran/earth",
     "https://github.com/cuixueshe/earthworm",
     "https://github.com/earthly/earthly",
     "https://github.com/google/earthengine-api",
-    "https://github.com/google/earthenterprise",
-    "https://pypi.org/project/earth/"
+    "https://github.com/google/earthenterprise"
   ],
   "edd-utils": [
     "https://cran.r-project.org/package=ageutils",
@@ -768,6 +787,7 @@
     "https://cran.r-project.org/package=enetLTS",
     "https://cran.r-project.org/package=genTS",
     "https://cran.r-project.org/package=regnet",
+    "https://github.com/cran/enetLTS",
     "https://github.com/fatmasevinck/enetLTS"
   ],
   "fastDummies": [
@@ -777,6 +797,7 @@
     "https://cran.r-project.org/package=rfordummies",
     "https://github.com/burningdrop/fastDummiesDot",
     "https://github.com/conda-forge/r-fastdummies-feedstock",
+    "https://github.com/cran/fastDummies",
     "https://github.com/jacobkap/fastDummies"
   ],
   "fullfact": [
@@ -785,6 +806,7 @@
     "https://cran.r-project.org/package=lfactors",
     "https://cran.r-project.org/package=nflfastR",
     "https://github.com/FullFact/claim-review-schema-wordpress-plugin",
+    "https://github.com/cran/fullfact",
     "https://github.com/jcartw/fullfact",
     "https://github.com/jialutu/Fullfact"
   ],
@@ -793,7 +815,8 @@
     "https://cran.r-project.org/package=funFEM",
     "https://cran.r-project.org/package=funLBM",
     "https://cran.r-project.org/package=xfun",
-    "https://github.com/adrienhaxaire/funfem"
+    "https://github.com/adrienhaxaire/funfem",
+    "https://github.com/cran/funFEM"
   ],
   "furniture": [
     "https://cran.r-project.org/package=fitur",
@@ -805,7 +828,9 @@
     "https://github.com/abuanwar072/Furniture-App-UI-2-Flutter",
     "https://github.com/abuanwar072/furniture_app_flutter",
     "https://github.com/clvrai/furniture",
+    "https://github.com/cran/furniture",
     "https://github.com/rajayogan/flutterui-furnitureapp",
+    "https://github.com/stenson/furniture",
     "https://pypi.org/project/furniture/"
   ],
   "fwdpy": [
@@ -835,6 +860,7 @@
     "https://cran.r-project.org/package=geobr",
     "https://cran.r-project.org/package=glober",
     "https://cran.r-project.org/package=gor",
+    "https://github.com/cran/geobr",
     "https://github.com/geobricks/geobricks_qgis_plugin_faostat",
     "https://github.com/geobricks/geobricks_qgis_plugin_trmm",
     "https://github.com/geobricks/geobricks_qgis_plugin_world_bank",
@@ -903,6 +929,7 @@
     "https://github.com/HabitRPG/habitica",
     "https://github.com/HabitRPG/habitica-android",
     "https://github.com/basille/hab",
+    "https://github.com/blurstudio/hab",
     "https://github.com/facebookresearch/habitat-lab",
     "https://github.com/facebookresearch/habitat-sim",
     "https://github.com/habitat-sh/habitat",
@@ -928,9 +955,9 @@
     "https://github.com/CliMA/Insolation.jl",
     "https://github.com/InsolenceWillow/insolencetvgo",
     "https://github.com/MindSetLib/Insolver",
+    "https://github.com/cran/insol",
     "https://github.com/insolar/insolar",
-    "https://github.com/sysu19351064/Pressure_Insole",
-    "https://pypi.org/project/insol/"
+    "https://github.com/sysu19351064/Pressure_Insole"
   ],
   "intePareto": [
     "https://cran.r-project.org/package=GPareto",
@@ -972,6 +999,7 @@
     "https://cran.r-project.org/package=knitr",
     "https://cran.r-project.org/package=knitrBootstrap",
     "https://cran.r-project.org/package=knitrdata",
+    "https://github.com/cran/knitr",
     "https://github.com/jimhester/knitrBootstrap",
     "https://github.com/yihui/knitr",
     "https://github.com/yihui/knitr-book",
@@ -983,6 +1011,7 @@
     "https://cran.r-project.org/package=netcontrol",
     "https://cran.r-project.org/package=poolHelper",
     "https://cran.r-project.org/package=rcontroll",
+    "https://github.com/caruccio/kontroller",
     "https://github.com/emonetlab/kontroller",
     "https://github.com/meromelo/Kontroller",
     "https://github.com/raghavk92/Kontroller",
@@ -1000,6 +1029,7 @@
     "https://github.com/libMesh/Documents",
     "https://github.com/libMesh/TIMPI",
     "https://github.com/libMesh/libmesh",
+    "https://github.com/superdima05/mesh",
     "https://pypi.org/project/libmesh/"
   ],
   "logspline": [
@@ -1007,6 +1037,7 @@
     "https://cran.r-project.org/package=logspline",
     "https://cran.r-project.org/package=lspline",
     "https://cran.r-project.org/package=polspline",
+    "https://github.com/cran/logspline",
     "https://github.com/francescoalemanno/LogSpline.jl",
     "https://github.com/mlr3learners/mlr3learners.logspline"
   ],
@@ -1030,6 +1061,7 @@
     "https://github.com/Melledy/LunarCore",
     "https://github.com/Sanakan8472/copy-dialog-lunar-lander",
     "https://github.com/alin23/Lunar",
+    "https://github.com/cran/lunar",
     "https://github.com/lunarphp/lunar",
     "https://pypi.org/project/lunar/"
   ],
@@ -1087,6 +1119,7 @@
     "https://cran.r-project.org/package=KernelKnn",
     "https://cran.r-project.org/package=isokernel",
     "https://cran.r-project.org/package=mixKernel",
+    "https://github.com/cran/mixKernel",
     "https://github.com/ipfgao/mixkernel"
   ],
   "mnnpy": [
@@ -1110,14 +1143,14 @@
     "https://github.com/lexborisov/Modest",
     "https://github.com/mvllow/modes.nvim",
     "https://github.com/sathish-deevi/modes-Package",
-    "https://github.com/stamen/modestmaps-js",
-    "https://pypi.org/project/modes/"
+    "https://github.com/stamen/modestmaps-js"
   ],
   "mokken": [
     "https://cran.r-project.org/package=lokern",
     "https://cran.r-project.org/package=mokken",
     "https://cran.r-project.org/package=pokemon",
     "https://cran.r-project.org/package=smoke",
+    "https://github.com/cran/mokken",
     "https://github.com/lg626/Mokken"
   ],
   "mord": [
@@ -1140,6 +1173,7 @@
     "https://cran.r-project.org/package=mappoly",
     "https://cran.r-project.org/package=mi4p",
     "https://github.com/jbornschein/mpi4py-examples",
+    "https://github.com/mpi4py/mpi4py",
     "https://github.com/mpi4py/mpi4py-fft",
     "https://github.com/mpi4py/mpi4py/",
     "https://github.com/mpi4py/setup-mpi",
@@ -1152,6 +1186,8 @@
     "https://cran.r-project.org/package=rEMM",
     "https://github.com/SudhakarBasu/GWAS-using-mrMLM",
     "https://github.com/YuanmingZhang65/mrMLM",
+    "https://github.com/cran/mrMLM",
+    "https://github.com/cran/mrMLM.GUI",
     "https://github.com/r-forge/mrmlm"
   ],
   "ndl": [
@@ -1164,6 +1200,7 @@
     "https://github.com/cran/ndl",
     "https://github.com/ensemble-core/NdLinear",
     "https://github.com/mlcommons/GaNDLF",
+    "https://github.com/msull/needle",
     "https://github.com/ndl-lab/ndlocr_cli",
     "https://github.com/ndless-nspire/Ndless",
     "https://pypi.org/project/ndl/"
@@ -1180,6 +1217,7 @@
     "https://cran.r-project.org/package=nlstac",
     "https://cran.r-project.org/package=onls",
     "https://github.com/conda-forge/r-nlsic-feedstock",
+    "https://github.com/cran/nlsic",
     "https://github.com/sgsokol/nlsic_py",
     "https://pypi.org/project/nlsic/"
   ],
@@ -1250,6 +1288,7 @@
     "https://cran.r-project.org/package=simdata",
     "https://cran.r-project.org/package=smdata",
     "https://github.com/chubrik/OsmDataKit",
+    "https://github.com/cran/osmdata",
     "https://github.com/fossgis/osmdata",
     "https://github.com/iwer/OSMDataAssets",
     "https://github.com/osmdatar/osmdatar",
@@ -1266,7 +1305,6 @@
     "https://github.com/jvns/pandas-cookbook",
     "https://github.com/pandas-dev/pandas",
     "https://github.com/sinaptik-ai/pandas-ai",
-    "https://pypi.org/project/panda/",
     "https://pypi.org/project/pandas/"
   ],
   "pandas": [
@@ -1316,7 +1354,6 @@
     "https://github.com/expersso/pdftables",
     "https://github.com/pdftables/python-pdftables-api",
     "https://github.com/pdftables/vba-pdftables-api",
-    "https://pypi.org/project/pdftables/",
     "https://www.github.com/expersso/pdftables"
   ],
   "phylip": [
@@ -1335,7 +1372,8 @@
     "https://cran.r-project.org/package=interactionR",
     "https://cran.r-project.org/package=interactions",
     "https://cran.r-project.org/package=powerGWASinteraction",
-    "https://cran.r-project.org/package=simpr.interaction"
+    "https://cran.r-project.org/package=simpr.interaction",
+    "https://github.com/cran/powerGWASinteraction"
   ],
   "psych": [
     "https://cran.r-project.org/package=MPsychoR",
@@ -1345,7 +1383,9 @@
     "https://cran.r-project.org/package=psychmeta",
     "https://github.com/ShadowMario/FNF-PsychEngine",
     "https://github.com/brandonlw/Psychson",
+    "https://github.com/cran/psych",
     "https://github.com/jspsych/jsPsych",
+    "https://github.com/matiyau/pSyCH",
     "https://github.com/psychopy/psychopy",
     "https://github.com/ruby/psych",
     "https://pypi.org/project/pSyCH/"
@@ -1356,6 +1396,7 @@
     "https://cran.r-project.org/package=pcvr",
     "https://cran.r-project.org/package=pvar",
     "https://cran.r-project.org/package=ypr",
+    "https://github.com/cran/PVR",
     "https://github.com/fxgames/pvrtextool_wrapper",
     "https://github.com/kodi-pvr/pvr.hts",
     "https://github.com/kodi-pvr/pvr.iptvsimple",
@@ -1381,8 +1422,7 @@
     "https://cran.r-project.org/package=ctypesio",
     "https://cran.r-project.org/package=plantphysioR",
     "https://cran.r-project.org/package=psyphy",
-    "https://github.com/MPBA/pyphysio",
-    "https://pypi.org/project/pyphysio/"
+    "https://github.com/MPBA/pyphysio"
   ],
   "pyqi": [
     "https://cran.r-project.org/package=phylin",
@@ -1391,8 +1431,7 @@
     "https://github.com/ifilot/pyqint",
     "https://github.com/mostm/pyqiwi",
     "https://github.com/onrik/pyqiwi",
-    "https://github.com/qir-alliance/pyqir",
-    "https://pypi.org/project/pyqi/"
+    "https://github.com/qir-alliance/pyqir"
   ],
   "pytorch": [
     "https://cran.r-project.org/package=mlr3torch",
@@ -1405,7 +1444,6 @@
     "https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix",
     "https://github.com/pytorch/pytorch",
     "https://github.com/yunjey/pytorch-tutorial",
-    "https://pypi.org/project/pytorch/",
     "https://pypi.org/project/torch/"
   ],
   "pytplot": [
@@ -1438,6 +1476,7 @@
     "https://cran.r-project.org/package=rDEA",
     "https://cran.r-project.org/package=rLiDAR",
     "https://cran.r-project.org/package=sureLDA",
+    "https://github.com/cran/rLiDAR",
     "https://github.com/juliomsevilla/rlidar",
     "https://github.com/r-forge/rlidar",
     "https://github.com/stevenconnorg/rlidar-accuracy"
@@ -1459,7 +1498,8 @@
     "https://cran.r-project.org/package=relaimpo",
     "https://cran.r-project.org/package=relgam",
     "https://cran.r-project.org/package=relimp",
-    "https://github.com/conda-forge/r-relaimpo-feedstock"
+    "https://github.com/conda-forge/r-relaimpo-feedstock",
+    "https://github.com/cran/relaimpo"
   ],
   "requests": [
     "https://cran.r-project.org/package=quest",
@@ -1524,6 +1564,8 @@
     "https://cran.r-project.org/package=sets",
     "https://github.com/Darkmux/SETSMS",
     "https://github.com/GoogleChrome/related-website-sets",
+    "https://github.com/cran/sets",
+    "https://github.com/danijar/sets",
     "https://github.com/ekzhu/SetSimilaritySearch",
     "https://github.com/hanmq/MachineLearning_Zhouzhihua_ProblemSets",
     "https://github.com/iconify/icon-sets",
@@ -1546,6 +1588,7 @@
     "https://cran.r-project.org/package=shiny",
     "https://github.com/cran/shiny",
     "https://github.com/nanxstats/awesome-shiny-extensions",
+    "https://github.com/posit-dev/py-shiny",
     "https://github.com/rikschennink/shiny",
     "https://github.com/rstudio/shiny",
     "https://github.com/rstudio/shiny-examples",
@@ -1596,6 +1639,7 @@
     "https://github.com/Sangmeebee/SMNetworkChecker",
     "https://github.com/alastairrushworth/smnet",
     "https://github.com/linshideng/SMNet",
+    "https://github.com/smarsuuuuuuu/SMNet",
     "https://github.com/sureshmopidevi/SMNetworkManager",
     "https://pypi.org/project/smnet/"
   ],
@@ -1611,7 +1655,8 @@
     "https://cran.r-project.org/package=BayesMFSurv",
     "https://cran.r-project.org/package=BayesSurvive",
     "https://cran.r-project.org/package=bayesSurv",
-    "https://cran.r-project.org/package=spBayesSurv"
+    "https://cran.r-project.org/package=spBayesSurv",
+    "https://github.com/cran/spBayesSurv"
   ],
   "spacesXYZ": [
     "https://cran.r-project.org/package=aspace",
@@ -1666,11 +1711,13 @@
     "https://cran.r-project.org/package=stars",
     "https://cran.r-project.org/package=starsExtra",
     "https://cran.r-project.org/package=starschemar",
+    "https://github.com/cran/stars",
     "https://github.com/daltoniam/Starscream",
     "https://github.com/facebookresearch/StarSpace",
     "https://github.com/mingrammer/go-web-framework-stars",
     "https://github.com/r-spatial/stars/",
     "https://github.com/starship/starship",
+    "https://github.com/stevencox/stars",
     "https://github.com/zhaoolee/StarsAndClown",
     "https://pypi.org/project/stars/"
   ],
@@ -1679,6 +1726,7 @@
     "https://cran.r-project.org/package=stdReg2",
     "https://cran.r-project.org/package=tvReg",
     "https://github.com/billahmasumcu/stdreg",
+    "https://github.com/cran/stdReg",
     "https://github.com/sachsmc/stdReg2",
     "https://github.com/stdreg/stdreg"
   ],
@@ -1691,6 +1739,7 @@
     "https://github.com/Jhonve/HairStrandsRendering",
     "https://github.com/MediaMath/strand",
     "https://github.com/cran/strand",
+    "https://github.com/i2mint/strand",
     "https://github.com/signalbash/how_are_we_stranded_here",
     "https://github.com/strand-tech/strand",
     "https://github.com/strands-project/strands_perception_people",
@@ -1714,6 +1763,7 @@
     "https://cran.r-project.org/package=suntools",
     "https://cran.r-project.org/package=urltools",
     "https://github.com/6chaoran/jupyter-summarytools",
+    "https://github.com/cran/summarytools",
     "https://github.com/dcomtois/summarytools",
     "https://github.com/dcomtois/summarytools-python",
     "https://github.com/plutonbacon/summarytools.rb",
@@ -1725,6 +1775,7 @@
     "https://cran.r-project.org/package=svUnit",
     "https://cran.r-project.org/package=svglite",
     "https://github.com/SciViews/svUnit",
+    "https://github.com/cran/svUnit",
     "https://github.com/svalat/svUnitTest",
     "https://github.com/svunit/svmock",
     "https://github.com/svunit/svunit",
@@ -1739,8 +1790,7 @@
     "https://github.com/mattprecious/swirl",
     "https://github.com/swirlai/swirl-search",
     "https://github.com/swirldev/swirl",
-    "https://github.com/swirldev/swirl_courses",
-    "https://pypi.org/project/swirl/"
+    "https://github.com/swirldev/swirl_courses"
   ],
   "swirlify": [
     "https://cran.r-project.org/package=simplifyNet",
@@ -1760,6 +1810,7 @@
     "https://cran.r-project.org/package=transmem",
     "https://cran.r-project.org/package=traudem",
     "https://github.com/Benson-Genomics-Lab/TRF",
+    "https://github.com/philippeller/dragoman",
     "https://github.com/rosszurowski/tandem",
     "https://github.com/sine-fdn/tandem",
     "https://github.com/tandem-pt/zustand-yjs",
@@ -1773,6 +1824,7 @@
     "https://cran.r-project.org/package=tensorflow",
     "https://cran.r-project.org/package=tensr",
     "https://github.com/aymericdamien/TensorFlow-Examples",
+    "https://github.com/cran/tensorflow",
     "https://github.com/jtoy/awesome-tensorflow",
     "https://github.com/rstudio/tensorflow",
     "https://github.com/tensorflow/models",
@@ -1803,8 +1855,7 @@
     "https://github.com/tidyverse/ggplot2",
     "https://github.com/tidyverse/rvest",
     "https://github.com/tidyverse/tidyr",
-    "https://github.com/tidyverse/tidyverse",
-    "https://pypi.org/project/tidyverse/"
+    "https://github.com/tidyverse/tidyverse"
   ],
   "tigerstats": [
     "https://cran.r-project.org/package=geostats",
@@ -1825,6 +1876,7 @@
     "https://cran.r-project.org/package=tremendousr",
     "https://github.com/JLSteenwyk/treehouse",
     "https://github.com/MHM5000/TreehouseShow",
+    "https://github.com/jaraco/treehouse",
     "https://github.com/treehouse-dave/get-acquainted-with-git",
     "https://github.com/treehouse/cheatsheets",
     "https://github.com/treehousedev/treehouse",
@@ -1838,6 +1890,7 @@
     "https://cran.r-project.org/package=tripack",
     "https://cran.r-project.org/package=triplot",
     "https://github.com/galaxy-genome-annotation/docker-tripal",
+    "https://github.com/galaxy-genome-annotation/python-tripal",
     "https://github.com/tripal/tripal",
     "https://github.com/tripal/tripal_blast",
     "https://github.com/tripal/tripal_jbrowse",
@@ -1849,6 +1902,7 @@
     "https://cran.r-project.org/package=ncvreg",
     "https://cran.r-project.org/package=transreg",
     "https://cran.r-project.org/package=truncreg",
+    "https://github.com/cran/truncreg",
     "https://github.com/feiran-l/pytorch_truncreg",
     "https://github.com/r-forge/truncreg"
   ],
@@ -1862,8 +1916,7 @@
     "https://github.com/cran/tsutils",
     "https://github.com/htinaunglu/tsutils",
     "https://github.com/hynd/heka-tsutils-plugins",
-    "https://github.com/trnnick/tsutils/",
-    "https://pypi.org/project/tsutils/"
+    "https://github.com/trnnick/tsutils/"
   ],
   "venn": [
     "https://cran.r-project.org/package=BioVenn",
@@ -1885,11 +1938,11 @@
     "https://cran.r-project.org/package=whoami",
     "https://cran.r-project.org/package=wowa",
     "https://github.com/FiloSottile/whoami.filippo.io",
+    "https://github.com/cran/whoa",
     "https://github.com/enomothem/Whoamifuck",
     "https://github.com/eriqande/whoa",
     "https://github.com/owerdogan/whoami-project",
     "https://github.com/samdoiron/WhoAmI",
-    "https://github.com/traefik/whoami",
-    "https://pypi.org/project/whoa/"
+    "https://github.com/traefik/whoami"
   ]
 }
