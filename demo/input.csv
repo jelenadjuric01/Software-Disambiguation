@@ -1,0 +1,2 @@
+﻿name;doi;paragraph
+(STAR;10.1038/s41598-021-86032-5;Then, the high-quality reads were aligned to the reference genome (hg19) using Spliced Transcripts Alignment to a Reference (STAR) with the parameter –quantMode GeneCounts for gene-level quantification and otherwise default parameters

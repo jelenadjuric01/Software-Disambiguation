@@ -247,7 +247,7 @@ Args:
 Returns:
     pd.DataFrame: DataFrame with similarity scores.
 """
-
+    print("🔍 Computing similarity metrics…")
     for col in ['name_metric','author_metric','paragraph_metric',"language_metric",'synonym_metric']:
         if col not in df.columns:
             df[col] = np.nan
@@ -257,21 +257,21 @@ Returns:
         df['metadata_name'].notna() &
         df['metadata_name'].astype(str).str.strip().astype(bool)
     )
-
+    print("Computing name metric...")
     # 2) name_metric: only for valid rows where name_metric is still NaN
     nm = valid & df['name_metric'].isna()
     df.loc[nm, 'name_metric'] = df.loc[nm].apply(
         lambda r: software_name_similarity(r['name'], r['metadata_name']),
         axis=1
     )
-
+    print("Computing author metric...")
     # 3) author_metric:
     am = valid & df['author_metric'].isna()
     df.loc[am, 'author_metric'] = df.loc[am].apply(
         lambda r: author_name_similarity(r['authors'], r['metadata_authors']),
         axis=1
     )
-
+    print("Computing paragraph metric...")
     # 4) paragraph_metric: only for rows with metadata_description & NaN
     pm = valid & df['paragraph_metric'].isna()
     df.loc[pm, 'paragraph_metric'] = df.loc[pm].apply(
@@ -280,7 +280,7 @@ Returns:
         ),
         axis=1
     )
-
+    print("Computing language metric...")
     lm = valid & df['language_metric'].isna()
     df.loc[lm, 'language_metric'] = df.loc[lm].apply(
         lambda r: programming_language_similarity(
@@ -289,6 +289,7 @@ Returns:
         ),
         axis=1
     )
+    print("Computing synonym metric...")
     sm = valid & df['synonym_metric'].isna()
     df.loc[sm, 'synonym_metric'] = df.loc[sm].apply(
         lambda r: synonym_name_similarity(
@@ -508,68 +509,60 @@ def get_github_user_data(username: str) -> str:
 
 
 
-def extract_somef_metadata(repo_url: str, somef_path: str = "D:\\MASTER\\TMF\\somef") -> dict:
-    """Run the SOMEF tool on a GitHub repository to extract metadata.
-
-    Invokes `poetry run somef describe` in a temp file, then reads JSON to extract:
-      - name        : project name
-      - description : text description
-      - authors     : list containing the GitHub repo owner’s display name
-      - language    : primary programming language by code size
+def extract_somef_metadata(repo_url: str) -> dict:
+    """
+    Run the SOMEF tool on a GitHub repository to extract metadata.
+    Invokes `somef describe` directly (no poetry).
 
     Args:
         repo_url:   URL of the GitHub repository.
-        somef_path: Path to the SOMEF project directory where `poetry run somef` is available.
+        somef_path: Path to the working directory for temp files (default is current).
 
     Returns:
-        A dict with keys:
+        A dict with:
           name (str), description (str), authors (List[str]), language (str).
-        Returns an empty dict on failure.
+        Returns empty dict on failure.
     """
-    temp_dir = os.path.join(somef_path, "temp")
+    somef_path = os.getcwd()  # default to current working directory
+    temp_dir = os.path.join(somef_path, "somef_temp")
     output_path = os.path.join(temp_dir, "metadata.json")
     os.makedirs(temp_dir, exist_ok=True)
     kt_path = temp_dir
     if sys.platform == "win32":
-        # Windows long‐path prefix
-        kt_path = "\\\\?\\" + temp_dir
+        kt_path = "\\\\?\\" + temp_dir  # handle long paths
 
     base_cmd = [
-        "poetry", "run", "somef", "describe",
+        "somef", "describe",
         "-r", repo_url,
         "-o", output_path,
         "-t", "0.93",
         "-m"
     ]
     cmds = [
-        base_cmd + ["-kt", kt_path],  # first attempt
-        base_cmd                     # retry without -kt
+        
+        base_cmd,                      # retry without -kt
+        base_cmd + ["-kt", kt_path],  # first try with -kt
     ]
 
     try:
-        # Try each command in turn
         for cmd in cmds:
             try:
-                subprocess.run(cmd, cwd=somef_path, check=True)
+                subprocess.run(cmd, check=True)
                 break
-            except subprocess.CalledProcessError as e:
-                print("")
+            except subprocess.CalledProcessError:
+                continue
         else:
-            # both attempts failed
             print(f"All SOMEF attempts failed for {repo_url}")
             return {}
 
-        # Load the JSON output into Python
         with open(output_path, "r", encoding="utf-8") as f:
             metadata = json.load(f)
 
         def get_first_value(key):
             return metadata.get(key, [{}])[0].get("result", {}).get("value", "")
-        
-        # "owner" is treated as author (GitHub username)
+
         owner = get_first_value("owner")
 
-        # Determine primary language by largest code size
         langs = metadata.get("programming_languages", [])
         primary_language = ""
         if langs:
@@ -584,7 +577,6 @@ def extract_somef_metadata(repo_url: str, somef_path: str = "D:\\MASTER\\TMF\\so
         }
 
     finally:
-        # Cleanup: delete temp JSON and clear out the temp directory
         try:
             os.remove(output_path)
         except OSError:
@@ -592,17 +584,15 @@ def extract_somef_metadata(repo_url: str, somef_path: str = "D:\\MASTER\\TMF\\so
 
         if os.path.isdir(temp_dir):
             for entry in os.scandir(temp_dir):
-                path = entry.path
-                if entry.is_dir(follow_symlinks=False):
-                    shutil.rmtree(path, ignore_errors=True)
-                else:
-                    try:
-                        os.remove(path)
-                    except OSError:
-                        pass
-
+                try:
+                    if entry.is_dir():
+                        shutil.rmtree(entry.path, ignore_errors=True)
+                    else:
+                        os.remove(entry.path)
+                except OSError:
+                    pass
 #Function that retrieves the metadata from any link
-def get_metadata(url: str, somef_path: str) -> dict:
+def get_metadata(url: str) -> dict:
     """Dispatch metadata extraction based on the URL’s domain.
 
     Routes to the appropriate extractor:
@@ -627,7 +617,7 @@ def get_metadata(url: str, somef_path: str) -> dict:
 
     # GitHub repo
     if "github.com" in domain:
-        return extract_somef_metadata(url,somef_path)
+        return extract_somef_metadata(url)
 
     # CRAN package (common formats: cran.r-project.org or pkg.go.dev/r)
     if domain == "cran.r-project.org" and (
@@ -671,7 +661,7 @@ Args:
 Returns:
     List[str]: List of GitHub repository URLs.
 """
-
+    print(f"🔍 Searching GitHub for '{name}'…")
     params = {
         "q":        f"{name} in:name",
         "sort":     "stars",
@@ -684,7 +674,7 @@ Returns:
         # 403 could be a rate-limit on the Search API
         if resp.status_code == 403:
             reset_ts = int(resp.headers.get("X-RateLimit-Reset", time.time() + 60))
-            wait = max(reset_ts - time.time()+1, 1)
+            wait = max(reset_ts - time.time()-1, 1)
             print(f"[Attempt {attempt}] Rate limited. Sleeping {int(wait)}s until reset…")
             time.sleep(wait)
             continue
@@ -725,7 +715,7 @@ def fetch_pypi_urls(
     2) Fuzzy lookup via XML‐RPC + JSON API per hit
     """
     urls: List[str] = []
-
+    print(f"🔍 Searching PyPI for '{pkg_name}'…")
     # 1) Exact match
     info = _get_pypi_info(pkg_name, timeout)
     if info:
@@ -800,6 +790,7 @@ def fetch_cran_urls(
       2) substring match
       3) fuzzy match via difflib
     """
+    print(f"🔍 Searching CRAN for '{name}'…")
     pkgs = _load_cran_packages(timeout)
     urls: List[str] = []
     name_lower = name.lower()
@@ -853,18 +844,23 @@ Returns:
     # GitHub
     try:
         results += fetch_github_urls(name)
+        print(f"[+] Found {(results)} GitHub URLs for '{name}'")
     except Exception as e:
         print(f"[!] GitHub fetch failed for '{name}': {e}")
 
     # PyPI
     try:
-        results += fetch_pypi_urls(name)
+        pypi_results= fetch_pypi_urls(name)
+        print(f"[+] Found {(pypi_results)} PyPI URLs for '{name}'")
+        results += pypi_results
     except Exception as e:
         print(f"[!] PyPI fetch failed for '{name}': {e}")
 
     # CRAN
     try:
-        results += fetch_cran_urls(name)
+        cran_results = fetch_cran_urls(name)
+        print(f"[+] Found {(cran_results)} CRAN URLs for '{name}'")
+        results += cran_results
     except Exception as e:
         print(f"[!] CRAN check failed for '{name}': {e}")
 
@@ -1039,7 +1035,7 @@ Args:
 Returns:
     Dict[str, dict]: Mapping from URL to extracted metadata.
 """
-
+    print("🔍 Starting candidate URL extraction...")
     # 1) Update or load existing candidates
     candidates = update_candidate_cache(input, fetcher, cache_path)
 
@@ -1061,7 +1057,7 @@ Returns:
     return input
 
     
-def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json", somef_path:str = r"D:/MASTER/TMF/somef") -> Dict[str, dict]:
+def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
     """Extract and cache metadata for all unique candidate URLs in a DataFrame.
 
     This function:
@@ -1080,6 +1076,7 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
     Returns:
         Dict[str, dict]: A mapping from each URL (str) to its metadata dict.
     """
+    print("🔍 Starting metadata extraction for candidate URLs...")
     # Step 1: Extract unique, non-empty URLs
     url_set = set()
     for cell in df["candidate_urls"].dropna():
@@ -1107,7 +1104,7 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
             if url not in metadata_cache or metadata_cache[url] in [None, {}]:
                 #print(f"🔍 Processing: {identifier}/{num_url-num_dict}")
                 print(f"🔍 Processing: {url}")
-                metadata_cache[url] = get_metadata(url,somef_path)
+                metadata_cache[url] = get_metadata(url)
             identifier += 1
 
     except Exception as e:
@@ -1438,6 +1435,7 @@ def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFram
     Returns:
         pd.DataFrame: A DataFrame mapping software names to lists of synonyms.
     """
+    print("Fetching synonyms...")
     if os.path.exists(synonym_file_location) and os.path.getsize(synonym_file_location) > 0:
         with open(synonym_file_location, "r", encoding="utf-8") as f:
             try:
@@ -1473,3 +1471,9 @@ def aggregate_group(subdf):
         'not_urls': ', '.join(subdf.loc[subdf['prediction'] == 0, 'candidate_urls'].dropna().astype(str)),
     })
 
+if __name__ == "__main__":
+    url = "https://github.com/alexdobin/STAR"
+    metadata = get_metadata(url)
+    print(f"Metadata for {url}:")
+    for key, value in metadata.items():
+        print(f"{key}: {value}")

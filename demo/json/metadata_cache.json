@@ -730,14 +730,6 @@
     ],
     "language": "Python"
   },
-  "https://github.com/alexdobin/STAR": {
-    "name": "STAR",
-    "description": "RNA-seq aligner",
-    "authors": [
-      "Alexander Dobin"
-    ],
-    "language": "C"
-  },
   "https://github.com/RainbowRedux/RainbowRedux": {
     "name": "RainbowRedux",
     "description": "RainbowRedux is an attempt to remake the engine for the original Rainbow Six games. This project is not a remake of the game, and does not distribute game content. You require the original game to play. You can pick up a copy from ebay or [GOG.com](https://www.gog.com/game/tom_clancys_rainbow_six) \n",
@@ -44632,5 +44624,6 @@
       "Roberto Vega"
     ],
     "language": "Jupyter Notebook"
-  }
+  },
+  "https://github.com/alexdobin/STAR": {}
 }

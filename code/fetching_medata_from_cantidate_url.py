@@ -8,7 +8,7 @@ import requests
 import re
 from urllib.parse import urlparse
 from urllib.parse import urlparse, parse_qs
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Tuple
 import re
 from bs4 import BeautifulSoup
 from rake_nltk import Rake
@@ -694,7 +694,7 @@ def extract_somef_metadata_with_RAKE(repo_url: str, somef_path: str = r"D:/MASTE
         # note: in a Python string literal this is "\\\\?\\"
             path = "\\\\?\\" + path
         subprocess.run([
-            "poetry", "run", "somef", "describe",
+            "poetry","run", "somef", "describe",
             "-r", repo_url,
             "-o", output_path,
             "-t", "0.93",
@@ -823,9 +823,204 @@ def get_metadata(url: str) -> dict:
         return extract_pypi_metadata_Rake_after(url)
     # Generic website fallback
     return extract_website_metadata(url)
-    
+def _clean_github_url(raw_url: str) -> str:
+    """
+    Given a GitHub URL that may include extra path segments (e.g. "/tree/master", "/issues", "/tarball/v1.0"),
+    normalize it to "https://github.com/{owner}/{repo}". If the URL isn’t a valid GitHub repo URL,
+    returns an empty string.
+    """
+    parsed = urlparse(raw_url)
+    host = parsed.netloc.lower()
+    if "github.com" not in host:
+        return ""
+    # Remove any ".git" suffix from path temporarily
+    path = parsed.path.rstrip("/").lstrip("/")
+    if path.endswith(".git"):
+        path = path[: -len(".git")]
+
+    segments = [seg for seg in path.split("/") if seg]
+    if len(segments) < 2:
+        return ""
+    owner, repo = segments[0], segments[1]
+    # Reconstruct the clean repository URL
+    return f"https://github.com/{owner}/{repo}"
+
+def get_github_link_from_pypi(url: str) -> Tuple[str,int]:
+    """
+    Given a PyPI project URL (e.g. "https://pypi.org/project/example"), fetches the package's JSON
+    metadata and returns the first GitHub repository URL found (in project_urls or home_page).
+    If no GitHub link is present, returns an empty string.
+
+    Args:
+        url (str): A PyPI project URL.
+
+    Returns:
+        str: The GitHub URL if found, otherwise "".
+    """
+    # 1) Extract package name
+    parsed = urlparse(url)
+    parts = parsed.path.strip("/").split("/")
+    if len(parts) >= 2 and parts[0] in ("project", "simple"):
+        pkg = parts[1]
+    else:
+        pkg = parts[0] if parts else None
+
+    if not pkg:
+        return ""
+
+    # 2) Fetch JSON metadata
+    api_url = f"https://pypi.org/pypi/{pkg}/json"
+    resp = requests.get(api_url)
+    if resp.status_code != 200:
+        return ""
+    info: Dict[str, Any] = resp.json().get("info", {})
+    full_description = (info.get("description") or "").strip()
+    description_length = len(full_description)  
+    project_urls = info.get("project_urls") or {}
+    for link in project_urls.values():
+        if link and "github.com" in link.lower():
+            clean = _clean_github_url(link.strip())
+            if clean:
+                return clean, description_length
+
+    # 4) Fallback: check home_page
+    home_page = info.get("home_page", "") or ""
+    if "github.com" in home_page.lower():
+        clean = _clean_github_url(home_page.strip())
+        if clean:
+            return clean, description_length
+
+    # 6) No GitHub link found
+    return "", description_length
+
+def extract_somef_metadata_with_RAKE_readme(repo_url: str, somef_path: str = r"D:/MASTER/TMF/somef") -> dict:
+    """
+    Extract metadata from a GitHub repository using SOMEF with RAKE fallback for keywords,
+    and determine whether the README file is empty.
+
+    This function runs the SOMEF tool on the given repository and parses
+    metadata from the resulting JSON. If the extracted keywords field is empty,
+    it applies RAKE to extract up to 5 multi-word keywords from the description text.
+    It also fetches the README (if a readme_url exists) and checks if its content is empty.
+
+    Args:
+        repo_url (str): URL of the GitHub repository.
+        somef_path (str): Path to the SOMEF project directory where `poetry run somef` is available.
+
+    Returns:
+        dict: A dictionary containing:
+            - name (str)
+            - description (str)
+            - keywords (List[str]) — extracted from SOMEF or generated via RAKE
+            - authors (List[str]) — GitHub owner's name
+            - language (str) — most dominant programming language in the repo
+            - readme_empty (bool) — True if README is missing or empty, False otherwise
+        Returns an empty dictionary on failure.
+    """
+
+    # Create a temp file to store SOMEF output
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
+        output_path = tmp_file.name
+
+    try:
+        # Ensure SOMEF temp directory exists (for -kt)
+        path = os.path.join("D:", os.sep, "MASTER", "TMF", "somef", "temp")
+        os.makedirs(path, exist_ok=True)
+        if sys.platform == "win32":
+            # Prefix with \\?\ to allow long Windows paths
+            path = "\\\\?\\" + path
+
+        # Run SOMEF with poetry
+        subprocess.run([
+            "poetry", "run", "somef", "describe",
+            "-r", repo_url,
+            "-o", output_path,
+            "-t", "0.93",
+            "-m",
+            "-kt", path
+        ], cwd=somef_path, check=True)
+
+        # Load the JSON output into Python
+        with open(output_path, "r", encoding="utf-8") as f:
+            metadata = json.load(f)
+
+        def get_first_value(key: str) -> str:
+            entries = metadata.get(key, [{}])
+            if not entries or not isinstance(entries, list):
+                return ""
+            return entries[0].get("result", {}).get("value", "") or ""
+
+        # 1) Extract name, description, owner, and programming languages
+        name = get_first_value("name")
+        text_description = get_first_value("description")
+        owner = get_first_value("owner")
+
+        # 2) Extract or derive keywords
+        raw_keywords = get_first_value("keywords")
+        keywords = [kw.strip() for kw in raw_keywords.split(",")] if raw_keywords else []
+        if not keywords:
+            # If SOMEF gave no keywords, fall back to RAKE on the description text
+            if text_description and not pd.isna(text_description):
+                r = Rake(min_length=2, max_length=3)
+                r.extract_keywords_from_text(text_description)
+                top_phrases = r.get_ranked_phrases()[:5]
+
+                cleaned = []
+                for phrase in top_phrases:
+                    tag = phrase.strip(' "\'.,').lower()
+                    if len(tag.split()) > 1 and re.match(r'^[\w\s]+$', tag):
+                        cleaned.append(tag)
+                seen = set()
+                keywords = [t for t in cleaned if not (t in seen or seen.add(t))]
+
+        # 3) Primary programming language
+        langs = metadata.get("programming_languages", [])
+        primary_language = ""
+        if langs:
+            primary = max(langs, key=lambda x: x.get("result", {}).get("size", 0))
+            primary_language = primary.get("result", {}).get("value", "")
+
+        # 4) Check if README is empty
+        readme_empty = True
+        readme_urls = metadata.get("readme_url", [])
+        if readme_urls and isinstance(readme_urls, list):
+            # Try the first URL in the list
+            first_url = readme_urls[0].get("result", {}).get("value", "") \
+                        if isinstance(readme_urls[0], dict) else readme_urls[0]
+            if first_url:
+                try:
+                    resp = requests.get(first_url, timeout=10)
+                    if resp.status_code == 200:
+                        content = resp.text.strip()
+                        readme_empty = (len(content) == 0)
+                    else:
+                        # Could not fetch README => treat as empty
+                        readme_empty = True
+                except Exception:
+                    readme_empty = True
+        # If no readme_url field, leave readme_empty = True
+
+        # 5) Prepare return dictionary
+        return {
+            "name": name,
+            "description": text_description,
+            "keywords": keywords,
+            "authors": [owner] if owner else [],
+            "language": primary_language,
+            "readme_empty": readme_empty
+        }
+
+    except Exception:
+        return {}
+    finally:
+        # Clean up the temporary SOMEF output file
+        try:
+            os.remove(output_path)
+        except OSError:
+            pass
+
 if __name__ == "__main__":
     # Example usage
-    url = "https://github.com/AIM-Harvard/foundation-cancer-image-biomarker"
-    metadata = extract_somef_metadata(url)
+    url = "https://github.com/ourresearch/oadoi"
+    metadata = extract_somef_metadata_with_RAKE_readme(url)
     print(metadata)

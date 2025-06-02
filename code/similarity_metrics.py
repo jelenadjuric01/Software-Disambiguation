@@ -527,7 +527,93 @@ Returns:
         sub.to_csv(output_path, index=False)
         print(f"📄 Similarity metrics saved to {output_path}")
 
+    return 
+
+def compute_similarity_test(df: pd.DataFrame,output_path:str = None) -> pd.DataFrame:
+    """
+Compute multiple similarity metrics between software mentions and candidate metadata.
+
+Metrics include:
+- `name_metric`: Jaro-Winkler similarity on normalized names.
+- `author_metric`: Similarity between author names.
+- `paragraph_metric`: SBERT-based semantic similarity.
+- `language_metric`: Similarity between programming language mentions.
+- `synonym_metric`: Similarity to known synonyms.
+
+Args:
+    df (pd.DataFrame): Input DataFrame with paper/software/metadata columns.
+    output_path (str, optional): If provided, saves resulting DataFrame as CSV.
+
+Returns:
+    pd.DataFrame: DataFrame with similarity scores.
+"""
+    print("🔍 Computing similarity metrics…")
+    for col in ['name_metric','author_metric','paragraph_metric',"language_metric",'synonym_metric']:
+        if col not in df.columns:
+            df[col] = np.nan
+
+    # 1) Mask of all rows that have valid metadata_name
+    valid = (
+        df['metadata_name'].notna() &
+        df['metadata_name'].astype(str).str.strip().astype(bool)
+    )
+    print("Computing name metric...")
+    # 2) name_metric: only for valid rows where name_metric is still NaN
+    nm = valid & df['name_metric'].isna()
+    df.loc[nm, 'name_metric'] = df.loc[nm].apply(
+        lambda r: software_name_similarity(r['name'], r['metadata_name']),
+        axis=1
+    )
+    print("Computing author metric...")
+    # 3) author_metric:
+    am = valid & df['author_metric'].isna()
+    df.loc[am, 'author_metric'] = df.loc[am].apply(
+        lambda r: author_name_similarity(r['authors'], r['metadata_authors']),
+        axis=1
+    )
+    print("Computing paragraph metric...")
+    # 4) paragraph_metric: only for rows with metadata_description & NaN
+    pm = valid & df['paragraph_metric'].isna()
+    df.loc[pm, 'paragraph_metric'] = df.loc[pm].apply(
+        lambda r: paragraph_description_similarity_BERT(
+            r['paragraph'], r['metadata_description']
+        ),
+        axis=1
+    )
+    print("Computing language metric...")
+    lm = valid & df['language_metric'].isna()
+    df.loc[lm, 'language_metric'] = df.loc[lm].apply(
+        lambda r: programming_language_similarity(
+            r['language'],
+            r['metadata_language']
+        ),
+        axis=1
+    )
+    print("Computing synonym metric...")
+    sm = valid & df['synonym_metric'].isna()
+    df.loc[sm, 'synonym_metric'] = df.loc[sm].apply(
+        lambda r: synonym_name_similarity(
+            r['metadata_name'],
+            r['synonyms']
+        ),
+        axis=1
+    )
+    # 6) Build the “sub” DataFrame you originally returned
+    cols = [
+        'id','name','doi','paragraph','authors','language','candidate_urls','synonyms',
+        'metadata_name','metadata_authors','metadata_description','metadata_language',
+        'name_metric','author_metric','paragraph_metric','language_metric','synonym_metric'
+    ]
+    
+    sub = df.loc[valid, cols].copy()
+
+    # 7) Optionally save
+    if output_path:
+        sub.to_csv(output_path, index=False)
+        print(f"📄 Similarity metrics saved to {output_path}")
+
     return sub
+
 
 if __name__ == "__main__":
     # Example usage

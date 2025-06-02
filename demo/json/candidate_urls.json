@@ -1,12 +1,4 @@
 {
-  "(STAR": [
-    "https://cran.r-project.org/package=SAR",
-    "https://cran.r-project.org/package=STAREG",
-    "https://cran.r-project.org/package=STARTS",
-    "https://cran.r-project.org/package=STAT",
-    "https://cran.r-project.org/package=TAR",
-    "https://github.com/alexdobin/STAR"
-  ],
   "ABBYY": [
     "https://cran.r-project.org/package=GABB",
     "https://github.com/abbyy/RTR-SDK.Android",
@@ -5010,7 +5002,6 @@
   ],
   "ldr": [
     "https://cran.r-project.org/package=autothresholdr",
-    "https://cran.r-project.org/package=buildr",
     "https://cran.r-project.org/package=causaldrf",
     "https://cran.r-project.org/package=epiworldR",
     "https://cran.r-project.org/package=epiworldRShiny",
@@ -6405,5 +6396,13 @@
     "https://github.com/predibase/lorax",
     "https://github.com/tloen/alpaca-lora",
     "https://pypi.org/project/lora/"
+  ],
+  "(STAR": [
+    "https://cran.r-project.org/package=SAR",
+    "https://cran.r-project.org/package=STAREG",
+    "https://cran.r-project.org/package=STARTS",
+    "https://cran.r-project.org/package=STAT",
+    "https://cran.r-project.org/package=TAR",
+    "https://github.com/alexdobin/STAR"
   ]
 }

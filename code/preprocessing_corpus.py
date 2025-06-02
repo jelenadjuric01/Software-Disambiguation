@@ -1,12 +1,14 @@
+from urllib.parse import urlparse
 import pandas as pd
 from pathlib import Path
 import json
 from typing import List, Tuple, Dict, Optional
 import os
-from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, extract_pypi_metadata_RAKE_class, extract_pypi_metadata_Rake_after, get_metadata  
+from fetch_candidates import load_candidates, save_candidates
+from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, extract_somef_metadata_with_RAKE_readme,get_github_link_from_pypi, extract_pypi_metadata_RAKE_class, extract_pypi_metadata_Rake_after, get_metadata  
 import re
 import csv
-from similarity_metrics import compute_similarity_df,  keyword_similarity_with_fallback, keyword_similarity_with_fallback_SBERT, paragraph_description_similarity_BERT, software_name_similarity_levenshtein, synonym_name_similarity, synonym_name_similarity_levenshtein
+from similarity_metrics import compute_similarity_df, compute_similarity_test, keyword_similarity_with_fallback, keyword_similarity_with_fallback_SBERT, paragraph_description_similarity_BERT, software_name_similarity_levenshtein, synonym_name_similarity, synonym_name_similarity_levenshtein
 from evaluation import  evaluation
 from rake_nltk import Rake
 import string
@@ -56,7 +58,7 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
         num_dict = len(metadata_cache)
         for url in url_set:
             if url not in metadata_cache or metadata_cache[url] in [None, {}]:
-                print(f"🔍 Processing: {identifier}/{num_url-num_dict}")
+                #print(f"🔍 Processing: {identifier}/{num_url-num_dict}")
                 print(f"🔍 Processing: {url}")
                 metadata_cache[url] = get_metadata(url)
             identifier += 1
@@ -433,7 +435,17 @@ Returns:
                     metadata[url]["keywords"] = kws
                     print(f"Extracted keywords from GitHub URL: {url}, {kws}")
             
-
+def is_pypi_url(url: str) -> bool:
+    """
+    Returns True if the given URL points to a PyPI project page (e.g. "https://pypi.org/project/foo/").
+    """
+    parsed = urlparse(url)
+    host = parsed.netloc.lower()
+    path = parsed.path.lower()
+    return (
+        ("pypi.org" in host or "python.org" in host)  # cover pypi.org (and edge cases)
+        and path.startswith("/project/")
+    )
 if __name__ == "__main__":
     # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
     """'''
@@ -559,23 +571,47 @@ if __name__ == "__main__":
     model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_2.xlsx"
     output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_6.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.7/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.6/pairs.csv"
-    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.12/model_input.csv"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.14/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.14/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.14/pairs.csv"
+    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.14/model_input.csv"
+    df = pd.read_excel(excel_path)
     #df = pd.read_csv(output_path)
-    #df = pd.read_excel(excel_path)
-    sim = pd.read_csv(output_path_similarities)
+    candidates = load_candidates("D:/MASTER/TMF/Software-Disambiguation/corpus/candidate_urls.json")
+    for key, urls in candidates.items():
+        # Work on a copy of the original list so we can modify freely.
+        updated_urls = list(urls)
 
-    sim['paragraph_metric'] = sim.apply(
-        lambda r: paragraph_description_similarity_BERT(
-            r['paragraph'],
-            r['metadata_description']
-            
-        ),
-        axis=1
-    )
-    
+        for u in urls:
+            if "github.com" not in u:
+                # Only touch GitHub links
+                continue
+
+            metadata = extract_somef_metadata_with_RAKE_readme(u)
+            if metadata and metadata["readme_empty"]:
+                updated_urls.remove(u)
+        # Replace the old list with the updated one
+        candidates[key] = updated_urls
+
+    save_candidates(candidates, "D:/MASTER/TMF/Software-Disambiguation/corpus/candidates_v3_14.json")
+    df['candidate_urls'] = df['name'].map(candidates).astype(str)
+    df['candidate_urls'] = df['candidate_urls'].str.replace("{", "").str.replace("}", "").str.replace("[", "").str.replace("]", "").str.replace("'", "").str.replace('"', '').str.replace(",", ",").str.replace(" ", "") # remove unwanted characters
+    df['candidate_urls'] = df['candidate_urls'].str.replace("'", "").str.replace('"', '').str.replace(",", ",").str.replace(" ", "")
+    df.drop(columns=['field/topic/keywords'], inplace=True)
+    df.to_excel("D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v_3_14.xlsx", index=False)
+    df = make_pairs(df, output_path_pairs)
+    with open(output_json_path, "r", encoding="utf-8") as f:
+        try:
+            metadata_cache = json.load(f)
+        except json.JSONDecodeError:
+            print("⚠️ Warning: Could not decode existing JSON. Starting with empty cache.")
+            metadata_cache = {}
+    add_metadata(df, metadata_cache, output_path)
+    sim = compute_similarity_test(df, output_path_similarities)
+    sim['true_label'] = [
+    int(c in [u.strip() for u in g.split(',')])
+    for c, g in zip(df['candidate_urls'], df['url (ground truth)'])
+    ]
     sim.to_csv(output_path_similarities, index=False)
-    model_input = sim[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
+    model_input = sim[['name_metric', 'paragraph_metric','language_metric','synonym_metric','author_metric','true_label']].copy()
     model_input.to_csv(model_input_path, index=False)

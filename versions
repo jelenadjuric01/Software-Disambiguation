@@ -13,3 +13,6 @@ Version 3.9 - the same as version 3.6, but the synonym similarity is calculated 
 Version 3.10 - mix of version 3.8 and 3.9, all similarities like in the version 3.6, but name and synonyms calculated using Levenshtein
 Version 3.11 - mix of versions 3.7 and 3.10, using SBERT for keywords, Levenshtein for name and synonyms
 Version 3.12 - the same as version 3.6, but using BERT for paragraph similarity
+Version 3.13 - the same as version 3.12, but we remove keywords completely and discard all PyPI URLs with short description (less than 400 characters) and no GitHub URL, if there is a GitHub URL, it adds it to candidate URLs
+Version 3.14 - the same as version 3.12, but we remove keywords completely and discard all GitHub URLs that have empty README file
+Version 3.15 - the same as version 3.12, but we remove keywords completely and discard PyPI URLs that have no GitHub and description shorter than 400 characters and all GitHubs that have empty README files
