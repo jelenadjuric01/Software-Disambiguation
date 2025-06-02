@@ -983,22 +983,32 @@ def extract_somef_metadata_with_RAKE_readme(repo_url: str, somef_path: str = r"D
         # 4) Check if README is empty
         readme_empty = True
         readme_urls = metadata.get("readme_url", [])
-        if readme_urls and isinstance(readme_urls, list):
-            # Try the first URL in the list
-            first_url = readme_urls[0].get("result", {}).get("value", "") \
-                        if isinstance(readme_urls[0], dict) else readme_urls[0]
-            if first_url:
+
+        if isinstance(readme_urls, list):
+            for entry in readme_urls:
+                # Extract the URL string, whether entry is a dict or a plain string
+                url = ""
+                if isinstance(entry, dict):
+                    url = entry.get("result", {}).get("value", "") or ""
+                else:
+                    url = entry or ""
+
+                if not url:
+                    continue
+
                 try:
-                    resp = requests.get(first_url, timeout=10)
+                    resp = requests.get(url, timeout=10)
                     if resp.status_code == 200:
                         content = resp.text.strip()
-                        readme_empty = (len(content) == 0)
-                    else:
-                        # Could not fetch README => treat as empty
-                        readme_empty = True
+                        if content:
+                            # Found a non-empty README, no need to check further
+                            readme_empty = False
+                            break
+                    # If status_code != 200 or content is empty, try the next URL
                 except Exception:
-                    readme_empty = True
-        # If no readme_url field, leave readme_empty = True
+                    # On request failure, just move on to the next URL
+                    continue
+
 
         # 5) Prepare return dictionary
         return {
@@ -1016,11 +1026,18 @@ def extract_somef_metadata_with_RAKE_readme(repo_url: str, somef_path: str = r"D
         # Clean up the temporary SOMEF output file
         try:
             os.remove(output_path)
+        #path = "D:\\MASTER\\TMF\\somef\\temp"
+            for entry in os.scandir(path):
+                entry_path = entry.path
+                if entry.is_dir(follow_symlinks=False):
+                    shutil.rmtree(entry_path) 
+                else:
+                    os.remove(entry_path)
         except OSError:
             pass
 
 if __name__ == "__main__":
     # Example usage
-    url = "https://github.com/ourresearch/oadoi"
+    url = "https://github.com/Shpota/github-activity-generator"
     metadata = extract_somef_metadata_with_RAKE_readme(url)
     print(metadata)

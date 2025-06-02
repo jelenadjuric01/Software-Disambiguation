@@ -1405,8 +1405,7 @@
     "https://github.com/expersso/pdftables",
     "https://github.com/pdftables/python-pdftables-api",
     "https://github.com/pdftables/vba-pdftables-api",
-    "https://pypi.org/project/pdftables/",
-    "https://www.github.com/expersso/pdftables"
+    "https://pypi.org/project/pdftables/"
   ],
   "phylip": [
     "https://cran.r-project.org/package=phylepic",

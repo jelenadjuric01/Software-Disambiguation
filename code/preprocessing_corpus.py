@@ -570,44 +570,53 @@ if __name__ == "__main__":
     model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
     model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_2.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_6.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.14/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.14/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.14/pairs.csv"
-    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.14/model_input.csv"
+    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_13.json"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.13/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.13/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.13/pairs.csv"
+    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.13/model_input.csv"
     df = pd.read_excel(excel_path)
     #df = pd.read_csv(output_path)
     candidates = load_candidates("D:/MASTER/TMF/Software-Disambiguation/corpus/candidate_urls.json")
+    #candidates_13 = load_candidates("D:/MASTER/TMF/Software-Disambiguation/corpus/candidate_urls_v3_13.json")
     for key, urls in candidates.items():
         # Work on a copy of the original list so we can modify freely.
         updated_urls = list(urls)
 
         for u in urls:
-            if "github.com" not in u:
-                # Only touch GitHub links
+            if ("pypi.org" not in u) and ("pypi.python.org" not in u):
                 continue
 
-            metadata = extract_somef_metadata_with_RAKE_readme(u)
-            if metadata and metadata["readme_empty"]:
+            github, description_length = get_github_link_from_pypi(u)
+            if not github and description_length < 400:
                 updated_urls.remove(u)
+                print(f"Removed PyPI URL: {u} (no GitHub link found or description too short)")
+                if github:
+                    if github in updated_urls:
+                        updated_urls.remove(github)
+            else:
+                # If we have a valid GitHub link, replace the PyPI URL with it
+                if github and github not in updated_urls:
+                    updated_urls.append(github)
+                    print(f"Added GitHub URL: {github} from PyPI URL: {u}")
         # Replace the old list with the updated one
         candidates[key] = updated_urls
 
-    save_candidates(candidates, "D:/MASTER/TMF/Software-Disambiguation/corpus/candidates_v3_14.json")
+    save_candidates(candidates, "D:/MASTER/TMF/Software-Disambiguation/corpus/candidate_urls_v3_13.json")
     df['candidate_urls'] = df['name'].map(candidates).astype(str)
     df['candidate_urls'] = df['candidate_urls'].str.replace("{", "").str.replace("}", "").str.replace("[", "").str.replace("]", "").str.replace("'", "").str.replace('"', '').str.replace(",", ",").str.replace(" ", "") # remove unwanted characters
     df['candidate_urls'] = df['candidate_urls'].str.replace("'", "").str.replace('"', '').str.replace(",", ",").str.replace(" ", "")
     df.drop(columns=['field/topic/keywords'], inplace=True)
-    df.to_excel("D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v_3_14.xlsx", index=False)
+    df.to_excel("D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_13.xlsx", index=False)
+    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
     df = make_pairs(df, output_path_pairs)
-    with open(output_json_path, "r", encoding="utf-8") as f:
-        try:
-            metadata_cache = json.load(f)
-        except json.JSONDecodeError:
-            print("⚠️ Warning: Could not decode existing JSON. Starting with empty cache.")
-            metadata_cache = {}
+
     add_metadata(df, metadata_cache, output_path)
+
     sim = compute_similarity_test(df, output_path_similarities)
+    df = pd.read_csv(output_path)
+   # sim = pd.read_csv(output_path_similarities)
+    df.dropna(subset=['metadata_name'], inplace=True)
     sim['true_label'] = [
     int(c in [u.strip() for u in g.split(',')])
     for c, g in zip(df['candidate_urls'], df['url (ground truth)'])
@@ -615,3 +624,18 @@ if __name__ == "__main__":
     sim.to_csv(output_path_similarities, index=False)
     model_input = sim[['name_metric', 'paragraph_metric','language_metric','synonym_metric','author_metric','true_label']].copy()
     model_input.to_csv(model_input_path, index=False)
+    '''for key in set(candidates.keys()) | set(candidates_13.keys()):
+        urls1 = set(candidates.get(key, []))
+        urls2 = set(candidates_13.get(key, []))
+
+        only_in_1 = urls1 - urls2
+        only_in_2 = urls2 - urls1
+
+        if only_in_1 or only_in_2:
+            print(f"Entry: {key}")
+            for u in only_in_1:
+                print(f"  → only in first dict:  {u}")
+            for u in only_in_2:
+                print(f"  → only in second dict: {u}")
+            print()  # blank line for readability'''
+

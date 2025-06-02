@@ -11140,15 +11140,6 @@
     ],
     "language": "R"
   },
-  "https://www.github.com/expersso/pdftables": {
-    "name": "pdftables",
-    "description": "Programmatic Conversion of PDF Tables With R",
-    "keywords": [],
-    "authors": [
-      "EP"
-    ],
-    "language": "R"
-  },
   "https://cran.r-project.org/package=spNetwork": {
     "name": "spNetwork",
     "description": "Perform spatial analysis on network.\nImplement several methods for spatial analysis on network: Network Kernel Density estimation,\nbuilding of spatial matrices based on network distance ('listw' objects from 'spdep' package), K functions estimation\nfor point pattern analysis on network, k nearest neighbours on network, reachable area calculation, and graph generation\nReferences: Okabe et al (2019) <doi:10.1080/13658810802475491>;\nOkabe et al (2012, ISBN:978-0470770818);Baddeley et al (2015, ISBN:9781482210200).",
@@ -21659,5 +21650,114 @@
       "posit-dev"
     ],
     "language": "Python"
+  },
+  "https://github.com/msull/needle": {
+    "name": "needle",
+    "description": "Easy file searching from the command-line",
+    "keywords": [
+      "search"
+    ],
+    "authors": [
+      "Sully"
+    ],
+    "language": "Python"
+  },
+  "https://github.com/matiyau/pSyCH": {
+    "name": "pSyCH",
+    "description": "Python-based task schedule creator",
+    "keywords": [],
+    "authors": [
+      "Nishad Mandlik"
+    ],
+    "language": "Python"
+  },
+  "https://github.com/BioPyTeam/biopy": {
+    "name": "biopy",
+    "description": "Multi-omics translations through the usage of multiple uncoupled autoencoders sharing a common latent space",
+    "keywords": [
+      "autoencoders",
+      "bioinformatics",
+      "deep-learning",
+      "gdc-portal"
+    ],
+    "authors": [
+      "BioPyTeam"
+    ],
+    "language": "Python"
+  },
+  "https://github.com/caruccio/kontroller": {
+    "name": "kontroller",
+    "description": "Python lib for writing Kubernetes controllers",
+    "keywords": [
+      "controller",
+      "kubernetes",
+      "library",
+      "python"
+    ],
+    "authors": [
+      "Mateus Caruccio"
+    ],
+    "language": "Python"
+  },
+  "https://github.com/arunkottilukkal/AnalyseSentiment": {
+    "name": "AnalyseSentiment",
+    "description": "",
+    "keywords": [],
+    "authors": [
+      "Arun Kesavan"
+    ],
+    "language": "Python"
+  },
+  "https://github.com/galaxy-genome-annotation/python-tripal": {
+    "name": "python-tripal",
+    "description": "A Python library for interacting with Tripal",
+    "keywords": [
+      "tripal"
+    ],
+    "authors": [
+      "Galaxy Genome Annotation"
+    ],
+    "language": "Python"
+  },
+  "https://github.com/stenson/furniture": {
+    "name": "furniture",
+    "description": "furniture for programmatic typesetting & animation in DrawBot",
+    "keywords": [
+      "programmatic typesetting"
+    ],
+    "authors": [
+      "Rob Stenson"
+    ],
+    "language": "Python"
+  },
+  "https://github.com/stevencox/stars": {
+    "name": "stars",
+    "description": "DevOps deployment tools for Mesos, Marathon, Spark, Zeppelin, and others.",
+    "keywords": [
+      "spark"
+    ],
+    "authors": [
+      "Steven"
+    ],
+    "language": "Python"
+  },
+  "https://github.com/danijar/sets": {
+    "name": "sets",
+    "description": "Read datasets in a standard way",
+    "keywords": [
+      "standard way",
+      "read datasets"
+    ],
+    "authors": [
+      "Danijar Hafner"
+    ],
+    "language": "Python"
+  },
+  "https://github.com/smarsuuuuuuu/SMNet": {
+    "name": "",
+    "description": "",
+    "keywords": [],
+    "authors": [],
+    "language": ""
   }
 }
