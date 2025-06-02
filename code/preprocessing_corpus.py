@@ -571,10 +571,10 @@ if __name__ == "__main__":
     model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
     excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_14.xlsx"
     output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_13.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.15/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.15/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.15/pairs.csv"
-    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.15/model_input.csv"
+    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.16/updated_with_metadata_file.csv"
+    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.16/similarities.csv"
+    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.16/pairs.csv"
+    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.16/model_input.csv"
     df = pd.read_excel(excel_path)
     #df = pd.read_csv(output_path)
     candidates = load_candidates("D:/MASTER/TMF/Software-Disambiguation/corpus/candidate_urls_v3_14.json")
@@ -588,7 +588,7 @@ if __name__ == "__main__":
                 continue
 
             github, description_length = get_github_link_from_pypi(u)
-            if not github and description_length < 400:
+            if not github and description_length < 300:
                 updated_urls.remove(u)
                 print(f"Removed PyPI URL: {u} (no GitHub link found or description too short)")
                 if github:
@@ -602,12 +602,12 @@ if __name__ == "__main__":
         # Replace the old list with the updated one
         candidates[key] = updated_urls
 
-    save_candidates(candidates, "D:/MASTER/TMF/Software-Disambiguation/corpus/candidate_urls_v3_15.json")
+    save_candidates(candidates, "D:/MASTER/TMF/Software-Disambiguation/corpus/candidate_urls_v3_16.json")
     df['candidate_urls'] = df['name'].map(candidates).astype(str)
     df['candidate_urls'] = df['candidate_urls'].str.replace("{", "").str.replace("}", "").str.replace("[", "").str.replace("]", "").str.replace("'", "").str.replace('"', '').str.replace(",", ",").str.replace(" ", "") # remove unwanted characters
     df['candidate_urls'] = df['candidate_urls'].str.replace("'", "").str.replace('"', '').str.replace(",", ",").str.replace(" ", "")
     #df.drop(columns=['field/topic/keywords'], inplace=True)
-    df.to_excel("D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_15.xlsx", index=False)
+    df.to_excel("D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_16.xlsx", index=False)
     with open(output_json_path, "r", encoding="utf-8") as f:
         try:
             metadata_cache = json.load(f)
