@@ -300,7 +300,7 @@ Returns:
     )
     # 6) Build the “sub” DataFrame you originally returned
     cols = [
-        'id','name','doi','paragraph','authors','language','candidate_urls','synonyms',
+        'name','doi','paragraph','authors','language','candidate_urls','synonyms',
         'metadata_name','metadata_authors','metadata_description','metadata_language',
         'name_metric','author_metric','paragraph_metric','language_metric','synonym_metric'
     ]
@@ -523,74 +523,108 @@ def extract_somef_metadata(repo_url: str) -> dict:
           name (str), description (str), authors (List[str]), language (str).
         Returns empty dict on failure.
     """
-    somef_path = os.getcwd()  # default to current working directory
-    temp_dir = os.path.join(somef_path, "somef_temp")
-    output_path = os.path.join(temp_dir, "metadata.json")
-    os.makedirs(temp_dir, exist_ok=True)
-    kt_path = temp_dir
-    if sys.platform == "win32":
-        kt_path = "\\\\?\\" + temp_dir  # handle long paths
-
-    base_cmd = [
-        "somef", "describe",
-        "-r", repo_url,
-        "-o", output_path,
-        "-t", "0.93",
-        "-m"
-    ]
-    cmds = [
-        
-        base_cmd,                      # retry without -kt
-        base_cmd + ["-kt", kt_path],  # first try with -kt
-    ]
+    
+    # Create a temp file to store SOMEF output
+    somef_path: str = r"D:/MASTER/TMF/somef"
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
+        output_path = tmp_file.name
 
     try:
-        for cmd in cmds:
-            try:
-                subprocess.run(cmd, check=True)
-                break
-            except subprocess.CalledProcessError:
-                continue
-        else:
-            print(f"All SOMEF attempts failed for {repo_url}")
-            return {}
+        # Ensure SOMEF temp directory exists (for -kt)
+        path = os.path.join("D:", os.sep, "MASTER", "TMF", "somef", "temp")
+        os.makedirs(path, exist_ok=True)
+        if sys.platform == "win32":
+            # Prefix with \\?\ to allow long Windows paths
+            path = "\\\\?\\" + path
 
+        # Run SOMEF with poetry
+        subprocess.run([
+            "poetry", "run", "somef", "describe",
+            "-r", repo_url,
+            "-o", output_path,
+            "-t", "0.93",
+            "-m",
+            "-kt", path
+        ], cwd=somef_path, check=True)
+
+        # Load the JSON output into Python
         with open(output_path, "r", encoding="utf-8") as f:
             metadata = json.load(f)
 
-        def get_first_value(key):
-            return metadata.get(key, [{}])[0].get("result", {}).get("value", "")
+        def get_first_value(key: str) -> str:
+            entries = metadata.get(key, [{}])
+            if not entries or not isinstance(entries, list):
+                return ""
+            return entries[0].get("result", {}).get("value", "") or ""
 
+        # 1) Extract name, description, owner, and programming languages
+        name = get_first_value("name")
+        text_description = get_first_value("description")
         owner = get_first_value("owner")
 
+       
+        # 3) Primary programming language
         langs = metadata.get("programming_languages", [])
         primary_language = ""
         if langs:
             primary = max(langs, key=lambda x: x.get("result", {}).get("size", 0))
             primary_language = primary.get("result", {}).get("value", "")
 
+        # 4) Check if README is empty
+        readme_empty = True
+        readme_urls = metadata.get("readme_url", [])
+
+        if isinstance(readme_urls, list):
+            for entry in readme_urls:
+                # Extract the URL string, whether entry is a dict or a plain string
+                url = ""
+                if isinstance(entry, dict):
+                    url = entry.get("result", {}).get("value", "") or ""
+                else:
+                    url = entry or ""
+
+                if not url:
+                    continue
+
+                try:
+                    resp = requests.get(url, timeout=10)
+                    if resp.status_code == 200:
+                        content = resp.text.strip()
+                        if content:
+                            # Found a non-empty README, no need to check further
+                            readme_empty = False
+                            break
+                    # If status_code != 200 or content is empty, try the next URL
+                except Exception:
+                    # On request failure, just move on to the next URL
+                    continue
+
+
+        # 5) Prepare return dictionary
         return {
-            "name": get_first_value("name"),
-            "description": get_first_value("description"),
-            "authors": [get_github_user_data(owner)] if owner else [],
-            "language": primary_language
+            "name": name,
+            "description": text_description,
+            "authors": [owner] if owner else [],
+            "language": primary_language,
+            "readme_empty": readme_empty
         }
 
+    except Exception:
+        return {}
     finally:
+        # Clean up the temporary SOMEF output file
         try:
             os.remove(output_path)
+        #path = "D:\\MASTER\\TMF\\somef\\temp"
+            for entry in os.scandir(path):
+                entry_path = entry.path
+                if entry.is_dir(follow_symlinks=False):
+                    shutil.rmtree(entry_path) 
+                else:
+                    os.remove(entry_path)
         except OSError:
             pass
 
-        if os.path.isdir(temp_dir):
-            for entry in os.scandir(temp_dir):
-                try:
-                    if entry.is_dir():
-                        shutil.rmtree(entry.path, ignore_errors=True)
-                    else:
-                        os.remove(entry.path)
-                except OSError:
-                    pass
 #Function that retrieves the metadata from any link
 def get_metadata(url: str) -> dict:
     """Dispatch metadata extraction based on the URL’s domain.
@@ -617,7 +651,10 @@ def get_metadata(url: str) -> dict:
 
     # GitHub repo
     if "github.com" in domain:
-        return extract_somef_metadata(url)
+        metadata = extract_somef_metadata(url)
+        if metadata and metadata.get("readme_empty") and 'cran' not in metadata.get("authors", []):
+            return {}
+        return metadata
 
     # CRAN package (common formats: cran.r-project.org or pkg.go.dev/r)
     if domain == "cran.r-project.org" and (
@@ -861,6 +898,8 @@ Returns:
         cran_results = fetch_cran_urls(name)
         print(f"[+] Found {(cran_results)} CRAN URLs for '{name}'")
         results += cran_results
+        
+
     except Exception as e:
         print(f"[!] CRAN check failed for '{name}': {e}")
 
@@ -1016,6 +1055,105 @@ def filter_cran_refs(url_dict):
         # build a new list only once, using the local `match`
         filtered = [u for u in urls if not match(u)]
         url_dict[software] = filtered
+def _clean_github_url(raw_url: str) -> str:
+    """
+    Given a GitHub URL that may include extra path segments (e.g. "/tree/master", "/issues", "/tarball/v1.0"),
+    normalize it to "https://github.com/{owner}/{repo}". If the URL isn’t a valid GitHub repo URL,
+    returns an empty string.
+    """
+    parsed = urlparse(raw_url)
+    host = parsed.netloc.lower()
+    if "github.com" not in host:
+        return ""
+    # Remove any ".git" suffix from path temporarily
+    path = parsed.path.rstrip("/").lstrip("/")
+    if path.endswith(".git"):
+        path = path[: -len(".git")]
+
+    segments = [seg for seg in path.split("/") if seg]
+    if len(segments) < 2:
+        return ""
+    owner, repo = segments[0], segments[1]
+    # Reconstruct the clean repository URL
+    return f"https://github.com/{owner}/{repo}"
+
+def get_github_link_from_pypi(url: str) -> Tuple[str,int]:
+    """
+    Given a PyPI project URL (e.g. "https://pypi.org/project/example"), fetches the package's JSON
+    metadata and returns the first GitHub repository URL found (in project_urls or home_page).
+    If no GitHub link is present, returns an empty string.
+
+    Args:
+        url (str): A PyPI project URL.
+
+    Returns:
+        str: The GitHub URL if found, otherwise "".
+    """
+    # 1) Extract package name
+    parsed = urlparse(url)
+    parts = parsed.path.strip("/").split("/")
+    if len(parts) >= 2 and parts[0] in ("project", "simple"):
+        pkg = parts[1]
+    else:
+        pkg = parts[0] if parts else None
+
+    if not pkg:
+        return ""
+
+    # 2) Fetch JSON metadata
+    api_url = f"https://pypi.org/pypi/{pkg}/json"
+    resp = requests.get(api_url)
+    if resp.status_code != 200:
+        return ""
+    info: Dict[str, Any] = resp.json().get("info", {})
+    full_description = (info.get("description") or "").strip()
+    description_length = len(full_description)  
+    project_urls = info.get("project_urls") or {}
+    for link in project_urls.values():
+        if link and "github.com" in link.lower():
+            clean = _clean_github_url(link.strip())
+            if clean:
+                return clean, description_length
+
+    # 4) Fallback: check home_page
+    home_page = info.get("home_page", "") or ""
+    if "github.com" in home_page.lower():
+        clean = _clean_github_url(home_page.strip())
+        if clean:
+            return clean, description_length
+
+    # 6) No GitHub link found
+    return "", description_length
+
+def cran_to_github_url(cran_url: str) -> str:
+    """
+    Converts a CRAN URL to a GitHub URL where author is 'cran'
+    and repository is the package name.
+
+    Args:
+        cran_url (str): URL pointing to a CRAN package.
+
+    Returns:
+        str: GitHub-style URL like https://github.com/cran/<package>
+             or None if package name couldn't be extracted.
+    """
+    if not isinstance(cran_url, str):
+        return None
+
+    # Regex to capture CRAN package name from various formats
+    patterns = [
+        r"cran\.r-project\.org/package=([^&/#?]+)",                      # ?package= or package=
+        r"cran\.r-project\.org/\?package=([^&/#?]+)",
+        r"cran\.r-project\.org/web/packages/([^/]+)/?",                 # /web/packages/<pkg>/
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, cran_url, re.IGNORECASE)
+        if match:
+            package = match.group(1)
+            return f"https://github.com/cran/{package}"
+
+    return None  # If no pattern matched
 
 def get_candidate_urls(
     input: pd.DataFrame,
@@ -1048,6 +1186,41 @@ Returns:
     # 4) Filter out CRAN refman links
     filter_cran_refs(candidates)
     # 5) Save candidates
+    for key, urls in candidates.items():
+        # Work on a copy of the original list so we can modify freely.
+        updated_urls = list(urls)
+
+        for u in urls:
+            url = u.strip()
+            parsed = urlparse(url)
+            domain = urlparse(url).netloc.lower()
+            path   = parsed.path or ""
+
+            # CRAN package (common formats: cran.r-project.org or pkg.go.dev/r)
+            if domain == "cran.r-project.org" and (
+                path.startswith("/web/packages/") or
+                path.startswith("/package=")
+            ):
+                github = cran_to_github_url(url)
+                if github:
+                    # If we have a valid GitHub link, replace the CRAN URL with it
+                    if github not in updated_urls:
+                        updated_urls.append(github)
+                        print(f"Added GitHub URL: {github} from CRAN URL: {u}")
+            if "pypi.org" in domain or "pypi.python.org" in domain:
+                github, description_length = get_github_link_from_pypi(u)
+                if not github and description_length < 400:
+                    updated_urls.remove(u)
+                    print(f"Removed PyPI URL: {u} (no GitHub link found or description too short)")
+                    
+                else:
+                    # If we have a valid GitHub link, replace the PyPI URL with it
+                    if github and github not in updated_urls:
+                        updated_urls.append(github)
+                        print(f"Added GitHub URL: {github} from PyPI URL: {u}")
+            
+        # Replace the old list with the updated one
+        candidates[key] = updated_urls
     save_candidates(candidates, cache_path)
     if 'candidate_urls' not in input.columns:
         input['candidate_urls'] = np.nan
@@ -1233,7 +1406,7 @@ def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
     df_exploded = df.explode("candidate_urls").reset_index(drop=True)
     
     # Assign new unique ID
-    df_exploded["id"] = range(1, len(df_exploded) + 1)
+    #df_exploded["id"] = range(1, len(df_exploded) + 1)
     df_exploded.to_csv(output_path, index=False)  # Save the DataFrame to a temporary CSV file
 
     return df_exploded

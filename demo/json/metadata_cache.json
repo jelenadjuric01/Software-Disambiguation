@@ -6973,7 +6973,6 @@
     ],
     "language": "R"
   },
-  "https://www.github.com/expersso/pdftables": {},
   "https://cran.r-project.org/package=spNetwork": {
     "name": "spNetwork",
     "description": "Perform spatial analysis on network.\nImplement several methods for spatial analysis on network: Network Kernel Density estimation,\nbuilding of spatial matrices based on network distance ('listw' objects from 'spdep' package), K functions estimation\nfor point pattern analysis on network, k nearest neighbours on network, reachable area calculation, and graph generation\nReferences: Okabe et al (2019) <doi:10.1080/13658810802475491>;\nOkabe et al (2012, ISBN:978-0470770818);Baddeley et al (2015, ISBN:9781482210200).",
@@ -44625,5 +44624,40 @@
     ],
     "language": "Jupyter Notebook"
   },
-  "https://github.com/alexdobin/STAR": {}
+  "https://github.com/alexdobin/STAR": {
+    "name": "STAR",
+    "description": "RNA-seq aligner",
+    "authors": [
+      "alexdobin"
+    ],
+    "language": "C",
+    "readme_empty": false
+  },
+  "https://github.com/RoyalHaskoningDHV/sam": {
+    "name": "sam",
+    "description": "Python package for time series analysis and machine learning",
+    "authors": [
+      "RoyalHaskoningDHV"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/raymondjacobson/matlab": {
+    "name": "matlab",
+    "description": "matlab for python",
+    "authors": [
+      "raymondjacobson"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/gtors/hh": {
+    "name": "hh",
+    "description": "The enumeration which contains all headers constants from RFC1945, RFC2518, RFC2616.",
+    "authors": [
+      "gtors"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  }
 }

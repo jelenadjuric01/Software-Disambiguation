@@ -1,3 +1,4 @@
+import json
 import sys
 import pandas as pd
 
@@ -68,7 +69,7 @@ metadata_cache_file = "./json/metadata_cache.json"
 CZI = pd.read_csv("./CZI/synonyms_matrix.csv")
 
 
-
+'''
 # Get the synonyms from the file
 get_synonyms_from_file(synonyms_file, input_dataframe,CZI_df=CZI)
 # Find the nearest language for each software
@@ -109,4 +110,16 @@ if output_path_similarities is not None:
     input_dataframe.to_csv(output_path_similarities, index=False)
 grouped = input_dataframe.groupby(['name', 'paragraph', 'doi']).apply(aggregate_group).reset_index()
 grouped.to_csv(output_path_aggregated_groups, index=False)
-print("Processing complete. Output files generated.")
+print("Processing complete. Output files generated.")'''
+df = pd.read_csv("./temp/pairs.csv")
+urls= df['candidate_urls'].tolist()
+with open(metadata_cache_file, 'r', encoding='utf-8') as f:
+    metadata_cache = json.load(f)
+for url in urls:
+    if url in list(metadata_cache.keys()):
+        del metadata_cache[url]
+for key in list(metadata_cache.keys()):
+    if "github.com" in metadata_cache[key]:
+        del metadata_cache[key]
+with open(metadata_cache_file, 'w', encoding='utf-8') as f:
+    json.dump(metadata_cache, f, ensure_ascii=False, indent=4)
