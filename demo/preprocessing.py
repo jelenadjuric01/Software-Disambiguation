@@ -475,6 +475,59 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
         "language"   : "R"
     }
 
+import re
+import requests
+from urllib.parse import urlparse, parse_qs
+from typing import List
+
+def extract_github_url_from_cran_package(cran_url: str) -> List[str]:
+    """
+    Given a CRAN package URL (any format), extract all GitHub URLs from CRANDB metadata.
+
+    Args:
+        cran_url (str): Any CRAN package URL.
+
+    Returns:
+        List[str]: Unique GitHub repository URLs (e.g., https://github.com/user/repo).
+    """
+    # Step 1: Parse package name
+    parsed = urlparse(url)
+    qs     = parse_qs(parsed.query)
+    if "package" in qs:
+        pkg = qs["package"][0]
+    else:
+        m = re.search(r"/package=([^/]+)", parsed.path)
+        if m:
+            pkg = m.group(1)
+        else:
+            parts = parsed.path.strip("/").split("/")
+            if "packages" in parts:
+                pkg = parts[parts.index("packages") + 1]
+            else:
+                raise ValueError(f"Cannot parse package name from URL: {url}")
+
+    # 2) fetch JSON from CRANDB
+    api_url = f"https://crandb.r-pkg.org/{pkg}"
+    resp    = requests.get(api_url)
+    resp.raise_for_status()
+    data    = resp.json()
+
+
+    # Step 3: Gather possible GitHub URLs
+    url_fields = []
+    if "URL" in data:
+        url_fields.extend(re.split(r",|\\s+", data["URL"]))
+    if "BugReports" in data:
+        url_fields.append(data["BugReports"].strip())
+
+    github_urls = set()
+    for u in url_fields:
+        if "github.com" in u.lower():
+            clean = _clean_github_url(u.strip())
+            if clean:
+                github_urls.add(clean)
+
+    return sorted(github_urls)
 
 
 def get_github_user_data(username: str) -> str:
@@ -1207,6 +1260,12 @@ Returns:
                     if github not in updated_urls:
                         updated_urls.append(github)
                         print(f"Added GitHub URL: {github} from CRAN URL: {u}")
+                githubs = extract_github_url_from_cran_package(url)
+                for github in githubs:
+                    if github and github not in updated_urls:
+                        updated_urls.append(github)
+                        print(f"Added GitHub URL: {github} from CRAN URL: {u}")
+                
             if "pypi.org" in domain or "pypi.python.org" in domain:
                 github, description_length = get_github_link_from_pypi(u)
                 if not github and description_length < 400:
@@ -1645,8 +1704,7 @@ def aggregate_group(subdf):
     })
 
 if __name__ == "__main__":
-    url = "https://github.com/alexdobin/STAR"
-    metadata = get_metadata(url)
-    print(f"Metadata for {url}:")
-    for key, value in metadata.items():
-        print(f"{key}: {value}")
+    url = "https://cran.r-project.org/web/packages/tidyverse/index.html"
+    metadata = extract_github_url_from_cran_package(url)
+    print(f"Metadata for {metadata}:")
+    

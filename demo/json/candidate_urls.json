@@ -2114,7 +2114,8 @@
     "https://github.com/Tcat1024/SPC",
     "https://github.com/petewarden/spchcat",
     "https://github.com/susam/spcss",
-    "https://github.com/traveller59/spconv"
+    "https://github.com/traveller59/spconv",
+    "https://pypi.org/project/spc/"
   ],
   "Simulator": [
     "https://cran.r-project.org/package=GlmSimulatoR",
@@ -2127,7 +2128,8 @@
     "https://github.com/carla-simulator/carla",
     "https://github.com/illidanlab/Simulator",
     "https://github.com/lgsvl/simulator",
-    "https://github.com/shinydevelopment/SimulatorStatusMagic"
+    "https://github.com/shinydevelopment/SimulatorStatusMagic",
+    "https://pypi.org/project/simulator/"
   ],
   "HFSS": [
     "https://cran.r-project.org/package=FSSF",
@@ -2149,7 +2151,8 @@
     "https://github.com/charmbracelet/catwalk",
     "https://github.com/knz/catwalk",
     "https://github.com/qlik-oss/catwalk",
-    "https://github.com/tisztamo/Catwalk.jl"
+    "https://github.com/tisztamo/Catwalk.jl",
+    "https://pypi.org/project/Catwalk/"
   ],
   "MATLAB": [
     "https://cran.r-project.org/package=R.matlab",
@@ -2202,6 +2205,7 @@
     "https://github.com/dequelabs/react-axe",
     "https://github.com/jazzband/django-axes",
     "https://github.com/soasme/axe",
+    "https://pypi.org/project/Axe",
     "https://pypi.org/project/Axe/"
   ],
   "ecopy": [
@@ -2215,7 +2219,8 @@
     "https://github.com/naolipth/ECOPY_23241",
     "https://github.com/peterroe/ECopy",
     "https://github.com/sustainableaviation/EcoPyLot",
-    "https://pypi.org/project/ecopy"
+    "https://pypi.org/project/ecopy",
+    "https://pypi.org/project/ecopy/"
   ],
   "libensemble": [
     "https://cran.r-project.org/package=ensembleTax",
@@ -2228,6 +2233,7 @@
     "https://github.com/Libensemble/libensemble",
     "https://github.com/conda-forge/libensemble-feedstock",
     "https://github.com/ytopt-team/ytopt-libensemble",
+    "https://pypi.org/project/libensemble",
     "https://pypi.org/project/libensemble/"
   ],
   "stringdb": [
@@ -2241,6 +2247,7 @@
     "https://github.com/gpp-rnd/stringdb",
     "https://github.com/monoclex/StringDB",
     "https://github.com/tarcisiotmf/sparql-stringdb",
+    "https://pypi.org/project/stringdb",
     "https://pypi.org/project/stringdb/"
   ],
   "WeBIAS": [
@@ -2252,6 +2259,7 @@
     "https://github.com/NathanPB/WebIAS",
     "https://github.com/gabrielpdb/WebIASelfCar",
     "https://github.com/pawelld/webias",
+    "https://pypi.org/project/WeBIAS",
     "https://pypi.org/project/WeBIAS/"
   ],
   "plottools": [
@@ -2266,6 +2274,7 @@
     "https://github.com/ethz-asl/fw_px4_plottools",
     "https://github.com/patrickbryant/PlotTools",
     "https://github.com/ronw/plottools",
+    "https://pypi.org/project/plottools",
     "https://pypi.org/project/plottools/"
   ],
   "Imagery": [
@@ -2279,7 +2288,9 @@
     "https://github.com/jasonmanesis/Satellite-Imagery-Datasets-Containing-Ships",
     "https://github.com/microsoft/satellite-imagery-labeling-tool",
     "https://github.com/prakashclt",
-    "https://github.com/syamkakarla98/Satellite_Imagery_Analysis"
+    "https://github.com/syamkakarla98/Satellite_Imagery_Analysis",
+    "https://pypi.org/project/Imagery",
+    "https://pypi.org/project/Imagery/"
   ],
   "pycsa": [
     "https://cran.r-project.org/package=csa",
@@ -2293,6 +2304,7 @@
     "https://github.com/earthai-tech/pycsamt",
     "https://github.com/nikcleju/pyCSalgos",
     "https://github.com/structurely/csa",
+    "https://pypi.org/project/pycsa",
     "https://pypi.org/project/pycsa/"
   ]
 }

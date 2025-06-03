@@ -462,7 +462,7 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
     resp    = requests.get(api_url)
     resp.raise_for_status()
     data    = resp.json()
-
+    return data
     name        = data.get("Package", pkg)
     description = data.get("Description", "")
 
@@ -1038,6 +1038,6 @@ def extract_somef_metadata_with_RAKE_readme(repo_url: str, somef_path: str = r"D
 
 if __name__ == "__main__":
     # Example usage
-    url = "https://github.com/Shpota/github-activity-generator"
-    metadata = extract_somef_metadata_with_RAKE_readme(url)
+    url = "https://cran.r-project.org/web/packages/tidyverse/index.html"
+    metadata = extract_cran_metadata(url)
     print(metadata)
