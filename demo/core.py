@@ -44,7 +44,7 @@ output_path_updated_with_metadata = "./temp/updated_with_metadata.csv"
 # Add the path to the output file for file with calculated similarities (optional)
 output_path_similarities = "./temp/similarities.csv"
 #Add the path to the model
-model_path = "./model_v17_light.pkl"
+model_path = "./model_v18.pkl"
 if model_path is None or model_path == "":
     model_path = "./model.pkl"
 # Add the path to the output file for file with model input
