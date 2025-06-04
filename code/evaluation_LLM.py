@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # 1. Load your data
 # -----------------------------------------------------------------------------
 test_df = pd.read_csv("code/test_LLM.csv")
-prev_df = pd.read_csv("binary_llm_results_gemma.csv")
+prev_df = pd.read_csv("binary_llm_results_llama.csv")
 
 
 # 3) Merge on the composite key ["name", "doi", "paragraph"].
@@ -62,7 +62,7 @@ Return only a single digit:
     for attempt in range(max_retries + 1):
         try:
             response = client.chat.completions.create(
-                model="gemma2-9b-it",
+                model="llama-3.1-8b-instant",
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.2,
                 max_completion_tokens=1024,
@@ -127,7 +127,7 @@ def compute_binary_metrics(df_results):
 if __name__ == "__main__":
     try:
         results = run_binary_evaluation()
-        results.to_csv("binary_llm_results_gemma_new.csv", index=False)
+        results.to_csv("binary_llm_results_llama_new.csv", index=False)
         compute_binary_metrics(results)
     except KeyboardInterrupt:
         print("\nEvaluation interrupted by user.")

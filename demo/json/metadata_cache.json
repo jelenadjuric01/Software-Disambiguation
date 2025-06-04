@@ -41959,5 +41959,7 @@
     "authors": [],
     "language": "Python"
   },
-  "https://github.com/sanjayaju/stdreg": {}
+  "https://github.com/sanjayaju/stdreg": {
+    "readme_empty": true
+  }
 }
