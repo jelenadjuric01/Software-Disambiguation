@@ -44,7 +44,7 @@ output_path_updated_with_metadata = "./temp/updated_with_metadata.csv"
 # Add the path to the output file for file with calculated similarities (optional)
 output_path_similarities = "./temp/similarities.csv"
 #Add the path to the model
-model_path = "./model_v18.pkl"
+model_path = "./model_v19_xgboost.pkl"
 if model_path is None or model_path == "":
     model_path = "./model.pkl"
 # Add the path to the output file for file with model input
@@ -64,6 +64,7 @@ candidates_cache_file = "./json/candidate_urls.json"
 synonyms_file = "./json/synonym_dictionary.json"
 metadata_cache_file = "./json/metadata_cache.json"
 
+print("Loading CZI data...")
 CZI = pd.read_csv("./CZI/synonyms_matrix.csv")
 
 
