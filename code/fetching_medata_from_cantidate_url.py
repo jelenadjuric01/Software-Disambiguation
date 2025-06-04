@@ -1038,6 +1038,22 @@ def extract_somef_metadata_with_RAKE_readme(repo_url: str, somef_path: str = r"D
 
 if __name__ == "__main__":
     # Example usage
-    url = "https://github.com/tanaylab/tgstat"
-    metadata = extract_somef_metadata_with_RAKE_readme(url)
-    print(metadata)
+    
+    corpus = pd.read_excel("corpus/corpus_v3_15.xlsx")      # assumes there's a column named "name" and a column named "url"
+    czi_test = pd.read_csv("corpus/CZI_sampled/CZI_test.csv",delimiter=';')           # assumes there's a column named "name" in here as well
+
+    # 2) Merge them on "name" (left‐join so that every row in CZI_test is preserved)
+    #    We'll pull in corpus["url"] and call it "ground truth"
+    corpus_unique = corpus.drop_duplicates(subset=["name"], keep="first")
+
+    czi_test['ground truth'] = czi_test['name'].map(corpus_unique.set_index('name')['url (ground truth)'])
+
+    # 3) Now `merged` contains all original columns from CZI_test,
+    #    plus a new "ground truth" column (URL from corpus if it matched, NaN otherwise).
+    #    If you want to overwrite CZI_test in place, you can simply do:
+    
+
+    # 4) (Optional) Save the updated CZI_test back to CSV
+    czi_test.to_csv("corpus/CZI_sampled/CZI_test_with_ground_truth.csv", index=False)
+
+    print(czi_test.head())
