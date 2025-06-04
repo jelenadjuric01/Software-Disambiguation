@@ -41766,7 +41766,15 @@
     ],
     "language": "R"
   },
-  "https://github.com/thelahunginjeet/pycsa": {},
+  "https://github.com/thelahunginjeet/pycsa": {
+    "name": "pycsa",
+    "description": "python code for correlated substitution analysis",
+    "authors": [
+      "Kevin Brown"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
   "https://pypi.org/project/beautifulsoup4": {
     "name": "beautifulsoup4",
     "description": "Screen-scraping library",
