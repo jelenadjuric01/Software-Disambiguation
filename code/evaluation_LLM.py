@@ -8,8 +8,20 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # -----------------------------------------------------------------------------
 # 1. Load your data
 # -----------------------------------------------------------------------------
-CSV_PATH = "D:/MASTER/TMF/Software-Disambiguation/code/test_LLM.csv"
-df = pd.read_csv(CSV_PATH)
+test_df = pd.read_csv("code/test_LLM.csv")
+prev_df = pd.read_csv("binary_llm_results_qwen.csv")
+
+
+# 3) Merge on the composite key ["name", "doi", "paragraph"].
+merged = test_df.merge(
+    prev_df[["name", "doi", "candidate_urls", "predicted_label"]],
+    on=["name", "doi", "candidate_urls"],
+    how="left"
+)
+
+# 4) Filter to only those rows where predicted_label is still NaN
+df = merged[merged["predicted_label"].isna()].copy().reset_index(drop=True)
+
 
 # -----------------------------------------------------------------------------
 # 2. Initialize Groq client
@@ -50,10 +62,10 @@ Return only a single digit:
     for attempt in range(max_retries + 1):
         try:
             response = client.chat.completions.create(
-                model="llama-3.1-8b-instant",
+                model="qwen-qwq-32b",
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.2,
-                max_completion_tokens=1024,
+                max_completion_tokens=4096,
                 stop=None,
             )
             reply = response.choices[0].message.content.strip()
@@ -115,7 +127,7 @@ def compute_binary_metrics(df_results):
 if __name__ == "__main__":
     try:
         results = run_binary_evaluation()
-        results.to_csv("binary_llm_results_llama.csv", index=False)
+        results.to_csv("binary_llm_results_qwen_new.csv", index=False)
         compute_binary_metrics(results)
     except KeyboardInterrupt:
         print("\nEvaluation interrupted by user.")

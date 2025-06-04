@@ -41919,5 +41919,36 @@
   },
   "https://github.com/tidyverse/ggplot3": {
     "readme_empty": true
+  },
+  "https://pypi.org/project/requests": {
+    "name": "requests",
+    "description": "Python HTTP for Humans.",
+    "authors": [
+      "Kenneth Reitz"
+    ],
+    "language": "Python"
+  },
+  "https://pypi.org/project/pycsa/": {
+    "name": "pycsa",
+    "description": "Python implementation of coupled simulated annealing (CSA)",
+    "authors": [
+      "Boudhayan Banerjee",
+      "Evan 'Pete' Walsh"
+    ],
+    "language": "Python"
+  },
+  "https://pypi.org/project/numpy": {
+    "name": "numpy",
+    "description": "Fundamental package for array computing in Python",
+    "authors": [
+      "Travis E. Oliphant et al."
+    ],
+    "language": "Python"
+  },
+  "https://pypi.org/project/pandas": {
+    "name": "pandas",
+    "description": "Powerful data structures for data analysis, time series, and statistics",
+    "authors": [],
+    "language": "Python"
   }
 }

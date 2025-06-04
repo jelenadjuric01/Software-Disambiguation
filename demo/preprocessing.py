@@ -1278,7 +1278,7 @@ Returns:
                 github, description_length = get_github_link_from_pypi(u)
                 if not github and description_length < 400:
                     updated_urls.remove(u)
-                    print(f"Removed PyPI URL: {u} (no GitHub link found or description too short)")
+                    print(f"Removed PyPI URL: {u} (no GitHub link found and description too short)")
                     
                 else:
                     # If we have a valid GitHub link, replace the PyPI URL with it
@@ -1288,7 +1288,15 @@ Returns:
             
         # Replace the old list with the updated one
         candidates[key] = updated_urls
-    save_candidates(candidates, cache_path)
+    cleaned_dict: dict[str, list[str]] = {}
+    for key, url_list in candidates.items():
+        cleaned_list = []
+        for u in url_list:
+            cleaned_list.append(_normalize_url_final(u))
+        cleaned_dict[key] = cleaned_list
+    dedupe_candidates(cleaned_dict)
+    save_candidates(cleaned_dict, cache_path)
+    candidates = cleaned_dict
     if 'candidate_urls' not in input.columns:
         input['candidate_urls'] = np.nan
     input['candidate_urls'] = input['name'].map(candidates).astype(str)
@@ -1710,7 +1718,27 @@ def aggregate_group(subdf):
         'urls': ', '.join(subdf.loc[subdf['prediction'] == 1, 'candidate_urls'].dropna().astype(str)),
         'not_urls': ', '.join(subdf.loc[subdf['prediction'] == 0, 'candidate_urls'].dropna().astype(str)),
     })
-
+def _normalize_url_final(url: str) -> str:
+    """
+    Normalize a single URL so that:
+      - GitHub (github.com) and CRAN (cran.r-project.org) URLs have NO trailing slash.
+      - PyPI (pypi.org) URLs HAVE a trailing slash.
+      - Everything else is returned as‐is.
+    """
+    parsed = urlparse(url)
+    domain = parsed.netloc.lower()
+    path = parsed.path or ""
+    
+    if domain.endswith("github.com") or domain.endswith("cran.r-project.org"):
+        # remove any trailing slash from the path
+        path = path.rstrip("/")
+    elif domain.endswith("pypi.org"):
+        # ensure there IS exactly one trailing slash
+        if not path.endswith("/"):
+            path = path + "/"
+    # rebuild URL with the (possibly) modified path
+    cleaned = parsed._replace(path=path)
+    return urlunparse(cleaned)
 if __name__ == "__main__":
     url = "https://cran.r-project.org/web/packages/tidyverse/index.html"
     metadata = extract_github_url_from_cran_package(url)
