@@ -936,8 +936,8 @@ def extract_somef_metadata_with_RAKE_readme(repo_url: str, somef_path: str = r"D
             "-r", repo_url,
             "-o", output_path,
             "-t", "0.93",
-            "-m",
-            "-kt", path
+            "-m"
+            #"-kt", path
         ], cwd=somef_path, check=True)
 
         # Load the JSON output into Python
@@ -1038,6 +1038,6 @@ def extract_somef_metadata_with_RAKE_readme(repo_url: str, somef_path: str = r"D
 
 if __name__ == "__main__":
     # Example usage
-    url = "https://cran.r-project.org/web/packages/tidyverse/index.html"
-    metadata = extract_cran_metadata(url)
+    url = "https://github.com/tanaylab/tgstat"
+    metadata = extract_somef_metadata_with_RAKE_readme(url)
     print(metadata)

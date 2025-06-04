@@ -198,7 +198,7 @@ Returns:
 
 if __name__ == "__main__":
     # 1) Load & split
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.15/model_input.csv")
+    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.17/model_input.csv")
     X_trainval, X_test, y_trainval, y_test = split_data(df, "true_label", test_size=0.2)
     
     
@@ -212,7 +212,7 @@ if __name__ == "__main__":
 
     # 3) 5-fold cross-validation on the 80% train+val only:
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-    models_to_try = ['Random Forest']
+    models_to_try = ['XGBoost']
 
     for name in models_to_try:
         y_true_oof, y_pred_oof = [], []
@@ -286,12 +286,11 @@ if __name__ == "__main__":
 
         # Bundle the preprocessor and the trained model
         pipeline_with_model = Pipeline([
-            ("preprocessing", preprocessor),
             ("classifier", model)
         ])
 
         # Save using cloudpickle
-        with open("./demo/model.pkl", "wb") as f:
+        with open("./demo/model_v17_xgboost.pkl", "wb") as f:
             cloudpickle.dump(pipeline_with_model, f)
 
         print("✅ Pipeline saved to final_pipeline.pkl using cloudpickle")

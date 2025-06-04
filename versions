@@ -17,3 +17,4 @@ Version 3.13 - the same as version 3.12, but we remove keywords completely and d
 Version 3.14 - the same as version 3.12, but we remove keywords completely and discard all GitHub URLs that have empty README file (except repository which cran authored)
 Version 3.15 - the same as version 3.12, but we remove keywords completely and discard PyPI URLs that have no GitHub and description shorter than 400 characters and all GitHubs that have empty README files
 Version 3.16 - the same as version 3.12, but we remove keywords completely and discard PyPI URLs that have no GitHub and description shorter than 300 characters and all GitHubs that have empty README files
+Version 3.17 - the same as version 3.15, but when searching URLs for CRAN we add github in mentioned in the page, resultsing in almost 10000 rows

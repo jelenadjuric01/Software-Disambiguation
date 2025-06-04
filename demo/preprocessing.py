@@ -480,7 +480,7 @@ import requests
 from urllib.parse import urlparse, parse_qs
 from typing import List
 
-def extract_github_url_from_cran_package(cran_url: str) -> List[str]:
+def extract_github_url_from_cran_package(url: str) -> List[str]:
     """
     Given a CRAN package URL (any format), extract all GitHub URLs from CRANDB metadata.
 
@@ -589,41 +589,48 @@ def extract_somef_metadata(repo_url: str) -> dict:
         if sys.platform == "win32":
             # Prefix with \\?\ to allow long Windows paths
             path = "\\\\?\\" + path
-
-        # Run SOMEF with poetry
-        subprocess.run([
-            "poetry", "run", "somef", "describe",
-            "-r", repo_url,
-            "-o", output_path,
-            "-t", "0.93",
-            "-m",
-            "-kt", path
-        ], cwd=somef_path, check=True)
+        base_cmd = [
+                "poetry", "run", "somef", "describe",
+                "-r", repo_url,
+                "-o", output_path,
+                "-t", "0.93",
+                "-m"
+            ]
+        cmds = [
+                base_cmd + ["-kt", path],  # first attempt
+                base_cmd                     # retry without -kt
+            ]
+        
+        # Load the JSON output into Python
+        for cmd in cmds:
+            try:
+                subprocess.run(cmd, cwd=somef_path, check=True)
+                break
+            except subprocess.CalledProcessError as e:
+                print(f"Command failed ({' '.join(cmd)}): {e}")
+        else:
+            # both attempts failed
+            print(f"All SOMEF attempts failed for {repo_url}")
+            return {}
 
         # Load the JSON output into Python
         with open(output_path, "r", encoding="utf-8") as f:
             metadata = json.load(f)
 
-        def get_first_value(key: str) -> str:
-            entries = metadata.get(key, [{}])
-            if not entries or not isinstance(entries, list):
-                return ""
-            return entries[0].get("result", {}).get("value", "") or ""
+        def get_first_value(key):
+            return metadata.get(key, [{}])[0].get("result", {}).get("value", "")
 
-        # 1) Extract name, description, owner, and programming languages
-        name = get_first_value("name")
-        text_description = get_first_value("description")
+        # Split keywords string into list
+        
+        # "owner" is treated as author (GitHub username)
         owner = get_first_value("owner")
 
-       
-        # 3) Primary programming language
+        # Determine primary language by largest code size
         langs = metadata.get("programming_languages", [])
         primary_language = ""
         if langs:
             primary = max(langs, key=lambda x: x.get("result", {}).get("size", 0))
             primary_language = primary.get("result", {}).get("value", "")
-
-        # 4) Check if README is empty
         readme_empty = True
         readme_urls = metadata.get("readme_url", [])
 
@@ -651,32 +658,33 @@ def extract_somef_metadata(repo_url: str) -> dict:
                 except Exception:
                     # On request failure, just move on to the next URL
                     continue
-
-
-        # 5) Prepare return dictionary
         return {
-            "name": name,
-            "description": text_description,
-            "authors": [owner] if owner else [],
+            "name": get_first_value("name"),
+            "description": get_first_value("description"),
+            "authors": [get_github_user_data(owner)] if owner else [],
             "language": primary_language,
             "readme_empty": readme_empty
         }
 
-    except Exception:
-        return {}
     finally:
-        # Clean up the temporary SOMEF output file
+        # Cleanup: delete temp JSON and clear out the temp directory
         try:
             os.remove(output_path)
-        #path = "D:\\MASTER\\TMF\\somef\\temp"
+        except OSError:
+            pass
+
+        if os.path.isdir(path):
             for entry in os.scandir(path):
                 entry_path = entry.path
                 if entry.is_dir(follow_symlinks=False):
-                    shutil.rmtree(entry_path) 
+                    shutil.rmtree(entry_path, ignore_errors=True)
                 else:
-                    os.remove(entry_path)
-        except OSError:
-            pass
+                    try:
+                        os.remove(entry_path)
+                    except OSError:
+                        pass
+
+
 
 #Function that retrieves the metadata from any link
 def get_metadata(url: str) -> dict:
@@ -706,7 +714,7 @@ def get_metadata(url: str) -> dict:
     if "github.com" in domain:
         metadata = extract_somef_metadata(url)
         if metadata and metadata.get("readme_empty") and 'cran' not in metadata.get("authors", []):
-            return {}
+            return {"readme_empty": True}
         return metadata
 
     # CRAN package (common formats: cran.r-project.org or pkg.go.dev/r)

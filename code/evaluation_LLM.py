@@ -115,7 +115,7 @@ def compute_binary_metrics(df_results):
 if __name__ == "__main__":
     try:
         results = run_binary_evaluation()
-        results.to_csv("binary_llm_results.csv", index=False)
+        results.to_csv("binary_llm_results_llama.csv", index=False)
         compute_binary_metrics(results)
     except KeyboardInterrupt:
         print("\nEvaluation interrupted by user.")
