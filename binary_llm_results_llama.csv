@@ -1,4 +1,4 @@
-software,doi,candidate_url,true_label,predicted_label,correct
+name,doi,candidate_urls,true_label,predicted_label,correct
 star,10.1099/mgen.0.000319,https://github.com/google/web-starter-kit,0,0.0,1
 assignPOP,10.1111/eva.12849,https://cran.r-project.org/package=Massign,0,1.0,0
 readr,10.1111/test.12258,https://github.com/cran/readr,1,1.0,1

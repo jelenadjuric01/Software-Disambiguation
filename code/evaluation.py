@@ -32,18 +32,3 @@ def evaluation(df: pd.DataFrame) -> None:
     print(classification_report(y_true, y_pred, target_names=['non-match','match']))
     print()
     
-if __name__ == "__main__":
-    import pandas as pd
-
-# 1. Load the workbook (adjust path if needed)
-    df = pd.read_excel('D:\MASTER\TMF\Software-Disambiguation\corpus\corpus_v3_2.xlsx')
-
-    # 2. Randomly sample 20% of the rows
-    #    Setting a random_state ensures reproducibility; change or remove for different draws
-    sampled = df.sample(frac=0.2, random_state=42)
-
-    # 3. (Optional) Inspect the first few sampled rows
-    print(sampled.head())
-
-    # 4. (Optional) Save your sample to a new Excel file
-    sampled.to_excel('corpus_v3_sampled20.xlsx', index=False)
