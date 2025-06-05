@@ -1354,7 +1354,12 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
                 print(f"🔍 Processing: {url}")
                 metadata_cache[url] = get_metadata(url)
             identifier += 1
-
+    except KeyboardInterrupt:
+        print("🔍 Process interrupted.")
+        with open(output_json_path, "w", encoding="utf-8") as f:
+            json.dump(metadata_cache, f, indent=2, ensure_ascii=False)
+        print(f"⚠️ Error at {url!r}: {e!r}  → cache saved to {output_json_path}")
+        raise
     except Exception as e:
         # On first error: save and then re-raise
         with open(output_json_path, "w", encoding="utf-8") as f:

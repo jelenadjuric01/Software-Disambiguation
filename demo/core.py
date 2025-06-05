@@ -63,7 +63,7 @@ if output_path_aggregated_groups is None or output_path_aggregated_groups == "":
 candidates_cache_file = "./json/candidate_urls.json"
 synonyms_file = "./json/synonym_dictionary.json"
 metadata_cache_file = "./json/metadata_cache.json"
-
+'''
 print("Loading CZI data...")
 CZI = pd.read_csv("./CZI/synonyms_matrix.csv")
 
@@ -87,7 +87,8 @@ input_dataframe.fillna(value=np.nan, inplace=True)
 # Save the updated DataFrame to a new CSV file (optional)
 if output_file_corpus is not None and output_file_corpus != "":
     input_dataframe.to_csv(output_file_corpus, index=False)
-
+'''
+input_dataframe = pd.read_csv(output_file_corpus)
 metadata_cache = dictionary_with_candidate_metadata(input_dataframe, metadata_cache_file)
 input_dataframe= make_pairs(input_dataframe,output_path_pairs)
 
