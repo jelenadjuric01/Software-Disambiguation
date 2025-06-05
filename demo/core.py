@@ -44,7 +44,7 @@ output_path_updated_with_metadata = "./temp/updated_with_metadata.csv"
 # Add the path to the output file for file with calculated similarities (optional)
 output_path_similarities = "./temp/similarities.csv"
 #Add the path to the model
-model_path = "./model_v19_xgboost.pkl"
+model_path = "./model.pkl"
 if model_path is None or model_path == "":
     model_path = "./model.pkl"
 # Add the path to the output file for file with model input
@@ -97,6 +97,9 @@ input_dataframe= compute_similarity_test(input_dataframe,output_path_similaritie
 model_input = input_dataframe[['name_metric', 'paragraph_metric','language_metric','synonym_metric','author_metric']].copy()
 model_input.to_csv(model_input_path, index=False)
 
+
+input_dataframe = pd.read_csv(output_path_similarities)
+model_input = pd.read_csv(model_input_path)
 #Loading model
 print("Predicting with the model...")
 with open(model_path, "rb") as f:

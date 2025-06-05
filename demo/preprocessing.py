@@ -1159,13 +1159,13 @@ def get_github_link_from_pypi(url: str) -> Tuple[str,int]:
         pkg = parts[0] if parts else None
 
     if not pkg:
-        return ""
+        return "",0
 
     # 2) Fetch JSON metadata
     api_url = f"https://pypi.org/pypi/{pkg}/json"
     resp = requests.get(api_url)
     if resp.status_code != 200:
-        return ""
+        return "",0
     info: Dict[str, Any] = resp.json().get("info", {})
     full_description = (info.get("description") or "").strip()
     description_length = len(full_description)  
@@ -1739,8 +1739,5 @@ def _normalize_url_final(url: str) -> str:
     # rebuild URL with the (possibly) modified path
     cleaned = parsed._replace(path=path)
     return urlunparse(cleaned)
-if __name__ == "__main__":
-    url = "https://cran.r-project.org/web/packages/tidyverse/index.html"
-    metadata = extract_github_url_from_cran_package(url)
-    print(f"Metadata for {metadata}:")
-    
+
+

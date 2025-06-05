@@ -31,15 +31,3 @@ def evaluation(df: pd.DataFrame) -> None:
     # if you want the full breakdown:
     print(classification_report(y_true, y_pred, target_names=['non-match','match']))
     print()
-    
-if __name__ == "__main__":
-    df = pd.read_csv("binary_llm_results_qwen_stacked.csv")
-    y_true = df['true_label']
-    y_pred = df['predicted_label']
-    p = precision_score(y_true, y_pred, zero_division=0)
-    r = recall_score(y_true, y_pred, zero_division=0)
-    f1 = f1_score(y_true, y_pred, zero_division=0)
-    
-    print(f"Precision: {p:.2f}")
-    print(f"Recall:    {r:.2f}")
-    print(f"F1-score:  {f1:.2f}\n")
