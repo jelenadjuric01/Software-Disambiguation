@@ -1247,7 +1247,9 @@ Returns:
     # 4) Filter out CRAN refman links
     filter_cran_refs(candidates)
     # 5) Save candidates
-    for key, urls in candidates.items():
+    keys = input["name"].unique()
+    for key in keys:
+        urls = candidates.get(key, [])
         # Work on a copy of the original list so we can modify freely.
         updated_urls = list(urls)
         print(f"Processing {key}")

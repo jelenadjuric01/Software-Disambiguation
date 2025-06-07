@@ -47,7 +47,6 @@
     "https://github.com/collegue1337/BeautifulSoup4",
     "https://github.com/icodeu/BeautifulSoup",
     "https://github.com/wention/BeautifulSoup4",
-    "https://pypi.org/project/BeautifulSoup",
     "https://pypi.org/project/BeautifulSoup/",
     "https://pypi.org/project/beautifulsoup4/"
   ],
@@ -97,7 +96,6 @@
     "https://github.com/ropensci/randgeo",
     "https://github.com/sfirke/janitor",
     "https://github.com/wsvincent/awesome-django",
-    "https://pypi.org/project/Django",
     "https://pypi.org/project/Django/"
   ],
   "FinCal": [
@@ -131,9 +129,7 @@
     "https://github.com/miguelgrinberg/flasky",
     "https://github.com/pallets-eco/flask-admin",
     "https://github.com/pallets/flask",
-    "https://github.com/pallets/flask/",
     "https://github.com/r-lidar/rlas",
-    "https://pypi.org/project/Flask",
     "https://pypi.org/project/Flask/"
   ],
   "GillespieSSA": [
@@ -818,7 +814,6 @@
     "https://github.com/collegue1337/BeautifulSoup4",
     "https://github.com/meteopavel/BeautifulSoup4_PEP_Parser",
     "https://github.com/wention/BeautifulSoup4",
-    "https://pypi.org/project/beautifulsoup4",
     "https://pypi.org/project/beautifulsoup4/"
   ],
   "beepr": [
@@ -1622,7 +1617,6 @@
     "https://github.com/rougier/matplotlib-tutorial",
     "https://github.com/terrytangyuan/autoplotly",
     "https://github.com/xuan-liang/ggmatplot",
-    "https://pypi.org/project/matplotlib",
     "https://pypi.org/project/matplotlib/"
   ],
   "methylcheck": [
@@ -1868,7 +1862,6 @@
     "https://github.com/rougier/from-python-to-numpy",
     "https://github.com/rougier/numpy-100",
     "https://github.com/tkonopka/umap",
-    "https://pypi.org/project/numpy",
     "https://pypi.org/project/numpy/"
   ],
   "onnx": [
@@ -1982,7 +1975,6 @@
     "https://github.com/pandas-dev/pandas",
     "https://github.com/sinaptik-ai/pandas-ai",
     "https://github.com/unina-sfere/adass",
-    "https://pypi.org/project/pandas",
     "https://pypi.org/project/pandas/"
   ],
   "paramtest": [
@@ -2177,8 +2169,6 @@
     "https://github.com/pytorch/pytorch",
     "https://github.com/wenjie2wang/touch",
     "https://github.com/yunjey/pytorch-tutorial",
-    "https://pypi.org/project/pytorch",
-    "https://pypi.org/project/pytorch/",
     "https://pypi.org/project/torch/"
   ],
   "pytplot": [
@@ -2290,7 +2280,6 @@
     "https://github.com/shenal-dkumara/rquest",
     "https://github.com/thijsjanzen/treestats",
     "https://github.com/thomasp85/reqres",
-    "https://pypi.org/project/requests",
     "https://pypi.org/project/requests/"
   ],
   "rglobi": [
@@ -2358,7 +2347,6 @@
     "https://github.com/scikit-learn-contrib/imbalanced-learn",
     "https://github.com/scikit-learn-contrib/sklearn-pandas",
     "https://github.com/scikit-learn/scikit-learn",
-    "https://pypi.org/project/scikit-learn",
     "https://pypi.org/project/scikit-learn/"
   ],
   "sets": [
@@ -2770,7 +2758,6 @@
     "https://github.com/tensorflow/models",
     "https://github.com/tensorflow/tensorflow",
     "https://github.com/tensorflow/tfjs",
-    "https://pypi.org/project/tensorflow",
     "https://pypi.org/project/tensorflow/"
   ],
   "tidyr": [
@@ -3194,8 +3181,7 @@
     "https://github.com/petewarden/spchcat",
     "https://github.com/statjs/bspcov",
     "https://github.com/susam/spcss",
-    "https://github.com/traveller59/spconv",
-    "https://pypi.org/project/spc/"
+    "https://github.com/traveller59/spconv"
   ],
   "Simulator": [
     "https://cran.r-project.org/package=GlmSimulatoR",
@@ -3247,8 +3233,7 @@
     "https://github.com/knz/catwalk",
     "https://github.com/nathaneastwood/catalog",
     "https://github.com/qlik-oss/catwalk",
-    "https://github.com/tisztamo/Catwalk.jl",
-    "https://pypi.org/project/Catwalk/"
+    "https://github.com/tisztamo/Catwalk.jl"
   ],
   "MATLAB": [
     "https://cran.r-project.org/package=R.matlab",
@@ -3326,7 +3311,6 @@
     "https://github.com/julienvollering/MIAmaxent",
     "https://github.com/mxjki/EfficientMaxEigenpair",
     "https://github.com/soasme/axe",
-    "https://pypi.org/project/Axe",
     "https://pypi.org/project/Axe/"
   ],
   "ecopy": [
@@ -3347,7 +3331,6 @@
     "https://github.com/sustainableaviation/EcoPyLot",
     "https://github.com/termehs/netropy",
     "https://github.com/wlandau/eply",
-    "https://pypi.org/project/ecopy",
     "https://pypi.org/project/ecopy/"
   ],
   "libensemble": [
@@ -3368,7 +3351,6 @@
     "https://github.com/l-ramirez-lopez/resemble",
     "https://github.com/vcerqueira/tsensembler",
     "https://github.com/ytopt-team/ytopt-libensemble",
-    "https://pypi.org/project/libensemble",
     "https://pypi.org/project/libensemble/"
   ],
   "stringdb": [
@@ -3412,7 +3394,6 @@
     "https://github.com/stefanangrick/BIS",
     "https://github.com/umr-amap/BIOMASS",
     "https://github.com/zejiang-unsw/WASP",
-    "https://pypi.org/project/WeBIAS",
     "https://pypi.org/project/WeBIAS/"
   ],
   "plottools": [
@@ -3437,7 +3418,6 @@
     "https://github.com/patrickbryant/PlotTools",
     "https://github.com/ronw/plottools",
     "https://github.com/swarchal/platetools",
-    "https://pypi.org/project/plottools",
     "https://pypi.org/project/plottools/"
   ],
   "Imagery": [
@@ -3482,7 +3462,6 @@
     "https://github.com/nikcleju/pyCSalgos",
     "https://github.com/structurely/csa",
     "https://github.com/thelahunginjeet/pycsa",
-    "https://pypi.org/project/pycsa",
     "https://pypi.org/project/pycsa/"
   ],
   "Circos": [
