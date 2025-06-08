@@ -34,7 +34,7 @@ if input_file is None or input_file == "":
         'candidate_urls': [candidate_urls]
     })
 else:
-    input_dataframe = pd.read_csv(input_file)
+    input_dataframe = pd.read_csv(input_file, delimiter = ';')
 # Add the path to the output file for file with added languages, synonyms, authors and candidate URLs (optional)
 output_file_corpus = './temp/corpus_with_candidates.csv'
 # Add the path to the output file for file with pairs of software names with candidate URLs (optional)

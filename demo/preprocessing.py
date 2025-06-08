@@ -1749,11 +1749,17 @@ def _normalize_url_final(url: str) -> str:
 
 if __name__ == "__main__":
     # Example usage
-    for url in [
-    "https://github.com/hazimehh/L0Learn\\nhttps:",
-    "https://github.com/foo/bar.git",
-    "https://github.com/foo/bar/tree/master",
-    "https://github.com/foo/bar.v1.2",
-    "https://github.com/foo/b@r",    # invalid char in repo
-]:
-        print(f"{url!r:50} → {_clean_github_url(url)!r}")
+    with open("demo/json/metadata_cache.json", "r", encoding="utf-8") as f:
+        metadata = json.load(f)
+    with open("demo/json/candidate_urls.json", "r") as f:
+        candidates = json.load(f)
+    metadata_keys = set(metadata.keys())
+    candidates_keys = set()
+    for key,values in candidates.items():
+        candidates_keys.update(values)
+    for key in metadata_keys:
+        if key not in candidates_keys:
+            print(f"Metadata for {key} not found in candidates.")
+            del metadata[key]
+    with open("demo/json/metadata_cache.json", "w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=2, ensure_ascii=False)

@@ -67,12 +67,6 @@
     ],
     "language": "Python"
   },
-  "https://pypi.org/project/statistix/": {
-    "name": "statistix",
-    "description": "Coming soon",
-    "authors": [],
-    "language": "Python"
-  },
   "https://pypi.org/project/TreeToReads/": {
     "name": "TreeToReads",
     "description": "Tree to Reads - A python script to to read a tree, resolve polytomies, generate mutations and simulate NGS reads.",
@@ -85,20 +79,6 @@
     "name": "beautifulsoup4",
     "description": "Screen-scraping library",
     "authors": [],
-    "language": "Python"
-  },
-  "https://pypi.org/project/whoa/": {
-    "name": "whoa",
-    "description": "defn: define infrastructure",
-    "authors": [],
-    "language": "Python"
-  },
-  "https://pypi.org/project/modes/": {
-    "name": "modes",
-    "description": "Photonic mode solver.",
-    "authors": [
-      "Jean-Luc Tambasco"
-    ],
     "language": "Python"
   },
   "https://pypi.org/project/httplib2/": {
@@ -117,35 +97,11 @@
     ],
     "language": "Python"
   },
-  "https://pypi.org/project/pytorch/": {
-    "name": "pytorch",
-    "description": "",
-    "authors": [
-      "Soumith Chintala"
-    ],
-    "language": "Python"
-  },
   "https://pypi.org/project/CoAPthon/": {
     "name": "CoAPthon",
     "description": "CoAPthon is an implementation of the CoAP protocol.",
     "authors": [
       "Giacomo Tanganelli"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/tsutils/": {
-    "name": "tsutils",
-    "description": "A collection of helper commands for Red-DiscordBot",
-    "authors": [
-      "The Tsubotki Team"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/dae/": {
-    "name": "dae",
-    "description": "da Engine that provides toolbox and namespace extensions for writing modular cherrypy applications.",
-    "authors": [
-      "Daniel Skinner"
     ],
     "language": "Python"
   },
@@ -243,14 +199,6 @@
     ],
     "language": "Python"
   },
-  "https://pypi.org/project/swirl/": {
-    "name": "swirl",
-    "description": "Some sugar for asynchronous Tornado code",
-    "authors": [
-      "Eric Naeseth"
-    ],
-    "language": "Python"
-  },
   "https://pypi.org/project/treehouse/": {
     "name": "treehouse",
     "description": "High-performance tree traversal",
@@ -297,14 +245,6 @@
     "authors": [],
     "language": "Python"
   },
-  "https://pypi.org/project/earth/": {
-    "name": "earth",
-    "description": "All of it",
-    "authors": [
-      "Nathan Longbotham"
-    ],
-    "language": "Python"
-  },
   "https://pypi.org/project/Flask/": {
     "name": "Flask",
     "description": "A simple framework for building complex web applications.",
@@ -316,14 +256,6 @@
     "description": "lunar is a WSGI based webframework in pure Python, without any third-party dependency.",
     "authors": [
       "jasonlyu"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/finCal/": {
-    "name": "finCal",
-    "description": "finCal creates calendar for stock and futures exchanges",
-    "authors": [
-      "The PyData Development Team"
     ],
     "language": "Python"
   },
@@ -339,14 +271,6 @@
     "name": "spektral",
     "description": "Graph Neural Networks with Keras and TensorFlow.",
     "authors": [],
-    "language": "Python"
-  },
-  "https://pypi.org/project/panda/": {
-    "name": "panda",
-    "description": "A Python implementation of the Panda REST interface",
-    "authors": [
-      "pandastream.com"
-    ],
     "language": "Python"
   },
   "https://pypi.org/project/chemometrics/": {
@@ -389,12 +313,6 @@
     ],
     "language": "Python"
   },
-  "https://pypi.org/project/activity/": {
-    "name": "activity",
-    "description": "",
-    "authors": [],
-    "language": "Python"
-  },
   "https://pypi.org/project/POAP/": {
     "name": "POAP",
     "description": "Python Optimization Asynchronous Plumbing.",
@@ -427,14 +345,6 @@
     ],
     "language": "Python"
   },
-  "https://pypi.org/project/pyphysio/": {
-    "name": "pyphysio",
-    "description": "Python library for physiological signals analysis (IBI & HRV, ECG, BVP, EDA, RESP, fNIRS, ...)",
-    "authors": [
-      "a.bizzego"
-    ],
-    "language": "Python"
-  },
   "https://pypi.org/project/shiny/": {
     "name": "shiny",
     "description": "A web development framework for Python.",
@@ -454,22 +364,6 @@
     "description": "TensorFlow is an open source machine learning framework for everyone.",
     "authors": [
       "Google Inc."
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/pyqi/": {
-    "name": "pyqi",
-    "description": "pyqi: expose your interface",
-    "authors": [
-      "Greg Caporaso"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/pdftables/": {
-    "name": "pdftables",
-    "description": "Parses PDFs and extracts what it believes to be tables.",
-    "authors": [
-      "ScraperWiki Ltd"
     ],
     "language": "Python"
   },
@@ -557,26 +451,10 @@
     "authors": [],
     "language": "Python"
   },
-  "https://pypi.org/project/cGraph/": {
-    "name": "cGraph",
-    "description": "Graph C extension with fast diameter computations.",
-    "authors": [
-      "UNKNOWN"
-    ],
-    "language": "Python"
-  },
   "https://pypi.org/project/scikit-learn/": {
     "name": "scikit-learn",
     "description": "A set of python modules for machine learning and data mining",
     "authors": [],
-    "language": "Python"
-  },
-  "https://pypi.org/project/insol/": {
-    "name": "insol",
-    "description": "insol: Solr search server API for python",
-    "authors": [
-      "Michael Domanski"
-    ],
     "language": "Python"
   },
   "https://pypi.org/project/kontroller/": {
@@ -633,14 +511,6 @@
     "description": "Hierarchical probabilistic models for multiple gene/variant associations based on NGS data",
     "authors": [
       "Dimitrios V. Vavoulis"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/tidyverse/": {
-    "name": "tidyverse",
-    "description": "",
-    "authors": [
-      "edavidaja"
     ],
     "language": "Python"
   },
@@ -7308,150 +7178,11 @@
     ],
     "language": "R"
   },
-  "https://cran.r-project.org/package=BioPred": {
-    "name": "BioPred",
-    "description": "Provides functions for training extreme gradient boosting model using propensity score A-learning and weight-learning methods. For further details, see Liu et al. (2024) <doi:10.1093/bioinformatics/btae592>.",
-    "authors": [
-      "Zihuan Liu",
-      "Yan Sun",
-      "Xin Huang"
-    ],
-    "language": "R"
-  },
-  "https://cran.r-project.org/package=ioanalysis": {
-    "name": "ioanalysis",
-    "description": "Calculates fundamental IO matrices (Leontief, Wassily W. (1951) <doi:10.1038/scientificamerican1051-15>); within period analysis via various rankings and coefficients (Sonis and Hewings (2006) <doi:10.1080/09535319200000013>, Blair and Miller (2009) <ISBN:978-0-521-73902-3>, Antras et al (2012) <doi:10.3386/w17819>, Hummels, Ishii, and Yi (2001) <doi:10.1016/S0022-1996(00)00093-3>); across period analysis with impact analysis (Dietzenbacher, van der Linden, and Steenge (2006) <doi:10.1080/09535319300000017>, Sonis, Hewings, and Guo (2006) <doi:10.1080/09535319600000002>); and a variety of table operators.",
-    "authors": [
-      "John Wade",
-      "Ignacio Sarmiento-Barbieri"
-    ],
-    "language": "R"
-  },
-  "https://cran.r-project.org/package=isoband": {
-    "name": "isoband",
-    "description": "A fast C++ implementation to generate contour lines\n(isolines) and contour polygons (isobands) from regularly spaced grids\ncontaining elevation data.",
-    "authors": [
-      "Hadley Wickham",
-      "Claus O. Wilke",
-      "Thomas Lin Pedersen"
-    ],
-    "language": "R"
-  },
-  "https://pypi.org/project/biopandas/": {
-    "name": "biopandas",
-    "description": "Machine Learning Library Extensions",
-    "authors": [
-      "Sebastian Raschka"
-    ],
-    "language": "Python"
-  },
-  "https://cran.r-project.org/package=fBonds": {
-    "name": "fBonds",
-    "description": "It implements the Nelson-Siegel and the Nelson-Siegel-Svensson\nterm structures.",
-    "authors": [
-      "Diethelm Wuertz",
-      "Tobias Setz"
-    ],
-    "language": "R"
-  },
-  "https://cran.r-project.org/package=BoardGames": {
-    "name": "BoardGames",
-    "description": "Tools for constructing board/grid based games, as well as readily available game(s) for your entertainment.",
-    "authors": [
-      "Derek Qiu"
-    ],
-    "language": "R"
-  },
-  "https://pypi.org/project/Catwalk/": {
-    "name": "Catwalk",
-    "description": "A way to view your models using TurboGears",
-    "authors": [
-      "Christopher Perkins"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/Axe": {
-    "name": "Axe",
-    "description": "An Extendable Python Web Framework",
-    "authors": [
-      "Ju Lin"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/WeBIAS": {
-    "name": "WeBIAS",
-    "description": "WeBIAS is a web server for publishing services. A service is a standalone command line program, which has to be supplied with certain parameters, and its output should be returned. Computations may require significant resources and time, and may have to be scheduled for later execution. Users are informed when their requests are finished and can peruse results at their convenience.",
-    "authors": [
-      "Pawel Daniluk"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/Imagery": {
-    "name": "Imagery",
-    "description": "A package which aims at providing the basic intial steps required to image related operations.",
-    "authors": [
-      "Prakash"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/simulator/": {
-    "name": "simulator",
-    "description": "Electrical Power System Simulator",
-    "authors": [
-      "Jason Xing Zhang"
-    ],
-    "language": "Python"
-  },
   "https://pypi.org/project/ecopy/": {
     "name": "ecopy",
     "description": "EcoPy: Ecological Data Analysis in Python",
     "authors": [
       "Nathan Lemoine"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/spc/": {
-    "name": "spc",
-    "description": "Statistical Process Control library for monitoring process behaviour",
-    "authors": [
-      "Michal Nowikowski"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/libensemble": {
-    "name": "libensemble",
-    "description": "A Python toolkit for coordinating asynchronous and dynamic ensembles of calculations.",
-    "authors": [
-      "Jeffrey Larson",
-      "Stephen Hudson",
-      "Stefan M. Wild",
-      "David Bindel",
-      "John-Luke Navarro"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/Imagery/": {
-    "name": "Imagery",
-    "description": "A package which aims at providing the basic intial steps required to image related operations.",
-    "authors": [
-      "Prakash"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/pycsa": {
-    "name": "pycsa",
-    "description": "Python implementation of coupled simulated annealing (CSA)",
-    "authors": [
-      "Boudhayan Banerjee",
-      "Evan 'Pete' Walsh"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/plottools": {
-    "name": "plottools",
-    "description": "UNKNOWN",
-    "authors": [
-      "Brecht Baeten"
     ],
     "language": "Python"
   },
@@ -7616,14 +7347,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/origin/": {
-    "name": "origin",
-    "description": "Python library for the Origin Event Publisher",
-    "authors": [
-      "Cochise Ruhulessin"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=ipADMIXTURE": {
     "name": "ipADMIXTURE",
     "description": "A data clustering package based on admixture ratios (Q matrix) of population structure. The framework is based on iterative Pruning procedure that performs data clustering by splitting a given population into subclusters until meeting the condition of stopping criteria the same as ipPCA, iNJclust, and IPCAPS frameworks. The package also provides a function to retrieve phylogeny tree that construct a neighbor-joining tree based on a similar matrix between clusters. By given multiple Q matrices with varying a number of ancestors (K), the framework define a similar value between clusters i,j as a minimum number K* that makes majority of members of two clusters are in the different clusters. This K* reflexes a minimum number of ancestors we need to splitting cluster i,j into different clusters if we assign K* clusters based on maximum admixture ratio of individuals. The publication of this package is at Chainarong Amornbunchornvej, Pongsakorn Wangkumhang, and Sissades Tongsima (2020) <doi:10.1101/2020.03.21.001206>.",
@@ -7646,14 +7369,6 @@
     "description": "A novel parametrization of log transformation and a shift parameter to automate the transformation process are proposed in R package 'AutoTransQF' based on Feng et al. (2016). Please read Feng et al. (2016) <doi:10.1002/sta4.104> for more details of the method.",
     "authors": [],
     "language": "R"
-  },
-  "https://pypi.org/project/FMDR": {
-    "name": "FMDR",
-    "description": "Find drivers on linux",
-    "authors": [
-      "strotic"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=WH": {
     "name": "WH",
@@ -7703,14 +7418,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/sph/": {
-    "name": "sph",
-    "description": "",
-    "authors": [
-      "François Poizat"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=STAND": {
     "name": "STAND",
     "description": "Provides functions for the analysis of\noccupational and environmental data with non-detects. Maximum\nlikelihood (ML) methods for censored log-normal data and\nnon-parametric methods based on the product limit estimate (PLE)\nfor left censored data are used to calculate all of the\nstatistics recommended by the American Industrial Hygiene\nAssociation (AIHA) for the complete data case. Functions for\nthe analysis of complete samples using exact methods are also\nprovided for the lognormal model. Revised from 2007-11-05\n'survfit~1'.",
@@ -7739,15 +7446,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/pandaa/": {
-    "name": "pandaa",
-    "description": "A placeholder project to demonstrate piiip",
-    "authors": [
-      "TNO Software",
-      "System Security"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=svgViewR": {
     "name": "svgViewR",
     "description": "Creates 3D animated, interactive visualizations that can be viewed in a web browser.",
@@ -7772,14 +7470,6 @@
       "Pavel V. Moskalev"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/shortbred": {
-    "name": "shortbred",
-    "description": "ShortBRED: a system for profiling protein families of interest at very high specificity in shotgun meta’omic sequencing data",
-    "authors": [
-      "Shortbred Development Team"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=rando": {
     "name": "rando",
@@ -7899,14 +7589,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/ring": {
-    "name": "ring",
-    "description": "Function-oriented cache interface with built-in memcache & redis + asyncio support.",
-    "authors": [
-      "Jeong YunWon"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=clayringsmiletus": {
     "name": "clayringsmiletus",
     "description": "Stacking rings are tools used to stack pottery in a Kiln.\nA relatively large group of stacking rings was found in the area of the\nsanctuary of Dionysos in Miletus in the 1970s. Measurements\nand additional info is gathered in this package and made available for use\nby other researchers. The data along with its archaeological context\nand analysis has been published\nin \"Archäologischer Anzeiger\" (2020/1, <doi:10.34780/aa.v0i1.1014>).",
@@ -7947,14 +7629,6 @@
       "Salla E. Toikkanen"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/ri": {
-    "name": "ri",
-    "description": "A remote import library",
-    "authors": [
-      "Vincent Miszczak"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=gridExtra": {
     "name": "gridExtra",
@@ -8054,14 +7728,6 @@
       "rOpenSci fnd"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/neurodocker": {
-    "name": "neurodocker",
-    "description": "A generic generator of Dockerfiles and Singularity recipes.",
-    "authors": [
-      "Neurodocker Developers"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/web/packages/LS2W/index.html": {
     "name": "LS2W",
@@ -8427,14 +8093,6 @@
     ],
     "language": "Python"
   },
-  "https://pypi.org/project/DAMN": {
-    "name": "DAMN",
-    "description": "UNKNOWN",
-    "authors": [
-      "UNKNOWN"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/web/packages/pafr/index.html": {
     "name": "pafr",
     "description": "Provides functions to read, process and visualize pairwise sequence\nalignments in the 'PAF' format used by 'minimap2' and other whole-genome aligners.\n'minimap2' is described by Li H. (2018) <doi:10.1093/bioinformatics/bty191>.",
@@ -8463,14 +8121,6 @@
       "Shyamal D. Peddada"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/AFEM": {
-    "name": "AFEM",
-    "description": "A Finite Element Python implementation",
-    "authors": [
-      "Arturo Rodriguez"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=DatabaseConnector": {
     "name": "DatabaseConnector",
@@ -8641,19 +8291,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/adcc": {
-    "name": "adcc",
-    "description": "adcc:  Seamlessly connect your host program to ADC",
-    "authors": [
-      "Michael F. Herbst",
-      "Maximilian Scheurer",
-      "Jonas Leitner",
-      "Antonia Papapostolou",
-      "Friederike Schneider",
-      "Adrian L. Dempwolff"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=RGIFT": {
     "name": "RGIFT",
     "description": "Implementation of some functions to create quizzes\nin the GIFT format. This format is used by several Virtual Learning\nEnvironments such as Moodle.",
@@ -8723,14 +8360,6 @@
       "Richard Raubertas"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/hi/": {
-    "name": "hi",
-    "description": "A simple hello world module",
-    "authors": [
-      "suryapoojarypy"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=PGEE": {
     "name": "PGEE",
@@ -8837,14 +8466,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/Ctrax": {
-    "name": "Ctrax",
-    "description": "Ctrax: The Caltech Multiple Fly Tracker",
-    "authors": [
-      "Kristin Branson"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=activatr": {
     "name": "activatr",
     "description": "This contains helpful functions for parsing, managing, plotting, and\nvisualizing activities, most often from GPX (GPS Exchange Format) files\nrecorded by GPS devices. It allows easy parsing of the source files into\nstandard R data formats, along with functions to compute derived data for\nthe activity, and to plot the activity in a variety of ways.",
@@ -8912,14 +8533,6 @@
       "Guangbao Guo"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/Variance/": {
-    "name": "Variance",
-    "description": "A python configuration manager",
-    "authors": [
-      "Bill Schumacher"
-    ],
-    "language": "Python"
   },
   "https://pypi.org/project/sgt/": {
     "name": "sgt",
@@ -9216,14 +8829,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/lsa": {
-    "name": "lsa",
-    "description": "Local Simularity Analysis Package.",
-    "authors": [
-      "Li Charlie Xia"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=librarian": {
     "name": "librarian",
     "description": "Automatically install, update, and load 'CRAN', 'GitHub', and 'Bioconductor'\npackages in a single function call. By accepting bare unquoted names for packages,\nit's easy to add or remove packages from the list.",
@@ -9322,17 +8927,6 @@
       "Marko Smiljanic"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/searchtweets": {
-    "name": "searchtweets",
-    "description": "Wrapper for Twitter's Premium and Enterprise search APIs",
-    "authors": [
-      "Fiona Pigott",
-      "Jeff Kolb",
-      "Josh Montague",
-      "Aaron Gonzales"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=pmetar": {
     "name": "pmetar",
@@ -9446,14 +9040,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/fma": {
-    "name": "fma",
-    "description": "Full Mongo Alchemyst",
-    "authors": [
-      "anvie"
-    ],
-    "language": "Python"
-  },
   "https://pypi.org/project/gpiozero/": {
     "name": "gpiozero",
     "description": "A simple interface to GPIO devices with Raspberry Pi",
@@ -9514,15 +9100,6 @@
       "Kimberly Hochstedler Webb"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/emtable": {
-    "name": "emtable",
-    "description": "Simple module to deal with EM tabular data (aka metadata)",
-    "authors": [
-      "J.M. De la Rosa Trevin",
-      "Grigory Sharov"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=ANOM": {
     "name": "ANOM",
@@ -9672,18 +9249,6 @@
       "Qingyang Liu"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/agentMET4FOF": {
-    "name": "agentMET4FOF",
-    "description": "A software package for the integration of metrological input into an agent-based system for the consideration of measurement uncertainty in current industrial manufacturing processes.",
-    "authors": [
-      "Bang Xiang Yong",
-      "Björn Ludwig",
-      "Anupam Prasad Vedurmudi",
-      "Maximilian Gruber",
-      "Haris Lulic"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=textpress": {
     "name": "textpress",
@@ -9938,14 +9503,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/swing": {
-    "name": "swing",
-    "description": "Configuration switcher by an environment variable inspired by Common Lisp's envy",
-    "authors": [
-      "monklof"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=ConvergenceConcepts": {
     "name": "ConvergenceConcepts",
     "description": "This is a pedagogical package, designed to help students understanding convergence of\nrandom variables. It provides a way to investigate interactively various modes of\nconvergence (in probability, almost surely, in law and in mean) of a sequence of i.i.d.\nrandom variables. Visualisation of simulated sample paths is possible through interactive\nplots. The approach is illustrated by examples and exercises through the function\n'investigate', as described in\nLafaye de Micheaux and Liquet (2009) <doi:10.1198/tas.2009.0032>.\nThe user can study his/her own sequences of random variables.",
@@ -9999,14 +9556,6 @@
     "description": "An intuitive interface to simulate (1) superimposed (marked) point patterns with vectorized parameterization of random point pattern and distribution of marks; and (2) grouped hyper data frame based on population parameters and subject-specific random effects.",
     "authors": [],
     "language": "R"
-  },
-  "https://pypi.org/project/libarchive": {
-    "name": "libarchive",
-    "description": "Python adapter for universal, libarchive-based archive access.",
-    "authors": [
-      "Dustin Oprea"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/web/packages/matchingMarkets/index.html": {
     "name": "matchingMarkets",
@@ -10172,14 +9721,6 @@
       "Piotr Fryzlewicz"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/dendrogram/": {
-    "name": "dendrogram",
-    "description": "Module for draw data from dendrogram",
-    "authors": [
-      "Sneilk"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=picante": {
     "name": "picante",
@@ -10368,14 +9909,6 @@
       "Tom Palmer"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/mi": {
-    "name": "mi",
-    "description": "description",
-    "authors": [
-      "JieYuan"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=fracdiff": {
     "name": "fracdiff",
@@ -10659,22 +10192,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/baseline": {
-    "name": "baseline",
-    "description": "Easy string baseline.",
-    "authors": [
-      "Dan Gass"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/examiner": {
-    "name": "examiner",
-    "description": "操作系统通知中心监控（不论微信、钉钉、QQ，只要开启消息通知），可编写对应处理脚本",
-    "authors": [
-      "Howie Hu"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/web/packages/miniUI/index.html": {
     "name": "miniUI",
     "description": "Provides UI widget and layout functions for writing Shiny apps\nthat work well on small screens.",
@@ -10692,14 +10209,6 @@
       "Danny Parsons"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/lincon": {
-    "name": "lincon",
-    "description": "a QP solver with support for general linear equality and inequality constraints",
-    "authors": [
-      "Ze Vinicius"
-    ],
-    "language": "Python"
   },
   "https://pypi.org/project/CellProfiler/": {
     "name": "CellProfiler",
@@ -11072,14 +10581,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/dnachisel": {
-    "name": "dnachisel",
-    "description": "Optimize DNA sequences under constraints.",
-    "authors": [
-      "Zulko"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=gnumeric": {
     "name": "gnumeric",
     "description": "Read data files readable by 'gnumeric' into 'R'. Can read\nwhole sheet or a range, from several file formats, including\nthe native format of 'gnumeric'. Reading is done by using\n'ssconvert' (a file converter utility included in the 'gnumeric'\ndistribution <http://www.gnumeric.org>) to convert\nthe requested part to CSV. From 'gnumeric' files (but not other\nformats) can list sheet names and sheet sizes or read all\nsheets.",
@@ -11404,14 +10905,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/ntplib": {
-    "name": "ntplib",
-    "description": "Python NTP library",
-    "authors": [
-      "Charles-Francois Natali"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=mvLSW": {
     "name": "mvLSW",
     "description": "Tools for analysing multivariate time series with wavelets. This includes: simulation of a multivariate locally stationary wavelet (mvLSW) process from a multivariate evolutionary wavelet spectrum (mvEWS); estimation of the mvEWS, local coherence and local partial coherence. See Park, Eckley and Ombao (2014) <doi:10.1109/TSP.2014.2343937> for details.",
@@ -11423,14 +10916,6 @@
       "Daniel Grose"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/phoenix/": {
-    "name": "phoenix",
-    "description": "MUS Interface for Phoenix Emulator 3.x",
-    "authors": [
-      "Bui"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=compare": {
     "name": "compare",
@@ -11709,14 +11194,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/numer": {
-    "name": "numer",
-    "description": "Example implementation of gmp and C math.h functions",
-    "authors": [
-      "Ar-Ed"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=CoreMicrobiomeR": {
     "name": "CoreMicrobiomeR",
     "description": "The Core Microbiome refers to the group of microorganisms that are consistently present in a particular environment, habitat, or host species. These microorganisms play a crucial role in the functioning and stability of that ecosystem. Identifying these microorganisms can contribute to the emerging field of personalized medicine. The 'CoreMicrobiomeR' is designed to facilitate the identification, statistical testing, and visualization of this group of microorganisms.This package offers three key functions to analyze and visualize microbial community data. This package has been developed based on the research papers published by Pereira et al.(2018) <doi:10.1186/s12864-018-4637-6> and Beule L, Karlovsky P. (2020) <doi:10.7717/peerj.9593>.",
@@ -11777,14 +11254,6 @@
       "Jeongyoun Ahn"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/cripto": {
-    "name": "cripto",
-    "description": "Ferramentas para utilização em criptografia KRSA",
-    "authors": [
-      "UNKNOWN"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=healthyR": {
     "name": "healthyR",
@@ -11863,14 +11332,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/DifferentialEquations/": {
-    "name": "DifferentialEquations",
-    "description": "This library solves differential equations",
-    "authors": [
-      "['Alexander Savostianov']"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=RCreliability": {
     "name": "RCreliability",
     "description": "This function corrects the bias in estimated regression coefficients due to classical additive measurement error (i.e., within-person variation) in logistic regressions under the main study/external reliability study design and the main study/internal reliability study design. The output includes the naive and corrected estimators for the regression coefficients; for the variance estimates of the corrected estimators, the extra variation due to estimating the parameters in the measurement error model is ignored or taken into account. Reference: Carroll RJ, Ruppert D, Stefanski L, Crainiceanu CM (2006) <doi:10.1201/9781420010138>.",
@@ -11932,14 +11393,6 @@
       "Philip Waggoner"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/acdc/": {
-    "name": "acdc",
-    "description": "Wanna-be fast string search",
-    "authors": [
-      "Amirouche"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=tican": {
     "name": "tican",
@@ -12256,14 +11709,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/baltic": {
-    "name": "baltic",
-    "description": "Lightweight package for analyzing, manipulating and visualizing annotated phylogenetic trees",
-    "authors": [
-      "Gytis Dudas"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=ViSe": {
     "name": "ViSe",
     "description": "Designed to help the user to determine the sensitivity of an proposed causal effect to unconsidered common causes. Users can create visualizations of sensitivity, effect sizes, and determine which pattern of effects would support a causal claim for between group differences. Number needed to treat formula from Kraemer H.C. & Kupfer D.J. (2006) <doi:10.1016/j.biopsych.2005.09.014>.",
@@ -12466,14 +11911,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/render/": {
-    "name": "render",
-    "description": "UNKNOWN",
-    "authors": [
-      "UNKNOWN"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=sae": {
     "name": "sae",
     "description": "Functions for small area estimation.",
@@ -12550,9 +11987,6 @@
       "Alain Dumesny"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/swa": {
-    "error": "Package 'swa' not found on PyPI"
   },
   "https://cran.r-project.org/package=abtest": {
     "name": "abtest",
@@ -12869,9 +12303,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/amer": {
-    "error": "Package 'amer' not found on PyPI"
-  },
   "https://cran.r-project.org/package=RESET": {
     "name": "RESET",
     "description": "Contains logic for sample-level variable set scoring using randomized reduced rank reconstruction error.\nFrost, H. Robert (2023) \"Reconstruction Set Test (RESET): a computationally efficient method for\nsingle sample gene set testing based on randomized reduced rank reconstruction error\" <doi:10.1101/2023.04.03.535366>.",
@@ -13178,17 +12609,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/pyGPs": {
-    "name": "pyGPs",
-    "description": "Gaussian Processes for Regression and Classification",
-    "authors": [
-      "['Marion Neumann'",
-      "'Shan Huang'",
-      "'Daniel Marthaler'",
-      "'Kristian Kersting']"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=otsfeatures": {
     "name": "otsfeatures",
     "description": "An implementation of several functions for feature extraction in\nordinal time series datasets. Specifically, some of the features proposed by\nWeiss (2019) <doi:10.1080/01621459.2019.1604370> can be computed.\nThese features can be used to perform inferential tasks or to feed machine\nlearning algorithms for ordinal time series, among others. The package also includes some\ninteresting datasets containing financial time series. Practitioners from a\nbroad variety of fields could benefit from the general framework provided\nby 'otsfeatures'.",
@@ -13325,12 +12745,6 @@
       "Bin Wang"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/dac": {
-    "name": "dac",
-    "description": "Tool to distribute data as code",
-    "authors": [],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=aiRthermo": {
     "name": "aiRthermo",
@@ -13492,22 +12906,6 @@
       "Matthew Jackson"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/max": {
-    "name": "max",
-    "description": "The Modular Accelerated Xecution (MAX) framework",
-    "authors": [
-      "Modular Inc"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/ldr": {
-    "name": "ldr",
-    "description": "Latent Dimensionality Reduction in Python",
-    "authors": [
-      "Elias Kassell"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/web/packages/KSD/index.html": {
     "name": "KSD",
@@ -13818,14 +13216,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/glo": {
-    "name": "glo",
-    "description": "Lib for using Glo monitoring in Python.",
-    "authors": [
-      "Anders Roos"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=epiworldRShiny": {
     "name": "epiworldRShiny",
     "description": "R 'shiny' web apps for epidemiological Agent-Based Models. It provides a user-friendly interface to the Agent-Based Modeling (ABM) R package 'epiworldR' (Meyer et al., 2023) <DOI:10.21105/joss.05781>. Some of the main features of the package include the Susceptible-Infected-Susceptible (SIS), Susceptible-Infected-Recovered (SIR), and Susceptible-Exposed-Infected-Recovered (SEIR) models. 'epiworldRShiny' provides a web-based user interface for running various epidemiological ABMs, simulating interventions, and visualizing results interactively.",
@@ -14113,22 +13503,6 @@
       "Luke Miratrix"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/keepalive": {
-    "name": "keepalive",
-    "description": "urllib keepalive support for python",
-    "authors": [
-      "Sergio Fernández"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/ambit": {
-    "name": "ambit",
-    "description": "Take control of your Palette.",
-    "authors": [
-      "khimaros"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=STOPES": {
     "name": "STOPES",
@@ -14461,17 +13835,6 @@
     ],
     "language": "Python"
   },
-  "https://pypi.org/project/mls": {
-    "name": "mls",
-    "description": "MultiLingualString",
-    "authors": [
-      "Aleksey Rembish"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/pangolin": {
-    "error": "Package 'pangolin' not found on PyPI"
-  },
   "https://cran.r-project.org/package=LSE": {
     "name": "LSE",
     "description": "The solution of equality constrained least squares problem (LSE) is\ngiven through four analytics methods (Generalized QR Factorization, Lagrange\nMultipliers, Direct Elimination and Null Space method). We expose the\northogonal decomposition called Generalized QR Factorization (GQR) and also RQ\nfactorization. Finally some codes for the solution of LSE applied in\nquaternions.",
@@ -14610,14 +13973,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/cursor": {
-    "name": "cursor",
-    "description": "A small Python package to hide or show the terminal cursor",
-    "authors": [
-      "Gijs Timmers"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=phoenix": {
     "name": "phoenix",
     "description": "Implementation of the Phoenix and Phoenix-8 Sepsis Criteria as\ndescribed in \"Development and Validation of the Phoenix Criteria for\nPediatric Sepsis and Septic Shock\" by Sanchez-Pinto, Bennett, DeWitt,\nRussell et al. (2024) <doi:10.1001/jama.2024.0196> (Drs. Sanchez-Pinto\nand Bennett contributed equally to this manuscript; Dr. DeWitt and Mr.\nRussell contributed equally to the manuscript), \"International Consensus\nCriteria for Pediatric Sepsis and Septic Shock\" by Schlapbach, Watson,\nSorce, Argent, et al. (2024) <doi:10.1001/jama.2024.0179> (Drs Schlapbach,\nWatson, Sorce, and Argent contributed equally) and the application note\n\"phoenix: an R package and Python module for calculating the Phoenix\npediatric sepsis score and criteria\" by DeWitt, Russell, Rebull,\nSanchez-Pinto, and Bennett (2024) <doi:10.1093/jamiaopen/ooae066>.",
@@ -14637,14 +13992,6 @@
       "Vu Le Tran"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/randomer": {
-    "name": "randomer",
-    "description": "一个随机数操作工具类。",
-    "authors": [
-      "kancy"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=DatabionicSwarm": {
     "name": "DatabionicSwarm",
@@ -14888,14 +14235,6 @@
       "Simon Urbanek"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/rxncon": {
-    "name": "rxncon",
-    "description": "The reaction-contingency framework for cellular signalling processes.",
-    "authors": [
-      "The rxncon group @ Humboldt University Berlin"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=WOTPLY": {
     "name": "WOTPLY",
@@ -15215,14 +14554,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/mt": {
-    "name": "mt",
-    "description": "",
-    "authors": [
-      "Sean Harrison"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=ACDm": {
     "name": "ACDm",
     "description": "Package for Autoregressive Conditional Duration (ACD, Engle and Russell, 1998) models. Creates trade, price or volume durations from transactions (tic) data, performs diurnal adjustments, fits various ACD models and tests them.",
@@ -15230,14 +14561,6 @@
       "Markus Belfrage"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/aikido": {
-    "name": "aikido",
-    "description": "Python library for topological data analysis in tabular data",
-    "authors": [
-      "Baihan Lin"
-    ],
-    "language": "Python"
   },
   "https://pypi.org/project/discord/": {
     "name": "discord",
@@ -15557,14 +14880,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/meep/": {
-    "name": "meep",
-    "description": "Very light-weight task runner",
-    "authors": [
-      "Fredrik Håård"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=adaptsmoFMRI": {
     "name": "adaptsmoFMRI",
     "description": "Adaptive smoothing functions for estimating the blood\noxygenation level dependent (BOLD) effect by using functional Magnetic\nResonance Imaging (fMRI) data, based on adaptive Gauss Markov random\nfields, for real as well as simulated data. The implemented models make\nuse of efficient Markov Chain Monte Carlo methods. Implemented methods\nare based on the research developed by A. Brezger, L. Fahrmeir, A.\nHennerfeind (2007) <https://www.jstor.org/stable/4626770>.",
@@ -15598,14 +14913,6 @@
       "Renzo Caceres"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/mux/": {
-    "name": "mux",
-    "description": "Simplifying how researchers access Data.\n    It includes a CLI and a library.",
-    "authors": [
-      "J. Fernando Sanchez"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=fpp2": {
     "name": "fpp2",
@@ -15706,14 +15013,6 @@
       "Bastiaan Quast"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/vi": {
-    "name": "vi",
-    "description": "ms",
-    "authors": [
-      "lhr"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/web/packages/RTransferEntropy/index.html": {
     "name": "RTransferEntropy",
@@ -16079,12 +15378,6 @@
       "Somak Dutta"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/fdb": {
-    "name": "fdb",
-    "description": "Legacy Python driver for Firebird 2.5",
-    "authors": [],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=minimapR": {
     "name": "minimapR",
@@ -16762,9 +16055,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/ecosys": {
-    "error": "Package 'ecosys' not found on PyPI"
-  },
   "https://cran.r-project.org/web/packages/rts/index.html": {
     "name": "rts",
     "description": "This framework aims to provide classes and methods for manipulating and processing of raster time series data (e.g. a time series of satellite images).",
@@ -17049,14 +16339,6 @@
       "Shuangcai Wang"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/selinux": {
-    "name": "selinux",
-    "description": "shim selinux module",
-    "authors": [
-      "Sorin Sbarnea"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=archive": {
     "name": "archive",
@@ -17429,16 +16711,6 @@
     ],
     "language": "R"
   },
-  "https://cran.r-project.org/package=textmineR": {
-    "name": "textmineR",
-    "description": "An aid for text mining in R, with a syntax that\nshould be familiar to experienced R users. Provides a wrapper for several\ntopic models that take similarly-formatted input and give similarly-formatted\noutput. Has additional functionality for analyzing and diagnostics for\ntopic models.",
-    "authors": [
-      "Tommy Jones",
-      "William Doane",
-      "Mattias Attbom"
-    ],
-    "language": "R"
-  },
   "https://cran.r-project.org/package=ARDECO": {
     "name": "ARDECO",
     "description": "A set of functions to access the 'ARDECO' (Annual Regional Database\nof the European Commission) data directly from the official ARDECO public\nrepository through the exploitation of the 'ARDECO' APIs.\nThe APIs are completely transparent to the user and the provided functions\nprovide a direct access to the 'ARDECO' data.\nThe 'ARDECO' database is a collection of variables related to demography,\nemployment, labour market, domestic product, capital formation.\nEach variable can be exposed in one or more units of measure as well as\nrefers to total values plus additional dimensions like economic sectors, gender,\nage classes. Data can be also aggregated at country level according\nto the tercet classes as defined by EUROSTAT.\nThe description of the 'ARDECO' database can be found at the following URL\n<https://urban.jrc.ec.europa.eu/ardeco>.",
@@ -17550,17 +16822,6 @@
     "description": "An R interface to the Chemistry Development Kit, a Java library\nfor chemoinformatics. Given the size of the library itself, this package is\nnot expected to change very frequently. To make use of the CDK within R, it is\nsuggested that you use the 'rcdk' package. Note that it is possible to directly\ninteract with the CDK using 'rJava'. However 'rcdk' exposes functionality in a more\nidiomatic way. The CDK library itself is released as LGPL and the sources can be\nobtained from <https://github.com/cdk/cdk>.",
     "authors": [],
     "language": "R"
-  },
-  "https://pypi.org/project/skfeature-chappers": {
-    "name": "skfeature-chappers",
-    "description": "Unofficial Fork of Feature Selection Repository in Python (DMML Lab@ASU)",
-    "authors": [
-      "Jundong Li",
-      "Kewei Cheng",
-      "Suhang Wang",
-      "Chapman Siu"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=StratSel": {
     "name": "StratSel",
@@ -18002,22 +17263,6 @@
     ],
     "language": "R"
   },
-  "https://cran.r-project.org/package=rbacon": {
-    "name": "rbacon",
-    "description": "An approach to age-depth modelling that uses Bayesian statistics to reconstruct accumulation histories for deposits, through combining radiocarbon and other dates with prior information on accumulation rates and their variability. See Blaauw & Christen (2011).",
-    "authors": [
-      "Maarten Blaauw",
-      "J. Andres Christen",
-      "Marco A. Aquino Lopez",
-      "Judith Esquivel Vazquez",
-      "Oscar M. Gonzalez V.",
-      "Ted Belding",
-      "James Theiler",
-      "Brian Gough",
-      "Charles Karney"
-    ],
-    "language": "R"
-  },
   "https://cran.r-project.org/package=mable": {
     "name": "mable",
     "description": "Fit data from a continuous population with a smooth density on finite interval by an approximate Bernstein polynomial model which is a mixture of certain beta distributions and find maximum approximate Bernstein likelihood estimator of the unknown coefficients. Consequently, maximum likelihood estimates of the unknown density, distribution functions, and more can be obtained. If the support of the density is not the unit interval then transformation can be applied. This is an implementation of the methods proposed by the author of this package published in the Journal of Nonparametric Statistics: Guan (2016) <doi:10.1080/10485252.2016.1163349> and Guan (2017) <doi:10.1080/10485252.2017.1374384>. For data with covariates, under some semiparametric regression models such as Cox proportional hazards model and the accelerated failure time model, the baseline survival function can be estimated smoothly based on general interval censored data.",
@@ -18072,14 +17317,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/heavy/": {
-    "name": "heavy",
-    "description": "Heavy",
-    "authors": [
-      "HeavyAI"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=microplot": {
     "name": "microplot",
     "description": "The microplot function writes a set of R graphics files to be used as\nmicroplots (sparklines) in tables in either 'LaTeX', 'HTML', 'Word',\nor 'Excel' files.  For 'LaTeX', we provide methods for the\nHmisc::latex() generic function to construct 'latex' tabular\nenvironments which include the graphs.  These can be used directly\nwith the operating system 'pdflatex' or 'latex' command, or by using\none of 'Sweave', 'knitr', 'rmarkdown', or 'Emacs org-mode' as an\nintermediary.  For 'MS Word', the msWord() function uses the\n'flextable' package to construct 'Word' tables which include the\ngraphs.  There are several distinct approaches for constructing HTML\nfiles.  The simplest is to use the msWord() function with argument\nfiletype=\"html\".  Alternatively, use either 'Emacs org-mode' or the\nhtmlTable::htmlTable() function to construct an 'HTML' file\ncontaining tables which include the graphs.  See the documentation\nfor our as.htmlimg() function.  For 'Excel' use on 'Windows', the\nfile examples/irisExcel.xls includes 'VBA' code which brings the\nindividual panels into individual cells in the spreadsheet.\nExamples in the examples and demo subdirectories are shown with\n'lattice' graphics, 'ggplot2' graphics, and 'base' graphics.\nExamples for 'LaTeX' include 'Sweave' (both 'LaTeX'-style and\n'Noweb'-style), 'knitr', 'emacs org-mode', and 'rmarkdown' input\nfiles and their 'pdf' output files.  Examples for 'HTML' include\n'org-mode' and 'Rmd' input files and their webarchive 'HTML' output\nfiles.  In addition, the as.orgtable() function can display a\ndata.frame in an 'org-mode' document.  The examples for 'MS Word'\n(with either filetype=\"docx\" or filetype=\"html\") work with all\noperating systems.  The package does not require the installation of\n'LaTeX' or 'MS Word' to be able to write '.tex' or '.docx' files.",
@@ -18112,14 +17349,6 @@
       "Jon Kropko"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/text/": {
-    "name": "text",
-    "description": "UNKNOWN",
-    "authors": [
-      "mrheyilun"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=forsearch": {
     "name": "forsearch",
@@ -18273,22 +17502,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/WebUI": {
-    "name": "WebUI",
-    "description": "WebUI lets you create first class desktop applications in Python with HTML/CSS",
-    "authors": [
-      "Nick Johnstone"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/hms/": {
-    "name": "hms",
-    "description": "",
-    "authors": [
-      "John Doe"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=CUMP": {
     "name": "CUMP",
     "description": "Combining Univariate Association Test Results of Multiple Phenotypes for Detecting Pleiotropy.",
@@ -18298,14 +17511,6 @@
       "Qiong Yang"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/tes": {
-    "name": "tes",
-    "description": "Tool for Elasticsearch",
-    "authors": [
-      "Deepanshu Gupta"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=DBEST": {
     "name": "DBEST",
@@ -18573,14 +17778,6 @@
     ],
     "language": "R"
   },
-  "https://cran.r-project.org/web/packages/SubVis/index.html": {
-    "name": "SubVis",
-    "description": "Substitution matrices are important parameters in protein alignment algorithms. These matrices represent the likelihood that an amino acid will be substituted for another during mutation. This tool allows users to apply predefined and custom matrices and then explore the resulting alignments with interactive visualizations.  'SubVis' requires the availability of a web browser.",
-    "authors": [
-      "Scott Barlowe"
-    ],
-    "language": "R"
-  },
   "https://pypi.org/project/dac/": {
     "name": "dac",
     "description": "Tool to distribute data as code",
@@ -18659,14 +17856,6 @@
       "Andri Signorell"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/bass/": {
-    "name": "bass",
-    "description": "Static site generator",
-    "authors": [
-      "Nico Poppelier"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=hydra": {
     "name": "hydra",
@@ -18747,14 +17936,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/tm/": {
-    "name": "tm",
-    "description": "Topic Maps",
-    "authors": [
-      "Lars Heuer"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=GlobalOptions": {
     "name": "GlobalOptions",
     "description": "It provides more configurations on the option values such as validation\nand filtering on the values, making options invisible or private.",
@@ -18771,12 +17952,6 @@
       "Sönke Johnsen"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/wradlib": {
-    "name": "wradlib",
-    "description": "wradlib - An Open Source Library for Weather Radar Data Processing",
-    "authors": [],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=ComparisonSurv": {
     "name": "ComparisonSurv",
@@ -19197,9 +18372,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/microbiome": {
-    "error": "Package 'microbiome' not found on PyPI"
-  },
   "https://cran.r-project.org/package=TFRE": {
     "name": "TFRE",
     "description": "Provide functions to estimate the coefficients in high-dimensional linear regressions via a tuning-free and robust approach. The method was published in Wang, L., Peng, B., Bradic, J., Li, R. and Wu, Y. (2020), \"A Tuning-free Robust and Efficient Approach to High-dimensional Regression\", Journal of the American Statistical Association, 115:532, 1700-1714(JASA’s discussion paper), <doi:10.1080/01621459.2020.1840989>. See also Wang, L., Peng, B., Bradic, J., Li, R. and Wu, Y. (2020), \"Rejoinder to “A tuning-free robust and efficient approach to high-dimensional regression\". Journal of the American Statistical Association, 115, 1726-1729, <doi:10.1080/01621459.2020.1843865>; Peng, B. and Wang, L. (2015), \"An Iterative Coordinate Descent Algorithm for High-Dimensional Nonconvex Penalized Quantile Regression\", Journal of Computational and Graphical Statistics, 24:3, 676-694, <doi:10.1080/10618600.2014.913516>; Clémençon, S., Colin, I., and Bellet, A. (2016), \"Scaling-up empirical risk minimization: optimization of incomplete u-statistics\", The Journal of Machine Learning Research, 17(1):2682–2717; Fan, J. and Li, R. (2001), \"Variable Selection via Nonconcave Penalized Likelihood and its Oracle Properties\", Journal of the American Statistical Association, 96:456, 1348-1360, <doi:10.1198/016214501753382273>.",
@@ -19227,14 +18399,6 @@
       "Shizhong Xu."
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/the": {
-    "name": "the",
-    "description": "rspec/should.js assertion style for python test",
-    "authors": [
-      "Yan Wenjun"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=draw": {
     "name": "draw",
@@ -19315,14 +18479,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/genomeview": {
-    "name": "genomeview",
-    "description": "genomeview",
-    "authors": [
-      "Noah Spies"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=PEPBVS": {
     "name": "PEPBVS",
     "description": "Performs Bayesian variable selection under normal linear\nmodels for the data with the model parameters following as prior distributions either\nthe power-expected-posterior (PEP) or the intrinsic (a special case of the former)\n(Fouskakis and Ntzoufras (2022) <doi: 10.1214/21-BA1288>,\nFouskakis and Ntzoufras (2020) <doi: 10.3390/econometrics8020017>).\nThe prior distribution on model space is the uniform over all models\nor the uniform on model dimension (a special case of the beta-binomial prior).\nThe selection is performed by either implementing a full enumeration\nand evaluation of all possible models or using the Markov Chain\nMonte Carlo Model Composition (MC3) algorithm (Madigan and York (1995) <doi: 10.2307/1403615>).\nComplementary functions for hypothesis testing, estimation and\npredictions under Bayesian model averaging, as well as, plotting and\nprinting the results are also provided. The results can be compared to the\nones obtained under other well-known priors on model parameters and model spaces.",
@@ -19352,14 +18508,6 @@
       "Andrew C. Hooker"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/claviger": {
-    "name": "claviger",
-    "description": "Synchronizes remote SSH authorized_keys",
-    "authors": [
-      "Bas Westerbaan"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=codetools": {
     "name": "codetools",
@@ -19407,14 +18555,6 @@
       "Mariel Finucane",
       "Lauren V. Forrow",
       "Drew Herren"
-    ],
-    "language": "R"
-  },
-  "https://cran.r-project.org/package=locationgamer": {
-    "name": "locationgamer",
-    "description": "Identification of equilibrium locations in location games (Hotelling (1929)\n<doi:10.2307/2224214>). In these games, two competing actors place\ncustomer-serving units in two locations simultaneously. Customers make the\ndecision to visit the location that is closest to them. The functions in\nthis package include Prim algorithm (Prim (1957)\n<doi:10.1002/j.1538-7305.1957.tb01515.x>) to find the minimum spanning tree\nconnecting all network vertices, an implementation of Dijkstra algorithm\n(Dijkstra (1959) <doi:10.1007/BF01386390>) to find the shortest distance and\npath between any two vertices, a self-developed algorithm using elimination\nof purely dominated strategies to find the equilibrium, and several plotting\nfunctions.",
-    "authors": [
-      "Maximilian Zellner"
     ],
     "language": "R"
   },
@@ -19562,14 +18702,6 @@
       "Francesca Ieva"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/SenseMe": {
-    "name": "SenseMe",
-    "description": "HaikuHome SenseMe API for fans and lights",
-    "authors": [
-      "Tom Faulkner"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=drawer": {
     "name": "drawer",
@@ -19792,14 +18924,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/engine": {
-    "name": "engine",
-    "description": "Pure python extensible SQL database engine supporting NULL values. Formally SnakeSQL.",
-    "authors": [
-      "James Gardner"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=hgutils": {
     "name": "hgutils",
     "description": "A handy collection of utility functions designed to aid in\npackage development, plotting and scientific research.  Package\ndevelopment functionalities includes among others tools such as\ncross-referencing package imports with the description file, analysis\nof redundant package imports, editing of the description file and the\ncreation of package badges for GitHub.  Some of the other\nfunctionalities include automatic package installation and loading,\nplotting points without overlap, creating nice breaks for plots,\noverview tables and many more handy utility functions.",
@@ -19834,14 +18958,6 @@
       "Lixing Zhu"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/collate": {
-    "name": "collate",
-    "description": "Aggregated feature generation made easy.",
-    "authors": [
-      "DSaPP Researchers"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=mapedit": {
     "name": "mapedit",
@@ -19974,14 +19090,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/resolve/": {
-    "name": "resolve",
-    "description": "Resolves strings containing dotted names into their objects.",
-    "authors": [
-      "Chris Withers"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=aTSA": {
     "name": "aTSA",
     "description": "Contains some tools for testing, analyzing time series data and\nfitting popular time series models such as ARIMA, Moving Average and Holt\nWinters, etc. Most functions also provide nice and clear outputs like SAS\ndoes, such as identify, estimate and forecast, which are the same statements\nin PROC ARIMA in SAS.",
@@ -19997,14 +19105,6 @@
       "Juri Reimand"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/iCR/": {
-    "name": "iCR",
-    "description": "This is a Python module to easily use the F5 iControl REST interface",
-    "authors": [
-      "Pete White"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=rstanbdp": {
     "name": "rstanbdp",
@@ -20313,25 +19413,6 @@
     ],
     "language": "R"
   },
-  "https://cran.r-project.org/package=ccrs": {
-    "name": "ccrs",
-    "description": "Functions for performing Correcting and Clustering response-style-biased preference data (CCRS). The main functions are correct.RS() for correcting for response styles, and ccrs() for simultaneously correcting and content-based clustering. The procedure begin with making rank-ordered boundary data from the given preference matrix using a function called create.ccrsdata(). Then in correct.RS(), the response style is corrected as follows: the rank-ordered boundary data are smoothed by I-spline functions, the given preference data are transformed by the smoothed functions. The resulting data matrix, which is considered as bias-corrected data, can be used for any data analysis methods. If one wants to cluster respondents based on their indicated preferences (content-based clustering), ccrs() can be applied to the given (response-style-biased) preference data, which simultaneously corrects for response styles and clusters respondents based on the contents. Also, the correction result can be checked by plot.crs() function.",
-    "authors": [
-      "Mariko Takagishi"
-    ],
-    "language": "R"
-  },
-  "https://cran.r-project.org/package=quickNmix": {
-    "name": "quickNmix",
-    "description": "For fitting N-mixture models using either FFT or asymptotic approaches. FFT N-mixture models extend the work of Cowen et al. (2017) <doi:10.1111/biom.12701>. Asymptotic N-mixture models extend the work of Dail and Madsen (2011) <doi:10.1111/j.1541-0420.2010.01465.x>, to consider asymptotic solutions to the open population N-mixture models. The FFT models are derived and described in \"Parker, M.R.P., Elliott, L., Cowen, L.L.E. (2022). Computational efficiency and precision for replicated-count and batch-marked hidden population models [Manuscript in preparation]. Department of Statistics and Actuarial Sciences, Simon Fraser University.\". The asymptotic models are derived and described in: \"Parker, M.R.P., Elliott, L., Cowen, L.L.E., Cao, J. (2022). Fast asymptotic solutions for N-mixtures on large populations [Manuscript in preparation]. Department of Statistics and Actuarial Sciences, Simon Fraser University.\".",
-    "authors": [
-      "Matthew RP Parker",
-      "Lloyd Elliott",
-      "Laura LE Cowen",
-      "Jiguo Cao"
-    ],
-    "language": "R"
-  },
   "https://cran.r-project.org/package=RCCPCA": {
     "name": "RCCPCA",
     "description": "The RCC_PCA criterion is a tool to determine the optimal number of components to retain in PCA;See Alshammri (2021).",
@@ -20393,14 +19474,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/rex": {
-    "name": "rex",
-    "description": "Automatically add and delete modules to requirements.txt installing them using pip.",
-    "authors": [
-      "Ilya Vouk"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=MIRES": {
     "name": "MIRES",
     "description": "Estimates random effect latent measurement models, wherein the loadings, residual variances, intercepts, latent means, and latent variances all vary across groups. The random effect variances of the measurement parameters are then modeled using a hierarchical inclusion model, wherein the inclusion of the variances (i.e., whether it is effectively zero or non-zero) is informed by similar parameters (of the same type, or of the same item). This additional hierarchical structure allows the evidence in favor of partial invariance to accumulate more quickly, and yields more certain decisions about measurement invariance. Martin, Williams, and Rast (2020) <doi:10.31234/osf.io/qbdjt>.",
@@ -20444,14 +19517,6 @@
       "Danny Parsons"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/SPAS": {
-    "name": "SPAS",
-    "description": "Single-Page App Server",
-    "authors": [
-      "Samuele Santi"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=ROKET": {
     "name": "ROKET",
@@ -20827,14 +19892,6 @@
       "Loic Marechal"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/briekit": {
-    "name": "briekit",
-    "description": "BRIE-kit: Preprocessing tool kit of BRIE in splicing analysis",
-    "authors": [
-      "Yuanhua Huang"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=overviewR": {
     "name": "overviewR",
@@ -21332,14 +20389,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/butterfly": {
-    "name": "butterfly",
-    "description": "A sleek web based terminal emulator",
-    "authors": [
-      "Florian Mounier"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=bayesmlogit": {
     "name": "bayesmlogit",
     "description": "Create life tables with a Bayesian approach, which can be very useful for modelling a complex health process when considering multiple predisposing factors and multiple coexisting health conditions. Details for this method can be found in: Lynch, Scott, et al., (2022) <doi:10.1177/00811750221112398>; Zang, Emma, et al., (2022) <doi:10.1093/geronb/gbab149>.",
@@ -21349,22 +20398,6 @@
       "Scott Lynch"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/ngsutils/": {
-    "name": "ngsutils",
-    "description": "NGSUtils - Various utilities for working with NGS data",
-    "authors": [
-      "Marcus Breese"
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/eye": {
-    "name": "eye",
-    "description": "A generic web-based browser of ZODB databases.",
-    "authors": [
-      "David Glick"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=DidacticBoost": {
     "name": "DidacticBoost",
@@ -21450,14 +20483,6 @@
       "Sharon Bewick"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/tablets": {
-    "name": "tablets",
-    "description": "The ultimate database-driven Django template experience",
-    "authors": [
-      "Craig Labenz"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=acroname": {
     "name": "acroname",
@@ -21763,14 +20788,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/EB": {
-    "name": "EB",
-    "description": "Ensemble Builder",
-    "authors": [
-      "Rob Swift"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=gamlss.add": {
     "name": "gamlss.add",
     "description": "Interface for extra smooth functions including tensor products,\nneural networks and decision trees.",
@@ -21987,14 +21004,6 @@
       "with\ncontributions by Thomas Brechenmacher"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/gender-guesser": {
-    "name": "gender-guesser",
-    "description": "Get the gender from first name.",
-    "authors": [
-      "Israel Saeta Pérez"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=sentencepiece": {
     "name": "sentencepiece",
@@ -22328,14 +21337,6 @@
     ],
     "language": "R"
   },
-  "https://cran.r-project.org/package=lgarch": {
-    "name": "lgarch",
-    "description": "Simulation and estimation of univariate and multivariate log-GARCH models. The main functions of the package are: lgarchSim(), mlgarchSim(), lgarch() and mlgarch(). The first two functions simulate from a univariate and a multivariate log-GARCH model, respectively, whereas the latter two estimate a univariate and multivariate log-GARCH model, respectively.",
-    "authors": [
-      "Genaro Sucarrat"
-    ],
-    "language": "R"
-  },
   "https://cran.r-project.org/package=revtools": {
     "name": "revtools",
     "description": "Researchers commonly need to summarize scientific information, a process known as 'evidence synthesis'. The first stage of a synthesis process (such as a systematic review or meta-analysis) is to download a list of references from academic search engines such as 'Web of Knowledge' or 'Scopus'. The traditional approach to systematic review is then to sort these data manually, first by locating and removing duplicated entries, and then screening to remove irrelevant content by viewing titles and abstracts (in that order). 'revtools' provides interfaces for each of these tasks. An alternative approach, however, is to draw on tools from machine learning to visualise patterns in the corpus. In this case, you can use 'revtools' to render ordinations of text drawn from article titles, keywords and abstracts, and interactively select or exclude individual references, words or topics.",
@@ -22439,12 +21440,6 @@
       "Andrés Christiansen"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/shan/": {
-    "name": "shan",
-    "description": "A small example package",
-    "authors": [],
-    "language": "Python"
   },
   "https://pypi.org/project/cameo/": {
     "name": "cameo",
@@ -22633,12 +21628,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/dtaidistance": {
-    "name": "dtaidistance",
-    "description": "Distance measures for time series (Dynamic Time Warping, fast C implementation)",
-    "authors": [],
-    "language": "Python"
-  },
   "https://cran.r-project.org/package=score": {
     "name": "score",
     "description": "Provides routines for scoring behavioral questionnaires. Includes scoring procedures for the 'International Physical Activity Questionnaire (IPAQ)' <http://www.ipaq.ki.se>. Compares physical functional performance to the age- and gender-specific normal ranges.",
@@ -22684,14 +21673,6 @@
       "Marco A.R. Ferreira"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/prime/": {
-    "name": "prime",
-    "description": "Module with extremely simple functions based on prime numbers",
-    "authors": [
-      "Parth Suresh"
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/package=geos": {
     "name": "geos",
@@ -25265,14 +24246,6 @@
   "https://github.com/CatsFromMars/Jenga": {
     "readme_empty": true
   },
-  "https://pypi.org/project/stringdb": {
-    "name": "stringdb",
-    "description": "Python functions to access the STRING API, a source of protein-protein association networks.",
-    "authors": [
-      "Peter C DeWeirdt"
-    ],
-    "language": "Python"
-  },
   "https://github.com/jazzband/django-axes": {
     "name": "django-axes",
     "description": "Keep track of failed login attempts in Django-powered sites.",
@@ -26081,14 +25054,6 @@
     ],
     "language": "",
     "readme_empty": false
-  },
-  "https://pypi.org/project/ecopy": {
-    "name": "ecopy",
-    "description": "EcoPy: Ecological Data Analysis in Python",
-    "authors": [
-      "Nathan Lemoine"
-    ],
-    "language": "Python"
   },
   "https://github.com/cran/lzstring": {
     "name": "lzstring",
@@ -28779,9 +27744,6 @@
     ],
     "language": "PHP",
     "readme_empty": false
-  },
-  "https://github.com/ropensci/rgbif(devel)": {
-    "readme_empty": true
   },
   "https://github.com/beeverycreative/helloBEEprusa-hardware": {
     "readme_empty": true
@@ -31917,15 +30879,6 @@
     "description": "TensorFlow for R",
     "authors": [
       "rstudio"
-    ],
-    "language": "R",
-    "readme_empty": false
-  },
-  "https://github.com/philchalmers/mirt/": {
-    "name": "mirt",
-    "description": "Multidimensional item response theory",
-    "authors": [
-      "philchalmers"
     ],
     "language": "R",
     "readme_empty": false
@@ -41424,48 +40377,6 @@
     ],
     "language": "R"
   },
-  "https://github.com/trnnick/tsutils/": {
-    "name": "tsutils",
-    "description": "The tsutils package for R provides functions to support various aspects of time series and forecasting modelling.",
-    "authors": [
-      "trnnick"
-    ],
-    "language": "R",
-    "readme_empty": false
-  },
-  "https://github.com/giabaio/BCEA/": {
-    "name": "BCEA",
-    "description": "Bayesian Cost Effectiveness Analysis. Given the results of a Bayesian model (possibly based on MCMC) in the form of simulations from the posterior distributions of suitable variables of costs and clinical benefits for two or more interventions, produces a health economic evaluation. Compares one of the interventions (the \"reference\") to the others (\"comparators\"). Produces many summary and plots to analyse the results",
-    "authors": [
-      "Gianluca Baio"
-    ],
-    "language": "R",
-    "readme_empty": false
-  },
-  "https://github.com/pallets/flask/": {
-    "name": "flask",
-    "description": "The Python micro framework for building web applications.",
-    "authors": [
-      "Pallets"
-    ],
-    "language": "Python",
-    "readme_empty": false
-  },
-  "https://github.com/mpi4py/mpi4py/": {
-    "name": "mpi4py",
-    "description": "Python bindings for MPI",
-    "authors": [
-      "MPI for Python"
-    ],
-    "language": "Python",
-    "readme_empty": false
-  },
-  "https://pypi.org/project/Flask": {
-    "name": "Flask",
-    "description": "A simple framework for building complex web applications.",
-    "authors": [],
-    "language": "Python"
-  },
   "https://cran.r-project.org/web/packages/rmarkdown/index.html": {
     "name": "rmarkdown",
     "description": "Convert R Markdown documents into a variety of formats.",
@@ -41551,20 +40462,6 @@
       "Mikkel Jørgensen"
     ],
     "language": "R"
-  },
-  "https://pypi.org/project/Django": {
-    "name": "Django",
-    "description": "A high-level Python web framework that encourages rapid development and clean, pragmatic design.",
-    "authors": [],
-    "language": "Python"
-  },
-  "https://pypi.org/project/tensorflow": {
-    "name": "tensorflow",
-    "description": "TensorFlow is an open source machine learning framework for everyone.",
-    "authors": [
-      "Google Inc."
-    ],
-    "language": "Python"
   },
   "https://cran.r-project.org/web/packages/dplyr/index.html": {
     "name": "dplyr",
@@ -41683,14 +40580,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/BeautifulSoup": {
-    "name": "BeautifulSoup",
-    "description": "Screen-scraping library",
-    "authors": [
-      "Leonard Richardson"
-    ],
-    "language": "Python"
-  },
   "https://cran.r-project.org/web/packages/shiny/index.html": {
     "name": "shiny",
     "description": "Makes it incredibly easy to build interactive web\napplications with R. Automatic \"reactive\" binding between inputs and\noutputs and extensive prebuilt widgets make it possible to build\nbeautiful, responsive, and powerful applications with minimal effort.",
@@ -41733,9 +40622,6 @@
     ],
     "language": "R"
   },
-  "https://github.com/tidyverse/ggplot4": {
-    "readme_empty": true
-  },
   "https://cran.r-project.org/web/packages/lubridate/index.html": {
     "name": "lubridate",
     "description": "Functions to work with date-times and time-spans: fast and\nuser friendly parsing of date-time data, extraction and updating of\ncomponents of a date-time (years, months, days, hours, minutes, and\nseconds), algebraic manipulation on date-time and time-span objects.\nThe 'lubridate' package has a consistent and memorable syntax that\nmakes working with dates easy and fun.",
@@ -41774,12 +40660,6 @@
     ],
     "language": "Python",
     "readme_empty": false
-  },
-  "https://pypi.org/project/beautifulsoup4": {
-    "name": "beautifulsoup4",
-    "description": "Screen-scraping library",
-    "authors": [],
-    "language": "Python"
   },
   "https://pypi.org/project/libensemble/": {
     "name": "libensemble",
@@ -41916,26 +40796,6 @@
     ],
     "language": "R"
   },
-  "https://pypi.org/project/matplotlib": {
-    "name": "matplotlib",
-    "description": "Python plotting package",
-    "authors": [
-      "John D. Hunter",
-      "Michael Droettboom"
-    ],
-    "language": "Python"
-  },
-  "https://github.com/tidyverse/ggplot3": {
-    "readme_empty": true
-  },
-  "https://pypi.org/project/requests": {
-    "name": "requests",
-    "description": "Python HTTP for Humans.",
-    "authors": [
-      "Kenneth Reitz"
-    ],
-    "language": "Python"
-  },
   "https://pypi.org/project/pycsa/": {
     "name": "pycsa",
     "description": "Python implementation of coupled simulated annealing (CSA)",
@@ -41943,20 +40803,6 @@
       "Boudhayan Banerjee",
       "Evan 'Pete' Walsh"
     ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/numpy": {
-    "name": "numpy",
-    "description": "Fundamental package for array computing in Python",
-    "authors": [
-      "Travis E. Oliphant et al."
-    ],
-    "language": "Python"
-  },
-  "https://pypi.org/project/pandas": {
-    "name": "pandas",
-    "description": "Powerful data structures for data analysis, time series, and statistics",
-    "authors": [],
     "language": "Python"
   },
   "https://github.com/sanjayaju/stdreg": {
@@ -44454,9 +43300,6 @@
     "language": "",
     "readme_empty": false
   },
-  "https://github.com/GeoBosh/gbutils(devel)": {
-    "readme_empty": true
-  },
   "https://github.com/mattheaphy/actxps": {
     "name": "actxps",
     "description": "Create actuarial experience studies",
@@ -46472,9 +45315,6 @@
     "language": "Python",
     "readme_empty": false
   },
-  "https://github.com/Azure/AzureStorhttps:": {
-    "readme_empty": true
-  },
   "https://github.com/FaridSafi/react-native-gifted-listview": {
     "name": "react-native-gifted-listview",
     "description": "✌️ ListView with pull-to-refresh and infinite scrolling for Android and iOS React-Native apps",
@@ -48317,7 +47157,6 @@
     "language": "C++",
     "readme_empty": false
   },
-  "https://github.com/hazimehh": {},
   "https://github.com/cran/vegtable": {
     "name": "vegtable",
     "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  vegtable — Handling Vegetation Data Sets. Homepage: https://github.com/kamapu/vegtable, http://kamapu.github.io/vegtable/  Report bugs for this package: https://github.com/kamapu/vegtable/issues",
@@ -52196,9 +51035,6 @@
     ],
     "language": "Python",
     "readme_empty": false
-  },
-  "https://github.com/sigbertklinke/abbreviate(developmentversion)": {
-    "readme_empty": true
   },
   "https://github.com/veliyilanci/Eviews": {
     "name": "Eviews",
@@ -58158,9 +56994,6 @@
     "language": "Python",
     "readme_empty": false
   },
-  "https://github.com/r-hyperspec/hyperSpec(code)": {
-    "readme_empty": true
-  },
   "https://github.com/KAIST-VICLab/FMA-Net": {
     "name": "FMA-Net",
     "description": "[CVPR 2024 Oral] Official repository of FMA-Net",
@@ -58777,9 +57610,6 @@
     ],
     "language": "Jupyter Notebook",
     "readme_empty": false
-  },
-  "https://github.com/kleinbub/rMEAhttps:": {
-    "readme_empty": true
   },
   "https://github.com/mbailo/BayesLogit": {
     "name": "BayesLogit",
@@ -63085,9 +61915,6 @@
     ],
     "language": "HTML",
     "readme_empty": false
-  },
-  "https://github.com/GeoBosh/rbibutils(devel)": {
-    "readme_empty": true
   },
   "https://github.com/hwdsl2/docker-ipsec-vpn-server": {
     "name": "docker-ipsec-vpn-server",
@@ -72291,9 +71118,6 @@
     ],
     "language": "R",
     "readme_empty": false
-  },
-  "https://github.com/ropensci/worrms(devel)": {
-    "readme_empty": true
   },
   "https://github.com/phil8192/ob-analytics": {
     "name": "ob-analytics",

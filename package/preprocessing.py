@@ -1290,6 +1290,9 @@ Returns:
                         print(f"Added GitHub URL: {github} from PyPI URL: {u}")
             elif "github.com" in domain:
                 # If it's already a GitHub URL, clean it up
+                if url == 'https://github.com/QianMo/Real-Time-Rendering-4th-Bibliography-Collection' or url == 'https://github.com/TapXWorld/ChinaTextbook':
+                    updated_urls.remove(u)
+                    continue  # remove the original URL
                 cleaned = _clean_github_url(url)
                 if cleaned and cleaned not in updated_urls:
                     updated_urls.append(cleaned)
