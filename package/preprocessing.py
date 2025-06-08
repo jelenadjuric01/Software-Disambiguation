@@ -1080,11 +1080,11 @@ def is_website_url(url, timeout=5):
     except requests.RequestException:
         return False
 
-def filter_url_dict_parallel(url_dict, max_workers=20):
-    # Flatten all URLs and dedupe
-    all_urls = {u for urls in url_dict.values() for u in urls}
+def filter_url_dict_parallel(url_dict, keys, max_workers=20):
+    # 1) Collect only the URLs under the specified keys
+    all_urls = {u for k in keys if k in url_dict for u in url_dict[k]}
     
-    # Fire off checks in parallel
+    # 2) Check them in parallel
     results = {}
     with ThreadPoolExecutor(max_workers=max_workers) as exe:
         futures = {exe.submit(is_website_url, u): u for u in all_urls}
@@ -1095,11 +1095,9 @@ def filter_url_dict_parallel(url_dict, max_workers=20):
             except Exception:
                 results[u] = False
     
-    # Rebuild filtered dict
-    return {
-        key: [u for u in urls if results.get(u)]
-        for key, urls in url_dict.items()
-    }
+    # 3) Rewrite in place, filtering each requested key
+    for k in keys:
+        url_dict[k] = [u for u in url_dict[k] if results.get(u, False)]
 
 
 PAT = re.compile(
@@ -1241,13 +1239,15 @@ Returns:
     # 2) Normalize and deduplicate URLs
     dedupe_candidates(candidates)
     print("Filtering non-website URLs in parallel...")
+    keys = input["name"].unique()
     # 3) Filter out non-website URLs in parallel
-    candidates = filter_url_dict_parallel(candidates)
+
+    filter_url_dict_parallel(candidates, keys)
     print("Filtering CRAN refman links...")
     # 4) Filter out CRAN refman links
     filter_cran_refs(candidates)
     # 5) Save candidates
-    keys = input["name"].unique()
+    
     for key in keys:
         urls = candidates.get(key, [])
         # Work on a copy of the original list so we can modify freely.
@@ -1276,7 +1276,7 @@ Returns:
                         updated_urls.append(github)
                         print(f"Added GitHub URL: {github} from CRAN URL: {u}")
                 
-            if "pypi.org" in domain or "pypi.python.org" in domain:
+            elif "pypi.org" in domain or "pypi.python.org" in domain:
                 github, description_length = get_github_link_from_pypi(u)
                 if not github and description_length < 400:
                     updated_urls.remove(u)
@@ -1287,6 +1287,13 @@ Returns:
                     if github and github not in updated_urls:
                         updated_urls.append(github)
                         print(f"Added GitHub URL: {github} from PyPI URL: {u}")
+            elif "github.com" in domain:
+                # If it's already a GitHub URL, clean it up
+                cleaned = _clean_github_url(url)
+                if cleaned and cleaned not in updated_urls:
+                    updated_urls.append(cleaned)
+                    updated_urls.remove(u)  # remove the original URL
+                    print(f"Added cleaned GitHub URL: {cleaned} from original URL: {u}")
             
         # Replace the old list with the updated one
         candidates[key] = updated_urls
