@@ -47719,7 +47719,15 @@
     "language": "R",
     "readme_empty": false
   },
-  "https://github.com/mumax/3": {},
+  "https://github.com/mumax/3": {
+    "name": "3",
+    "description": "GPU-accelerated micromagnetic simulator",
+    "authors": [
+      "mumax"
+    ],
+    "language": "Go",
+    "readme_empty": false
+  },
   "https://github.com/cran/abglasso": {},
   "https://github.com/autoNumeric/autoNumeric": {},
   "https://github.com/atalay-k/drawsample": {},
@@ -47955,7 +47963,15 @@
   },
   "https://github.com/fkgruber/SID_cran": {},
   "https://github.com/jbryer/brickset": {},
-  "https://github.com/cran/RCCPCA": {},
+  "https://github.com/cran/RCCPCA": {
+    "name": "RCCPCA",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  RCCPCA — \"Retained Component Criterion for Principal Component Analysis\"  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
   "https://github.com/openshift/origin": {},
   "https://github.com/sagirumati/EviewsR": {},
   "https://github.com/rlabduke/MolProbity": {
@@ -57962,6 +57978,1626 @@
       "Axel"
     ],
     "language": "JavaScript",
+    "readme_empty": false
+  },
+  "https://github.com/williamngan/pts": {
+    "name": "pts",
+    "description": "A library for visualization and creative-coding",
+    "authors": [
+      "William Ngan"
+    ],
+    "language": "TypeScript",
+    "readme_empty": false
+  },
+  "https://github.com/ecospat/NMI": {
+    "name": "NMI",
+    "description": "Data and code for manuscript \"Distance to native niche margins explains establishment success of alien mammals\"",
+    "authors": [
+      "ecospat"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/mclear/Sesame": {
+    "name": "Sesame",
+    "description": "Microsoft Windows NFC Login and Logout",
+    "authors": [
+      "McLEAR"
+    ],
+    "language": "C#",
+    "readme_empty": false
+  },
+  "https://github.com/ropensci/treeStartR": {
+    "name": "treestartr",
+    "description": "An R package for making starting trees from combined molecular, morphological and stratigraphic data",
+    "authors": [
+      "rOpenSci"
+    ],
+    "language": "TeX",
+    "readme_empty": false
+  },
+  "https://github.com/ropensci/parzer": {
+    "name": "parzer",
+    "description": "Parse geographic coordinates",
+    "authors": [
+      "rOpenSci"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/clusterit/orca": {
+    "name": "orca",
+    "description": "A SSH Gateway",
+    "authors": [
+      "clusterit"
+    ],
+    "language": "Go",
+    "readme_empty": false
+  },
+  "https://github.com/iscanner/iscanner_ios": {
+    "name": "iscanner_ios",
+    "description": "An easy-to-use scanner app for iOS.",
+    "authors": [
+      "iScanner"
+    ],
+    "language": "Objective-C",
+    "readme_empty": false
+  },
+  "https://github.com/homfen/dataTables.treeGrid.js": {
+    "name": "dataTables.treeGrid.js",
+    "description": "TreeGrid extension for jquery DataTables",
+    "authors": [
+      "Homfen"
+    ],
+    "language": "JavaScript",
+    "readme_empty": false
+  },
+  "https://github.com/dieterich-lab/Baltica": {
+    "name": "Baltica",
+    "description": "Baltica: integrated differential junction usage ",
+    "authors": [
+      "Dieterich Lab"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/AzarayAOS/TreeStar": {
+    "readme_empty": true
+  },
+  "https://github.com/silenceper/dcmp": {
+    "name": "dcmp",
+    "description": "基于etcd的配置管理系统 (etcd v2)",
+    "authors": [
+      "silenceper"
+    ],
+    "language": "JavaScript",
+    "readme_empty": false
+  },
+  "https://github.com/cran/breakpoint": {
+    "name": "breakpoint",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  breakpoint — An R Package for Multiple Break-Point Detection via the Cross-Entropy Method. Homepage: https://github.com/madawaweer/breakpoint  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/smistad/FAST": {
+    "name": "FAST",
+    "description": "A framework for high-performance medical image processing, neural network inference and visualization",
+    "authors": [
+      "Erik Smistad"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/Project-MONAI/MONAI": {
+    "name": "MONAI",
+    "description": "AI Toolkit for Healthcare Imaging",
+    "authors": [
+      "Project MONAI"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/cran/etable": {
+    "name": "etable",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  etable — Easy Table  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cran/parzer": {
+    "name": "parzer",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  parzer — Parse Messy Geographic Coordinates. Homepage: https://github.com/ropensci/parzer, https://docs.ropensci.org/parzer/  Report bugs for this package: https://github.com/ropensci/parzer/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/dankelley/plan": {
+    "name": "plan",
+    "description": "R package for project planning",
+    "authors": [
+      "Dan Kelley"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/BRBVS": {
+    "name": "BRBVS",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  BRBVS — Variable Selection and Ranking in Copula Survival Models Affected by General Censoring Scheme  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/choi-phd/PROsetta": {
+    "name": "PROsetta",
+    "description": "A common problem when using a variety of patient-reported outcome measures (PROs) for diverse populations and subgroups is establishing the comparability of scales or units on which the outcomes are reported. The lack of comparability in metrics (e.g., raw summed scores vs. scaled scores) among different PROs poses practical challenges in measuring and comparing effects across different studies.\n\nLinking refers to establishing a relationship between scores on two different measures that are not necessarily designed to have the same content or target population. When tests are built in such a way that they differ in content or difficulty, linking must be conducted in order to establish a relationship between the test scores.\n\nOne technique, commonly referred to as equating, involves the process of converting the system of units of one measure to that of another. This process of deriving equivalent scores has been used successfully in educational assessment to compare test scores obtained from parallel or alternate forms that measure the same characteristic with equal precision.\n",
+    "authors": [
+      "Seung W. Choi"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/websearchr": {
+    "name": "websearchr",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  websearchr — Access Domains and Search Popular Websites. Homepage: https://github.com/fschaff/websearchr  Report bugs for this package: https://github.com/fschaff/websearchr/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/adeverse/adespatial": {
+    "name": "adespatial",
+    "description": "Multivariate Multiscale Spatial Analysis",
+    "authors": [
+      "In the ade universe"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/tabit": {
+    "name": "tabit",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  tabit — Simple Tabulation Made Simple  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/bonsaiforest": {
+    "name": "bonsaiforest",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  bonsaiforest — Shrinkage Based Forest Plots. Homepage: https://github.com/insightsengineering/bonsaiforest/  Report bugs for this package: https://github.com/insightsengineering/bonsaiforest/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/rust-rosetta/rust-rosetta": {
+    "name": "rust-rosetta",
+    "description": "Implementing Rosetta Code problems in Rust.",
+    "authors": [
+      "rust-rosetta"
+    ],
+    "language": "Rust",
+    "readme_empty": false
+  },
+  "https://github.com/aladhims/Pre-senseMe": {
+    "name": "Pre-senseMe",
+    "description": "An android app that helps college activity to track presence record and the duration of a class based on the location of the lecturer using Location Services API and Firebase",
+    "authors": [
+      "Alfian Dhimas"
+    ],
+    "language": "Java",
+    "readme_empty": false
+  },
+  "https://github.com/cran/PGEE": {
+    "name": "PGEE",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  PGEE — Penalized Generalized Estimating Equations in High-Dimension  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/gbaierle/epitrix-bite-detection": {
+    "name": "epitrix-bite-detection",
+    "description": "This project uses OpenCV to detect epitrix bites in tobacco leaves",
+    "authors": [
+      "Gabriel Baierle"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/cran/BiTSLS": {
+    "name": "BiTSLS",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  BiTSLS — Bidirectional Two-Stage Least Squares Estimation  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/layumi/Person_reID_baseline_pytorch": {
+    "name": "Person_reID_baseline_pytorch",
+    "description": ":bouncing_ball_person: Pytorch ReID: A tiny, friendly, strong pytorch implement of person re-id / vehicle re-id baseline. Tutorial 👉https://github.com/layumi/Person_reID_baseline_pytorch/tree/master/tutorial",
+    "authors": [
+      "Zhedong Zheng"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/ahembree/ansible-hms-docker": {
+    "name": "ansible-hms-docker",
+    "description": "Ansible playbook for an orchestrated Home Media Server deployment",
+    "authors": [
+      "Aidan Hembree"
+    ],
+    "language": "Jinja",
+    "readme_empty": false
+  },
+  "https://github.com/guaguaguaxia/weekly_report": {
+    "name": "weekly_report",
+    "description": "简单描述工作内容，帮你生成完整周报",
+    "authors": [
+      "guaguaguaxia"
+    ],
+    "language": "CSS",
+    "readme_empty": false
+  },
+  "https://github.com/cran/SEI": {
+    "name": "SEI",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  SEI — Calculating Standardised Indices. Homepage: https://github.com/noeliaof/SEI, https://noeliaof.github.io/SEI/  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "HTML",
+    "readme_empty": false
+  },
+  "https://github.com/hoffmann/report": {
+    "readme_empty": true
+  },
+  "https://github.com/mrc-ide/ring": {
+    "name": "ring",
+    "description": ":ring: Ring buffers",
+    "authors": [
+      "MRC Centre for Global Infectious Disease Analysis"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/ScoreEB": {
+    "name": "ScoreEB",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ScoreEB — Score Test Integrated with Empirical Bayes for Association Study  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/EOSIO/eosjs": {
+    "name": "eosjs",
+    "description": "General purpose library for the EOSIO blockchain. ",
+    "authors": [
+      "EOSIO"
+    ],
+    "language": "TypeScript",
+    "readme_empty": false
+  },
+  "https://github.com/revoltchat/revolt": {
+    "name": "revolt",
+    "description": "Repository for miscellaneous repository management and discussions: https://github.com/revoltchat/revolt/discussions",
+    "authors": [
+      "Revolt"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/ipea/aebdata": {
+    "name": "aebdata",
+    "description": "R package to download data from Atlas do Estado Brasileiro",
+    "authors": [
+      "Instituto de Pesquisa Econômica Aplicada (IPEA)"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/vitotai/BrewPiLess": {
+    "name": "BrewPiLess",
+    "description": "Use an ESP8266 to replace RPI and Arduino. Running BrewPi without Pi, therefore, BrewPi-Less",
+    "authors": [
+      "vitotai"
+    ],
+    "language": "C",
+    "readme_empty": false
+  },
+  "https://github.com/cran/robomit": {
+    "name": "robomit",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  robomit — Robustness Checks for Omitted Variable Bias  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://pypi.org/project/collate/": {
+    "name": "collate",
+    "description": "Aggregated feature generation made easy.",
+    "authors": [
+      "DSaPP Researchers"
+    ],
+    "language": "Python"
+  },
+  "https://github.com/cran/ape": {
+    "name": "ape",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ape — Analyses of Phylogenetics and Evolution. Homepage: https://github.com/emmanuelparadis/ape  Report bugs for this package: https://github.com/emmanuelparadis/ape/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://pypi.org/project/wradlib/": {
+    "name": "wradlib",
+    "description": "wradlib - An Open Source Library for Weather Radar Data Processing",
+    "authors": [],
+    "language": "Python"
+  },
+  "https://github.com/barbushin/php-imap": {
+    "name": "php-imap",
+    "description": "Manage mailboxes, filter/get/delete emails in PHP (supports IMAP/POP3/NNTP)",
+    "authors": [
+      "Sergey"
+    ],
+    "language": "PHP",
+    "readme_empty": false
+  },
+  "https://github.com/TongfeiLiu/C3Net-for-building-extraction": {
+    "name": "C3Net-for-building-extraction",
+    "description": "KBS2023: C3Net for Building Extraction ",
+    "authors": [
+      "Tongfei"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/nextools/metarepo": {
+    "name": "metarepo",
+    "description": "🍱 Metarepo of many packages and various monorepos",
+    "authors": [
+      "NexTools"
+    ],
+    "language": "TypeScript",
+    "readme_empty": false
+  },
+  "https://github.com/hzambran/hydroGOF": {
+    "name": "hydroGOF",
+    "description": "Goodness-of-fit functions for comparison of simulated and observed hydrological time series",
+    "authors": [
+      "Mauricio Zambrano-Bigiarini"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/aTSA": {
+    "name": "aTSA",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  aTSA — Alternative Time Series Analysis  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/stawel/cheali-charger": {
+    "name": "cheali-charger",
+    "description": "cheap lipo charger",
+    "authors": [
+      "Paweł Stawicki"
+    ],
+    "language": "C",
+    "readme_empty": false
+  },
+  "https://github.com/kvnkuang/pbmcapply": {
+    "name": "pbmcapply",
+    "description": "Tracking the progress of mc*apply with progress bar.",
+    "authors": [
+      "Kevin Kuang"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/lmForc": {
+    "name": "lmForc",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  lmForc — Linear Model Forecasting  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/FoundationDB/fdb-record-layer": {
+    "name": "fdb-record-layer",
+    "description": "A record-oriented store built on FoundationDB",
+    "authors": [
+      "FoundationDB"
+    ],
+    "language": "Java",
+    "readme_empty": false
+  },
+  "https://github.com/cran/dendextend": {
+    "name": "dendextend",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  dendextend — Extending 'dendrogram' Functionality in R. Homepage: https://talgalili.github.io/dendextend/, https://github.com/talgalili/dendextend/, https://cran.r-project.org/package=dendextend, https://www.r-statistics.com/tag/dendextend/, ht ...",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/PERMANOVA": {
+    "name": "PERMANOVA",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  PERMANOVA — Multivariate Analysis of Variance Based on Distances and Permutations  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cran/causaldrf": {
+    "name": "causaldrf",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  causaldrf — Estimating Causal Dose Response Functions  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/NirantK/awesome-project-ideas": {
+    "name": "awesome-project-ideas",
+    "description": "Curated list of Machine Learning, NLP, Vision, Recommender Systems Project Ideas",
+    "authors": [
+      "Nirant"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/andrewzm/EFDR": {
+    "name": "EFDR",
+    "description": "Enhanced False Discovery Rate",
+    "authors": [
+      "Andrew Zammit Mangion"
+    ],
+    "language": "Jupyter Notebook",
+    "readme_empty": false
+  },
+  "https://github.com/nmayorov/allan-variance": {
+    "name": "allan-variance",
+    "description": "Simple allan variance in Python",
+    "authors": [
+      "Nikolay Mayorov"
+    ],
+    "language": "Jupyter Notebook",
+    "readme_empty": false
+  },
+  "https://github.com/kleinbub/rMEAhttps:": {
+    "readme_empty": true
+  },
+  "https://github.com/mbailo/BayesLogit": {
+    "name": "BayesLogit",
+    "description": "Fast, exact Bayesian inference for logistic likelihoods.",
+    "authors": [
+      "mbailo"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/pooling": {
+    "name": "pooling",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  pooling — Fit Poolwise Regression Models  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/alibaba/fish-redux": {
+    "name": "fish-redux",
+    "description": "An assembled flutter application framework.",
+    "authors": [
+      "Alibaba"
+    ],
+    "language": "Dart",
+    "readme_empty": false
+  },
+  "https://github.com/cran/currr": {
+    "name": "currr",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  currr — Apply Mapping Functions in Frequent Saving. Homepage: https://github.com/MarcellGranat/currr  Report bugs for this package: https://github.com/MarcellGranat/currr/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/vagabond-systems/forage-lyft-starter-repo": {
+    "name": "forage-lyft-starter-repo",
+    "description": "Lyft starter repo",
+    "authors": [
+      "Vagabond Systems"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/cfranke/scan": {
+    "readme_empty": true
+  },
+  "https://github.com/morenoh149/react-native-contacts": {
+    "name": "react-native-contacts",
+    "description": "React Native Contacts",
+    "authors": [
+      "Harry Moreno"
+    ],
+    "language": "Java",
+    "readme_empty": false
+  },
+  "https://github.com/OpenXiangShan/XiangShan": {
+    "name": "XiangShan",
+    "description": "Open-source high-performance RISC-V processor",
+    "authors": [
+      "XiangShan"
+    ],
+    "language": "Scala",
+    "readme_empty": false
+  },
+  "https://github.com/molecule-one/megan": {
+    "name": "megan",
+    "description": "Code for \"Molecule Edit Graph Attention Network: Modeling Chemical Reactions as Sequences of Graph Edits\"",
+    "authors": [
+      "Molecule One"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/cran/MFO": {
+    "name": "MFO",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  MFO — Maximal Fat Oxidation and Kinetics Calculation. Homepage: https://github.com/JorgeDelro/MFO  Report bugs for this package: https://github.com/JorgeDelro/MFO/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/rothgar/awesome-tmux": {
+    "name": "awesome-tmux",
+    "description": "A list of awesome resources for tmux",
+    "authors": [
+      "Justin Garrison"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/kemsguy7/metapredict": {
+    "name": "metapredict",
+    "description": "",
+    "authors": [
+      "kemsguy7"
+    ],
+    "language": "TypeScript",
+    "readme_empty": false
+  },
+  "https://github.com/cran/SPSL": {
+    "name": "SPSL",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  SPSL — Site Percolation on Square Lattices (SPSL). Homepage: https://cran.r-project.org/package=SPSL  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cran/SDT": {
+    "name": "SDT",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  SDT — Self-Determination Theory Measures. Homepage: http://www.meb.edu.tum.de  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cran/affinitymatrix": {
+    "name": "affinitymatrix",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  affinitymatrix — Estimation of Affinity Matrix  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/zmactep/ProtParam.jl": {
+    "name": "ProtParam.jl",
+    "description": "ExPASy tool clone written on Julia",
+    "authors": [
+      "Pavel Yakovlev"
+    ],
+    "language": "Julia",
+    "readme_empty": false
+  },
+  "https://github.com/waldronlab/pensim": {
+    "name": "pensim",
+    "description": "Tuning and nested cross-validation for L1, L2, and Elastic Net penalized regression",
+    "authors": [
+      "Waldron Lab at the CUNY SPH"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/geometries": {
+    "name": "geometries",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  geometries — Convert Between R Objects and Geometric Structures. Homepage: https://dcooley.github.io/geometries/  Report bugs for this package: https://github.com/dcooley/geometries/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/lightbluetitan/colombiapi": {
+    "name": "colombiapi",
+    "description": "The ColombiAPI package provides a seamless interface to access diverse public data about Colombia through the API-Colombia, a RESTful API. ",
+    "authors": [
+      "Renzo Cáceres Rossi"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/DominiqueMaucieri/quadcleanR": {
+    "name": "quadcleanR",
+    "description": "quadcleanR: A customizable tool to clean up ecological data collected from quadrats. ",
+    "authors": [
+      "Dominique Maucieri"
+    ],
+    "language": "HTML",
+    "readme_empty": false
+  },
+  "https://github.com/zeeev/wham": {
+    "name": "wham",
+    "description": "Structural variant detection and association testing",
+    "authors": [
+      "Zev Kronenberg"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/cran/classGraph": {
+    "name": "classGraph",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  classGraph — Construct Graphs of S4 Class Hierarchies  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cran/phenex": {
+    "name": "phenex",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  phenex — Auxiliary Functions for Phenological Data Analysis  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cran/obAnalytics": {
+    "name": "obAnalytics",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  obAnalytics — Limit Order Book Analytics. Homepage: https://github.com/phil8192/ob-analytics  Report bugs for this package: https://github.com/phil8192/ob-analytics/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "HTML",
+    "readme_empty": false
+  },
+  "https://github.com/viizznuu/Table1": {
+    "name": "Table1",
+    "description": "",
+    "authors": [
+      "Vishnu VK"
+    ],
+    "language": "HTML",
+    "readme_empty": false
+  },
+  "https://github.com/nandp1/gpbStat": {
+    "name": "gpbStat",
+    "description": "Statistical analysis of Plant Breeding data",
+    "authors": [
+      "nandp1"
+    ],
+    "language": "HTML",
+    "readme_empty": false
+  },
+  "https://github.com/cran/ggstream": {
+    "name": "ggstream",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ggstream — Create Streamplots in 'ggplot2'  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/daeyounglim/metapack": {
+    "name": "metapack",
+    "description": "**metapack** (version 0.1.x) provides function(s) to perform Bayesian inference for (network) meta-analytic models *including* the ones introduced in the following papers:\r\n+ Yao, H., Kim, S., Chen, M. H., Ibrahim, J. G., Shah, A. K., & Lin, J. (2015). Bayesian inference for multivariate meta-regression with a partially observed within-study sample covariance matrix. *Journal of the American Statistical Association*, **110(510)**, 528-544.\r\n+ Li, H, Lim, D, Chen, M-H, et al. Bayesian network meta‐regression hierarchical models using heavy-tailed multivariate random effects with covariate-dependent variances. *Statistics in Medicine*. 2021; 1-22. <doi:10.1002/sim.8983>\r\n\r\n**metapack** takes advantage of formula-parsing to extract relevant information to configure a meta-analytic model. Aside from the data characteristic (aggregate v. IPD) and the response type (univariate v. multivariate), all other modeling choices fall into prior specification.\r\n\r\nTo see the model specification, please refer to the corresponding papers, the long-form vignette of this package, or the following paper:\r\n\r\n+ Lim, D., Chen, M. H., Ibrahim, J. G., Kim, S., Shah, A. K., & Lin, J. (2022). metapack: An R Package for Bayesian Meta-Analysis and Network Meta-Analysis with a Unified Formula Interface. The R journal, 14(3), 142.\r\n\r \n",
+    "authors": [
+      "Daeyoung Lim"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/cran/gender": {
+    "name": "gender",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  gender — Predict Gender from Names Using Historical Data. Homepage: https://github.com/lmullen/gender  Report bugs for this package: https://github.com/lmullen/gender/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/NandhanaRameshkumar/Dendrogram_linkage": {
+    "readme_empty": true
+  },
+  "https://github.com/cran/shoredate": {
+    "name": "shoredate",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  shoredate — Shoreline Dating Coastal Stone Age Sites. Homepage: https://github.com/isakro/shoredate, https://isakro.github.io/shoredate/  Report bugs for this package: https://github.com/isakro/shoredate/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/voronianski/flux-comparison": {
+    "name": "flux-comparison",
+    "description": ":pencil: Practical comparison of different Flux solutions",
+    "authors": [
+      "Dmytro Voronianski"
+    ],
+    "language": "JavaScript",
+    "readme_empty": false
+  },
+  "https://github.com/aarushbhutra/gender-guesser": {
+    "readme_empty": true
+  },
+  "https://github.com/cran/compas": {
+    "name": "compas",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  compas — Conformational Manipulations of Protein Atomic Structures  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/GeoBosh/rbibutils": {
+    "name": "rbibutils",
+    "description": "Convert bibliography files between various formats, including BibTeX, BibLaTeX, PubMed, RIS, and Bibentry. This is an R port of the bibutils utilities plus R manipulation of bibiliography objects.",
+    "authors": [
+      "Georgi N. Boshnakov"
+    ],
+    "language": "C",
+    "readme_empty": false
+  },
+  "https://github.com/space-wizards/RSI.py": {
+    "name": "RSI.py",
+    "description": "Python library & tools for manipulation of RSI files used in SS14.",
+    "authors": [
+      "Space Wizards Federation"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/grip-unina/GNLM": {
+    "name": "GNLM",
+    "description": "Guided patch-wise nonlocal SAR despeckling",
+    "authors": [
+      "grip-unina"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/tastejs/awesome-app-ideas": {
+    "name": "awesome-app-ideas",
+    "description": "List of awesome app ideas",
+    "authors": [
+      "TasteJS"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/hzambran/hydroTSM": {
+    "name": "hydroTSM",
+    "description": "Time Series Management and Analysis for Hydrological Modelling",
+    "authors": [
+      "Mauricio Zambrano-Bigiarini"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/clugen/clugenr": {
+    "name": "clugenr",
+    "description": "Multidimensional cluster generation in R",
+    "authors": [
+      "clugen"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/DCPROGS/HJCFITmasterdocs": {
+    "readme_empty": true
+  },
+  "https://github.com/atusy/ftExtra": {
+    "name": "ftExtra",
+    "description": "Helper functions for the flextable package",
+    "authors": [
+      "atusy"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/RUCAIBox/CRSLab": {
+    "name": "CRSLab",
+    "description": "CRSLab is an open-source toolkit for building Conversational Recommender System (CRS).",
+    "authors": [
+      "RUCAIBox"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/cran/RVenn": {
+    "name": "RVenn",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  RVenn — Set Operations for Many Sets  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cran/adace": {
+    "name": "adace",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  adace — Estimator of the Adherer Average Causal Effect  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/tmux-plugins/tmux-resurrect": {
+    "name": "tmux-resurrect",
+    "description": "Persists tmux environment across system restarts.",
+    "authors": [
+      "tmux-plugins"
+    ],
+    "language": "Shell",
+    "readme_empty": false
+  },
+  "https://github.com/RTagBot/cliff": {
+    "name": "cliff",
+    "description": "Execute command line programs interactively",
+    "authors": [
+      "Randy Lai"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/coRanking": {
+    "name": "coRanking",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  coRanking — Co-Ranking Matrix. Homepage: https://coranking.guido-kraemer.com/  Report bugs for this package: https://github.com/gdkrmr/coRanking/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/swagger-api/swagger-ui": {
+    "name": "swagger-ui",
+    "description": "Swagger UI is a collection of HTML, JavaScript, and CSS assets that dynamically generate beautiful documentation from a Swagger-compliant API.",
+    "authors": [
+      "Swagger"
+    ],
+    "language": "JavaScript",
+    "readme_empty": false
+  },
+  "https://github.com/cran/admiral": {
+    "name": "admiral",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  admiral — ADaM in R Asset Library. Homepage: https://pharmaverse.github.io/admiral/, https://github.com/pharmaverse/admiral  Report bugs for this package: https://github.com/pharmaverse/admiral/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/CellProfiler/CellProfiler": {
+    "name": "CellProfiler",
+    "description": "An open-source application for biological image analysis",
+    "authors": [
+      "CellProfiler"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/cran/dail": {
+    "name": "dail",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  dail — Data from Access to Information Law  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/koenbok/Cactus": {
+    "name": "Cactus",
+    "description": "Static site generator for designers. Uses Python and Django templates.",
+    "authors": [
+      "eudicots"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/cran/dafishr": {
+    "name": "dafishr",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  dafishr — Download, Wrangle, and Analyse Vessel Monitoring System Data. Homepage: https://github.com/CBMC-GCMP/dafishr, https://cbmc-gcmp.github.io/dafishr/  Report bugs for this package: https://github.com/CBMC-GCMP/dafishr/issues/",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/snayfach/MicrobeCensus": {
+    "name": "MicrobeCensus",
+    "description": "MicrobeCensus estimates the average genome size of microbial communities from metagenomic data",
+    "authors": [
+      "Stephen Nayfach"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/Edinburgh-Genome-Foundry/DnaChisel": {
+    "name": "DnaChisel",
+    "description": ":pencil2: A versatile DNA sequence optimizer",
+    "authors": [
+      "Edinburgh Genome Foundry"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/LingDong-/shan-shui-inf": {
+    "name": "shan-shui-inf",
+    "description": "Procedurally generated Chinese landscape painting.",
+    "authors": [
+      "Lingdong Huang"
+    ],
+    "language": "HTML",
+    "readme_empty": false
+  },
+  "https://github.com/swihart/mvpd": {
+    "name": "mvpd",
+    "description": "mvpd: An R Package for Multivariate Product Distributions",
+    "authors": [
+      "Bruce Swihart"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/StratSel": {
+    "name": "StratSel",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  StratSel — Strategic Selection Estimator  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/HERA-Team/baseline_dependent_averaging": {
+    "name": "baseline_dependent_averaging",
+    "description": "Code for averaging together baselines",
+    "authors": [
+      "Hydrogen Epoch of Reionization Array (HERA)"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/KurtBestor/Hitomi-Downloader": {
+    "name": "Hitomi-Downloader",
+    "description": ":cake: Desktop utility to download images/videos/music/text from various websites, and more.",
+    "authors": [
+      "Kurt Bestor"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/friendly/vcdExtra": {
+    "name": "vcdExtra",
+    "description": "Extensions and additions to vcd: Visualizing Categorical Data ",
+    "authors": [
+      "Michael Friendly"
+    ],
+    "language": "HTML",
+    "readme_empty": false
+  },
+  "https://github.com/stla/gmpoly": {
+    "name": "gmpoly",
+    "description": "Multivariate polynomials with 'gmp' rational coefficients",
+    "authors": [
+      "stla"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/apaTables": {
+    "name": "apaTables",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  apaTables — Create American Psychological Association (APA) Style Tables. Homepage: https://github.com/dstanley4/apaTables  Report bugs for this package: https://github.com/dstanley4/apaTables/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/BeckWang0912/TDAppMonitorKit": {
+    "name": "TDAppMonitorKit",
+    "description": "性能监测工具（UI卡顿、CPU、Memory）",
+    "authors": [
+      "Big Orange"
+    ],
+    "language": "Objective-C",
+    "readme_empty": false
+  },
+  "https://github.com/JoshData/python-email-validator": {
+    "name": "python-email-validator",
+    "description": "A robust email syntax and deliverability validation library for Python.",
+    "authors": [
+      "Joshua Tauberer"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/rewanthtammana/Damn-Vulnerable-Bank": {
+    "name": "Damn-Vulnerable-Bank",
+    "description": "Damn Vulnerable Bank is designed to be an intentionally vulnerable android application. This provides an interface to assess your android application security hacking skills.",
+    "authors": [
+      "Rewanth Tammana"
+    ],
+    "language": "Java",
+    "readme_empty": false
+  },
+  "https://github.com/leonardomso/33-js-concepts": {
+    "name": "33-js-concepts",
+    "description": "📜 33 JavaScript concepts every developer should know.",
+    "authors": [
+      "Leonardo Maldonado"
+    ],
+    "language": "JavaScript",
+    "readme_empty": false
+  },
+  "https://github.com/cran/zscorer": {
+    "name": "zscorer",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  zscorer — Child Anthropometry z-Score Calculator. Homepage: https://github.com/nutriverse/zscorer  Report bugs for this package: https://github.com/nutriverse/zscorer/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/swisskyrepo/PayloadsAllTheThings": {
+    "name": "PayloadsAllTheThings",
+    "description": "A list of useful payloads and bypass for Web Application Security and Pentest/CTF",
+    "authors": [
+      "Swissky"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/stephenSRMMartin/LMMELSM": {
+    "name": "LMMELSM",
+    "description": "R Package for fitting latent multivariate mixed effects location scale models.",
+    "authors": [
+      "Stephen Martin"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/ini": {
+    "name": "ini",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ini — Read and Write '.ini' Files. Homepage: https://github.com/dvdscripter/ini  Report bugs for this package: https://github.com/dvdscripter/ini/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/Serjio555/Cripto": {},
+  "https://github.com/cran/textpress": {
+    "name": "textpress",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  textpress — A Lightweight and Versatile NLP Toolkit. Homepage: https://github.com/jaytimm/textpress, https://jaytimm.github.io/textpress/  Report bugs for this package: https://github.com/jaytimm/textpress/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/draw": {
+    "name": "draw",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  draw — Wrapper Functions for Producing Graphics. Homepage: https://github.com/rrwen/draw  Report bugs for this package: https://github.com/rrwen/draw/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/autothresholdr": {
+    "name": "autothresholdr",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  autothresholdr — An R Port of the 'ImageJ' Plugin 'Auto Threshold'. Homepage: https://rorynolan.github.io/autothresholdr/, https://github.com/rorynolan/autothresholdr#readme  Report bugs for this package: https://github.com/rorynolan/autothresh ...",
+    "authors": [
+      "cran"
+    ],
+    "language": "C++",
+    "readme_empty": true
+  },
+  "https://github.com/codeschool/WatchUsBuild-ImageStreamingAppWithNodePubSubServer": {
+    "name": "WatchUsBuild-ImageStreamingAppWithNodePubSubServer",
+    "description": "soup to bits pub sub",
+    "authors": [
+      "Code School"
+    ],
+    "language": "JavaScript",
+    "readme_empty": false
+  },
+  "https://github.com/cran/algaeClassify": {
+    "name": "algaeClassify",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  algaeClassify — Tools to Query the 'Algaebase' Online Database, Standardize Phytoplankton Taxonomic Data, and Perform Functional Group Classifications. Homepage: https://doi.org/10.5066/F7S46Q3F  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/ChaosGame": {
+    "name": "ChaosGame",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ChaosGame — Chaos Game  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cran/facebookorganicR": {
+    "name": "facebookorganicR",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  facebookorganicR — Get Data from 'Facebook Organic' via the 'Windsor.ai' API. Homepage: https://windsor.ai/  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/HotBitmapGG/CreditSesameRingView": {
+    "name": "CreditSesameRingView",
+    "description": "Imitation of Ali credit sesame new old ring view.http://www.jianshu.com/p/8486a5baa708",
+    "authors": [
+      "Hcc"
+    ],
+    "language": "Java",
+    "readme_empty": false
+  },
+  "https://github.com/pedvide/ADC": {
+    "name": "ADC",
+    "description": "Teensy 4/3.x/LC ADC implementation",
+    "authors": [
+      "Pedro Villanueva"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/r-spatial/mapedit": {
+    "name": "mapedit",
+    "description": "Interactive editing of spatial data in R",
+    "authors": [
+      "r-spatial"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/CCP": {
+    "name": "CCP",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  CCP — Significance Tests for Canonical Correlation Analysis (CCA)  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cov-lineages/pangolin": {
+    "name": "pangolin",
+    "description": "Software package for assigning SARS-CoV-2 genome sequences to global lineages.",
+    "authors": [
+      "CoV-lineages"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/cran/dscore": {
+    "name": "dscore",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  dscore — D-Score for Child Development. Homepage: https://github.com/d-score/dscore, https://d-score.org/dscore/, https://d-score.org/dbook1/  Report bugs for this package: https://github.com/d-score/dscore/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/shadowsocks/shadowsocks-android": {
+    "name": "shadowsocks-android",
+    "description": "A shadowsocks client for Android",
+    "authors": [
+      "shadowsocks"
+    ],
+    "language": "Kotlin",
+    "readme_empty": false
+  },
+  "https://github.com/cran/Strategy": {
+    "name": "Strategy",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  Strategy — Generic Framework to Analyze Trading Strategies  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/gordon/genomeviewer": {
+    "name": "genomeviewer",
+    "description": "GenomeViewer is a webbased viewer for GFF3 genome annotations",
+    "authors": [
+      "Gordon Gremme"
+    ],
+    "language": "Ruby",
+    "readme_empty": false
+  },
+  "https://github.com/tidylab/decorators": {
+    "name": "decorators",
+    "description": "Extend the behaviour of a function without explicitly modifying it",
+    "authors": [
+      "Tidylab"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/CFDEMproject/LAMMPS": {
+    "readme_empty": true
+  },
+  "https://github.com/cran/ConvergenceConcepts": {
+    "name": "ConvergenceConcepts",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ConvergenceConcepts — Seeing Convergence Concepts in Action  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cran/QF": {
+    "name": "QF",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  QF — Density, Cumulative and Quantile Functions of Quadratic Forms  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "C++",
+    "readme_empty": true
+  },
+  "https://github.com/cran/minimapR": {
+    "name": "minimapR",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  minimapR — Wrapper for 'minimap2'. Homepage: https://github.com/jake-bioinfo/minimapR  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/XxrzxX/eCDFP-Notes": {
+    "name": "eCDFP-Notes",
+    "description": "",
+    "authors": [
+      "!!"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/santikka/dosearch": {
+    "name": "dosearch",
+    "description": "dosearch: R Package for Identifying General Causal Queries",
+    "authors": [
+      "Santtu Tikka"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/wehaox/Typecho-Butterfly": {
+    "name": "Typecho-Butterfly",
+    "description": "Hexo主题Butterfly的Typecho移植版———开源不易，帮忙点个star，谢谢了🌹",
+    "authors": [
+      "wehao"
+    ],
+    "language": "PHP",
+    "readme_empty": false
+  },
+  "https://github.com/atsa-es/atsar": {
+    "name": "atsar",
+    "description": "Applied time series analysis in R with Stan.  Allows fast Bayesian fitting of multivariate time-series models.",
+    "authors": [
+      "Applied Time Series Analysis"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/cran/harmony": {
+    "name": "harmony",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  harmony — Fast, Sensitive, and Accurate Integration of Single Cell Data. Homepage: https://github.com/immunogenomics/harmony  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/ihahachi/Clustring-Python-DTAIDistance": {
+    "name": "Clustring-Python-DTAIDistance",
+    "description": "",
+    "authors": [
+      "Hachi Abderrahmane Ben Salem"
+    ],
+    "language": "Jupyter Notebook",
+    "readme_empty": false
+  },
+  "https://github.com/apexcharts/react-apexcharts": {
+    "name": "react-apexcharts",
+    "description": "📊 React Component for ApexCharts",
+    "authors": [
+      "ApexCharts"
+    ],
+    "language": "JavaScript",
+    "readme_empty": false
+  },
+  "https://github.com/crzyscholar/stagonographer": {
+    "readme_empty": true
+  },
+  "https://github.com/Descendant/InOps": {
+    "readme_empty": true
+  },
+  "https://github.com/wlandau/crew": {
+    "name": "crew",
+    "description": "A distributed worker launcher",
+    "authors": [
+      "Will Landau"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/veggiemonk/awesome-docker": {
+    "name": "awesome-docker",
+    "description": ":whale: A curated list of Docker resources and projects",
+    "authors": [
+      "Julien Bisconti"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/vuejs/devtools-v6": {
+    "name": "devtools-v6",
+    "description": "⚙️ Browser devtools extension for debugging Vue.js applications.",
+    "authors": [
+      "Vue"
+    ],
+    "language": "TypeScript",
+    "readme_empty": false
+  },
+  "https://github.com/cran/ace2fastq": {
+    "name": "ace2fastq",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ace2fastq — ACE File to FASTQ Converter. Homepage: https://github.com/c5sire/ace2fastq  Report bugs for this package: https://github.com/c5sire/ace2fastq/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/Harrison4192/validata": {
+    "name": "validata",
+    "description": "validate your data",
+    "authors": [
+      "Harrison Tietze"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/bfast": {
+    "name": "bfast",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  bfast — Breaks for Additive Season and Trend. Homepage: https://bfast2.github.io/  Report bugs for this package: https://github.com/bfast2/bfast/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/cran/PCFAM": {
+    "name": "PCFAM",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  PCFAM — Computation of Ancestry Scores with Mixed Families and Unrelated Individuals  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/daattali/ggExtra": {
+    "name": "ggExtra",
+    "description": "📊 Add marginal histograms to ggplot2, and more ggplot2 enhancements",
+    "authors": [
+      "Dean Attali"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/finki-mk/VP": {
+    "name": "VP",
+    "description": "Визуелно програмирање",
+    "authors": [
+      "ФИНКИ"
+    ],
+    "language": "C#",
+    "readme_empty": false
+  },
+  "https://github.com/AguaClara/SWOT": {
+    "name": "SWOT",
+    "description": "CEE 4520 course material",
+    "authors": [
+      "AguaClara at Cornell"
+    ],
+    "language": "Jupyter Notebook",
+    "readme_empty": false
+  },
+  "https://github.com/carstenstann/FPP2": {
+    "name": "FPP2",
+    "description": "Solutions to exercises in Forecasting: Principles and Practice by Rob Hyndman",
+    "authors": [
+      "Carsten"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/cran/narray": {
+    "name": "narray",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  narray — Subset- And Name-Aware Array Utility Functions. Homepage: https://github.com/mschubert/narray  Report bugs for this package: https://github.com/mschubert/narray/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/lvsti/Cameo": {
+    "name": "Cameo",
+    "description": "CMIO DAL plugin explorer",
+    "authors": [
+      "Tamas Lustyik"
+    ],
+    "language": "Swift",
+    "readme_empty": false
+  },
+  "https://github.com/cran/NeuralNetTools": {
+    "name": "NeuralNetTools",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  NeuralNetTools — Visualization and Analysis Tools for Neural Networks  Report bugs for this package: https://github.com/fawda123/NeuralNetTools/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/SarahWeiii/CoACD": {
+    "name": "CoACD",
+    "description": "[SIGGRAPH2022] Approximate Convex Decomposition for 3D Meshes with Collision-Aware Concavity and Tree Search",
+    "authors": [
+      "Xinyue Wei"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/augmentedperception/deepview_video_dataset": {
+    "name": "deepview_video_dataset",
+    "description": "",
+    "authors": [
+      "augmentedperception"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/nickduran/align-linguistic-alignment": {
+    "name": "align-linguistic-alignment",
+    "description": "Python library for extracting quantitative, reproducible metrics of multi-level alignment between speakers in naturalistic language corpora.",
+    "authors": [
+      "Nicholas Duran"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/cran/BSPBSS": {
+    "name": "BSPBSS",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  BSPBSS — Bayesian Spatial Blind Source Separation  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/cran/recosystem": {
+    "name": "recosystem",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  recosystem — Recommender System using Matrix Factorization. Homepage: https://github.com/yixuan/recosystem  Report bugs for this package: https://github.com/yixuan/recosystem/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/milk-org/ImageStreamIO": {
+    "name": "ImageStreamIO",
+    "description": "Support for image stream format I/O",
+    "authors": [
+      "Multi-purpose Imaging Libraries toolKit (milk)"
+    ],
+    "language": "C++",
+    "readme_empty": false
+  },
+  "https://github.com/CristianT/LiteDBvsSQLite": {
+    "name": "LiteDBvsSQLite",
+    "description": "I wanted to evaluate the raw speed of inserting records in a file based database from a C# application.  \nThe 2 most interesting alterntives I found are SQLite + Entity Framework, which is a well known and well stablish solution,\nand LiteDB, which is the no-SQL alternative written completely in .Net.\n\nSince the evaluated use case is inserting records one by one the code to write is this:\n",
+    "authors": [
+      "Cristian T"
+    ],
+    "language": "C#",
+    "readme_empty": false
+  },
+  "https://github.com/kisungyou/Riemann": {
+    "name": "Riemann",
+    "description": "Learning with Data on Riemannian Manifolds",
+    "authors": [
+      "Kisung You"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/mjwestgate/revtools": {
+    "name": "revtools",
+    "description": "Tools to support research synthesis in R",
+    "authors": [
+      "Martin Westgate"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/javiercara/emssm": {
+    "name": "emssm",
+    "description": "Estimation of Multivariate State Space Models",
+    "authors": [
+      "Javier Cara"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/amsantac/TOC": {
+    "name": "TOC",
+    "description": "TOC R package",
+    "authors": [
+      "Ali S."
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/glm.predict": {
+    "name": "glm.predict",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  glm.predict — Predicted Values and Discrete Changes for Regression Models. Homepage: https://github.com/benjaminschlegel/glm.predict/  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
     "readme_empty": false
   }
 }

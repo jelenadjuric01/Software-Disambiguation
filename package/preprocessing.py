@@ -1116,24 +1116,25 @@ def filter_cran_refs(url_dict):
         url_dict[software] = filtered
 def _clean_github_url(raw_url: str) -> str:
     """
-    Given a GitHub URL that may include extra path segments (e.g. "/tree/master", "/issues", "/tarball/v1.0"),
-    normalize it to "https://github.com/{owner}/{repo}". If the URL isn’t a valid GitHub repo URL,
-    returns an empty string.
+    Normalize any GitHub repo URL (even with extra segments or newlines)
+    to https://github.com/{owner}/{repo}; otherwise return "".
     """
-    parsed = urlparse(raw_url)
-    host = parsed.netloc.lower()
-    if "github.com" not in host:
+    pattern = re.compile(
+    r"https?://github\.com/"
+    r"(?P<owner>[A-Za-z0-9_-]+)"
+    r"/"
+    r"(?P<repo>[A-Za-z0-9._-]+)"
+    r"(?=(?:[^A-Za-z0-9._-]|$))",
+    re.IGNORECASE,
+)
+    m = pattern.search(raw_url)
+    if not m:
         return ""
-    # Remove any ".git" suffix from path temporarily
-    path = parsed.path.rstrip("/").lstrip("/")
-    if path.endswith(".git"):
-        path = path[: -len(".git")]
-
-    segments = [seg for seg in path.split("/") if seg]
-    if len(segments) < 2:
-        return ""
-    owner, repo = segments[0], segments[1]
-    # Reconstruct the clean repository URL
+    owner = m.group("owner")
+    repo  = m.group("repo")
+    # 2) strip a trailing ".git" (case-insensitive), if it snuck in
+    if repo.lower().endswith(".git"):
+        repo = repo[:-4]
     return f"https://github.com/{owner}/{repo}"
 
 def get_github_link_from_pypi(url: str) -> Tuple[str,int]:
