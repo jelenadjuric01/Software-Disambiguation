@@ -71937,5 +71937,424 @@
     ],
     "language": "R",
     "readme_empty": false
+  },
+  "https://github.com/cran/discovr": {
+    "name": "discovr",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  discovr — Interactive Tutorials and Data for \"Discovering Statistics Using R and RStudio\". Homepage: https://www.discovr.rocks, https://github.com/profandyfield/discovr  Report bugs for this package: https://github.com/profandyfield/discovr/iss ...",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/CBASSED50": {
+    "name": "CBASSED50",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  CBASSED50 — Process CBASS-Derived PAM Data  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/YifeiLIU/metaArray": {
+    "readme_empty": true
+  },
+  "https://github.com/takakoizumi/OmicSense": {
+    "name": "OmicSense",
+    "description": "\nThe goal of OmicSense is to ...\n \n",
+    "authors": [
+      "takakoizumi"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/ropensci/worrms(devel)": {
+    "readme_empty": true
+  },
+  "https://github.com/textmate/textmate": {
+    "name": "textmate",
+    "description": "TextMate is a graphical text editor for macOS 10.12 or later",
+    "authors": [
+      "textmate"
+    ],
+    "language": "Objective-C++",
+    "readme_empty": false
+  },
+  "https://github.com/cran/libopenexr": {
+    "name": "libopenexr",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  libopenexr — Static Library and Headers for 'OpenEXR' Image I/O  Report bugs for this package: https://github.com/tylermorganwall/libopenexr/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "C",
+    "readme_empty": true
+  },
+  "https://github.com/Luigi-Annic/ciphertext": {
+    "name": "ciphertext",
+    "description": "R package for ciphering/deciphering words and phrases with classical techniques",
+    "authors": [
+      "Luigi-Annic"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/Celnardur/quicklime": {
+    "readme_empty": true
+  },
+  "https://github.com/facebookresearch/fastText": {
+    "readme_empty": true
+  },
+  "https://github.com/r-hyperspec/hyperSpec(code)": {
+    "readme_empty": true
+  },
+  "https://github.com/acumos/acumos-r-client": {
+    "name": "acumos-r-client",
+    "description": "",
+    "authors": [
+      "Acumos"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://cran.r-project.org/package=discovr": {
+    "name": "discovr",
+    "description": "Interactive 'R' tutorials and datasets for the textbook Field\n(2026), \"Discovering Statistics Using R and RStudio\",\n<https://www.discovr.rocks/>.  Interactive tutorials cover general\nworkflow in 'R' and 'RStudio', summarizing data, visualizing data,\nfitting models and bias, correlation, the general linear model (GLM),\nmoderation, mediation, missing values, comparing means using the GLM\n(analysis of variance), comparing adjusted means (analysis of covariance), factorial\ndesigns, repeated measures designs, exploratory factor analysis (EFA).\nThere are no functions, only datasets and interactive tutorials.",
+    "authors": [
+      "Andy Field"
+    ],
+    "language": "R"
+  },
+  "https://github.com/profandyfield/discovr": {
+    "name": "discovr",
+    "description": "discovr package for R to accompany Discovering Statistics Using R and RStudio",
+    "authors": [
+      "Andy Field"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/ropensci/rinat": {
+    "name": "rinat",
+    "description": "A programmatic interface to iNaturalist",
+    "authors": [
+      "rOpenSci"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/pedroCabraAcela/Scrapping-Colombian-Macrodata": {
+    "name": "Scrapping-Colombian-Macrodata",
+    "description": "One of the main challenges in producing econometric models for Colombian macro-financial variables is obtaining the data. \nMost of the variables are indeed available on the internet for free. However, searching, importing and harmonizing this information is a step that slows down the models' production :hourglass:. \nIn the foreseeable future, the developer of this repository intends to create a Python version of this package :smile:. \n \n",
+    "authors": [
+      "pedroCabraAcela"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/tylermorganwall/libopenexr": {
+    "readme_empty": true
+  },
+  "https://github.com/ronaldran97/PAFR_UI": {
+    "name": "PAFR_UI",
+    "description": "",
+    "authors": [
+      "Ronald Tran"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/cran/agpower": {
+    "name": "agpower",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  agpower — Recurrent Event Analysis Planning for Robust Andersen-Gill Model  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/aur-archive/ctrax": {
+    "readme_empty": true
+  },
+  "https://github.com/Textualize/textual": {
+    "name": "textual",
+    "description": "The lean application framework for Python.  Build sophisticated user interfaces with a simple Python API. Run your apps in the terminal and a web browser.",
+    "authors": [
+      "Textualize"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/sigbertklinke/abbreviate": {
+    "name": "abbreviate",
+    "description": "Abbreviate strings ",
+    "authors": [
+      "Sigbert Klinke"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://cran.r-project.org/web/packages/SubVis/index.html": {
+    "name": "SubVis",
+    "description": "Substitution matrices are important parameters in protein alignment algorithms. These matrices represent the likelihood that an amino acid will be substituted for another during mutation. This tool allows users to apply predefined and custom matrices and then explore the resulting alignments with interactive visualizations.  'SubVis' requires the availability of a web browser.",
+    "authors": [
+      "Scott Barlowe"
+    ],
+    "language": "R"
+  },
+  "https://github.com/cran/aplotExtra": {
+    "name": "aplotExtra",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  aplotExtra — Creating Composite Plots using 'aplot'. Homepage: https://github.com/YuLab-SMU/aplotExtra  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/prodriguezsosa/EmbeddingRegression": {
+    "name": "EmbeddingRegression",
+    "description": "Repository for paper \"Embedding Regression: Models for Context-Specific Description and Inference\"",
+    "authors": [
+      "Pedro L. Rodríguez"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://github.com/jimzhan/rex": {
+    "readme_empty": true
+  },
+  "https://github.com/GeoBosh/rbibutils(devel)": {
+    "readme_empty": true
+  },
+  "https://github.com/GeoBosh/gbutils(devel)": {
+    "readme_empty": true
+  },
+  "https://github.com/eclarke/shortbred-snakemake": {
+    "name": "shortbred-snakemake",
+    "description": "Rules to run ShortBRED using Snakemake",
+    "authors": [
+      "Erik Clarke"
+    ],
+    "language": "Python",
+    "readme_empty": false
+  },
+  "https://github.com/OscarKjell/text": {
+    "name": "text",
+    "description": "Using Transformers from HuggingFace in R",
+    "authors": [
+      "Oscar Kjell"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/fawda123/micromap": {
+    "name": "micromap",
+    "description": "ORD for R micromap package development",
+    "authors": [
+      "Marcus W Beck"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://cran.r-project.org/package=adsoRptionCMF": {
+    "name": "adsoRptionCMF",
+    "description": "Provides tools for classical parameter estimation of adsorption isotherm models, including both\nlinear and nonlinear forms of the Freundlich, Langmuir, and Temkin isotherms. This package allows\nusers to fit these models to experimental data, providing parameter estimates along with fit statistics\nsuch as Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC). Error metrics are\ncomputed to evaluate model performance, and the package produces model fit plots with bootstrapped 95%\nconfidence intervals. Additionally, it generates residual plots for diagnostic assessment of the models.\nResearchers and engineers in material science, environmental engineering, and chemical engineering can\nrigorously analyze adsorption behavior in their systems using this straightforward, non-Bayesian approach.\nFor more details, see Harding (1907) <doi:10.2307/2987516>.",
+    "authors": [
+      "Paul Angelo C. Manlapaz"
+    ],
+    "language": "R"
+  },
+  "https://github.com/hazimehh": {},
+  "https://github.com/cran/ciphertext": {
+    "name": "ciphertext",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  ciphertext — Classical Cryptography Methods for Words and Phrases. Homepage: https://github.com/Luigi-Annic/ciphertext  Report bugs for this package: https://github.com/Luigi-Annic/ciphertext/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://cran.r-project.org/package=CBASSED50": {
+    "name": "CBASSED50",
+    "description": "Tools to process CBASS-derived PAM data efficiently. Minimal requirements are PAM-based photosynthetic efficiency data (or data from any other continuous variable that changes with temperature, e.g. relative bleaching scores) from 4 coral samples (nubbins) subjected to 4 temperature profiles of at least 2 colonies from 1 coral species from 1 site. Please refer to the following CBASS (Coral Bleaching Automated Stress System) papers for in-depth information regarding CBASS acute thermal stress assays, experimental design considerations, and ED5/ED50/ED95 thermal parameters: Nicolas R. Evensen et al. (2023) <doi:10.1002/lom3.10555> Christian R. Voolstra et al. (2020) <doi:10.1111/gcb.15148> Christian R. Voolstra et al. (2025) <doi:10.1146/annurev-marine-032223-024511>.",
+    "authors": [
+      "Yulia Iakovleva",
+      "Luigi Colin",
+      "Christian Robert Voolstra"
+    ],
+    "language": "R"
+  },
+  "https://github.com/kleinbub/rMEAhttps:": {
+    "readme_empty": true
+  },
+  "https://github.com/cran/text": {
+    "name": "text",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  text — Analyses of Text using Transformers Models from HuggingFace, Natural Language Processing and Machine Learning. Homepage: https://r-text.org/, https://github.com/OscarKjell/text/  Report bugs for this package: https://github.com/OscarKjel ...",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/conText": {
+    "name": "conText",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  conText — 'a la Carte' on Text (ConText) Embedding Regression. Homepage: https://github.com/prodriguezsosa/EmbeddingRegression  Report bugs for this package: https://github.com/prodriguezsosa/ConText/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/prodriguezsosa/ConText": {
+    "name": "conText",
+    "description": "An R package for estimating and doing statistical inference on context-specific word embeddings.",
+    "authors": [
+      "Pedro L. Rodríguez"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/adsoRptionCMF": {
+    "name": "adsoRptionCMF",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  adsoRptionCMF — Classical Model Fitting of Adsorption Isotherms  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://cran.r-project.org/package=agpower": {
+    "name": "agpower",
+    "description": "Power and associated functions useful in prospective planning and monitoring of a clinical trial when a recurrent event endpoint is to be assessed by the robust Andersen-Gill model, see Lin, Wei, Yang, and Ying (2010) <doi:10.1111/1467-9868.00259>. The equations developed in Ingel and Jahn-Eimermacher (2014) <doi:10.1002/bimj.201300090> and their consequences are employed.",
+    "authors": [
+      "Stephen Rush"
+    ],
+    "language": "R"
+  },
+  "https://github.com/YuLab-SMU/aplotExtra": {
+    "name": "aplotExtra",
+    "description": "Creating composite plot using 'aplot'",
+    "authors": [
+      "Bioinformatics Group @ SMU"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/Azure/AzureStorhttps:": {
+    "readme_empty": true
+  },
+  "https://cran.r-project.org/package=libopenexr": {
+    "name": "libopenexr",
+    "description": "Provides the 'OpenEXR' static library and 'C++' headers\nfor high-dynamic-range image I/O  (see <https://openexr.com/>)\nneeded to link R packages against the 'OpenEXR' library, along\nwith a basic R interface to load 'EXR' images.",
+    "authors": [
+      "Tyler Morgan-Wall",
+      "Aaron Demolder",
+      "Abe Fettig",
+      "Aloys Baillet",
+      "Andre Mazzone",
+      "Andrew Kunz",
+      "Anton Dukhovnikov",
+      "Antonio Rojas",
+      "Aras Pranckevičius",
+      "Arkady Shapkin",
+      "Arkell Rasiah",
+      "Axel Waggershauser",
+      "Balázs Oroszi",
+      "Barnaby Robson",
+      "Ben Grimes",
+      "Brendan Bolles",
+      "Cary Phillips",
+      "Chris Leu",
+      "Christina Tempelaar-Lietz",
+      "Christopher Horvath",
+      "Christopher Kulla",
+      "Christoph Gohlke",
+      "Cristian Martínez",
+      "Dan Horák",
+      "Daniel Kaneider",
+      "Darby Johnston",
+      "Dave Sawyer",
+      "David Korczynski",
+      "Diogo Teles Sant'Anna",
+      "Dirk Lemstra",
+      "Drew Hess",
+      "Ed Hanway",
+      "Edward Kmett",
+      "Eric Sommerlade",
+      "E Sommerlade",
+      "Florian Kainz",
+      "Grant Kim",
+      "Gregorio Litenstein",
+      "Gyula Gubacsi",
+      "Halfdan Ingvarsson",
+      "Harry Mallon",
+      "Huibean Luo",
+      "Ibraheem Alhashim",
+      "Jack Kingsman",
+      "Jamie Kenyon",
+      "Jan Tojnar",
+      "Jean-Francois Panisset",
+      "Jens Lindgren",
+      "Ji Hun Yu",
+      "Johannes Vollmer",
+      "John Loy",
+      "John Mertic",
+      "Jonathan Stone",
+      "Jose Luis Cercos-Pita",
+      "Joseph Goldstone",
+      "Juha Reunanen",
+      "Julian Amann",
+      "Juri Abramov",
+      "Karl Hendrikse",
+      "Karl Rasche",
+      "Kevin Wheatley",
+      "Kimball Thurston",
+      "Larry Gritz",
+      "Laurens Voerman",
+      "L. E. Segovia",
+      "Liam Fernandez",
+      "Lucy Wilkes",
+      "Mark Reid",
+      "Mark Sisson",
+      "Martin Aumüller",
+      "Martin Husemann",
+      "Matthäus G. Chajdas",
+      "Matthias C. M. Troffaes",
+      "Matt Pharr",
+      "Md Sadman Chowdhury",
+      "Michael Thomas",
+      "Nicholas Yue",
+      "Nick Porcino",
+      "Nick Rasmussen",
+      "Nicolas Chauvet",
+      "Niklas Hambüchen",
+      "Owen Thompson",
+      "Paul Schneider",
+      "Peter Hillman",
+      "Peter Steneteg",
+      "Peter Urbanec",
+      "Phil Barrett",
+      "Piotr Stanczyk",
+      "Ralph Potter",
+      "Rémi Achard",
+      "Reto Kromer",
+      "Richard Goedeken",
+      "Sergey Fedorov",
+      "Shawn Walker-Salas",
+      "Simon Boorer",
+      "Simon Otter",
+      "Srinath Ravichandran",
+      "Thanh Ha",
+      "Thomas Debesse",
+      "Thorsten Kaufmann",
+      "Timothy Lyanguzov",
+      "Wenzel Jakob",
+      "Wojciech Jarosz",
+      "Xo Wang",
+      "Yaakov Selkowitz",
+      "Yining Karl Li",
+      "Yujie Shu",
+      "Kevin Ushey"
+    ],
+    "language": "R"
   }
 }
