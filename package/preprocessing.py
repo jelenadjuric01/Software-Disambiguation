@@ -1761,8 +1761,3 @@ def _normalize_url_final(url: str) -> str:
     cleaned = parsed._replace(path=path)
     return urlunparse(cleaned)
 
-if __name__ == "__main__":
-    # Example usage
-    url = "https://github.com/alexdobin/STAR"
-    metadata = get_metadata(url)
-    print(metadata)
