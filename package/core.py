@@ -12,7 +12,7 @@ from models import make_model, get_preprocessing_pipeline
 
 
 #Add the path to the input file (optional)
-input_file = "./input.csv"
+input_file = "./package/input.csv"
 if input_file is None or input_file == "":
     name = input("Enter the software mention: ")
     if name == "":
@@ -36,36 +36,36 @@ if input_file is None or input_file == "":
 else:
     input_dataframe = pd.read_csv(input_file, delimiter = ';')
 # Add the path to the output file for file with added languages, synonyms, authors and candidate URLs (optional)
-output_file_corpus = './temp/corpus_with_candidates.csv'
+output_file_corpus = './package/temp/corpus_with_candidates.csv'
 # Add the path to the output file for file with pairs of software names with candidate URLs (optional)
-output_path_pairs = "./temp/pairs.csv"
+output_path_pairs = "./package/temp/pairs.csv"
 # Add the path to the output file for file with added metadata (optional)
-output_path_updated_with_metadata = "./temp/updated_with_metadata.csv"
+output_path_updated_with_metadata = "./package/temp/updated_with_metadata.csv"
 # Add the path to the output file for file with calculated similarities (optional)
-output_path_similarities = "./temp/similarities.csv"
+output_path_similarities = "./package/temp/similarities.csv"
 #Add the path to the model
-model_path = "./model.pkl"
+model_path = "./package/model.pkl"
 if model_path is None or model_path == "":
-    model_path = "./model.pkl"
+    model_path = "./package/model.pkl"
 # Add the path to the output file for file with model input
-model_input_path = "./model_input.csv"
+model_input_path = "./package/model_input.csv"
 if model_input_path is None or model_input_path == "":
-    model_input_path = "./model_input.csv"
+    model_input_path = "./package/model_input.csv"
 # Add the path to the output file with predictions (optional)
-output_path_predictions = "./temp/predictions.csv"
+output_path_predictions = "./package/temp/predictions.csv"
 # Add the path to the output file with aggregated groups)
-output_path_aggregated_groups = "./aggregated_groups.csv"
+output_path_aggregated_groups = "./package/aggregated_groups.csv"
 if output_path_aggregated_groups is None or output_path_aggregated_groups == "":
-    output_path_aggregated_groups = "./aggregated_groups.csv"
+    output_path_aggregated_groups = "./package/aggregated_groups.csv"
 
 
 
-candidates_cache_file = "./json/candidate_urls.json"
-synonyms_file = "./json/synonym_dictionary.json"
-metadata_cache_file = "./json/metadata_cache.json"
+candidates_cache_file = "./package/json/candidate_urls.json"
+synonyms_file = "./package/json/synonym_dictionary.json"
+metadata_cache_file = "./package/json/metadata_cache.json"
 
 print("Loading CZI data...")
-CZI = pd.read_csv("./CZI/synonyms_matrix.csv")
+CZI = pd.read_csv("./package/CZI/synonyms_matrix.csv")
 
 
 
@@ -111,7 +111,7 @@ input_dataframe['prediction'] = predictions
 # Save the final DataFrame with predictions to a new CSV file
 if output_path_similarities is not None:
     input_dataframe.to_csv(output_path_similarities, index=False)
-grouped = input_dataframe.groupby(['name', 'paragraph', 'doi']).apply(aggregate_group).reset_index()
+grouped = input_dataframe.groupby(['name', 'paragraph', 'doi']).apply(aggregate_group, include_groups=True).reset_index()
 grouped.to_csv(output_path_aggregated_groups, index=False)
 print("Processing complete. Output files generated.")
 

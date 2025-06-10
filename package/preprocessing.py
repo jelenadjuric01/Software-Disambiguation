@@ -564,46 +564,47 @@ def get_github_user_data(username: str) -> str:
 def extract_somef_metadata(repo_url: str) -> dict:
     """
     Run the SOMEF tool on a GitHub repository to extract metadata.
-    Invokes `somef describe` directly (no poetry).
+    Calls SOMEF directly as a package (no poetry, no external somef directory).
 
     Args:
-        repo_url:   URL of the GitHub repository.
-        somef_path: Path to the working directory for temp files (default is current).
+        repo_url: URL of the GitHub repository.
 
     Returns:
         A dict with:
-          name (str), description (str), authors (List[str]), language (str).
+          name (str), description (str), authors (List[str]), language (str), readme_empty (bool).
         Returns empty dict on failure.
     """
     
     # Create a temp file to store SOMEF output
-    somef_path: str = r"D:/MASTER/TMF/somef"
     with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
         output_path = tmp_file.name
 
     try:
-        # Ensure SOMEF temp directory exists (for -kt)
-        path = os.path.join("D:", os.sep, "MASTER", "TMF", "somef", "temp")
-        os.makedirs(path, exist_ok=True)
+        # Create someftemp directory in current working directory
+        temp_path = os.path.join(os.getcwd(), "someftemp")
+        os.makedirs(temp_path, exist_ok=True)
+        
         if sys.platform == "win32":
             # Prefix with \\?\ to allow long Windows paths
-            path = "\\\\?\\" + path
-        base_cmd = [
-                "poetry", "run", "somef", "describe",
-                "-r", repo_url,
-                "-o", output_path,
-                "-t", "0.93",
-                "-m"
-            ]
-        cmds = [
-                base_cmd + ["-kt", path],  # first attempt
-                base_cmd                     # retry without -kt
-            ]
+            temp_path = "\\\\?\\" + temp_path
         
-        # Load the JSON output into Python
+        base_cmd = [
+            "somef", "describe",
+            "-r", repo_url,
+            "-o", output_path,
+            "-t", "0.93",
+            "-m"
+        ]
+        
+        cmds = [
+            base_cmd,  # first attempt with temp directory
+            base_cmd + ["-kt", temp_path]                       # retry without -kt
+        ]
+        
+        # Try running SOMEF commands
         for cmd in cmds:
             try:
-                subprocess.run(cmd, cwd=somef_path, check=True)
+                subprocess.run(cmd, check=True)
                 break
             except subprocess.CalledProcessError as e:
                 print(f"Command failed ({' '.join(cmd)}): {e}")
@@ -619,8 +620,6 @@ def extract_somef_metadata(repo_url: str) -> dict:
         def get_first_value(key):
             return metadata.get(key, [{}])[0].get("result", {}).get("value", "")
 
-        # Split keywords string into list
-        
         # "owner" is treated as author (GitHub username)
         owner = get_first_value("owner")
 
@@ -630,6 +629,7 @@ def extract_somef_metadata(repo_url: str) -> dict:
         if langs:
             primary = max(langs, key=lambda x: x.get("result", {}).get("size", 0))
             primary_language = primary.get("result", {}).get("value", "")
+        
         readme_empty = True
         readme_urls = metadata.get("readme_url", [])
 
@@ -657,6 +657,7 @@ def extract_somef_metadata(repo_url: str) -> dict:
                 except Exception:
                     # On request failure, just move on to the next URL
                     continue
+        
         return {
             "name": get_first_value("name"),
             "description": get_first_value("description"),
@@ -672,8 +673,10 @@ def extract_somef_metadata(repo_url: str) -> dict:
         except OSError:
             pass
 
-        if os.path.isdir(path):
-            for entry in os.scandir(path):
+        # Clean up someftemp directory
+        temp_path_clean = os.path.join(os.getcwd(), "someftemp")
+        if os.path.isdir(temp_path_clean):
+            for entry in os.scandir(temp_path_clean):
                 entry_path = entry.path
                 if entry.is_dir(follow_symlinks=False):
                     shutil.rmtree(entry_path, ignore_errors=True)
@@ -682,7 +685,6 @@ def extract_somef_metadata(repo_url: str) -> dict:
                         os.remove(entry_path)
                     except OSError:
                         pass
-
 
 
 #Function that retrieves the metadata from any link
@@ -1633,8 +1635,8 @@ def get_authors(doi):
     return_value["authors"] = return_authors
     return return_value
 
-def get_synonyms_from_CZI(df, dictionary):
-    for key in dictionary.keys():
+def get_synonyms_from_CZI(df, dictionary ,keys):
+    for key in keys:
         if dictionary[key] != set():
             continue
         # Find matching rows in synonyms_df where the software mention matches the dictionary key
@@ -1642,11 +1644,11 @@ def get_synonyms_from_CZI(df, dictionary):
         # Store synonyms as a list
         dictionary[key].update(matches)
 
-def get_synonyms_from_SoftwareKG(dictionary):
+def get_synonyms_from_SoftwareKG(dictionary, keys):
     # Define the SPARQL endpoint
     sparql = SPARQLWrapper("https://data.gesis.org/somesci/sparql")
     # Execute the query
-    for key in dictionary.keys():
+    for key in keys:
         if dictionary[key] != set():
             continue
         query = f"""
@@ -1684,11 +1686,11 @@ ORDER BY ?synonym
 
         except Exception as e:
             print(f"Error retrieving synonyms for {key}: {e}")
-def get_synonyms(dictionary, CZI = 1, SoftwareKG = 1,CZI_df:pd.DataFrame = None) -> Dict[str, set]:
+def get_synonyms(dictionary, keys, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame = None) -> Dict[str, set]:
     if CZI == 1:
-        get_synonyms_from_CZI(CZI_df, dictionary)
+        get_synonyms_from_CZI(CZI_df, dictionary, keys)
     if SoftwareKG == 1:
-        get_synonyms_from_SoftwareKG(dictionary)
+        get_synonyms_from_SoftwareKG(dictionary, keys)
     dictionary = {key: list(value) for key, value in dictionary.items()}
     return dictionary
 
@@ -1718,7 +1720,8 @@ def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFram
                 benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
     else:
             benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
-    benchmark_dictionary = get_synonyms(benchmark_dictionary, CZI=CZI, SoftwareKG=SoftwareKG,CZI_df=CZI_df)
+    names = benchmark_df["name"].str.lower().unique()
+    benchmark_dictionary = get_synonyms(benchmark_dictionary, CZI=CZI, SoftwareKG=SoftwareKG, keys=names, CZI_df=CZI_df)
     # Save the updated dictionary to a JSON file
     with open(synonym_file_location, "w", encoding="utf-8") as f:
         json.dump(benchmark_dictionary, f, ensure_ascii=False, indent=4)
@@ -1760,6 +1763,6 @@ def _normalize_url_final(url: str) -> str:
 
 if __name__ == "__main__":
     # Example usage
-    url = "https://github.com/HKUST-Aerial-Robotics/VINS-Fusion"
+    url = "https://github.com/alexdobin/STAR"
     metadata = get_metadata(url)
     print(metadata)
