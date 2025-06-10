@@ -9,7 +9,7 @@ try:
     with open("README.md", "r", encoding="utf-8") as fh:
         long_description = fh.read()
 except FileNotFoundError:
-    long_description = "Your package description here"
+    long_description = "SOftware NAme Disambiguation: A tool for disambiguating software names and their URLs in scientific literature."
 
 setup(
     name="sonad",  # Replace with your actual package name
@@ -34,6 +34,15 @@ setup(
     install_requires=requirements,
     include_package_data=True,
     package_data={
-        "": ["*.csv", "*.pkl", "*.json"],  # Include your data files
+        "sonad": [
+            'model.pkl',
+            'CZI/*',
+            'json/*'
+        ],  # Include your data files
+    },
+    entry_points={
+        'console_scripts': [
+            'sonad=sonad.cli:cli',
+        ],
     },
 )

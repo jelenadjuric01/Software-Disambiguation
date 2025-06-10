@@ -1,3 +1,4 @@
+from pathlib import Path
 from SPARQLWrapper import JSON, SPARQLWrapper
 import pandas as pd
 import json
@@ -576,14 +577,18 @@ def extract_somef_metadata(repo_url: str) -> dict:
     """
     
     # Create a temp file to store SOMEF output
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
-        output_path = tmp_file.name
 
     try:
+        package_dir = Path(__file__).parent
+        temp_path = package_dir / "someftemp"
         # Create someftemp directory in current working directory
-        temp_path = os.path.join(os.getcwd(), "someftemp")
-        os.makedirs(temp_path, exist_ok=True)
-        
+        temp_path.mkdir(exist_ok=True, parents=True)
+        with tempfile.NamedTemporaryFile(
+        dir=str(temp_path), 
+        delete=False, 
+        suffix=".json"
+    ) as tmp_file:
+            output_path = tmp_file.name
         if sys.platform == "win32":
             # Prefix with \\?\ to allow long Windows paths
             temp_path = "\\\\?\\" + temp_path
@@ -674,17 +679,16 @@ def extract_somef_metadata(repo_url: str) -> dict:
             pass
 
         # Clean up someftemp directory
-        temp_path_clean = os.path.join(os.getcwd(), "someftemp")
-        if os.path.isdir(temp_path_clean):
-            for entry in os.scandir(temp_path_clean):
-                entry_path = entry.path
-                if entry.is_dir(follow_symlinks=False):
-                    shutil.rmtree(entry_path, ignore_errors=True)
-                else:
-                    try:
-                        os.remove(entry_path)
-                    except OSError:
-                        pass
+        temp_path = package_dir / "someftemp"
+        if temp_path.exists():
+            for entry in temp_path.iterdir():
+                try:
+                    if entry.is_dir():
+                        shutil.rmtree(entry, ignore_errors=True)
+                    else:
+                        entry.unlink()
+                except OSError:
+                    continue
 
 
 #Function that retrieves the metadata from any link
@@ -732,7 +736,6 @@ def get_metadata(url: str) -> dict:
 
 
 GITHUB_API_URL = "https://api.github.com/search/repositories"
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 COMMON_GITHUB_HEADERS = {
     "Accept":     "application/vnd.github.v3+json",
@@ -742,7 +745,8 @@ COMMON_GITHUB_HEADERS = {
 def fetch_github_urls(
     name: str,
     per_page: int = 5,
-    max_retries: int = 3
+    max_retries: int = 3,
+    github_token: str = None
 ) -> List[str]:
     """
 Query GitHub's Search API for repositories matching a given name.
@@ -767,8 +771,8 @@ Returns:
 
     for attempt in range(1, max_retries + 1):
         headers = COMMON_GITHUB_HEADERS.copy()
-        if GITHUB_TOKEN:
-            headers["Authorization"] = f"token {GITHUB_TOKEN}"
+        if github_token:
+            headers["Authorization"] = f"token {github_token}"
         resp = requests.get(GITHUB_API_URL, params=params, headers=headers, timeout=10)
         # 403 could be a rate-limit on the Search API
         if resp.status_code == 403:
@@ -919,7 +923,7 @@ def fetch_cran_urls(
     return urls[:max_results]
 
 
-def fetch_candidate_urls(name: str) -> set[str]:
+def fetch_candidate_urls(name: str, github_token: str = None) -> set[str]:
     """
 Main entry function to retrieve and clean candidate software URLs.
 
@@ -942,7 +946,7 @@ Returns:
 
     # GitHub
     try:
-        results += fetch_github_urls(name)
+        results += fetch_github_urls(name, github_token=github_token)
         print(f"[+] Found {(results)} GitHub URLs for '{name}'")
     except Exception as e:
         print(f"[!] GitHub fetch failed for '{name}': {e}")
@@ -992,7 +996,8 @@ def save_candidates(candidates: Dict[str, Set[str]], path: str):
 def update_candidate_cache(
     corpus: pd.DataFrame,
     fetcher,                # your fetch_candidate_urls(name) function
-    cache_path: str
+    cache_path: str,
+    github_token: str = None
 ) -> Dict[str, Set[str]]:
     # 1) load existing
     candidates = load_candidates(cache_path)
@@ -1013,7 +1018,7 @@ def update_candidate_cache(
                         candidates[name].add(u)
         
         # 4) fetch & add new ones
-        new = set(fetcher(name))
+        new = set(fetcher(name, github_token=github_token))
         # only do the network hit if there’s something new to add
         if not new.issubset(candidates[name]):
             candidates[name].update(new)
@@ -1219,7 +1224,8 @@ def cran_to_github_url(cran_url: str) -> str:
 def get_candidate_urls(
     input: pd.DataFrame,
     cache_path: str = "candidate_urls.json",
-    fetcher=fetch_candidate_urls
+    fetcher=fetch_candidate_urls,
+    github_token: str = None
 ) -> pd.DataFrame:
     """
 Extract metadata for all URLs found in a DataFrame and cache the results.
@@ -1236,7 +1242,7 @@ Returns:
 """
     print("🔍 Starting candidate URL extraction...")
     # 1) Update or load existing candidates
-    candidates = update_candidate_cache(input, fetcher, cache_path)
+    candidates = update_candidate_cache(input, fetcher, cache_path, github_token)
     print("Deduplicating and normalizing URLs...")
     # 2) Normalize and deduplicate URLs
     dedupe_candidates(candidates)

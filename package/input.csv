@@ -1,2 +1,0 @@
-﻿name;candidate_urls;doi;paragraph
-BayesLogit;https://cran.r-project.org/web/packages/BayesLogit/index.html,https://github.com/jwindle/BayesLogit;10.1371/journal.pone.0180343;The execution time for the baseline packages (BayesLogit and monomvn) was measured using the microbenchmark R package [28] because the aforementioned packages do not measure their execution time

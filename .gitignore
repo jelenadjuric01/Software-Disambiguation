@@ -3,5 +3,4 @@ token
 github_from_CZI.csv
 cran_from_CZI.csv
 demo/CZI
-sonad
-package/CZI
+sonad_package/sonad/CZI

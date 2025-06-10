@@ -1,0 +1,3 @@
+include sonad/model.pkl
+recursive-include sonad/CZI *
+recursive-include sonad/json *
