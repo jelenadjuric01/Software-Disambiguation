@@ -1,10 +1,20 @@
 import click
 from .core import process_files
 from .config import configure_token, get_token
+@click.group(help="""
+SONAD: Software Name Disambiguation Tool
 
-@click.group()
+Available commands:
+
+  process    Process input CSV file and generate disambiguation results
+             Options:
+               -i, --input TEXT     Input CSV file path (required)
+               -o, --output TEXT    Output CSV file path (required)
+               -t, --temp-dir TEXT  Optional temporary directory path
+
+  configure  Configure GitHub token for API access
+""")
 def cli():
-    """SONAD: Software Name Disambiguation Tool"""
     pass
 
 @cli.command()

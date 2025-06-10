@@ -591,7 +591,7 @@ def extract_somef_metadata(repo_url: str) -> dict:
             output_path = tmp_file.name
         if sys.platform == "win32":
             # Prefix with \\?\ to allow long Windows paths
-            temp_path = "\\\\?\\" + temp_path
+            temp_path = "\\\\?\\" + str(temp_path)
         
         base_cmd = [
             "somef", "describe",

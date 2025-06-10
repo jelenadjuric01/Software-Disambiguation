@@ -1,12 +1,9 @@
 from setuptools import setup, find_packages
 
-# Read requirements from requirements.txt
-with open("requirements.txt", "r", encoding="utf-8") as fh:
-    requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
 
 # Read README for long description (optional)
 try:
-    with open("README.md", "r", encoding="utf-8") as fh:
+    with open("README.md", "r") as fh:
         long_description = fh.read()
 except FileNotFoundError:
     long_description = "SOftware NAme Disambiguation: A tool for disambiguating software names and their URLs in scientific literature."
@@ -30,8 +27,25 @@ setup(
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "Topic :: Software Development :: Libraries :: Python Modules"
     ],
+    license="MIT",
     python_requires="==3.9",
-    install_requires=requirements,
+    install_requires=[
+    "pandas>=1.3,<2.3",
+    "numpy>=1.21,<1.27",
+    "cloudpickle>=2.0",
+    "scikit-learn>=1.0,<1.4",
+    "xgboost>=1.5,<2.2",
+    "lightgbm>=3.3,<4.1",
+    "sentence-transformers>=2.2,<3.0",
+    "textdistance>=4.2",
+    "beautifulsoup4>=4.9,<5.0",
+    "requests>=2.25,<2.33",
+    "SPARQLWrapper>=1.8,<2.1",
+    "lxml>=4.9,<6.0",
+    "elementpath==4.0.0",
+    "somef>=0.9.11"
+],
+
     include_package_data=True,
     package_data={
         "sonad": [

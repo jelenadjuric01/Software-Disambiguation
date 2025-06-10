@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Software name disambiguation pipeline"
 authors = [{ name = "Jelena Duric", email = "djuricjelena611@gmail.com" }]
 readme = "README.md"
+license = {text = "MIT"}
 requires-python = "==3.9"
 
 dependencies = [
@@ -19,9 +20,13 @@ dependencies = [
     "requests>=2.25,<2.33",
     "SPARQLWrapper>=1.8,<2.1",
     "lxml>=4.9,<6.0",
+    "elementpath==4.0.0",
     "somef>=0.9.11"
 ]
 keywords = ["software", "disambiguation", "metadata", "machine learning", "NLP"]
+
+[project.scripts]
+sonad = "sonad.cli:cli"
 
 [project.urls]
 "Homepage" = "https://github.com/jelenadjuric01/Software-Disambiguation"
