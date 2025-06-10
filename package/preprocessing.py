@@ -17,10 +17,9 @@ import tempfile
 from urllib.parse import urlparse
 from urllib.parse import urlparse, parse_qs
 from bs4 import BeautifulSoup
-import shutil, stat
+import shutil
 
 from sentence_transformers import SentenceTransformer, util
-from sklearn.metrics.pairwise import cosine_similarity
 
 import textdistance
 
@@ -1759,4 +1758,8 @@ def _normalize_url_final(url: str) -> str:
     cleaned = parsed._replace(path=path)
     return urlunparse(cleaned)
 
-
+if __name__ == "__main__":
+    # Example usage
+    url = "https://github.com/HKUST-Aerial-Robotics/VINS-Fusion"
+    metadata = get_metadata(url)
+    print(metadata)
