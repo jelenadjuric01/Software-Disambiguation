@@ -10,4 +10,5 @@ beautifulsoup4<5.0,>=4.9
 requests<2.33,>=2.25
 SPARQLWrapper<2.1,>=1.8
 lxml<6.0,>=4.9
+elementpath==4.0.0
 somef>=0.9.11

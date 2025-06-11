@@ -530,7 +530,7 @@ def extract_github_url_from_cran_package(url: str) -> List[str]:
     return sorted(github_urls)
 
 
-def get_github_user_data(username: str) -> str:
+def get_github_user_data(username: str, github_token: str) -> str:
     """Retrieve a GitHub user’s display name via the GitHub API.
 
     Sends an authenticated request if GITHUB_TOKEN is set; otherwise unauthenticated.
@@ -543,8 +543,7 @@ def get_github_user_data(username: str) -> str:
         The user’s full name (str), or the original username if not found or on error.
     """
     url = f"https://api.github.com/users/{username}"
-    token = os.getenv("GITHUB_TOKEN")
-    headers = {"Authorization": f"token {token}"} if token else {}
+    headers = {"Authorization": f"token {github_token}"} if github_token else {}
 
     try:
         response = requests.get(url, headers=headers)
@@ -562,7 +561,7 @@ def get_github_user_data(username: str) -> str:
 
 
 
-def extract_somef_metadata(repo_url: str) -> dict:
+def extract_somef_metadata(repo_url: str, github_token: str = None) -> dict:
     """
     Run the SOMEF tool on a GitHub repository to extract metadata.
     Calls SOMEF directly as a package (no poetry, no external somef directory).
@@ -666,7 +665,7 @@ def extract_somef_metadata(repo_url: str) -> dict:
         return {
             "name": get_first_value("name"),
             "description": get_first_value("description"),
-            "authors": [get_github_user_data(owner)] if owner else [],
+            "authors": [get_github_user_data(owner, github_token)] if owner else [],
             "language": primary_language,
             "readme_empty": readme_empty
         }
@@ -692,7 +691,7 @@ def extract_somef_metadata(repo_url: str) -> dict:
 
 
 #Function that retrieves the metadata from any link
-def get_metadata(url: str) -> dict:
+def get_metadata(url: str, github_token: str = None) -> dict:
     """Dispatch metadata extraction based on the URL’s domain.
 
     Routes to the appropriate extractor:
@@ -717,7 +716,7 @@ def get_metadata(url: str) -> dict:
 
     # GitHub repo
     if "github.com" in domain:
-        metadata = extract_somef_metadata(url)
+        metadata = extract_somef_metadata(url, github_token)
         if metadata and metadata.get("readme_empty") and 'cran' not in metadata.get("authors", []):
             return {"readme_empty": True}
         return metadata
@@ -1325,8 +1324,8 @@ Returns:
     input['candidate_urls'] = input['candidate_urls'].str.replace("'", "").str.replace('"', '').str.replace(",", ",").str.replace(" ", "")
     return input
 
-    
-def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json") -> Dict[str, dict]:
+
+def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = "metadata_cache.json", github_token: str = None) -> Dict[str, dict]:
     """Extract and cache metadata for all unique candidate URLs in a DataFrame.
 
     This function:
@@ -1373,7 +1372,7 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
             if url not in metadata_cache or metadata_cache[url] in [None, {}]:
                 #print(f"🔍 Processing: {identifier}/{num_url-num_dict}")
                 print(f"🔍 Processing: {url}")
-                metadata_cache[url] = get_metadata(url)
+                metadata_cache[url] = get_metadata(url, github_token=github_token)
             identifier += 1
     except KeyboardInterrupt:
         print("🔍 Process interrupted.")
@@ -1415,7 +1414,7 @@ def sanitize_text_for_csv(text: str) -> str:
     # 3) Trim leading/trailing whitespace
     return text.strip()
 
-def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
+def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None) -> None:
     """Populate a DataFrame in place with metadata for each candidate URL.
 
     Ensures the columns

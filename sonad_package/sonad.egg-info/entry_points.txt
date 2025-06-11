@@ -1,0 +1,2 @@
+[console_scripts]
+sonad = sonad.cli:cli

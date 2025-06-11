@@ -90,7 +90,7 @@ def process_files(input_path, output_path, folder_path=None, github_token=None):
         output_path_model_input = temp_dir / "model_input.csv"
     
     # Load input data
-    input_dataframe = pd.read_csv(input_path, delimiter=';')
+    input_dataframe = pd.read_csv(input_path)
     
     print("Loading CZI data...")
     CZI = pd.read_csv(czi_path)
@@ -117,7 +117,8 @@ def process_files(input_path, output_path, folder_path=None, github_token=None):
         github_token=github_token
     )
     input_dataframe.fillna(value=np.nan, inplace=True)
-    
+    input_dataframe = input_dataframe.infer_objects(copy=False)
+
     if output_file_corpus is not None:
         input_dataframe.to_csv(output_file_corpus, index=False)
     

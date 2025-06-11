@@ -3,23 +3,18 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)  
 ![Python](https://img.shields.io/badge/python-3.9-blue.svg)
 
-**SONAD** (Software Name Disambiguation) is a command-line tool and Python package that links software mentions in scientific papers to their corresponding metadata and repository URLs. It leverages NLP, third-party tools like SOMEF, and GitHub metadata to resolve software names accurately.
+**SONAD** (Software Name Disambiguation) is a command-line tool and Python package that links software mentions in scientific papers to their corresponding repository URLs. It leverages NLP, third-party tools like SOMEF, and metadata to resolve software names. It is limited to fetching URLs from GitHub, PyPI and CRAN. Take into account that this is not 100% accurate as it uses a machine learning model trained on data, but it did outperform models llama-3.1-8b-instant, qwen-qwq-32b, gemma2-9b-it and deepseek-r1-distill-llama-70b.
 
 ---
 
 ## Installation
 
-Clone the repository and install using pip:
+Install using pip:
 
 ```
 pip install sonad
 ```
 
-For development mode (auto-refreshes when you edit the code):
-
-```
-pip install -e .
-```
 
 ---
 
@@ -96,7 +91,26 @@ Scikit-learn,10.1000/xyz123,"We used Scikit-learn for classification.","https://
 ```
 
 ---
+## Output Format
 
+The output CSV will contain one row for each input mention, with the following columns:
+- `name`: The software name from the input.
+- `paragraph`: The paragraph where the software was mentioned.
+- `doi`: The DOI of the paper in which the software was mentioned.
+- `synonyms`: Alternative names or variants of the software name identified during processing.
+- `language`: The inferred programming language(s) used by the software, if available.
+- `authors`: Names of authors of the paper it they can be fetched from OpenAlex tool.
+- `urls`: A comma-separated list of predicted repository or project URLs (e.g., GitHub, PyPI, CRAN).
+- `not_urls`: URLs that were considered but rejected during disambiguation (e.g., due to low confidence or irrelevance).
+
+---
+
+### Example:
+
+```
+name,paragraph,doi,synonyms,language,authors,urls,not_urls
+Scikit-learn,"We used Scikit-learn for classification.",10.1000/xyz123,"scikit learn;sklearn",Python,"Pedregosa et al.","https://github.com/scikit-learn/scikit-learn","https://pypi.org/project/sklearn/"
+```
 
 ## License
 

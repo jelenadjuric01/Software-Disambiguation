@@ -10,7 +10,7 @@ except FileNotFoundError:
 
 setup(
     name="sonad",  # Replace with your actual package name
-    version="0.1.0",
+    version="0.1.2",
     author="Jelena Duric",
     author_email="djuricjelena611@gmail.com",
     description="SOftware NAme Disambiguation: A tool for disambiguating software names and their URLs in scientific literature.",

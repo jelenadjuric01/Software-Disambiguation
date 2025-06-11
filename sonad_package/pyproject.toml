@@ -1,6 +1,6 @@
 [project]
 name = "sonad"
-version = "0.1.0"
+version = "0.1.2"
 description = "Software name disambiguation pipeline"
 authors = [{ name = "Jelena Duric", email = "djuricjelena611@gmail.com" }]
 readme = "README.md"

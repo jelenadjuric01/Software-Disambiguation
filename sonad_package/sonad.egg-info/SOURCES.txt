@@ -13,6 +13,7 @@ sonad/preprocessing.py
 sonad.egg-info/PKG-INFO
 sonad.egg-info/SOURCES.txt
 sonad.egg-info/dependency_links.txt
+sonad.egg-info/entry_points.txt
 sonad.egg-info/requires.txt
 sonad.egg-info/top_level.txt
 sonad/CZI/synonyms_matrix.csv

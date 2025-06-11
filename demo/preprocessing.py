@@ -1,3 +1,4 @@
+from pathlib import Path
 from SPARQLWrapper import JSON, SPARQLWrapper
 import pandas as pd
 import json
@@ -17,10 +18,9 @@ import tempfile
 from urllib.parse import urlparse
 from urllib.parse import urlparse, parse_qs
 from bs4 import BeautifulSoup
-import shutil, stat
+import shutil
 
 from sentence_transformers import SentenceTransformer, util
-from sklearn.metrics.pairwise import cosine_similarity
 
 import textdistance
 
@@ -565,46 +565,51 @@ def get_github_user_data(username: str) -> str:
 def extract_somef_metadata(repo_url: str) -> dict:
     """
     Run the SOMEF tool on a GitHub repository to extract metadata.
-    Invokes `somef describe` directly (no poetry).
+    Calls SOMEF directly as a package (no poetry, no external somef directory).
 
     Args:
-        repo_url:   URL of the GitHub repository.
-        somef_path: Path to the working directory for temp files (default is current).
+        repo_url: URL of the GitHub repository.
 
     Returns:
         A dict with:
-          name (str), description (str), authors (List[str]), language (str).
+          name (str), description (str), authors (List[str]), language (str), readme_empty (bool).
         Returns empty dict on failure.
     """
     
     # Create a temp file to store SOMEF output
-    somef_path: str = r"D:/MASTER/TMF/somef"
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
-        output_path = tmp_file.name
 
     try:
-        # Ensure SOMEF temp directory exists (for -kt)
-        path = os.path.join("D:", os.sep, "MASTER", "TMF", "somef", "temp")
-        os.makedirs(path, exist_ok=True)
+        package_dir = Path(__file__).parent
+        temp_path = package_dir / "someftemp"
+        # Create someftemp directory in current working directory
+        temp_path.mkdir(exist_ok=True, parents=True)
+        with tempfile.NamedTemporaryFile(
+        dir=str(temp_path), 
+        delete=False, 
+        suffix=".json"
+    ) as tmp_file:
+            output_path = tmp_file.name
         if sys.platform == "win32":
             # Prefix with \\?\ to allow long Windows paths
-            path = "\\\\?\\" + path
-        base_cmd = [
-                "poetry", "run", "somef", "describe",
-                "-r", repo_url,
-                "-o", output_path,
-                "-t", "0.93",
-                "-m"
-            ]
-        cmds = [
-                base_cmd + ["-kt", path],  # first attempt
-                base_cmd                     # retry without -kt
-            ]
+            temp_path = "\\\\?\\" + str(temp_path)
         
-        # Load the JSON output into Python
+        base_cmd = [
+            "somef", "describe",
+            "-r", repo_url,
+            "-o", output_path,
+            "-t", "0.93",
+            "-m"
+        ]
+        
+        cmds = [
+            base_cmd,  # first attempt with temp directory
+            base_cmd + ["-kt", temp_path]                       # retry without -kt
+        ]
+        
+        # Try running SOMEF commands
         for cmd in cmds:
             try:
-                subprocess.run(cmd, cwd=somef_path, check=True)
+                subprocess.run(cmd, check=True)
                 break
             except subprocess.CalledProcessError as e:
                 print(f"Command failed ({' '.join(cmd)}): {e}")
@@ -620,8 +625,6 @@ def extract_somef_metadata(repo_url: str) -> dict:
         def get_first_value(key):
             return metadata.get(key, [{}])[0].get("result", {}).get("value", "")
 
-        # Split keywords string into list
-        
         # "owner" is treated as author (GitHub username)
         owner = get_first_value("owner")
 
@@ -631,6 +634,7 @@ def extract_somef_metadata(repo_url: str) -> dict:
         if langs:
             primary = max(langs, key=lambda x: x.get("result", {}).get("size", 0))
             primary_language = primary.get("result", {}).get("value", "")
+        
         readme_empty = True
         readme_urls = metadata.get("readme_url", [])
 
@@ -658,6 +662,7 @@ def extract_somef_metadata(repo_url: str) -> dict:
                 except Exception:
                     # On request failure, just move on to the next URL
                     continue
+        
         return {
             "name": get_first_value("name"),
             "description": get_first_value("description"),
@@ -673,17 +678,17 @@ def extract_somef_metadata(repo_url: str) -> dict:
         except OSError:
             pass
 
-        if os.path.isdir(path):
-            for entry in os.scandir(path):
-                entry_path = entry.path
-                if entry.is_dir(follow_symlinks=False):
-                    shutil.rmtree(entry_path, ignore_errors=True)
-                else:
-                    try:
-                        os.remove(entry_path)
-                    except OSError:
-                        pass
-
+        # Clean up someftemp directory
+        temp_path = package_dir / "someftemp"
+        if temp_path.exists():
+            for entry in temp_path.iterdir():
+                try:
+                    if entry.is_dir():
+                        shutil.rmtree(entry, ignore_errors=True)
+                    else:
+                        entry.unlink()
+                except OSError:
+                    continue
 
 
 #Function that retrieves the metadata from any link
@@ -731,20 +736,17 @@ def get_metadata(url: str) -> dict:
 
 
 GITHUB_API_URL = "https://api.github.com/search/repositories"
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-if not GITHUB_TOKEN:
-    raise ValueError("Please set the GITHUB_TOKEN environment variable.")
-
-HEADERS = {
-    "Authorization": f"token {GITHUB_TOKEN}",
-    "Accept":        "application/vnd.github.v3+json",
-    "User-Agent":    "my-software-disambiguator"  # any non-empty string
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", None)
+COMMON_GITHUB_HEADERS = {
+    "Accept":     "application/vnd.github.v3+json",
+    "User-Agent": "my-software-disambiguator"
 }
 
 def fetch_github_urls(
     name: str,
     per_page: int = 5,
-    max_retries: int = 3
+    max_retries: int = 3,
+    github_token: str = None
 ) -> List[str]:
     """
 Query GitHub's Search API for repositories matching a given name.
@@ -768,7 +770,10 @@ Returns:
     }
 
     for attempt in range(1, max_retries + 1):
-        resp = requests.get(GITHUB_API_URL, params=params, headers=HEADERS, timeout=10)
+        headers = COMMON_GITHUB_HEADERS.copy()
+        if GITHUB_TOKEN:
+            headers["Authorization"] = f"token {GITHUB_TOKEN}"
+        resp = requests.get(GITHUB_API_URL, params=params, headers=headers, timeout=10)
         # 403 could be a rate-limit on the Search API
         if resp.status_code == 403:
             reset_ts = int(resp.headers.get("X-RateLimit-Reset", time.time() + 60))
@@ -918,7 +923,7 @@ def fetch_cran_urls(
     return urls[:max_results]
 
 
-def fetch_candidate_urls(name: str) -> set[str]:
+def fetch_candidate_urls(name: str, github_token: str = None) -> set[str]:
     """
 Main entry function to retrieve and clean candidate software URLs.
 
@@ -941,7 +946,7 @@ Returns:
 
     # GitHub
     try:
-        results += fetch_github_urls(name)
+        results += fetch_github_urls(name, github_token=github_token)
         print(f"[+] Found {(results)} GitHub URLs for '{name}'")
     except Exception as e:
         print(f"[!] GitHub fetch failed for '{name}': {e}")
@@ -991,7 +996,8 @@ def save_candidates(candidates: Dict[str, Set[str]], path: str):
 def update_candidate_cache(
     corpus: pd.DataFrame,
     fetcher,                # your fetch_candidate_urls(name) function
-    cache_path: str
+    cache_path: str,
+    github_token: str = None
 ) -> Dict[str, Set[str]]:
     # 1) load existing
     candidates = load_candidates(cache_path)
@@ -1012,7 +1018,7 @@ def update_candidate_cache(
                         candidates[name].add(u)
         
         # 4) fetch & add new ones
-        new = set(fetcher(name))
+        new = set(fetcher(name, github_token=github_token))
         # only do the network hit if there’s something new to add
         if not new.issubset(candidates[name]):
             candidates[name].update(new)
@@ -1080,11 +1086,11 @@ def is_website_url(url, timeout=5):
     except requests.RequestException:
         return False
 
-def filter_url_dict_parallel(url_dict, max_workers=20):
-    # Flatten all URLs and dedupe
-    all_urls = {u for urls in url_dict.values() for u in urls}
+def filter_url_dict_parallel(url_dict, keys, max_workers=20):
+    # 1) Collect only the URLs under the specified keys
+    all_urls = {u for k in keys if k in url_dict for u in url_dict[k]}
     
-    # Fire off checks in parallel
+    # 2) Check them in parallel
     results = {}
     with ThreadPoolExecutor(max_workers=max_workers) as exe:
         futures = {exe.submit(is_website_url, u): u for u in all_urls}
@@ -1095,11 +1101,9 @@ def filter_url_dict_parallel(url_dict, max_workers=20):
             except Exception:
                 results[u] = False
     
-    # Rebuild filtered dict
-    return {
-        key: [u for u in urls if results.get(u)]
-        for key, urls in url_dict.items()
-    }
+    # 3) Rewrite in place, filtering each requested key
+    for k in keys:
+        url_dict[k] = [u for u in url_dict[k] if results.get(u, False)]
 
 
 PAT = re.compile(
@@ -1220,7 +1224,8 @@ def cran_to_github_url(cran_url: str) -> str:
 def get_candidate_urls(
     input: pd.DataFrame,
     cache_path: str = "candidate_urls.json",
-    fetcher=fetch_candidate_urls
+    fetcher=fetch_candidate_urls,
+    github_token: str = None
 ) -> pd.DataFrame:
     """
 Extract metadata for all URLs found in a DataFrame and cache the results.
@@ -1237,21 +1242,25 @@ Returns:
 """
     print("🔍 Starting candidate URL extraction...")
     # 1) Update or load existing candidates
-    candidates = update_candidate_cache(input, fetcher, cache_path)
-
+    candidates = update_candidate_cache(input, fetcher, cache_path, github_token)
+    print("Deduplicating and normalizing URLs...")
     # 2) Normalize and deduplicate URLs
     dedupe_candidates(candidates)
-
+    print("Filtering non-website URLs in parallel...")
+    keys = input["name"].unique()
     # 3) Filter out non-website URLs in parallel
-    candidates = filter_url_dict_parallel(candidates)
 
+    filter_url_dict_parallel(candidates, keys)
+    print("Filtering CRAN refman links...")
     # 4) Filter out CRAN refman links
     filter_cran_refs(candidates)
     # 5) Save candidates
-    for key, urls in candidates.items():
+    
+    for key in keys:
+        urls = candidates.get(key, [])
         # Work on a copy of the original list so we can modify freely.
         updated_urls = list(urls)
-
+        print(f"Processing {key}")
         for u in urls:
             url = u.strip()
             parsed = urlparse(url)
@@ -1275,7 +1284,7 @@ Returns:
                         updated_urls.append(github)
                         print(f"Added GitHub URL: {github} from CRAN URL: {u}")
                 
-            if "pypi.org" in domain or "pypi.python.org" in domain:
+            elif "pypi.org" in domain or "pypi.python.org" in domain:
                 github, description_length = get_github_link_from_pypi(u)
                 if not github and description_length < 400:
                     updated_urls.remove(u)
@@ -1286,6 +1295,16 @@ Returns:
                     if github and github not in updated_urls:
                         updated_urls.append(github)
                         print(f"Added GitHub URL: {github} from PyPI URL: {u}")
+            elif "github.com" in domain:
+                # If it's already a GitHub URL, clean it up
+                if url == 'https://github.com/QianMo/Real-Time-Rendering-4th-Bibliography-Collection' or url == 'https://github.com/TapXWorld/ChinaTextbook':
+                    updated_urls.remove(u)
+                    continue  # remove the original URL
+                cleaned = _clean_github_url(url)
+                if cleaned and cleaned not in updated_urls:
+                    updated_urls.append(cleaned)
+                    updated_urls.remove(u)  # remove the original URL
+                    print(f"Added cleaned GitHub URL: {cleaned} from original URL: {u}")
             
         # Replace the old list with the updated one
         candidates[key] = updated_urls
@@ -1295,6 +1314,7 @@ Returns:
         for u in url_list:
             cleaned_list.append(_normalize_url_final(u))
         cleaned_dict[key] = cleaned_list
+    print("Final deduplication of candidate URLs...")
     dedupe_candidates(cleaned_dict)
     save_candidates(cleaned_dict, cache_path)
     candidates = cleaned_dict
@@ -1621,8 +1641,8 @@ def get_authors(doi):
     return_value["authors"] = return_authors
     return return_value
 
-def get_synonyms_from_CZI(df, dictionary):
-    for key in dictionary.keys():
+def get_synonyms_from_CZI(df, dictionary ,keys):
+    for key in keys:
         if dictionary[key] != set():
             continue
         # Find matching rows in synonyms_df where the software mention matches the dictionary key
@@ -1630,11 +1650,11 @@ def get_synonyms_from_CZI(df, dictionary):
         # Store synonyms as a list
         dictionary[key].update(matches)
 
-def get_synonyms_from_SoftwareKG(dictionary):
+def get_synonyms_from_SoftwareKG(dictionary, keys):
     # Define the SPARQL endpoint
     sparql = SPARQLWrapper("https://data.gesis.org/somesci/sparql")
     # Execute the query
-    for key in dictionary.keys():
+    for key in keys:
         if dictionary[key] != set():
             continue
         query = f"""
@@ -1672,11 +1692,11 @@ ORDER BY ?synonym
 
         except Exception as e:
             print(f"Error retrieving synonyms for {key}: {e}")
-def get_synonyms(dictionary, CZI = 1, SoftwareKG = 1,CZI_df:pd.DataFrame = None) -> Dict[str, set]:
+def get_synonyms(dictionary, keys, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame = None) -> Dict[str, set]:
     if CZI == 1:
-        get_synonyms_from_CZI(CZI_df, dictionary)
+        get_synonyms_from_CZI(CZI_df, dictionary, keys)
     if SoftwareKG == 1:
-        get_synonyms_from_SoftwareKG(dictionary)
+        get_synonyms_from_SoftwareKG(dictionary, keys)
     dictionary = {key: list(value) for key, value in dictionary.items()}
     return dictionary
 
@@ -1706,7 +1726,8 @@ def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFram
                 benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
     else:
             benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
-    benchmark_dictionary = get_synonyms(benchmark_dictionary, CZI=CZI, SoftwareKG=SoftwareKG,CZI_df=CZI_df)
+    names = benchmark_df["name"].str.lower().unique()
+    benchmark_dictionary = get_synonyms(benchmark_dictionary, CZI=CZI, SoftwareKG=SoftwareKG, keys=names, CZI_df=CZI_df)
     # Save the updated dictionary to a JSON file
     with open(synonym_file_location, "w", encoding="utf-8") as f:
         json.dump(benchmark_dictionary, f, ensure_ascii=False, indent=4)
@@ -1746,20 +1767,3 @@ def _normalize_url_final(url: str) -> str:
     cleaned = parsed._replace(path=path)
     return urlunparse(cleaned)
 
-
-if __name__ == "__main__":
-    # Example usage
-    with open("demo/json/metadata_cache.json", "r", encoding="utf-8") as f:
-        metadata = json.load(f)
-    with open("demo/json/candidate_urls.json", "r") as f:
-        candidates = json.load(f)
-    metadata_keys = set(metadata.keys())
-    candidates_keys = set()
-    for key,values in candidates.items():
-        candidates_keys.update(values)
-    for key in metadata_keys:
-        if key not in candidates_keys:
-            print(f"Metadata for {key} not found in candidates.")
-            del metadata[key]
-    with open("demo/json/metadata_cache.json", "w", encoding="utf-8") as f:
-        json.dump(metadata, f, indent=2, ensure_ascii=False)
