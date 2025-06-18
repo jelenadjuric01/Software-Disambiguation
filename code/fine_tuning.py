@@ -14,7 +14,10 @@ from sklearn.metrics import precision_score, recall_score, f1_score
 from xgboost import XGBClassifier
 
 from models import make_model, split_data, get_preprocessing_pipeline
-
+'''
+This script performs hyperparameter tuning for Random Forest, XGBoost, and LightGBM models.
+It uses GridSearchCV for tuning, with a preprocessing pipeline for Random Forest.
+'''
 
 def get_param_grids():
     """

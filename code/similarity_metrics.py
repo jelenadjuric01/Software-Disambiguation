@@ -310,7 +310,7 @@ Returns:
 
 def synonym_name_similarity(name1: str, names: str) -> float:
     """
-Compute Levenshtein similarity between a software name and a list of synonyms.
+Compute Jaro-Wrinkler similarity between a software name and a list of synonyms.
 
 The input synonyms string is comma-separated. Each synonym and the main name
 are normalized before comparison. The final similarity score is the average
@@ -427,27 +427,35 @@ def author_name_similarity(name1: str, name2: str) -> float:
 
 def compute_similarity_df(df: pd.DataFrame,output_path:str = None) -> pd.DataFrame:
     """
-Compute similarity metrics between paper entries and candidate metadata.
+    Compute and populate similarity metrics on the DataFrame in place.
 
-For each row where `metadata_name` is present, this function:
-- Computes up to six similarity metrics (if not already filled):
-    • `name_metric`: software_name_similarity
-    • `author_metric`: author_name_similarity
-    • `paragraph_metric`: paragraph_description_similarity
-    • `keywords_metric`: keyword_similarity_with_fallback
-    • `language_metric`: programming_language_similarity
-    • `synonym_metric`: synonym_name_similarity
-- Adds a binary `true_label` indicating whether the candidate URL matches any ground-truth URLs
-- Optionally saves the output to CSV
+    For each row with a non‐empty `metadata_name`, calculates and fills:
+      - `name_metric`      (software_name_similarity)
+      - `author_metric`    (author_name_similarity)
+      - `paragraph_metric` (paragraph_description_similarity)
+      - `keywords_metric`  (keyword_similarity_with_fallback)
+      - `language_metric`  (programming_language_similarity)
+      - `synonym_metric`   (synonym_name_similarity)
 
-Args:
-    df (pd.DataFrame): Input dataframe containing paper and metadata fields.
-    output_path (str, optional): File path to save the result CSV. Default is None.
+    It also adds a binary `true_label` indicating whether the
+    `candidate_urls` value matches any ground‐truth URL.
 
-Returns:
-    pd.DataFrame: Filtered and updated dataframe with all computed metrics and `true_label`.
-"""
+    Parameters:
+        df (pd.DataFrame):
+            Input DataFrame with columns including
+            `name`, `metadata_name`, `authors`, `metadata_authors`, etc.
+            Similarity columns will be created or overwritten.
+        output_path (str, optional):
+            If provided, path where the subset of valid rows
+            (with all metrics) will be saved as a CSV.
 
+    Returns:
+        None
+
+    Side Effects:
+        - Modifies `df` in place by adding/updating metric and `true_label` columns.
+        - Writes a CSV file to `output_path` if specified.
+    """
     for col in ['name_metric','author_metric','paragraph_metric','keywords_metric',"language_metric",'synonym_metric']:
         if col not in df.columns:
             df[col] = np.nan

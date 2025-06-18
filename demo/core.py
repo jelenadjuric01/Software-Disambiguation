@@ -48,9 +48,9 @@ model_path = "./model.pkl"
 if model_path is None or model_path == "":
     model_path = "./model.pkl"
 # Add the path to the output file for file with model input
-model_input_path = "./model_input.csv"
+model_input_path = "./temp/model_input.csv"
 if model_input_path is None or model_input_path == "":
-    model_input_path = "./model_input.csv"
+    model_input_path = "./temp/model_input.csv"
 # Add the path to the output file with predictions (optional)
 output_path_predictions = "./temp/predictions.csv"
 # Add the path to the output file with aggregated groups)

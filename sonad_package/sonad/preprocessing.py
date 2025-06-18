@@ -15,7 +15,6 @@ from functools import lru_cache
 import subprocess
 import sys
 import tempfile
-from urllib.parse import urlparse
 from urllib.parse import urlparse, parse_qs
 from bs4 import BeautifulSoup
 import shutil
@@ -114,7 +113,7 @@ def software_name_similarity(name1: str, name2: str) -> float:
 
 def synonym_name_similarity(name1: str, names: str) -> float:
     """
-Compute Levenshtein similarity between a software name and a list of synonyms.
+Compute Jaro-Wrinkler similarity between a software name and a list of synonyms.
 
 The input synonyms string is comma-separated. Each synonym and the main name
 are normalized before comparison. The final similarity score is the average
@@ -475,10 +474,7 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
         "language"   : "R"
     }
 
-import re
-import requests
-from urllib.parse import urlparse, parse_qs
-from typing import List
+
 
 def extract_github_url_from_cran_package(url: str) -> List[str]:
     """
@@ -796,7 +792,20 @@ PYPI_PROJECT_URL = "https://pypi.org/project/{pkg}/"
 @lru_cache(maxsize=512)
 def _get_pypi_info(pkg: str, timeout: float = 10.0) -> Dict:
     """
-    Fetches the JSON info block for `pkg`, or returns {} on error.
+    Retrieve the PyPI JSON 'info' block for a given package name.
+
+    Performs a GET to `https://pypi.org/pypi/{pkg}/json`. Cached in memory
+    to avoid repeated network calls.
+
+    Parameters:
+        pkg (str):
+            Name of the PyPI package.
+        timeout (float):
+            HTTP request timeout in seconds.
+
+    Returns:
+        Dict[str, Any]:
+            The 'info' sub-dictionary from the PyPI JSON response, or `{}` on error.
     """
     try:
         r = requests.get(PYPI_JSON_URL.format(pkg=pkg), timeout=timeout)
@@ -813,8 +822,22 @@ def fetch_pypi_urls(
     timeout: float = 10.0
 ) -> List[str]:
     """
-    1) Exact lookup via JSON API → returns info['package_url'] (or info['project_url'])
-    2) Fuzzy lookup via XML‐RPC + JSON API per hit
+    Find PyPI project page URLs for a package name.
+
+    1. Tries exact JSON API lookup (`_get_pypi_info`) to get `package_url` or `project_url`.
+    2. If fewer than `max_results`, falls back to an XML-RPC name search and API lookups.
+
+    Parameters:
+        pkg_name (str):
+            Name of the PyPI package to search for.
+        max_results (int):
+            Maximum number of URLs to return.
+        timeout (float):
+            HTTP request timeout in seconds.
+
+    Returns:
+        List[str]:
+            List of PyPI project page URLs, up to `max_results`.
     """
     urls: List[str] = []
     print(f"🔍 Searching PyPI for '{pkg_name}'…")
@@ -870,7 +893,21 @@ CRAN_SHORT_URL    = "https://cran.r-project.org/package={pkg}"
 def _load_cran_packages(timeout: float = 10.0) -> List[str]:
     """
     Fetch and parse the CRAN PACKAGES index into a list of package names.
-    Cached in memory so we only download it once.
+
+    Downloads `https://cran.r-project.org/src/contrib/PACKAGES` and extracts
+    every "Package: X" line. Cached in memory so it's only downloaded once.
+
+    Parameters:
+        timeout (float):
+            HTTP request timeout in seconds.
+
+    Returns:
+        List[str]:
+            All package names available on CRAN.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If the download fails.
     """
     resp = requests.get(CRAN_PACKAGES_URL, timeout=timeout)
     resp.raise_for_status()
@@ -887,10 +924,23 @@ def fetch_cran_urls(
     timeout: float = 10.0
 ) -> List[str]:
     """
-    Return up to `max_results` canonical CRAN URLs for packages matching `name`:
-      1) exact match
-      2) substring match
-      3) fuzzy match via difflib
+    Return CRAN package page URLs whose names best match the query.
+
+    1. If an exact name match exists, returns that.
+    2. Otherwise includes substring matches.
+    3. Finally uses `difflib.get_close_matches` for fuzzy matching.
+
+    Parameters:
+        name (str):
+            Query string for package names.
+        max_results (int):
+            Maximum number of URLs to return.
+        timeout (float):
+            HTTP request timeout for loading the index.
+
+    Returns:
+        List[str]:
+            CRAN package page URLs (e.g. `https://cran.r-project.org/package=<pkg>`).
     """
     print(f"🔍 Searching CRAN for '{name}'…")
     pkgs = _load_cran_packages(timeout)
@@ -924,23 +974,23 @@ def fetch_cran_urls(
 
 def fetch_candidate_urls(name: str, github_token: str = None) -> set[str]:
     """
-Main entry function to retrieve and clean candidate software URLs.
+    Aggregate candidate software URLs from GitHub, PyPI, and CRAN.
 
-Performs the following steps:
-1. Update or load cached candidates.
-2. Deduplicate and normalize URLs.
-3. Filter non-website and CRAN-ref URLs.
-4. Save to file and return updated DataFrame.
+    1. Queries GitHub repos via `fetch_github_urls`.
+    2. Looks up PyPI project pages via `fetch_pypi_urls`.
+    3. Finds CRAN package pages via `fetch_cran_urls`.
+    4. Combines all results into a set to remove duplicates.
 
-Args:
-    input (pd.DataFrame): Corpus with software names.
-    cache_path (str): Path to JSON cache file.
-    fetcher (callable): Function to fetch candidate URLs for a name.
+    Parameters:
+        name (str):
+            Software or package name to search for.
+        github_token (Optional[str]):
+            GitHub personal access token for authenticated searches.
 
-Returns:
-    pd.DataFrame: Updated corpus with `candidate_urls` column.
-"""
-
+    Returns:
+        Set[str]:
+            Unique candidate URLs discovered for `name`.
+    """
     results = []
 
     # GitHub
@@ -972,7 +1022,23 @@ Returns:
     return set(results)
 
 def load_candidates(path: str) -> Dict[str, Set[str]]:
-    """Load a JSON cache of {name: [urls…]}, return {name: set(urls)…}."""
+    """
+    Load a JSON cache of candidate URLs from disk.
+
+    Parameters:
+        path (str):
+            Path to a JSON file containing `{name: [url1, url2, …]}`.
+
+    Returns:
+        Dict[str, Set[str]]:
+            Mapping from each `name` to a set of its URLs.
+
+    Raises:
+        FileNotFoundError:
+            If the file doesn't exist.
+        json.JSONDecodeError:
+            If the file contains invalid JSON.
+    """
     if os.path.exists(path) and os.path.getsize(path) > 0:
         with open(path, "r", encoding="utf-8") as f:
             try:
@@ -987,7 +1053,21 @@ def load_candidates(path: str) -> Dict[str, Set[str]]:
     return {name: set(urls) for name, urls in data.items()}
 
 def save_candidates(candidates: Dict[str, Set[str]], path: str):
-    """Convert sets→lists and write out a pretty JSON file."""
+    """
+    Persist candidate URL cache to disk as pretty-printed JSON.
+
+    Converts each set of URLs into a sorted list before writing.
+
+    Parameters:
+        candidates (Dict[str, Set[str]]):
+            Mapping from names to URL sets.
+        path (str):
+            Path to write the JSON file.
+
+    Raises:
+        IOError:
+            If writing to disk fails.
+    """
     serializable = {name: sorted(list(urls)) for name, urls in candidates.items()}
     with open(path, "w", encoding="utf-8") as f:
         json.dump(serializable, f, indent=2, ensure_ascii=False)
@@ -998,6 +1078,35 @@ def update_candidate_cache(
     cache_path: str,
     github_token: str = None
 ) -> Dict[str, Set[str]]:
+    """
+    Load, augment, and persist a cache of candidate URLs for each software name.
+
+    1. Loads existing JSON cache from `cache_path` (or initializes empty).
+    2. For each unique `name` in `corpus['name']`:
+       a. Ensures an entry exists in the cache.
+       b. Adds any URLs already in `corpus['candidate_urls']`.
+       c. Fetches fresh URLs via `fetcher(name, github_token)` and merges them.
+    3. Saves the updated cache back to `cache_path`.
+
+    Parameters:
+        corpus (pd.DataFrame):
+            DataFrame containing at least a `'name'` column and
+            optionally a `'candidate_urls'` column of comma-separated URLs.
+        fetcher (Callable[[str, Optional[str]], Iterable[str]]):
+            Function to fetch new URLs for a given software name.
+        cache_path (str):
+            Filesystem path to the JSON cache file.
+        github_token (Optional[str]):
+            GitHub token passed through to the fetcher for authenticated requests.
+
+    Returns:
+        Dict[str, Set[str]]:
+            Mapping from each software name to its updated set of candidate URLs.
+
+    Raises:
+        IOError:
+            If reading from or writing to `cache_path` fails.
+    """
     # 1) load existing
     candidates = load_candidates(cache_path)
 
@@ -1030,6 +1139,22 @@ from urllib.parse import urlparse, urlunparse
 from typing import Dict, Iterable, List
 
 def normalize_url(u: str) -> str:
+    """
+    Convert a URL to a normalized, canonical form.
+
+    - Forces the 'https' scheme.
+    - Lowercases the network location.
+    - Strips any trailing slash from the path.
+    - Drops params, query strings, and fragments.
+
+    Parameters:
+        u (str):
+            The original URL.
+
+    Returns:
+        str:
+            The normalized URL, suitable for de-duplication.
+    """
     p = urlparse(u)
     scheme = "https"
     netloc = p.netloc.lower()
@@ -1039,9 +1164,18 @@ def normalize_url(u: str) -> str:
 
 def dedupe_candidates(candidates: Dict[str, Iterable[str]]) -> None:
     """
-    For each key in `candidates`, normalize its URLs and drop duplicates,
-    preferring the https version when http & https both appear.
-    Modifies `candidates` in place, replacing each value with a List[str].
+    Normalize and deduplicate URLs in-place for each key.
+
+    - Normalizes via `normalize_url`.
+    - Prefers `https` over `http` when both exist.
+
+    Parameters:
+        candidates (Dict[str, Iterable[str]]):
+            Mapping from names to lists/sets of raw URLs.
+
+    Side Effects:
+        Modifies `candidates` in place, replacing each value with a list
+        of deduplicated, normalized URLs.
     """
     for key, urls in candidates.items():
         seen: Dict[str, str] = {}
@@ -1075,7 +1209,22 @@ session.mount('http://', adapter)
 session.mount('https://', adapter)
 
 def is_website_url(url, timeout=5):
-    """Return True if url passes extension + HEAD-test for HTML."""
+    """
+    Return True if the URL likely points to an HTML page.
+
+    - Rejects common non-HTML file extensions.
+    - Issues an HTTP HEAD and checks for 'text/html' in Content-Type.
+
+    Parameters:
+        url (str):
+            URL to test.
+        timeout (float):
+            HTTP request timeout in seconds.
+
+    Returns:
+        bool:
+            True if the URL returns an HTML page, False otherwise.
+    """
     path = urlparse(url).path.lower()
     if os.path.splitext(path)[1] in DISALLOWED_EXTENSIONS:
         return False
@@ -1086,6 +1235,24 @@ def is_website_url(url, timeout=5):
         return False
 
 def filter_url_dict_parallel(url_dict, keys, max_workers=20):
+    """
+    In-place filter of `url_dict` to keep only URLs that return HTML pages.
+
+    1. Gathers all URLs under the given `keys`.
+    2. Concurrently issues HEAD requests (via `is_website_url`) to check for 'text/html'.
+    3. Replaces each `url_dict[key]` with only those URLs that passed.
+
+    Parameters:
+        url_dict (Dict[str, List[str]]):
+            Mapping from software names to lists of URL strings.
+        keys (Iterable[str]):
+            Subset of keys in `url_dict` to check.
+        max_workers (int):
+            Number of threads for parallel HTTP checks.
+
+    Side Effects:
+        Modifies `url_dict` in place.
+    """
     # 1) Collect only the URLs under the specified keys
     all_urls = {u for k in keys if k in url_dict for u in url_dict[k]}
     
@@ -1112,8 +1279,15 @@ match = PAT.match  # local reference to speed up lookups
 
 def filter_cran_refs(url_dict):
     """
-    In-place filter of url_dict[software] lists,
-    removing any URL matching our CRAN-refman pattern.
+    Remove CRAN reference-manual URLs from each entry in the cache, in place.
+
+    Parameters:
+        url_dict (Dict[str, List[str]]):
+            Mapping from names to lists of URL strings.
+
+    Side Effects:
+        Modifies `url_dict` in place by filtering out any URLs
+        matching CRAN reference-manual patterns (e.g. '/manual/' in path).
     """
     for software, urls in url_dict.items():
         # build a new list only once, using the local `match`
@@ -1121,8 +1295,19 @@ def filter_cran_refs(url_dict):
         url_dict[software] = filtered
 def _clean_github_url(raw_url: str) -> str:
     """
-    Normalize any GitHub repo URL (even with extra segments or newlines)
-    to https://github.com/{owner}/{repo}; otherwise return "".
+    Normalize a GitHub repo URL to the form 'https://github.com/{owner}/{repo}'.
+
+    Removes any trailing '.git', extra path segments (e.g. '/tree/...'),
+    query parameters, and fragments. Returns an empty string if the input
+    is not recognized as a GitHub repository URL.
+
+    Parameters:
+        raw_url (str):
+            The original GitHub URL.
+
+    Returns:
+        str:
+            Canonical repo URL or '' if invalid.
     """
     pattern = re.compile(
     r"https?://github\.com/"
@@ -1227,18 +1412,29 @@ def get_candidate_urls(
     github_token: str = None
 ) -> pd.DataFrame:
     """
-Extract metadata for all URLs found in a DataFrame and cache the results.
+    Update a DataFrame with cleaned, deduplicated candidate URLs per name.
 
-Only fetches metadata for URLs not already cached. Uses `get_metadata` dispatcher.
+    1. Loads or updates the URL cache via `update_candidate_cache`.
+    2. Normalizes & deduplicates all URLs.
+    3. Filters out non-HTML & CRAN-refman links in parallel.
+    4. Converts CRAN/PyPI URLs to GitHub when possible.
+    5. Saves the final cache and writes a `'candidate_urls'` column
+       back into `input`.
 
-Args:
-    df (pd.DataFrame): DataFrame with `candidate_urls` column.
-    output_json_path (str): Path to metadata JSON cache.
-    somef_path (str): Path to SOMEF installation.
+    Parameters:
+        input (pd.DataFrame):
+            DataFrame with a `'name'` column (and optional old `'candidate_urls'`).
+        cache_path (str):
+            Path to the JSON cache file for persistence.
+        fetcher (callable):
+            Function to fetch fresh candidate URLs for a given name.
+        github_token (Optional[str]):
+            GitHub token for API calls.
 
-Returns:
-    Dict[str, dict]: Mapping from URL to extracted metadata.
-"""
+    Returns:
+        pd.DataFrame:
+            The same DataFrame, now with an up-to-date `'candidate_urls'` column.
+    """
     print("🔍 Starting candidate URL extraction...")
     # 1) Update or load existing candidates
     candidates = update_candidate_cache(input, fetcher, cache_path, github_token)
@@ -1418,7 +1614,7 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None) -> N
     """Populate a DataFrame in place with metadata for each candidate URL.
 
     Ensures the columns
-    `metadata_name`, `metadata_authors`, `metadata_keywords`,
+    `metadata_name`, `metadata_authors`,
     `metadata_description`, and `metadata_language` exist. Then for each row
     missing `metadata_name`:
       1. Looks up its URL in the `metadata` dict.
@@ -1430,7 +1626,7 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None) -> N
         df (pd.DataFrame): DataFrame with `candidate_urls` and optional
             metadata columns to fill.
         metadata (Dict[str, dict]): Mapping URLs (str) → metadata dicts with keys
-            `"name"`, `"authors"`, `"keywords"`, `"description"`, `"language"`.
+            `"name"`, `"authors"`, `"description"`, `"language"`.
         output_path (str, optional): If provided, path to write the updated
             DataFrame as CSV using minimal quoting.
 
@@ -1481,24 +1677,23 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None) -> N
         print(f"📄 Updated CSV file saved to {output_path}")
 
 def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
-    """Explode candidate URLs into one row per (mention, URL) pair and save to CSV.
+    """
+    Explode comma-separated candidate URLs into one row per (mention, URL) pair.
 
-    1. Splits the `candidate_urls` column on commas and explodes each URL
-       into its own row.
-    2. Assigns a new unique integer `id` to each row.
-    3. Computes `probability (ground truth)` = 1 if the URL appears in
-       `url (ground truth)`, else 0.
-    4. Saves the exploded DataFrame to `output_path` and returns it.
+    1. Splits `candidate_urls` into lists.
+    2. Uses `DataFrame.explode` to produce one row per URL.
+    3. Resets the index.
+    4. Saves the exploded DataFrame to `output_path`.
 
-    Args:
-        df (pd.DataFrame): DataFrame with columns
-            `candidate_urls` (comma-separated URLs) and
-            `url (ground truth)`.
-        output_path (str): File path to save the exploded CSV.
+    Parameters:
+        df (pd.DataFrame):
+            DataFrame with a `candidate_urls` column of comma-separated URLs.
+        output_path (str):
+            CSV path where the exploded table will be written.
 
     Returns:
-        pd.DataFrame: Exploded DataFrame with new `id` and
-        `probability (ground truth)` columns.
+        pd.DataFrame:
+            The exploded DataFrame.
     """
     df["candidate_urls"] = df["candidate_urls"].fillna('').apply(
         lambda x: [url.strip() for url in str(x).split(',') if url.strip()]
@@ -1616,6 +1811,26 @@ Returns:
 
 
 def get_authors(doi):
+    """
+    Retrieve author display names for a work via the OpenAlex API.
+
+    Fetches `https://api.openalex.org/works/https://doi.org/{doi}` and
+    extracts each author’s `display_name`.
+
+    Parameters:
+        doi (str):
+            Digital Object Identifier of the work.
+
+    Returns:
+        Dict[str, Any]:
+            `{ "doi": doi, "authors": [<display_name>, …] }`.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If the HTTP request fails.
+        KeyError:
+            If the expected 'authorships' field is missing.
+    """
     # Set the URL for the OpenAlex API
     url = "https://api.openalex.org/works/https://doi.org/"
     # Set the headers
@@ -1641,6 +1856,24 @@ def get_authors(doi):
     return return_value
 
 def get_synonyms_from_CZI(df, dictionary ,keys):
+    """
+    Populate `dictionary[key]` with CZI-provided synonyms from a DataFrame.
+
+    For each `key`:
+     - If `dictionary[key]` is empty, finds rows in `df` where
+       `software_mention`.str.lower() == `key` and adds `synonym` values.
+
+    Parameters:
+        df (pd.DataFrame):
+            Must have columns `software_mention` and `synonym`.
+        dictionary (Dict[str, Set[str]]):
+            Mapping from lowercase software name to a set of synonyms.
+        keys (Iterable[str]):
+            Software names (lowercase) to update.
+
+    Side Effects:
+        Updates `dictionary` in place.
+    """
     for key in keys:
         if dictionary[key] != set():
             continue
@@ -1650,6 +1883,22 @@ def get_synonyms_from_CZI(df, dictionary ,keys):
         dictionary[key].update(matches)
 
 def get_synonyms_from_SoftwareKG(dictionary, keys):
+    """
+    Populate synonyms for keys by querying the SoftwareKG SPARQL endpoint.
+
+    For each `key` whose `dictionary[key]` is empty, runs a SPARQL query
+    on GESIS SomeSci to retrieve alternative spellings (`nif:anchorOf`)
+    linked to the same software entity.
+
+    Parameters:
+        dictionary (Dict[str, Set[str]]):
+            Mapping from lowercase software name to a set of synonyms.
+        keys (Iterable[str]):
+            Software names (lowercase) to query.
+
+    Side Effects:
+        Updates `dictionary` in place.
+    """
     # Define the SPARQL endpoint
     sparql = SPARQLWrapper("https://data.gesis.org/somesci/sparql")
     # Execute the query
@@ -1692,6 +1941,28 @@ ORDER BY ?synonym
         except Exception as e:
             print(f"Error retrieving synonyms for {key}: {e}")
 def get_synonyms(dictionary, keys, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame = None) -> Dict[str, set]:
+    """
+    Retrieve synonyms for software names using CZI and/or SoftwareKG sources.
+
+    Depending on flags, calls `get_synonyms_from_CZI` and/or
+    `get_synonyms_from_SoftwareKG`, then converts each set into a list.
+
+    Parameters:
+        dictionary (Dict[str, Set[str]]):
+            Initial mapping from lowercase software name to a set of synonyms.
+        keys (Iterable[str]):
+            Names (lowercase) for which to fetch synonyms.
+        CZI (bool):
+            Whether to use the CZI DataFrame source.
+        SoftwareKG (bool):
+            Whether to use the SPARQL SoftwareKG source.
+        CZI_df (Optional[pd.DataFrame]):
+            DataFrame for CZI source lookups.
+
+    Returns:
+        Dict[str, List[str]]:
+            Mapping from software name to list of synonyms.
+    """
     if CZI == 1:
         get_synonyms_from_CZI(CZI_df, dictionary, keys)
     if SoftwareKG == 1:
@@ -1700,13 +1971,41 @@ def get_synonyms(dictionary, keys, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame
     return dictionary
 
 def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFrame, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame = None) -> pd.DataFrame:
-    """Load synonyms from a CSV file into a DataFrame.
+    """
+    Load, augment, and persist a synonyms dictionary, then map into the DataFrame.
 
-    Args:
-        file_path (str): Path to the CSV file containing synonyms.
+    1. If `synonym_file_location` exists and is non-empty, load it as JSON to a dict of sets.
+       Otherwise initialize an empty set for each unique `benchmark_df["name"]`.
+    2. Ensure every lowercase name from `benchmark_df` has an entry in the dict.
+    3. Call `get_synonyms(...)` with CZI and/or SoftwareKG sources to populate missing synonyms.
+    4. Write the updated dictionary back to `synonym_file_location` as JSON.
+    5. Add or overwrite `benchmark_df["synonyms"]` by lowercasing each name, looking up its
+       synonyms (as a list), and joining them with commas.
+
+    Parameters:
+        synonym_file_location (str):
+            Filesystem path to the JSON file used for caching software-name → synonyms.
+        benchmark_df (pd.DataFrame):
+            Input DataFrame containing at least a `"name"` column of software mentions.
+        CZI (bool):
+            Whether to fetch synonyms from the CZI CSV source.
+        SoftwareKG (bool):
+            Whether to fetch synonyms via the SoftwareKG SPARQL endpoint.
+        CZI_df (Optional[pd.DataFrame]):
+            DataFrame loaded from the CZI synonyms CSV (if `CZI` is True).
 
     Returns:
-        pd.DataFrame: A DataFrame mapping software names to lists of synonyms.
+        pd.DataFrame:
+            The same `benchmark_df`, now guaranteed to have a `"synonyms"` column
+            of comma-separated synonym strings.
+
+    Side Effects:
+        - Reads from and writes to `synonym_file_location`.
+        - Prints status messages to stdout.
+
+    Raises:
+        IOError:
+            If writing the JSON file fails.
     """
     print("Fetching synonyms...")
     if os.path.exists(synonym_file_location) and os.path.getsize(synonym_file_location) > 0:
@@ -1737,6 +2036,26 @@ def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFram
 )
     return benchmark_df
 def aggregate_group(subdf):
+    """
+    Aggregate a group of (mention, URL, prediction) rows into summary fields.
+
+    For the subgroup `subdf`, returns a Series with:
+      - 'synonyms': all unique `subdf["synonyms"]` values, joined by ", ".
+      - 'language': all unique `subdf["language"]` values, joined by ", ".
+      - 'authors':  all unique `subdf["authors"]` values, joined by ", ".
+      - 'urls':     all `subdf["candidate_urls"]` where `prediction == 1`, joined by ", ".
+      - 'not_urls': all `subdf["candidate_urls"]` where `prediction == 0`, joined by ", ".
+
+    Parameters:
+        subdf (pd.DataFrame):
+            A slice of the full DataFrame for one (name, paragraph, DOI) group,
+            containing at minimum the columns
+            `['synonyms','language','authors','candidate_urls','prediction']`.
+
+    Returns:
+        pd.Series:
+            A one-row summary of that group, suitable for reassembly into a grouped DataFrame.
+    """
     return pd.Series({
         'synonyms': ', '.join(subdf['synonyms'].dropna().astype(str).unique()),
         'language': ', '.join(subdf['language'].dropna().astype(str).unique()),
@@ -1746,10 +2065,19 @@ def aggregate_group(subdf):
     })
 def _normalize_url_final(url: str) -> str:
     """
-    Normalize a single URL so that:
-      - GitHub (github.com) and CRAN (cran.r-project.org) URLs have NO trailing slash.
-      - PyPI (pypi.org) URLs HAVE a trailing slash.
-      - Everything else is returned as‐is.
+    Domain-specific final normalization of a single URL.
+
+    - If the host ends in "github.com" or "cran.r-project.org": remove any trailing slash.
+    - If the host ends in "pypi.org": ensure exactly one trailing slash.
+    - Otherwise leave the path untouched.
+
+    Parameters:
+        url (str):
+            The original URL to normalize.
+
+    Returns:
+        str:
+            The rebuilt URL with adjusted trailing slash rules.
     """
     parsed = urlparse(url)
     domain = parsed.netloc.lower()

@@ -83,7 +83,6 @@ Supports five types of classifiers with sensible defaults:
 Class imbalance is handled automatically:
 - For LR and RF: `class_weight='balanced'`
 - For XGBoost: sets `scale_pos_weight` using label ratio
-- For LightGBM: computes `class_weight` dictionary
 - For MLP: no automatic class balancing (user responsibility)
 
 Args:
@@ -137,7 +136,7 @@ Raises:
 
         defaults = dict(
             n_estimators=100,
-            class_weight=cw,
+            #class_weight=cw,
             random_state=42,
             n_jobs=-1
         )

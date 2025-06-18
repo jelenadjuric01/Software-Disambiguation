@@ -1,15 +1,13 @@
+import json
 from urllib.parse import urlparse
 import pandas as pd
-from pathlib import Path
 import json
 from typing import List, Tuple, Dict, Optional
 import os
-from fetch_candidates import load_candidates, save_candidates
-from fetching_medata_from_cantidate_url import extract_pypi_metadata_RAKE, extract_somef_metadata_with_RAKE_readme,get_github_link_from_pypi, extract_pypi_metadata_RAKE_class, extract_pypi_metadata_Rake_after, get_metadata  
+from fetching_medata_from_cantidate_url import get_metadata  
 import re
 import csv
-from similarity_metrics import compute_similarity_df, compute_similarity_test, keyword_similarity_with_fallback, keyword_similarity_with_fallback_SBERT, paragraph_description_similarity_BERT, software_name_similarity_levenshtein, synonym_name_similarity, synonym_name_similarity_levenshtein
-from evaluation import  evaluation
+from similarity_metrics import compute_similarity_df, compute_similarity_test
 from rake_nltk import Rake
 import string
 
@@ -32,6 +30,10 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
 
     Returns:
         Dict[str, dict]: A mapping from each URL (str) to its metadata dict.
+    Raises:
+        Exception:
+            Any exception raised by `get_metadata` will be re-raised after the
+            cache is saved to `output_json_path`.
     """
     # Step 1: Extract unique, non-empty URLs
     url_set = set()
@@ -79,16 +81,21 @@ def dictionary_with_candidate_metadata(df:pd.DataFrame, output_json_path: str = 
     return metadata_cache
 
 def sanitize_text_for_csv(text: str) -> str:
-    """Prepare a text string for safe CSV export.
+    """
+    Clean a text string so it can be safely embedded in a CSV.
 
-    Replaces control characters with spaces, escapes internal quotes,
-    and trims whitespace.
+    This performs:
+      - Replacement of control characters (U+0000–U+001F, U+007F) with spaces.
+      - Doubling of any internal double-quotes (`" → ""`) per RFC-4180.
+      - Trimming of leading and trailing whitespace.
 
     Args:
-        text: Raw input string.
+        text (str):
+            Raw input string (may contain control chars, quotes, etc.).
 
     Returns:
-        A cleaned string with no control characters and RFC-4180-compliant quotes.
+        str:
+            The cleaned string, ready for CSV export.
     """
     # 1) Replace control chars (U+0000–U+001F, U+007F) with space
     text = re.sub(r'[\x00-\x1F\x7F]+', ' ', text)
@@ -98,27 +105,35 @@ def sanitize_text_for_csv(text: str) -> str:
     return text.strip()
 
 def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
-    """Populate a DataFrame in place with metadata for each candidate URL.
+    """
+    Populate `df` in-place with metadata fields for each candidate URL.
 
-    Ensures the columns
-    `metadata_name`, `metadata_authors`, `metadata_keywords`,
-    `metadata_description`, and `metadata_language` exist. Then for each row
-    missing `metadata_name`:
-      1. Looks up its URL in the `metadata` dict.
-      2. Sanitizes each field via `sanitize_text_for_csv`.
-      3. Writes the values into the DataFrame.
-    Optionally saves the updated DataFrame to CSV.
+    Ensures columns
+      `metadata_name`, `metadata_authors`, `metadata_keywords`,
+      `metadata_description`, and `metadata_language`
+    exist, then for every row whose `metadata_name` is blank:
+      1. Looks up the URL in `metadata[url]`.
+      2. Applies `sanitize_text_for_csv` to each field.
+      3. Writes the cleaned values back into `df`.
+
+    If `output_path` is provided, saves the updated DataFrame as CSV with
+    minimal quoting.
 
     Args:
-        df (pd.DataFrame): DataFrame with `candidate_urls` and optional
-            metadata columns to fill.
-        metadata (Dict[str, dict]): Mapping URLs (str) → metadata dicts with keys
-            `"name"`, `"authors"`, `"keywords"`, `"description"`, `"language"`.
-        output_path (str, optional): If provided, path to write the updated
-            DataFrame as CSV using minimal quoting.
+        df (pd.DataFrame):
+            Must contain `"candidate_urls"` and (optionally) existing metadata cols.
+        metadata (Dict[str, dict]):
+            URL→dict mapping with keys `"name"`, `"authors"`, `"keywords"`,
+            `"description"`, and `"language"`.
+        output_path (str, optional):
+            Path to write the CSV. If `None`, no file is written.
 
     Returns:
         None
+
+    Raises:
+        IOError:
+            If writing to `output_path` fails.
     """
     # Ensure metadata columns exist
     for col in ["metadata_name", "metadata_authors", "metadata_keywords", "metadata_description","metadata_language"]:
@@ -169,24 +184,28 @@ def add_metadata(df: pd.DataFrame, metadata: dict, output_path: str = None):
         print(f"📄 Updated CSV file saved to {output_path}")
 
 def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
-    """Explode candidate URLs into one row per (mention, URL) pair and save to CSV.
+    """
+    Explode each comma-separated URL into its own row and assign a unique ID.
 
-    1. Splits the `candidate_urls` column on commas and explodes each URL
-       into its own row.
-    2. Assigns a new unique integer `id` to each row.
-    3. Computes `probability (ground truth)` = 1 if the URL appears in
-       `url (ground truth)`, else 0.
-    4. Saves the exploded DataFrame to `output_path` and returns it.
+    Transforms:
+      - Splits `df["candidate_urls"]` into lists.
+      - Uses `DataFrame.explode` to get one (row, URL) pair per line.
+      - Adds a 1-based integer column `"id"`.
+      - Saves the result to `output_path` as CSV.
 
     Args:
-        df (pd.DataFrame): DataFrame with columns
-            `candidate_urls` (comma-separated URLs) and
-            `url (ground truth)`.
-        output_path (str): File path to save the exploded CSV.
+        df (pd.DataFrame):
+            Must contain `"candidate_urls"` of comma-separated URL lists.
+        output_path (str):
+            File path where the exploded table will be written.
 
     Returns:
-        pd.DataFrame: Exploded DataFrame with new `id` and
-        `probability (ground truth)` columns.
+        pd.DataFrame:
+            The exploded DataFrame with a new `"id"` column.
+
+    Raises:
+        IOError:
+            If saving to `output_path` fails.
     """
     df["candidate_urls"] = df["candidate_urls"].fillna('').apply(
         lambda x: [url.strip() for url in str(x).split(',') if url.strip()]
@@ -201,20 +220,30 @@ def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
 
 
 def even_out_dataframes(df_full: pd.DataFrame, df_metrics: pd.DataFrame, output_path:str) -> pd.DataFrame:
-    """Append missing rows from `df_full` into `df_metrics`, filling metrics with NaN.
+    """
+    Ensure every row in `df_full` appears in `df_metrics`, filling missing metrics with NaN.
 
-    Ensures that every (`name`, `doi`, `paragraph`, `candidate_urls`) in
-    `df_full` is present in `df_metrics`. Any rows missing in `df_metrics`
-    are appended with metric columns set to NaN.
+    1. Performs a left-merge on ['name','doi','paragraph','candidate_urls'].
+    2. Identifies rows only in `df_full` and reindexes them to match `df_metrics` columns.
+    3. Appends those rows to `df_metrics`.
+    4. Drops any rows still missing `metadata_name`.
+    5. Optionally writes the combined DataFrame to CSV.
 
     Args:
-        df_full (pd.DataFrame): The master DataFrame containing all expected rows.
-        df_metrics (pd.DataFrame): DataFrame with metric columns.
-        output_path (str, optional): If provided, saves the result to CSV.
+        df_full (pd.DataFrame):
+            Master DataFrame of all expected entries.
+        df_metrics (pd.DataFrame):
+            DataFrame containing some subset of metric columns.
+        output_path (str, optional):
+            If provided, path to save the combined CSV.
 
     Returns:
-        pd.DataFrame: Concatenated DataFrame containing all rows from both inputs,
-        with missing metrics as NaN.
+        pd.DataFrame:
+            A DataFrame containing all rows, with missing metrics as NaN.
+
+    Raises:
+        IOError:
+            If saving to `output_path` fails.
     """
     key_cols = ['name', 'doi', 'paragraph',"candidate_urls"]
 
@@ -266,17 +295,19 @@ IDE_MAPPING = {
 def get_language_positions(
     text: str
 ) -> List[Tuple[str, int, int]]:
-    """Detect programming language and IDE mentions in text with character spans.
+    """
+    Find character spans for known programming languages and IDEs in `text`.
 
-    Scans `text` for known language names and IDE keywords, recording
-    each match’s start and end indices.
+    Scans for each entry in `COMMON_LANGUAGES` (as regex `\bLang\b`) and each
+    key in `IDE_MAPPING`, mapping IDE name back to its language.
 
     Args:
-        text (str): Input document string.
+        text (str):
+            The document in which to search.
 
     Returns:
-        List[Tuple[str, int, int]]: A list of tuples
-        `(language, start_index, end_index)` for each mention.
+        List[Tuple[str, int, int]]:
+            Tuples of (language, start_index, end_index) for each match.
     """
     
     languages = COMMON_LANGUAGES
@@ -304,19 +335,22 @@ def find_nearest_language_for_softwares(
     software_names: str
 ) -> Optional[str]: 
     """
-Identify the programming language mentioned closest to a software name.
+    Identify which programming language mention lies closest to a software name.
 
-Uses character-level proximity to find which programming language or IDE
-is mentioned nearest to the given software name within the provided text.
+    1. Finds the first case-insensitive occurrence of `software_names` in `text`.
+    2. Computes midpoints of all language/IDE spans (from `get_language_positions`).
+    3. Returns the language whose midpoint is closest to that of the software.
 
-Args:
-    text (str): Full paragraph of text to search.
-    software_names (str): The name of the software to find.
+    Args:
+        text (str):
+            The paragraph to search.
+        software_names (str):
+            The software name to locate.
 
-Returns:
-    Optional[str]: Name of the closest language (e.g. "Python"), or None
-    if no valid software or language is found.
-"""
+    Returns:
+        Optional[str]:
+            The nearest language (e.g. "Python") or `None` if no match found.
+    """
 
     languages = COMMON_LANGUAGES
     ide_mapping = IDE_MAPPING
@@ -437,7 +471,18 @@ Returns:
             
 def is_pypi_url(url: str) -> bool:
     """
-    Returns True if the given URL points to a PyPI project page (e.g. "https://pypi.org/project/foo/").
+    Check whether `url` is a PyPI project page.
+
+    Considers hosts containing "pypi.org" or "python.org" and a path
+    starting with "/project/".
+
+    Args:
+        url (str):
+            The URL to test.
+
+    Returns:
+        bool:
+            `True` if it matches a PyPI project pattern, else `False`.
     """
     parsed = urlparse(url)
     host = parsed.netloc.lower()
@@ -447,75 +492,15 @@ def is_pypi_url(url: str) -> bool:
         and path.startswith("/project/")
     )
 if __name__ == "__main__":
-    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 1
-    """'''
-    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v1.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/updated_with_metadata_file_v1.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv"
-    # Build metadata cache from Excel
-
-    # Load the DataFrame again to add metadata
-    df = pd.read_excel(excel_path)
-    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
-    print(metadata_cache)
-    df = make_pairs(df)
-
-    add_metadata(df,metadata_cache, output_path)
-    df = compute_similarity_df(df,output_path_similarities)
-    output_path_calculated_version_1 = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/calculated_version_1.csv"
-    # Load the DataFrame again to see the results
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/similarities_version_1.csv")
-    # Get the average, min, and max for each metric
-    get_average_min_max(df, output_path_calculated_version_1)
     
-
-    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 2
-    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v2.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/pairs.csv"
-    output_path_calculated = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/calculated.csv"
-
-    # Build metadata cache from Excel
-    
-    # Load the DataFrame again to add metadata
-    df = pd.read_excel(excel_path)
-    metadata_cache = dictionary_with_candidate_metadata(df, output_json_path)
-    print(metadata_cache)
-    df = make_pairs(df,output_path_pairs)
-
-    add_metadata(df,metadata_cache, output_path)
-    df = compute_similarity_df(df,output_path_similarities)
-    # Load the DataFrame again to see the results
-    df = pd.read_csv(output_path_similarities)
-    # Get the average, min, and max for each metric
-    get_average_min_max(df, output_path_calculated)
-    outputh_avg_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/average_ranked.csv"
-    outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/min_ranked.csv"
-    outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v2/max_ranked.csv"
-    #Get ranked candidates and save the updated file version 2
-    df = pd.read_csv(output_path_calculated)
-    df_avg, df_min, df_max = split_by_avg_min_max(df)
-    df_avg = group_by_candidates(df_avg, outputh_avg_ranked)
-    df_min = group_by_candidates(df_min, outputh_min_ranked)
-    df_max = group_by_candidates(df_max, outputh_max_ranked)
-    print("Evaluation  of average")
-    evaluation(df_avg)
-    print("Evaluation  of min")
-    evaluation(df_min)
-    print("Evaluation  of max")
-    evaluation(df_max)
-    #Version 3
-    # Taking corpus, extracting metadata from candidate urls, cumputing similarities and saving the updated file version 3
-    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/updated_with_metadata_file.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/pairs.csv"
-    output_path_calculated = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv"
-    df = pd.read_excel(excel_path)
+    excel_path = "research/corpus/corpus_v3_14.xlsx"
+    output_json_path = "research/corpus/temp/metadata_caches/metadata_cache_v3_13.json"
+    output_path = "research/corpus/temp/v3.17/updated_with_metadata.csv"
+    output_path_similarities = "research/corpus/temp/v3.17/similarities.csv"
+    output_path_pairs = "research/corpus/temp/v3.17/pairs.csv"
+    model_input_path = "research/corpus/temp/v3.17/model_input.csv"
+    #df = pd.read_excel(excel_path)
+    df = pd.read_csv(output_path)
     df['language'] = df.apply(
     lambda row: find_nearest_language_for_softwares(
         text=row['paragraph'],
@@ -530,72 +515,8 @@ if __name__ == "__main__":
 
     add_metadata(df,metadata_cache, output_path)
     df = compute_similarity_df(df,output_path_similarities)
-    # Load the DataFrame again to see the results
-    df = pd.read_csv(output_path_similarities)
-    # Get the average, min, and max for each metric
-    get_average_min_max(df, output_path_calculated)
-    outputh_avg_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/average_ranked.csv"
-    outputh_min_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/min_ranked.csv"
-    outputh_max_ranked = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/max_ranked.csv"
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated.csv")
-    df_avg, df_min, df_max = split_by_summary(df)
-    print("Evaluation  of average")
-    evaluation(df_avg)
-    print("Evaluation  of min")
-    evaluation(df_min)
-    print("Evaluation  of max")
-    evaluation(df_max)
-    df_avg.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/average_ranked.csv")
-    df_min.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/min_ranked.csv")
-    df_max.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/max_ranked.csv")
-   
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/calculated_positives.csv")
-    filtered = select_rows_below_threshold(df,['name_metric','keywords_metric','paragraph_metric','language_metric'],0.1)
-    filtered.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3/low_quality.csv")"""
-    #Version 3.1 adding synonyms similarity
-    '''similarities_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/similarities.csv"
-    updated_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/updated_with_metadata_file.csv"
-    df = pd.read_csv(similarities_path)
-    df_updated = pd.read_csv(updated_path)
-    df_updated = df_updated.dropna(subset=['metadata_name']).copy()
-    df['synonyms']=df_updated["synonyms"]
-    df['synonym_metric'] = df.apply(
-        lambda row: synonym_name_similarity(
-            row['metadata_name'],
-            row['synonyms']
-        ),
-        axis=1
-    )
-    df.to_csv(similarities_path, index=False)
-    model_input = df[['name_metric', 'keywords_metric', 'paragraph_metric', 'author_metric','language_metric','synonym_metric','true_label']].copy()
-    model_input.to_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.1/model_input.csv", index=False)'''
-    excel_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/corpus_v3_14.xlsx"
-    output_json_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/metadata_cache_v3_13.json"
-    output_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.17/updated_with_metadata.csv"
-    output_path_similarities = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.17/similarities.csv"
-    output_path_pairs = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.17/pairs.csv"
-    model_input_path = "D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.17/model_input.csv"
-    #df = pd.read_excel(excel_path)
-    df = pd.read_csv(output_path)
-    
 
     sim = compute_similarity_test(df, output_path_similarities)
     model_input = sim[['name_metric', 'paragraph_metric','language_metric','synonym_metric','author_metric','true_label']].copy()
     model_input.to_csv(model_input_path, index=False)
-    '''candidates = load_candidates("D:/MASTER/TMF/Software-Disambiguation/corpus/candidate_urls.json")
-    candidates_13 = load_candidates("D:/MASTER/TMF/Software-Disambiguation/corpus/candidate_urls_v3_14.json")
-    for key in set(candidates.keys()) | set(candidates_13.keys()):
-        urls1 = set(candidates.get(key, []))
-        urls2 = set(candidates_13.get(key, []))
-
-        only_in_1 = urls1 - urls2
-        only_in_2 = urls2 - urls1
-
-        if only_in_1 or only_in_2:
-            print(f"Entry: {key}")
-            for u in only_in_1:
-                print(f"  → only in first dict:  {u}")
-            for u in only_in_2:
-                print(f"  → only in second dict: {u}")
-            print()  # blank line for readability'''
-
+    

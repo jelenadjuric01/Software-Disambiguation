@@ -32,8 +32,8 @@ pip install sonad
 ### 📊 Research and Feature Engineering
 
 These folders were used to test and evaluate different steps of the pipeline:
-- `corpus/` — raw data preparation and cleaning
-- `code/` — full pipeline scripts used outside the notebook
+- `research/` — raw data preparation and cleaning
+- `code/` — full pipeline scripts used for research
 - `demo/` - used for trying the final code
 
 You can explore the progression from feature design to the final tool in the notebook.
