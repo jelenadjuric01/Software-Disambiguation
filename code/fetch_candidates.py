@@ -30,7 +30,23 @@ def fetch_github_urls(
     max_retries: int = 3
 ) -> List[str]:
     """
-    Return up to `per_page` GitHub repo URLs matching `name`, handling rate limits.
+    Search GitHub repositories by name and return their HTML URLs.
+
+    Parameters:
+        name (str):
+            Query string to search for repositories.
+        per_page (int):
+            Maximum number of repository URLs to return.
+        timeout (float):
+            Maximum number of seconds to wait for the HTTP request.
+
+    Returns:
+        List[str]:
+            A list of GitHub repository page URLs matching the search.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If the GitHub API request fails (e.g. network issues or rate limits).
     """
     params = {
         "q":        f"{name} in:name",
@@ -64,7 +80,21 @@ PYPI_PROJECT_URL = "https://pypi.org/project/{pkg}/"
 @lru_cache(maxsize=512)
 def _get_pypi_info(pkg: str, timeout: float = 10.0) -> Dict:
     """
-    Fetches the JSON info block for `pkg`, or returns {} on error.
+    Fetch package metadata from PyPI’s JSON API.
+
+    Parameters:
+        pkg (str):
+            The name of the package to look up on PyPI.
+        timeout (float):
+            Maximum number of seconds to wait for the HTTP request.
+
+    Returns:
+        dict:
+            Parsed JSON response from PyPI if successful, or an empty dict on error.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If the HTTP GET to PyPI fails.
     """
     try:
         r = requests.get(PYPI_JSON_URL.format(pkg=pkg), timeout=timeout)
@@ -81,8 +111,26 @@ def fetch_pypi_urls(
     timeout: float = 10.0
 ) -> List[str]:
     """
-    1) Exact lookup via JSON API → returns info['package_url'] (or info['project_url'])
-    2) Fuzzy lookup via XML‐RPC + JSON API per hit
+    Look up candidate project URLs for a given name on PyPI.
+
+    This first attempts an exact JSON lookup, and if the project exists returns
+    its “package_url” or “project_url.” Otherwise, it falls back to a search.
+
+    Parameters:
+        name (str):
+            The name of the project to search for on PyPI.
+        max_results (int):
+            Maximum number of URLs to return from search results.
+        timeout (float):
+            Seconds to wait for each HTTP request.
+
+    Returns:
+        List[str]:
+            List of PyPI project page URLs up to `max_results`.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If any HTTP GET to PyPI fails.
     """
     urls: List[str] = []
 
@@ -137,8 +185,19 @@ CRAN_SHORT_URL    = "https://cran.r-project.org/package={pkg}"
 @lru_cache(maxsize=1)
 def _load_cran_packages(timeout: float = 10.0) -> List[str]:
     """
-    Fetch and parse the CRAN PACKAGES index into a list of package names.
-    Cached in memory so we only download it once.
+    Download and parse the CRAN PACKAGES index into a list of package names.
+
+    Parameters:
+        timeout (float):
+            Maximum number of seconds to wait for the HTTP GET.
+
+    Returns:
+        List[str]:
+            A list of all package names available on CRAN.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If downloading the PACKAGES index fails.
     """
     resp = requests.get(CRAN_PACKAGES_URL, timeout=timeout)
     resp.raise_for_status()
@@ -155,10 +214,27 @@ def fetch_cran_urls(
     timeout: float = 10.0
 ) -> List[str]:
     """
-    Return up to `max_results` canonical CRAN URLs for packages matching `name`:
-      1) exact match
-      2) substring match
-      3) fuzzy match via difflib
+    Find CRAN package pages whose names closely match the query.
+
+    Uses difflib to score similarity against all CRAN package names.
+
+    Parameters:
+        name (str):
+            Query string for matching CRAN package names.
+        max_results (int):
+            Maximum number of package URLs to return.
+        timeout (float):
+            Maximum number of seconds to wait when fetching the PACKAGES index.
+
+    Returns:
+        List[str]:
+            List of CRAN package page URLs (e.g. https://cran.r-project.org/package=<pkg>).
+
+    Raises:
+        ValueError:
+            If no matching packages are found.
+        requests.exceptions.RequestException:
+            If fetching the CRAN index fails.
     """
     pkgs = _load_cran_packages(timeout)
     urls: List[str] = []
@@ -191,11 +267,18 @@ def fetch_cran_urls(
 
 def fetch_candidate_urls(name: str) -> set[str]:
     """
-    For each software name, fetch candidate URLs in this order:
-      1. GitHub
-      2. PyPI
-      3. CRAN
-      4. General Google search (excluding above domains)
+    Aggregate candidate website URLs for a software name from multiple sources.
+
+    This runs GitHub, PyPI and CRAN lookups (in that order) and returns the
+    union of all discovered URLs.
+
+    Parameters:
+        name (str):
+            The software or package name to query across sources.
+
+    Returns:
+        Set[str]:
+            A set of unique URLs from all sources for the given name.
     """
     results = []
 
@@ -221,7 +304,24 @@ def fetch_candidate_urls(name: str) -> set[str]:
     return set(results)
 
 def load_candidates(path: str) -> Dict[str, Set[str]]:
-    """Load a JSON cache of {name: [urls…]}, return {name: set(urls)…}."""
+    """
+    Load a JSON cache of candidate URLs into memory.
+
+    Parameters:
+        path (str):
+            Filesystem path to the JSON file containing a mapping
+            {name: [url1, url2, …]}.
+
+    Returns:
+        Dict[str, Set[str]]:
+            A dict mapping each name to a set of its cached URLs.
+
+    Raises:
+        FileNotFoundError:
+            If the cache file does not exist.
+        json.JSONDecodeError:
+            If the cache file contains invalid JSON.
+    """
     if os.path.exists(path) and os.path.getsize(path) > 0:
         with open(path, "r", encoding="utf-8") as f:
             try:
@@ -236,7 +336,22 @@ def load_candidates(path: str) -> Dict[str, Set[str]]:
     return {name: set(urls) for name, urls in data.items()}
 
 def save_candidates(candidates: Dict[str, Set[str]], path: str):
-    """Convert sets→lists and write out a pretty JSON file."""
+    """
+    Persist the candidate URL cache to disk as pretty-printed JSON.
+
+    Parameters:
+        candidates (Dict[str, Set[str]]):
+            Mapping from names to sets of URLs.
+        path (str):
+            Filesystem path where the JSON file will be written.
+
+    Returns:
+        None
+
+    Raises:
+        IOError:
+            If writing to the file system fails.
+    """
     serializable = {name: sorted(list(urls)) for name, urls in candidates.items()}
     with open(path, "w", encoding="utf-8") as f:
         json.dump(serializable, f, indent=2, ensure_ascii=False)
@@ -246,6 +361,25 @@ def update_candidate_cache(
     fetcher,                # your fetch_candidate_urls(name) function
     cache_path: str
 ) -> Dict[str, Set[str]]:
+    """
+    Load an existing JSON cache of candidate URLs (or start fresh), merge in URLs
+    from both the provided DataFrame and a network fetcher, and write the updated
+    cache back to disk.
+
+    Parameters:
+        corpus (pd.DataFrame):
+            DataFrame with at least a 'name' column, and optionally a 
+            'candidate_urls' column containing comma-separated URL strings.
+        fetcher (Callable[[str], Iterable[str]]):
+            Function that, given a software name, returns an iterable of candidate URLs.
+        cache_path (str):
+            Filesystem path to the JSON file used for caching {name: [urls…]}.
+
+    Returns:
+        Dict[str, Set[str]]:
+            Mapping from each unique name in `corpus` to the full set of candidate URLs
+            (including both pre-existing and newly fetched).
+    """
     # 1) load existing
     candidates = load_candidates(cache_path)
 
@@ -282,14 +416,34 @@ def normalize_url(u: str) -> str:
     scheme = "https"
     netloc = p.netloc.lower()
     path = p.path.rstrip("/")
-    # drop params, query, fragment
+    """
+    Normalize a URL by:
+      - Forcing the 'https' scheme
+      - Lowercasing the network location
+      - Stripping any trailing slash from the path
+      - Dropping params, query strings, and fragments
+
+    Parameters:
+        u (str):
+            The original URL to normalize.
+
+    Returns:
+        str:
+            A canonicalized URL suitable for duplicate-detection and comparison.
+    """
     return urlunparse((scheme, netloc, path, "", "", ""))
 
 def dedupe_candidates(candidates: Dict[str, Iterable[str]]) -> None:
     """
-    For each key in `candidates`, normalize its URLs and drop duplicates,
-    preferring the https version when http & https both appear.
-    Modifies `candidates` in place, replacing each value with a List[str].
+    Normalize and deduplicate all URLs in the cache, in place.
+
+    Parameters:
+        candidates (Dict[str, Iterable[str]]):
+            Mapping from names to lists or sets of URL strings.
+
+    Side Effects:
+        Modifies `candidates` in place, replacing each value with a
+        deduplicated list of normalized URLs.
     """
     for key, urls in candidates.items():
         seen: Dict[str, str] = {}
@@ -323,7 +477,27 @@ session.mount('http://', adapter)
 session.mount('https://', adapter)
 
 def is_website_url(url, timeout=5):
-    """Return True if url passes extension + HEAD-test for HTML."""
+    """
+    Determine whether a URL points to an HTML page.
+
+    Performs a HEAD request and checks that:
+      - The status code is 200
+      - The Content-Type header contains “text/html”
+
+    Parameters:
+        url (str):
+            The URL to test.
+        timeout (float):
+            Seconds to wait for the HTTP HEAD request.
+
+    Returns:
+        bool:
+            True if the URL returns HTML content, False otherwise.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If the HEAD request fails.
+    """
     path = urlparse(url).path.lower()
     if os.path.splitext(path)[1] in DISALLOWED_EXTENSIONS:
         return False
@@ -334,6 +508,21 @@ def is_website_url(url, timeout=5):
         return False
 
 def filter_url_dict_parallel(url_dict, max_workers=20):
+    """
+    In parallel, perform a HEAD request on every URL in `url_dict` and keep only
+    those whose Content-Type header indicates HTML (i.e. a real website page).
+
+    Parameters:
+        url_dict (Dict[str, Iterable[str]]):
+            Mapping from keys (e.g. software names) to iterables of URL strings.
+        max_workers (int):
+            Number of threads to use for concurrent HTTP HEAD checks.
+
+    Returns:
+        Dict[str, List[str]]:
+            New mapping with the same keys, each pointing to a list of URLs
+            that passed the HTML-type check.
+    """
     # Flatten all URLs and dedupe
     all_urls = {u for urls in url_dict.values() for u in urls}
     
@@ -362,8 +551,15 @@ match = PAT.match  # local reference to speed up lookups
 
 def filter_cran_refs(url_dict):
     """
-    In-place filter of url_dict[software] lists,
-    removing any URL matching our CRAN-refman pattern.
+    Remove CRAN reference-manual URLs from each entry in the cache, in place.
+
+    Parameters:
+        url_dict (Dict[str, List[str]]):
+            Mapping from names to lists of URL strings.
+
+    Side Effects:
+        Modifies `url_dict` in place by filtering out any URLs
+        that match CRAN reference-manual patterns.
     """
     for software, urls in url_dict.items():
         # build a new list only once, using the local `match`
@@ -376,8 +572,27 @@ def get_candidate_urls(
     fetcher=fetch_candidate_urls
 ) -> pd.DataFrame:
     """
-    Main entry point to update candidate URLs for each software in the corpus.
-    Returns a dictionary of {software_name: set(urls)}.
+    Update a corpus DataFrame with a new `candidate_urls` column.
+
+    1. Loads or updates the on-disk cache.
+    2. Normalizes & deduplicates all cached URLs.
+    3. Filters out non-HTML & CRAN-refman links.
+    4. Persists the updated cache.
+    5. Adds/overwrites `input['candidate_urls']` with
+       stringified lists of URLs per name.
+
+    Parameters:
+        input (pd.DataFrame):
+            DataFrame containing at least a “name” column.
+        cache_path (str):
+            Path to JSON cache file to read/write.
+        fetcher (callable):
+            Function to fetch fresh URLs for a given name.
+
+    Returns:
+        pd.DataFrame:
+            The same DataFrame, with a new or updated
+            `candidate_urls` column of stringified URL lists.
     """
     # 1) Update or load existing candidates
     candidates = update_candidate_cache(input, fetcher, cache_path)

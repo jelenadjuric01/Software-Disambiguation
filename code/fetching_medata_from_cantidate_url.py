@@ -19,25 +19,31 @@ BLACKLIST = {"Development Status", "License", "Programming Language", "Topic", "
 MIN_LEN   = 3
 
 def extract_pypi_metadata(url: str) -> Dict[str, Any]:
-    """Fetch metadata for a PyPI package given its project URL.
+    """
+    Fetch metadata for a PyPI package given its project URL.
 
-    Parses the package name from the URL, retrieves info from the PyPI JSON API,
-    and extracts:
-      - name       : package name
-      - description: summary string
-      - keywords   : list from JSON or derived from Trove classifiers
-      - authors    : combined author + maintainer names
-      - language   : always "Python"
+    This function parses the package name from the URL, retrieves the
+    package’s JSON metadata from the PyPI API, and returns a dict with:
+      - name       (str): the package name
+      - description(str): the summary text
+      - keywords   (List[str]): from JSON or derived from Trove classifiers
+      - authors    (List[str]): combined author + maintainer names
+      - language   (str): always "Python"
 
-    Args:
-        url: PyPI project URL (e.g. "https://pypi.org/project/foo").
+    Parameters:
+        url (str):
+            PyPI project URL (e.g. "https://pypi.org/project/foo").
 
     Returns:
-        A dict with keys:
-          name (str), description (str), keywords (List[str]),
-          authors (List[str]), language (str).
-        On error, returns {"error": "..."}.
+        Dict[str, Any]:
+            Metadata dict as above. On error (parse failure or 404), returns
+            {"error": "..."}.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If the HTTP request to the PyPI API fails for other reasons.
     """
+
     # 1) extract package name
     parsed = urlparse(url)
     parts = parsed.path.strip("/").split("/")
@@ -105,26 +111,26 @@ def extract_pypi_metadata(url: str) -> Dict[str, Any]:
 
 def extract_pypi_metadata_Rake_after(url: str) -> Dict[str, Any]:
     """
-        Extract metadata for a PyPI package with layered keyword fallback.
+    Fetch metadata for a PyPI package with layered keyword fallback.
 
-        This function retrieves package metadata and attempts to extract keywords
-        in a two-step fallback strategy. It first checks for JSON-defined keywords.
-        If none are found, it tries to derive keywords from Trove classifiers.
-        If classifiers also fail to provide valid keywords, it applies RAKE
-        to extract keyword phrases from the summary text.
+    Retrieves JSON metadata as in `extract_pypi_metadata`, then:
+      1. Uses JSON keywords if present.
+      2. Falls back to Trove classifiers if JSON keywords empty.
+      3. Falls back to RAKE extraction over the summary if classifiers yield none.
 
-        Args:
-            url (str): A PyPI project URL (e.g. "https://pypi.org/project/example").
+    Parameters:
+        url (str):
+            PyPI project URL (e.g. "https://pypi.org/project/example").
 
-        Returns:
-            dict: A dictionary containing:
-                - name (str): Package name
-                - description (str): Summary description
-                - keywords (List[str]): Extracted, derived, or RAKE-generated keywords
-                - authors (List[str]): Combined author and maintainer names
-                - language (str): Always "Python"
-            If extraction fails, returns {"error": "..."}.
-"""
+    Returns:
+        Dict[str, Any]:
+            Metadata dict with keys name, description, keywords, authors, language.
+            On parse or lookup error, returns {"error": "..."}.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If any HTTP request (JSON fetch) fails.
+    """
     # 1) extract package name
     parsed = urlparse(url)
     parts = parsed.path.strip("/").split("/")
@@ -210,24 +216,25 @@ def extract_pypi_metadata_Rake_after(url: str) -> Dict[str, Any]:
 
 def extract_pypi_metadata_RAKE(url: str) -> Dict[str, Any]:
     """
-    Extract metadata for a PyPI package using RAKE for keyword extraction.
+    Fetch metadata for a PyPI package using RAKE-only keyword extraction.
 
-    This function ignores Trove classifiers and uses RAKE to generate keywords
-    directly from the summary text if the JSON 'keywords' field is empty.
-    This is useful when classifier-derived tags are insufficient or undesired.
+    Retrieves JSON metadata and:
+      - Uses JSON keywords if non-empty.
+      - Otherwise applies RAKE to the summary text to extract up to 5 key phrases.
 
-    Args:
-        url (str): A PyPI project URL (e.g. "https://pypi.org/project/example").
+    Parameters:
+        url (str):
+            PyPI project URL (e.g. "https://pypi.org/project/example").
 
     Returns:
-        dict: A dictionary containing:
-            - name (str): Package name
-            - description (str): Summary description
-            - keywords (List[str]): JSON-defined or RAKE-generated keyword phrases
-            - authors (List[str]): Combined author and maintainer names
-            - language (str): Always "Python"
-        If extraction fails, returns {"error": "..."}.
-"""
+        Dict[str, Any]:
+            Dict with name, description, keywords, authors, language.
+            On error, returns {"error": "..."}.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If the PyPI API request fails.
+    """
 
     # 1) extract package name
     parsed = urlparse(url)
@@ -295,24 +302,26 @@ def extract_pypi_metadata_RAKE(url: str) -> Dict[str, Any]:
 
 def extract_pypi_metadata_RAKE_class(url: str) -> Dict[str, Any]:
     """
-Extract metadata for a PyPI package with fallback to RAKE and classifiers.
+    Fetch metadata for a PyPI package with RAKE and classifier fallbacks.
 
-This function attempts to generate keywords by first checking the JSON 'keywords'
-field. If empty, it applies RAKE to extract keywords from the summary. If RAKE
-also produces no valid keywords, it falls back to using topic-based Trove classifiers.
+    Attempts keyword extraction in this order:
+      1. JSON keywords
+      2. RAKE on summary
+      3. Trove classifiers
 
-Args:
-    url (str): A PyPI project URL (e.g. "https://pypi.org/project/example").
+    Parameters:
+        url (str):
+            PyPI project URL (e.g. "https://pypi.org/project/example").
 
-Returns:
-    dict: A dictionary containing:
-        - name (str): Package name
-        - description (str): Summary description
-        - keywords (List[str]): From JSON, RAKE, or Trove classifiers (in that order)
-        - authors (List[str]): Combined author and maintainer names
-        - language (str): Always "Python"
-    If extraction fails, returns {"error": "..."}.
-"""
+    Returns:
+        Dict[str, Any]:
+            Dict with name, description, keywords, authors, language.
+            On error, returns {"error": "..."}.
+
+    Raises:
+        requests.exceptions.RequestException:
+            If the HTTP request fails.
+    """
 
     # 1) extract package name
     parsed = urlparse(url)
@@ -398,17 +407,19 @@ Returns:
 
 
 def parse_authors_r(authors_r: str) -> List[str]:
-    """Parse an R Authors@R DESCRIPTION field into author names.
+    """
+    Parse an R `Authors@R` DESCRIPTION field into a list of author names.
 
-    Finds all `person(...)` blocks in the string, extracts quoted tokens,
-    and joins given + family names into "Given Family" format.  Single-quoted
-    entries (organizations) are included as-is.
+    Extracts all `person(...)` entries, pulls quoted tokens, and formats each
+    as "Given Family". Single-quoted strings (organizations) are returned as-is.
 
-    Args:
-        authors_r: Raw Authors@R field from a CRAN DESCRIPTION file.
+    Parameters:
+        authors_r (str):
+            Raw `Authors@R` field value from a CRAN DESCRIPTION.
 
     Returns:
-        A list of author or organization names (e.g. ["First Last", "OrgName"]).
+        List[str]:
+            Names of individuals or organizations.
     """
     blocks = re.findall(r'person\((.*?)\)', authors_r, flags=re.DOTALL)
     out = []
@@ -421,25 +432,29 @@ def parse_authors_r(authors_r: str) -> List[str]:
     return out
 
 def extract_cran_metadata(url: str) -> Dict[str, Any]:
-    """Fetch metadata for a CRAN R package given its documentation URL.
+    """
+    Fetch metadata for a CRAN R package given its documentation URL.
 
-    Parses the package name from the URL or query, queries the CRANDB API,
-    and extracts:
-      - name       : package name
-      - description: DESCRIPTION text
-      - keywords   : from DESCRIPTION, Task Views, or RAKE fallback
-      - authors    : from Authors@R, Author field, or HTML fallback
-      - language   : always "R"
+    Parses the package name from:
+      - URL query `?package=…`
+      - path segment `/web/packages/{pkg}/…`
+      - generic `/packages/{pkg}/…`
+    Then fetches JSON from the CRANDB API at `https://crandb.r-pkg.org/{pkg}`.
 
-    Args:
-        url: CRAN package URL, e.g.
-             "https://cran.r-project.org/web/packages/pkg/index.html"
-             or "?package=pkg".
+    Parameters:
+        url (str):
+            CRAN package URL (e.g. "https://cran.r-project.org/web/packages/pkg/index.html"
+            or "https://cran.r-project.org/?package=pkg").
 
     Returns:
-        A dict with keys:
-          name (str), description (str), keywords (List[str]), authors (List[str]), language (str).
-        Raises ValueError if the package name cannot be parsed.
+        Dict[str, Any]:
+            The raw JSON response from CRANDB.
+
+    Raises:
+        ValueError:
+            If the package name cannot be parsed from the URL.
+        requests.exceptions.RequestException:
+            If the HTTP GET to CRANDB fails.
     """
     # 1) extract pkg name
     parsed = urlparse(url)
@@ -462,7 +477,7 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
     resp    = requests.get(api_url)
     resp.raise_for_status()
     data    = resp.json()
-    return data
+    
     name        = data.get("Package", pkg)
     description = data.get("Description", "")
 
@@ -524,16 +539,20 @@ def extract_cran_metadata(url: str) -> Dict[str, Any]:
 
 
 def get_github_user_data(username: str) -> str:
-    """Retrieve a GitHub user’s display name via the GitHub API.
+    """
+    Retrieve a GitHub user’s display name via the GitHub API.
 
-    Sends an authenticated request if GITHUB_TOKEN is set; otherwise unauthenticated.
-    Returns the “name” field from the API, falling back to the login on error or if blank.
+    Sends an authenticated request if `GITHUB_TOKEN` is set. Returns the
+    "name" field from the API response, falling back to the login on error
+    or if the name is blank.
 
-    Args:
-        username: GitHub login (e.g. "octocat").
+    Parameters:
+        username (str):
+            GitHub login (e.g. "octocat").
 
     Returns:
-        The user’s full name (str), or the original username if not found or on error.
+        str:
+            The user’s full name, or `username` if not found or on error.
     """
     url = f"https://api.github.com/users/{username}"
     token = os.getenv("GITHUB_TOKEN")
@@ -556,29 +575,37 @@ def get_github_user_data(username: str) -> str:
 
 
 def extract_somef_metadata(repo_url: str, somef_path: str = "D:\\MASTER\\TMF\\somef") -> dict:
-    """Run the SOMEF tool on a GitHub repository to extract metadata.
+    """
+    Extract metadata for a GitHub repository using the SOMEF CLI tool.
 
-    Invokes `poetry run somef describe` in a temp file, then reads JSON to extract:
-      - name        : project name
-      - description : text description
-      - keywords    : list of keywords
-      - authors     : list containing the GitHub repo owner’s display name
-      - language    : primary programming language by code size
+    Invokes `poetry run somef describe -r {repo_url}` twice (with/without `-kt`),
+    reads the JSON output, and extracts:
+      - name        (str)
+      - description (str)
+      - keywords    (List[str])
+      - authors     (List[str]) — GitHub owner
+      - language    (str) — primary by code size
 
-    Args:
-        repo_url:   URL of the GitHub repository.
-        somef_path: Path to the SOMEF project directory where `poetry run somef` is available.
+    Parameters:
+        repo_url (str):
+            GitHub repository URL.
+        somef_path (str):
+            Filesystem path where `poetry run somef` is available.
 
     Returns:
-        A dict with keys:
-          name (str), description (str), keywords (List[str]), authors (List[str]), language (str).
-        Returns an empty dict on failure.
+        dict:
+            Metadata dict as above, or `{}` on failure.
+
+    Side Effects:
+        Creates and cleans up temporary files under `{somef_path}/temp`.
+
+    Raises:
+        subprocess.CalledProcessError:
+            If the SOMEF command fails.
+        IOError:
+            If reading the JSON output fails.
     """
     # Create a temp file to store the output
-    
-
-    # Prepare the two command variants: with and without -kt
-    # Note: keep -t and -m in both
     temp_dir = os.path.join(somef_path, "temp")
     output_path = os.path.join(temp_dir, "metadata.json")
     os.makedirs(temp_dir, exist_ok=True)
@@ -662,26 +689,26 @@ def extract_somef_metadata(repo_url: str, somef_path: str = "D:\\MASTER\\TMF\\so
 
 def extract_somef_metadata_with_RAKE(repo_url: str, somef_path: str = r"D:/MASTER/TMF/somef") -> dict:
     """
-    Extract metadata from a GitHub repository using SOMEF with RAKE fallback for keywords.
+    Extract metadata for a GitHub repo via SOMEF with RAKE fallback for keywords.
 
-    This function runs the SOMEF tool on the given repository and parses
-    metadata from the resulting JSON. If the extracted keywords field is empty,
-    it applies RAKE to extract up to 5 multi-word keywords from the description text.
+    Runs SOMEF as in `extract_somef_metadata`, then if no keywords:
+      - Applies RAKE to the SOMEF description to extract up to 5 multi-word phrases.
 
-    Args:
-        repo_url (str): URL of the GitHub repository.
-        somef_path (str): Path to the SOMEF project directory where `poetry run somef` is available.
+    Parameters:
+        repo_url (str):
+            GitHub repository URL.
+        somef_path (str):
+            Path to the SOMEF directory.
 
     Returns:
-        dict: A dictionary containing:
-            - name (str)
-            - description (str)
-            - keywords (List[str]) — extracted from SOMEF or generated via RAKE
-            - authors (List[str]) — GitHub owner's name
-            - language (str) — most dominant programming language in the repo
-        Returns an empty dictionary on failure.
-"""
+        dict:
+            Dict with keys name, description, keywords, authors, language.
+            Returns `{}` on failure.
 
+    Raises:
+        subprocess.CalledProcessError:
+            If the SOMEF call fails.
+    """
     # Create a temp file to store the output
     with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
         output_path = tmp_file.name
@@ -771,35 +798,26 @@ def extract_somef_metadata_with_RAKE(repo_url: str, somef_path: str = r"D:/MASTE
                 os.remove(entry_path)
 
 
-#Function that handles the generic website metadata extraction
-def extract_website_metadata(url: str) -> dict:
-    """
-    Placeholder for extracting generic website metadata.
 
-    Args:
-        url: The URL of the website.
-
-    Returns:
-        A dict of extracted metadata (implementation-specific).
-    """
-    return {}
 
 #Function that retrieves the metadata from any link
 def get_metadata(url: str) -> dict:
-    """Dispatch metadata extraction based on the URL’s domain.
+    """
+    Dispatch metadata extraction based on URL domain.
 
-    Routes to the appropriate extractor:
-      - GitHub repos      → extract_somef_metadata
-      - CRAN packages     → extract_cran_metadata
-      - PyPI packages     → extract_pypi_metadata
-      - Other websites    → extract_website_metadata
+    Routes to:
+      - GitHub → extract_somef_metadata_with_RAKE
+      - CRAN   → extract_cran_metadata
+      - PyPI   → extract_pypi_metadata_Rake_after
 
-    Args:
-        url: The URL from which to extract metadata.
+    Parameters:
+        url (str):
+            The URL from which to extract metadata.
 
     Returns:
-        A metadata dict as returned by one of the specialized extractors,
-        or {"error": "..."} on invalid input or failure.
+        dict:
+            Metadata dict as returned by the chosen extractor, or
+            {"error": "..."} for invalid input.
     """
     if not isinstance(url, str) or not url.strip():
         return {"error": "Invalid URL"}
@@ -822,12 +840,21 @@ def get_metadata(url: str) -> dict:
     if "pypi.org" in domain or "pypi.python.org" in domain:
         return extract_pypi_metadata_Rake_after(url)
     # Generic website fallback
-    return extract_website_metadata(url)
+    return {"error": "Unsupported URL format"}
 def _clean_github_url(raw_url: str) -> str:
     """
-    Given a GitHub URL that may include extra path segments (e.g. "/tree/master", "/issues", "/tarball/v1.0"),
-    normalize it to "https://github.com/{owner}/{repo}". If the URL isn’t a valid GitHub repo URL,
-    returns an empty string.
+    Normalize a GitHub repo URL to the form "https://github.com/{owner}/{repo}".
+
+    Removes any trailing ".git", extra path segments (e.g. "/tree/..."),
+    and returns an empty string if not a valid GitHub repo URL.
+
+    Parameters:
+        raw_url (str):
+            The original GitHub URL.
+
+    Returns:
+        str:
+            Canonical repo URL or "".
     """
     parsed = urlparse(raw_url)
     host = parsed.netloc.lower()
@@ -847,15 +874,19 @@ def _clean_github_url(raw_url: str) -> str:
 
 def get_github_link_from_pypi(url: str) -> Tuple[str,int]:
     """
-    Given a PyPI project URL (e.g. "https://pypi.org/project/example"), fetches the package's JSON
-    metadata and returns the first GitHub repository URL found (in project_urls or home_page).
-    If no GitHub link is present, returns an empty string.
+    Extract the first GitHub repository link from a PyPI project URL.
 
-    Args:
-        url (str): A PyPI project URL.
+    Fetches the PyPI JSON metadata, checks `project_urls` and `home_page`
+    for a GitHub link, cleans it, and returns it along with the length
+    of the full package description.
+
+    Parameters:
+        url (str):
+            PyPI project URL.
 
     Returns:
-        str: The GitHub URL if found, otherwise "".
+        Tuple[str, int]:
+            (cleaned GitHub URL or "", description length).
     """
     # 1) Extract package name
     parsed = urlparse(url)
@@ -895,29 +926,31 @@ def get_github_link_from_pypi(url: str) -> Tuple[str,int]:
 
 def extract_somef_metadata_with_RAKE_readme(repo_url: str, somef_path: str = r"D:/MASTER/TMF/somef") -> dict:
     """
-    Extract metadata from a GitHub repository using SOMEF with RAKE fallback for keywords,
-    and determine whether the README file is empty.
+    Extract metadata for a GitHub repo via SOMEF with RAKE and README‐emptiness check.
 
-    This function runs the SOMEF tool on the given repository and parses
-    metadata from the resulting JSON. If the extracted keywords field is empty,
-    it applies RAKE to extract up to 5 multi-word keywords from the description text.
-    It also fetches the README (if a readme_url exists) and checks if its content is empty.
+    Runs SOMEF, applies RAKE if needed, then fetches any README URLs present
+    to determine if the README is empty.
 
-    Args:
-        repo_url (str): URL of the GitHub repository.
-        somef_path (str): Path to the SOMEF project directory where `poetry run somef` is available.
+    Parameters:
+        repo_url (str):
+            GitHub repository URL.
+        somef_path (str):
+            Path to the SOMEF tool directory.
 
     Returns:
-        dict: A dictionary containing:
-            - name (str)
-            - description (str)
-            - keywords (List[str]) — extracted from SOMEF or generated via RAKE
-            - authors (List[str]) — GitHub owner's name
-            - language (str) — most dominant programming language in the repo
-            - readme_empty (bool) — True if README is missing or empty, False otherwise
-        Returns an empty dictionary on failure.
-    """
+        dict:
+            Metadata dict with keys:
+              - name, description, keywords, authors, language,
+              - readme_empty (bool)
+            Returns `{}` on failure.
 
+    Side Effects:
+        Creates and deletes temporary SOMEF output files.
+
+    Raises:
+        Exception:
+            On unexpected errors during extraction.
+    """
     # Create a temp file to store SOMEF output
     with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp_file:
         output_path = tmp_file.name
@@ -1036,14 +1069,3 @@ def extract_somef_metadata_with_RAKE_readme(repo_url: str, somef_path: str = r"D
         except OSError:
             pass
 
-if __name__ == "__main__":
-    # Example usage
-    
-    corpus = pd.read_csv("binary_llm_results_qwen.csv")      # assumes there's a column named "name" and a column named "url"
-    czi_test = pd.read_csv("binary_llm_results_qwen_new.csv")           # assumes there's a column named "name" in here as well
-
-    # 2) Merge them on "name" (left‐join so that every row in CZI_test is preserved)
-    #    We'll pull in corpus["url"] and call it "ground truth"
-    corpus.dropna(subset=["predicted_label"], inplace=True)  # drop rows with NaN in "predicted_label"
-    df_stacked = pd.concat([corpus, czi_test], axis=0, ignore_index=True)
-    df_stacked.to_csv("binary_llm_results_qwen_stacked.csv", index=False)

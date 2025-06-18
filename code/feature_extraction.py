@@ -1,7 +1,6 @@
 import itertools
-from typing import List, Optional, Tuple
 import pandas as pd
-import numpy as np
+from sklearn.metrics import f1_score, precision_score, recall_score
 from sklearn.model_selection import  StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
@@ -24,13 +23,13 @@ Models used: Logistic Regression, Random Forest, XGBoost, LightGBM, Neural Net
 
 if __name__ == "__main__":
     # Load & split
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.17/model_input.csv")
+    df = pd.read_csv("research/temp/v3.3/model_input.csv")
     X_trainval, X_test, y_trainval, y_test = split_data(df, "true_label", test_size=0.2)
-    cols_to_impute = [ 'paragraph_metric','language_metric','synonym_metric','author_metric']
+    cols_to_impute = [ 'paragraph_metric','language_metric','synonym_metric','author_metric', 'keywords_metric']
     X_tree_train = X_trainval.copy()
     X_tree_test = X_test.copy()
 
-    models_to_try = ['Random Forest', 'XGBoost', 'LightGBM']
+    models_to_try = ['Logistic Regression', 'Random Forest', 'XGBoost', 'LightGBM', 'Neural Net']
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
     
@@ -225,7 +224,7 @@ if __name__ == "__main__":
         print(f"\n--- Test results for {name} ---")
         evaluation(pd.DataFrame({"true_label": y_test.values, "prediction": y_pred}))
     # 3) Feature Combination Evaluation
-    '''metrics = ['name_metric', 'paragraph_metric', 'language_metric',
+    metrics = ['name_metric', 'paragraph_metric', 'language_metric',
            'synonym_metric', 'keywords_metric', 'author_metric']
 
     # Store results in a list of dicts
@@ -329,4 +328,4 @@ if __name__ == "__main__":
     # save all results to CSV
     results_df = pd.DataFrame(results)
     results_df.to_csv('metric_combinations_results.csv', index=False)
-    print("Saved results to 'metric_combinations_results.csv'")'''
+    print("Saved results to 'metric_combinations_results.csv'")

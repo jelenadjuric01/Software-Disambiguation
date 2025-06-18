@@ -1,26 +1,14 @@
 import os
 import time
-import json
 import pandas as pd
 from groq import Groq
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import precision_score, recall_score, f1_score
 
 # -----------------------------------------------------------------------------
 # 1. Load your data
 # -----------------------------------------------------------------------------
-test_df = pd.read_csv("code/test_LLM.csv")
-prev_df = pd.read_csv("binary_llm_results_llama.csv")
 
-
-# 3) Merge on the composite key ["name", "doi", "paragraph"].
-merged = test_df.merge(
-    prev_df[["name", "doi", "candidate_urls", "predicted_label"]],
-    on=["name", "doi", "candidate_urls"],
-    how="left"
-)
-
-# 4) Filter to only those rows where predicted_label is still NaN
-df = merged[merged["predicted_label"].isna()].copy().reset_index(drop=True)
+df = pd.read_csv("research/evaluation_llm/test_LLM.csv")
 
 
 # -----------------------------------------------------------------------------
