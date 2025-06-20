@@ -72356,5 +72356,139 @@
       "Kevin Ushey"
     ],
     "language": "R"
+  },
+  "https://cran.r-project.org/package=docopt": {
+    "name": "docopt",
+    "description": "Define a command-line interface by just giving it\na description in the specific format.",
+    "authors": [
+      "Edwin de Jonge"
+    ],
+    "language": "R"
+  },
+  "https://github.com/ardata-fr/doconv": {
+    "name": "doconv",
+    "description": "",
+    "authors": [
+      "ArData"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/dgarijo/Widoco": {
+    "name": "Widoco",
+    "description": "Wizard for documenting ontologies. WIDOCO is a step by step generator of HTML templates with the documentation of your ontology. It uses the LODE environment to create part of the template.",
+    "authors": [
+      "Daniel Garijo"
+    ],
+    "language": "JavaScript",
+    "readme_empty": false
+  },
+  "https://github.com/cran/doconv": {
+    "name": "doconv",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  doconv — Document Conversion to 'PDF' or 'PNG'  Report bugs for this package: https://github.com/ardata-fr/doconv/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/docopt/docopt.R": {
+    "name": "docopt.R",
+    "description": "Command-line interface description language for R (http://docopt.org)",
+    "authors": [
+      "docopt"
+    ],
+    "language": "R",
+    "readme_empty": false
+  },
+  "https://github.com/cran/docopt": {
+    "name": "docopt",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  docopt — Command-Line Interface Specification Language. Homepage: https://github.com/docopt/docopt.R  Report bugs for this package: https://github.com/docopt/docopt.R/issues",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://github.com/Salva5297/WidocoServer": {
+    "name": "WidocoServer",
+    "description": "Service Rest for the application of WIDOCO",
+    "authors": [
+      "Salvador González Gerpe"
+    ],
+    "language": "HTML",
+    "readme_empty": false
+  },
+  "https://github.com/cran/docore": {
+    "name": "docore",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  docore — Utility Functions for Scientific Coding  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "R",
+    "readme_empty": true
+  },
+  "https://cran.r-project.org/package=docore": {
+    "name": "docore",
+    "description": "Basic routines used in scientific coding, such as timing routines, vector/array handing functions and I/O support routines.",
+    "authors": [
+      "Danail Obreschkow"
+    ],
+    "language": "R"
+  },
+  "https://github.com/ec-europa/widoco": {
+    "name": "widoco",
+    "description": "Docker wrapper for the WIDOCO ontology publisher",
+    "authors": [
+      "European Commission"
+    ],
+    "language": "Dockerfile",
+    "readme_empty": false
+  },
+  "https://github.com/soilwise-he/widoco-action": {
+    "name": "widoco-action",
+    "description": "a repository to run widoco as a github action; widoco builds docs for knowledge graphs",
+    "authors": [
+      "Horizon Europe – Mission Soil Project – SoilWise"
+    ],
+    "language": "Dockerfile",
+    "readme_empty": false
+  },
+  "https://cran.r-project.org/package=doconv": {
+    "name": "doconv",
+    "description": "It provides the ability to generate images from documents\nof different types. Three main features are provided: functions for\ngenerating document thumbnails, functions for performing visual tests\nof documents and a function for updating fields and table of contents\nof a 'Microsoft Word' or 'RTF' document. In order to work, 'LibreOffice' must be\ninstalled on the machine and or 'Microsoft Word'. If the latter is\navailable, it can be used to produce PDF documents or images\nidentical to the originals; otherwise, 'LibreOffice' is used and\nthe rendering can be sometimes different from the original\ndocuments.",
+    "authors": [
+      "David Gohel",
+      "ArData cph",
+      "David Hajage"
+    ],
+    "language": "R"
+  },
+  "https://github.com/cran/RWildbook": {
+    "name": "RWildbook",
+    "description": ":exclamation: This is a read-only mirror of the CRAN R package repository.  RWildbook — Interface for the 'Wildbook' Wildlife Data Management Framework  ",
+    "authors": [
+      "cran"
+    ],
+    "language": "HTML",
+    "readme_empty": true
+  },
+  "https://github.com/IATA-Cargo/one-record-ontologies-widoco": {
+    "name": "one-record-ontologies-widoco",
+    "description": "Repository used for generating ontology documentation via OnToology",
+    "authors": [
+      "IATA Digital Cargo"
+    ],
+    "language": "",
+    "readme_empty": false
+  },
+  "https://cran.r-project.org/package=RWildbook": {
+    "name": "RWildbook",
+    "description": "Provides an interface with the 'Wildbook' mark-recapture ecological database framework. It\nhelps users to pull data from the 'Wildbook' framework and format data for further analysis\nwith mark-recapture applications like 'Program MARK' (which can be accessed via the 'RMark' package in 'R').\nFurther information on the 'Wildbook' framework is available at: <http://www.wildbook.org/doku.php>.",
+    "authors": [
+      "Simon Bonner",
+      "Xinxin Huang"
+    ],
+    "language": "R"
   }
 }

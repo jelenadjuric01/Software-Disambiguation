@@ -573,21 +573,19 @@ def extract_somef_metadata(repo_url: str, github_token: str = None) -> dict:
     
     # Create a temp file to store SOMEF output
 
+    package_dir = Path(__file__).parent
+    temp_path = package_dir / "someftemp"
+    temp_path.mkdir(exist_ok=True, parents=True)
+
+    # prepare a temp file for SOMEF output
+    with tempfile.NamedTemporaryFile(dir=str(temp_path), delete=False, suffix=".json") as tmp_file:
+        output_path = tmp_file.name
+
     try:
-        package_dir = Path(__file__).parent
-        temp_path = package_dir / "someftemp"
-        # Create someftemp directory in current working directory
-        temp_path.mkdir(exist_ok=True, parents=True)
-        with tempfile.NamedTemporaryFile(
-        dir=str(temp_path), 
-        delete=False, 
-        suffix=".json"
-    ) as tmp_file:
-            output_path = tmp_file.name
         if sys.platform == "win32":
-            # Prefix with \\?\ to allow long Windows paths
+            # allow long Windows paths
             temp_path = "\\\\?\\" + str(temp_path)
-        
+
         base_cmd = [
             "somef", "describe",
             "-r", repo_url,
@@ -595,69 +593,65 @@ def extract_somef_metadata(repo_url: str, github_token: str = None) -> dict:
             "-t", "0.93",
             "-m"
         ]
-        
+
         cmds = [
-            base_cmd,  # first attempt with temp directory
-            base_cmd + ["-kt", temp_path]                       # retry without -kt
+            base_cmd,                      # first attempt
+            base_cmd + ["-kt", temp_path]  # retry with -kt
         ]
-        
-        # Try running SOMEF commands
+
+        # Try each command until we see a non-empty JSON
         for cmd in cmds:
             try:
-                subprocess.run(cmd, check=True)
-                break
-            except subprocess.CalledProcessError as e:
-                print(f"Command failed ({' '.join(cmd)}): {e}")
+                subprocess.run(cmd, check=False)
+            except Exception as e:
+                print(f"Command raised exception ({' '.join(cmd)}): {e}")
+
+            # Check if output JSON exists and is non-empty
+            if os.path.exists(output_path):
+                try:
+                    with open(output_path, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    if isinstance(data, dict) and data:
+                        # Got valid metadata → stop trying further cmds
+                        break
+                except (ValueError, json.JSONDecodeError):
+                    # invalid or empty JSON → try next cmd
+                    pass
         else:
-            # both attempts failed
+            # all attempts failed to produce metadata
             print(f"All SOMEF attempts failed for {repo_url}")
             return {}
 
-        # Load the JSON output into Python
+        # Load the final JSON
         with open(output_path, "r", encoding="utf-8") as f:
             metadata = json.load(f)
 
         def get_first_value(key):
             return metadata.get(key, [{}])[0].get("result", {}).get("value", "")
 
-        # "owner" is treated as author (GitHub username)
         owner = get_first_value("owner")
 
-        # Determine primary language by largest code size
+        # primary language = largest code size
         langs = metadata.get("programming_languages", [])
         primary_language = ""
         if langs:
             primary = max(langs, key=lambda x: x.get("result", {}).get("size", 0))
             primary_language = primary.get("result", {}).get("value", "")
-        
+
+        # check for non-empty README
         readme_empty = True
-        readme_urls = metadata.get("readme_url", [])
+        for entry in metadata.get("readme_url", []):
+            url = entry.get("result", {}).get("value", "") if isinstance(entry, dict) else entry
+            if not url:
+                continue
+            try:
+                resp = requests.get(url, timeout=10)
+                if resp.status_code == 200 and resp.text.strip():
+                    readme_empty = False
+                    break
+            except Exception:
+                continue
 
-        if isinstance(readme_urls, list):
-            for entry in readme_urls:
-                # Extract the URL string, whether entry is a dict or a plain string
-                url = ""
-                if isinstance(entry, dict):
-                    url = entry.get("result", {}).get("value", "") or ""
-                else:
-                    url = entry or ""
-
-                if not url:
-                    continue
-
-                try:
-                    resp = requests.get(url, timeout=10)
-                    if resp.status_code == 200:
-                        content = resp.text.strip()
-                        if content:
-                            # Found a non-empty README, no need to check further
-                            readme_empty = False
-                            break
-                    # If status_code != 200 or content is empty, try the next URL
-                except Exception:
-                    # On request failure, just move on to the next URL
-                    continue
-        
         return {
             "name": get_first_value("name"),
             "description": get_first_value("description"),
@@ -2093,4 +2087,7 @@ def _normalize_url_final(url: str) -> str:
     # rebuild URL with the (possibly) modified path
     cleaned = parsed._replace(path=path)
     return urlunparse(cleaned)
-
+if __name__ == "__main__":
+    url = "https://github.com/ec-europa/widoco"
+    data = extract_somef_metadata(url)
+    print(data)

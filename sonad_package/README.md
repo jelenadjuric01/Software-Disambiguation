@@ -1,7 +1,7 @@
 # SONAD: Software Name Disambiguation
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)  
-![Python](https://img.shields.io/badge/python-3.9-blue.svg)
+![Python](https://img.shields.io/badge/python-3.10-blue.svg)
 
 **SONAD** (Software Name Disambiguation) is a command-line tool and Python package that links software mentions in scientific papers to their corresponding repository URLs. It leverages NLP, third-party tools like SOMEF, and metadata to resolve software names. It is limited to fetching URLs from GitHub, PyPI and CRAN. Take into account that this is not 100% accurate as it uses a machine learning model trained on data, but it did outperform models llama-3.1-8b-instant, qwen-qwq-32b, gemma2-9b-it and deepseek-r1-distill-llama-70b.
 
@@ -20,13 +20,15 @@ pip install sonad
 
 ## Initial Configuration
 
-Before using SONAD, you **must install and configure SOMEF**  
+Before using SONAD, you **must make sure that SOMEF works**  
 (https://github.com/KnowledgeCaptureAndDiscovery/somef/?tab=readme-ov-file),  
 which is used for software metadata extraction.
 
-Follow their installation instructions to make sure `somef` runs correctly on your system.
+Follow their instructions to make sure `somef` runs correctly on your system. It is installed with sonad, but the user should check if somef works before running sonad.
 
-It is also **strongly recommended to provide a GitHub API token** to avoid rate limits when querying GitHub. You can configure this once using:
+It is also **strongly recommended to provide a GitHub API token** to avoid rate limits when querying GitHub. You can configure this for sonad and somef once using:
+
+If you wish not to use GitHub token, you then need to configure somef with automatic option (somef configure -a).
 
 ```
 sonad configure
@@ -38,7 +40,7 @@ Your token will be saved for future runs.
 
 ## Requirements
 
-SONAD requires Python 3.9. All dependencies are installed automatically.
+SONAD requires Python 3.10. All dependencies are installed automatically.
 
 Some key libraries:
 - pandas

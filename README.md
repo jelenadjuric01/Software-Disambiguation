@@ -42,7 +42,7 @@ You can explore the progression from feature design to the final tool in the not
 # SONAD: Software Name Disambiguation
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)  
-![Python](https://img.shields.io/badge/python-3.9-blue.svg)
+![Python](https://img.shields.io/badge/python-3.10-blue.svg)
 
 **SONAD** (Software Name Disambiguation) is a command-line tool and Python package that links software mentions in scientific papers to their corresponding repository URLs. It leverages NLP, third-party tools like SOMEF, and metadata to resolve software names. It is limited to fetching URLs from GitHub, PyPI and CRAN. Take into account that this is not 100% accurate as it uses a machine learning model trained on data, but it did outperform models llama-3.1-8b-instant, qwen-qwq-32b, gemma2-9b-it and deepseek-r1-distill-llama-70b.
 
@@ -79,7 +79,7 @@ Your token will be saved for future runs.
 
 ## Requirements
 
-SONAD requires Python 3.9. All dependencies are installed automatically.
+SONAD requires Python 3.10. All dependencies are installed automatically.
 
 Some key libraries:
 - pandas

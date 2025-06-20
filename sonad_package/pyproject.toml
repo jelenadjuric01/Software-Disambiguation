@@ -1,37 +1,58 @@
-[project]
-name = "sonad"
-version = "0.1.2"
-description = "Software name disambiguation pipeline"
-authors = [{ name = "Jelena Duric", email = "djuricjelena611@gmail.com" }]
-readme = "README.md"
-license = {text = "MIT"}
-requires-python = "==3.9"
-
-dependencies = [
-    "pandas>=1.3,<2.3",
-    "numpy>=1.21,<1.27",
-    "cloudpickle>=2.0",
-    "scikit-learn>=1.0,<1.4",
-    "xgboost>=1.5,<2.2",
-    "lightgbm>=3.3,<4.1",
-    "sentence-transformers>=2.2,<3.0",
-    "textdistance>=4.2",
-    "beautifulsoup4>=4.9,<5.0",
-    "requests>=2.25,<2.33",
-    "SPARQLWrapper>=1.8,<2.1",
-    "lxml>=4.9,<6.0",
-    "elementpath==4.0.0",
-    "somef>=0.9.11"
+[tool.poetry]
+name         = "sonad"
+version      = "0.1.3"
+description  = "Software name disambiguation pipeline"
+authors      = ["Jelena Duric <djuricjelena611@gmail.com>"]
+license      = "MIT"
+readme       = "README.md"
+homepage     = "https://github.com/jelenadjuric01/Software-Disambiguation"
+repository   = "https://github.com/jelenadjuric01/Software-Disambiguation"
+keywords     = ["software", "disambiguation", "metadata", "machine learning", "NLP"]
+classifiers  = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.10",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Libraries :: Python Modules"
 ]
-keywords = ["software", "disambiguation", "metadata", "machine learning", "NLP"]
 
-[project.scripts]
+packages = [
+  { include = "sonad" }
+]
+
+include = [
+  { path = "sonad/model.pkl",           format = ["sdist", "wheel"] },
+  { path = "sonad/CZI/synonyms_matrix.csv",format = ["sdist", "wheel"] },
+  { path = "sonad/json",                 format = ["sdist", "wheel"] }
+]
+
+
+[tool.poetry.dependencies]
+python              = ">=3.10,<=3.13"
+rdflib              = ">=6.0.1"
+somef               = ">=0.9.11"
+click                = "^8.0"
+cloudpickle         = ">=2.0"
+xgboost             = ">=1.5"
+lightgbm            = ">=3.3"
+sentence-transformers = ">=2.2"
+textdistance        = ">=4.2"
+beautifulsoup4      = ">=4.9"
+SPARQLWrapper       = "^1.8"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+pytest   = "^7.0"
+coverage = "^7.2"
+
+[tool.poetry.scripts]
 sonad = "sonad.cli:cli"
 
-[project.urls]
-"Homepage" = "https://github.com/jelenadjuric01/Software-Disambiguation"
-"Issues" = "https://github.com/jelenadjuric01/Software-Disambiguation/issues"
+
 
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires    = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"

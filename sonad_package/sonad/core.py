@@ -178,20 +178,20 @@ def process_files(input_path, output_path, folder_path=None, github_token=None):
     # Load input data
     input_dataframe = pd.read_csv(input_path)
     
-    print("Loading CZI data...")
+    print("Loading CZI data for synonym extraction...")
     CZI = pd.read_csv(czi_path)
     
     # Processing pipeline
-    print("Processing data...")
+    print("Processing  input data...")
     get_synonyms_from_file(synonyms_file, input_dataframe, CZI_df=CZI)
-    
-    print("Finding nearest language for each software...")
+
+    print("Finding nearest language for each software from the surrounding paragraph...")
     input_dataframe['language'] = input_dataframe.apply(
         lambda row: find_nearest_language_for_softwares(row['paragraph'], row['name']), 
         axis=1
     )
     
-    print("Getting authors for each paper...")
+    print("Getting authors for each paper using openAlex tool...")
     results = input_dataframe['doi'].apply(get_authors)
     input_dataframe['authors'] = results.apply(
         lambda x: ','.join(x.get('authors', [])) if isinstance(x, dict) else ''

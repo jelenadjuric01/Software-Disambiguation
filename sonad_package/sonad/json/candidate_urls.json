@@ -9590,5 +9590,24 @@
     "https://github.com/vdblab/FLORAL",
     "https://github.com/wevertonbio/florabr",
     "https://pypi.org/project/lora/"
+  ],
+  "Widoco": [
+    "https://cran.r-project.org/package=RWildbook",
+    "https://cran.r-project.org/package=doconv",
+    "https://cran.r-project.org/package=docopt",
+    "https://cran.r-project.org/package=docore",
+    "https://cran.r-project.org/package=midoc",
+    "https://github.com/IATA-Cargo/one-record-ontologies-widoco",
+    "https://github.com/Salva5297/WidocoServer",
+    "https://github.com/ardata-fr/doconv",
+    "https://github.com/cran/RWildbook",
+    "https://github.com/cran/doconv",
+    "https://github.com/cran/docopt",
+    "https://github.com/cran/docore",
+    "https://github.com/cran/midoc",
+    "https://github.com/dgarijo/Widoco",
+    "https://github.com/docopt/docopt.R",
+    "https://github.com/ec-europa/widoco",
+    "https://github.com/soilwise-he/widoco-action"
   ]
 }
