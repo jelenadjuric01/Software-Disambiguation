@@ -1,5 +1,7 @@
 name: Publish to PyPI
-
+defaults:
+  run:
+    working-directory: sonad_package
 # Trigger on new tags (vX.Y.Z) or Release publishes
 on:
   release:
