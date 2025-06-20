@@ -245,9 +245,16 @@ def process_files(input_path, output_path, folder_path=None, github_token=None):
     if output_path_similarities is not None:
         input_dataframe.to_csv(output_path_similarities, index=False)
     
-    grouped = input_dataframe.groupby(['name', 'paragraph', 'doi']).apply(
-        aggregate_group, include_groups=True
-    ).reset_index()
+    grouping_cols = ['name', 'paragraph', 'doi']
+    other_cols    = [c for c in input_dataframe.columns if c not in grouping_cols]
+
+# 2. Select them before groupby.apply
+    grouped = (
+        input_dataframe
+        .groupby(grouping_cols)[ grouping_cols + other_cols ]
+        .apply(aggregate_group)
+        .reset_index(drop=True)
+    )
     
     grouped.to_csv(output_path, index=False)
     print(f"Processing complete. Output saved to {output_path}")
