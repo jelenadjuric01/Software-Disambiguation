@@ -246,14 +246,16 @@ def process_files(input_path, output_path, folder_path=None, github_token=None):
         input_dataframe.to_csv(output_path_similarities, index=False)
     
     grouping_cols = ['name', 'paragraph', 'doi']
-    other_cols    = [c for c in input_dataframe.columns if c not in grouping_cols]
 
-# 2. Select them before groupby.apply
+# 2) pick any other columns you need inside your function
+    other_cols = [c for c in input_dataframe.columns if c not in grouping_cols]
+
+    # 3) slice, group, apply, then reset_index (no drop!)
     grouped = (
-        input_dataframe
-        .groupby(grouping_cols)[ grouping_cols + other_cols ]
-        .apply(aggregate_group)
-        .reset_index(drop=True)
+        input_dataframe[ grouping_cols + other_cols ]
+        .groupby(grouping_cols)
+        .apply(aggregate_group)   # your function sees name, paragraph, doi, plus other_cols
+        .reset_index()            # promotes name/paragraph/doi from the index back to columns
     )
     
     grouped.to_csv(output_path, index=False)
