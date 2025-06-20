@@ -5,7 +5,7 @@ defaults:
 # Trigger on new tags (vX.Y.Z) or Release publishes
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   deploy:
