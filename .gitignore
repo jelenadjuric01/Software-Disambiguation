@@ -4,4 +4,5 @@ github_from_CZI.csv
 cran_from_CZI.csv
 demo/CZI
 sonad_package/sonad/CZI
+sonad_package/dist
 sonad-env
