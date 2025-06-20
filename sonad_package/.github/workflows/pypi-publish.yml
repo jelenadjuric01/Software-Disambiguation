@@ -2,14 +2,11 @@ name: Publish to PyPI
 
 # Trigger on new tags (vX.Y.Z) or Release publishes
 on:
-  push:
-    tags:
-      - 'v*.*.*'
   release:
-    types: [published]
+    types: [created]
 
 jobs:
-  publish:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,37 +22,16 @@ jobs:
 
       # 3) Install Poetry
       - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+      - name: Update version
+        run: python update_version.py
+      - name: Install dependencies
+        run: poetry install
+      - name: Configure Poetry for PyPI
         run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-          export PATH="$HOME/.local/bin:$PATH"
+          poetry config pypi-token.pypi ${{ secrets.PYPI_PASSWORD }}
 
-      # 4) Cache Poetry’s cache (optional)
-      - name: Cache Poetry
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pypoetry
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-
-      # 5) Install deps and build
-      - name: Install & build
+      - name: Build and publish
         run: |
-          poetry install --no-dev
           poetry build
-
-      # 6) Validate with Twine
-      - name: Validate distributions
-        run: |
-          pip install twine
-          twine check dist/*
-
-      # 7) Configure PyPI token
-      - name: Set Poetry token
-        env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          poetry config pypi-token.pypi "${POETRY_PYPI_TOKEN_PYPI}"
-
-      # 8) Publish!
-      - name: Publish to PyPI
-        run: |
-          poetry publish --no-interaction
+          poetry publish
