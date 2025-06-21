@@ -202,8 +202,13 @@ def process_files(input_path, output_path, folder_path=None, github_token=None):
         candidates_cache_file,
         github_token=github_token
     )
-    input_dataframe.fillna(value=np.nan, inplace=True)
-    input_dataframe = input_dataframe.infer_objects(copy=False)
+    # This will actually eliminate the warning
+    input_dataframe = input_dataframe.copy()
+    for col in input_dataframe.columns:
+        if input_dataframe[col].dtype == 'object':
+            input_dataframe[col] = input_dataframe[col].astype('string').fillna(pd.NA).astype('object')
+        else:
+            input_dataframe[col] = input_dataframe[col].fillna(np.nan)
 
     if output_file_corpus is not None:
         input_dataframe.to_csv(output_file_corpus, index=False)
