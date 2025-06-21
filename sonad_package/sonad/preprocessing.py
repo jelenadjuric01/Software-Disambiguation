@@ -2088,6 +2088,19 @@ def _normalize_url_final(url: str) -> str:
     cleaned = parsed._replace(path=path)
     return urlunparse(cleaned)
 if __name__ == "__main__":
-    url = "https://github.com/ec-europa/widoco"
-    data = extract_somef_metadata(url)
-    print(data)
+    # Example usage
+   
+
+# Create a DataFrame with some missing values and mixed data types
+    input_dataframe = pd.DataFrame({
+        'name': ['example1', 'example2', None, 'example4'],
+        'candidate_urls': [
+            ['http://url1.com', 'http://url2.com'], 
+            ['http://url3.com'], 
+            None,
+            ['http://url4.com', 'http://url5.com', 'http://url6.com']
+        ],
+        'score': [0.85, None, 0.92, 0.78],
+        'status': ['active', 'pending', None, 'active']
+    })
+    input_dataframe = input_dataframe.fillna(value=np.nan).infer_objects(copy=False)
