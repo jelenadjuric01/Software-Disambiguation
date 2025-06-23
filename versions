@@ -3,7 +3,7 @@ Version 2 - everything from Version 1 with added cleaned Kai Li Prism mentions (
 Version 3 - it is the same as version 2, but all URLs which are not GitHub, CRAN or PyPi are removed from ground truth as well as from candidates, for this version programming language metric was added
 Version 3.1 - the same as version 3, but with added synonyms 
 Version 3.2 - the same as version 3.1, but keywords from paper aren't fetched using openAlex tool, but using RAKE on paragraph surrounding software mention
-Version 3.3 - the same as version 3.2, but for missing keywords from github we use RAKE 
+Version 3.3 - the same as version 3.2, but for missing keywords from GitHub we use RAKE 
 Version 3.4 - the same as version 3.3, but instead of using TOPIC classifiers for missing keywords from PyPi, we use Rake
 Version 3.5 - the same as version 3.4, only when Rake returns missing keywords, we fetch TOPIC classifiers like before
 Version 3.6 - the same as version 3.5, but for PyPI metadata, if keywords are missing we first fetch TOPIC and if that is missing, then we use Rake
@@ -17,6 +17,6 @@ Version 3.13 - the same as version 3.12, but we remove keywords completely and d
 Version 3.14 - the same as version 3.12, but we remove keywords completely and discard all GitHub URLs that have empty README file (except repository which cran authored)
 Version 3.15 - the same as version 3.12, but we remove keywords completely and discard PyPI URLs that have no GitHub and description shorter than 400 characters and all GitHubs that have empty README files
 Version 3.16 - the same as version 3.12, but we remove keywords completely and discard PyPI URLs that have no GitHub and description shorter than 300 characters and all GitHubs that have empty README files
-Version 3.17 - the same as version 3.15, but when searching URLs for CRAN we add github in mentioned in the page, resultsing in almost 10000 rows
+Version 3.17 - the same as version 3.15, but when searching URLs for CRAN we add GitHub in mentioned in the page, resultsing in almost 10000 rows
 Version 3.18 - the same as version 3.15, but models don't use class weighted approach
-Version 3.19 - the same as version 3.17, but models don't use clas weighted approach
+Version 3.19 - the same as version 3.17, but models don't use class weighted approach
