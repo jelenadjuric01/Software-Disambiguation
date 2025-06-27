@@ -96,7 +96,7 @@ Returns:
         return LogisticRegression(**{**defaults, **params.get(key, {})})
 
     elif key == "random forest":
-        defaults = dict(n_estimators=100, class_weight="balanced", n_jobs=-1, random_state=42)
+        defaults = dict(n_estimators=100, n_jobs=-1, random_state=42)
         return RandomForestClassifier(**{**defaults, **params.get(key, {})})
 
     elif key == "xgboost":
@@ -104,7 +104,7 @@ Returns:
         defaults = dict(
             n_estimators=100,
             eval_metric="logloss",
-            scale_pos_weight=neg/pos,
+            #scale_pos_weight=neg/pos,
             random_state=42,
             n_jobs=-1,
             enable_categorical=True  # Add this for newer XGBoost versions
@@ -123,7 +123,7 @@ Returns:
 
         defaults = dict(
             n_estimators=100,
-            class_weight=cw,
+            #class_weight=cw,
             random_state=42,
             n_jobs=-1
         )
@@ -198,7 +198,8 @@ Returns:
 
 if __name__ == "__main__":
     # 1) Load & split
-    df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.17/model_input.csv")
+    #df = pd.read_csv("D:/MASTER/TMF/Software-Disambiguation/corpus/temp/v3.17/model_input.csv")
+    df = pd.read_csv("model_input.csv")
     X_trainval, X_test, y_trainval, y_test = split_data(df, "true_label", test_size=0.2)
     
     

@@ -117,7 +117,6 @@ Raises:
         defaults = dict(
             n_estimators=100,
             eval_metric="logloss",
-            scale_pos_weight=neg/pos,
             random_state=42,
             n_jobs=-1,
             enable_categorical=True  # Add this for newer XGBoost versions

@@ -1,5 +1,6 @@
 import re
 from urllib.parse import urlparse, urlunparse
+import cloudpickle
 import pandas as pd
 from sklearn.metrics import precision_score, recall_score, f1_score, classification_report
 
@@ -87,10 +88,71 @@ def label_true(row: pd.Series) -> int:
     return int(bool(gt_set & cand_set))
 
 
+def enrich_with_ground_truth(
+    df_target: pd.DataFrame,
+    df_lookup: pd.DataFrame,
+    name_col: str = "name",
+    doi_col: str = "doi",
+    paragraph_col: str = "paragraph",
+    gt_col: str = "ground truth",
+    how: str = "left"
+) -> pd.DataFrame:
+    """
+    Enrich df_target by pulling in the ground_truth column from df_lookup,
+    matching on (name, doi, paragraph).
+
+    Parameters
+    ----------
+    df_target : pd.DataFrame
+        DataFrame missing the ground_truth column.
+    df_lookup : pd.DataFrame
+        DataFrame containing the ground_truth column.
+    name_col : str
+        Column name for 'name' in both frames.
+    doi_col : str
+        Column name for 'doi' in both frames.
+    paragraph_col : str
+        Column name for 'paragraph' in both frames.
+    gt_col : str
+        Column name for the ground truth in df_lookup (and to create in df_target).
+    how : str
+        Merge method (‘left’, ‘inner’, etc.); default ‘left’ keeps all rows of df_target.
+
+    Returns
+    -------
+    pd.DataFrame
+        A new DataFrame like df_target but with a `ground_truth` column added.
+    """
+
+    # sanity checks
+    for c in (name_col, doi_col, paragraph_col):
+        if c not in df_target.columns:
+            raise KeyError(f"Target DataFrame is missing column '{c}'")
+        if c not in df_lookup.columns:
+            raise KeyError(f"Lookup DataFrame is missing column '{c}'")
+    if gt_col not in df_lookup.columns:
+        raise KeyError(f"Lookup DataFrame is missing ground truth column '{gt_col}'")
+
+    # drop duplicate key-ground_truth pairs so we don’t multiply rows
+    lookup_unique = (
+        df_lookup[[name_col, doi_col, paragraph_col, gt_col]]
+        .drop_duplicates(subset=[name_col, doi_col, paragraph_col])
+    )
+
+    # perform the merge
+    merged = df_target.merge(
+        lookup_unique,
+        on=[name_col, doi_col, paragraph_col],
+        how=how
+    )
+
+    return merged
+
 
 if __name__ == "__main__":
-    df = pd.read_csv('input1.csv',delimiter=';')
-    #df['true_label'] = df.apply(label_true, axis=1)
-    df.to_csv('input1.csv', index=False)
-    #evaluation(df)
+    df = pd.read_csv('temp/temp/similarities.csv')
+    df_lookup = pd.read_csv('CZI_test.csv')
+    df = enrich_with_ground_truth(df, df_lookup)
+    df['true_label'] = df.apply(label_true, axis=1)
 
+    evaluation(df)
