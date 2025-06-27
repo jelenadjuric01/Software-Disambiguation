@@ -1793,22 +1793,157 @@ def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
 
 # Reuse or customize these lists/mappings
 COMMON_LANGUAGES = [
-    "Python", "R", "Java", "C\\+\\+", "C#", "C", "JavaScript",
-    "TypeScript", "Ruby", "Go", "Rust", "Scala", "Haskell",
-    "MATLAB", "PHP", "Perl", "Swift", "Kotlin", "Dart", "Julia"
+    "ABAP",
+    "Ada",
+    "ALGOL",
+    "APL",
+    "AppleScript",
+    "Assembly",
+    "AWK",
+    "Bash",
+    "Batch",
+    "C",
+    "C#",
+    "C\\+\\+",            # escaped for regex
+    "Clojure",
+    "COBOL",
+    "Crystal",
+    "D",
+    "Dart",
+    "Delphi",
+    "Erlang",
+    "Elixir",
+    "Elm",
+    "F#",
+    "Fortran",
+    "Go",
+    "Groovy",
+    "Haskell",
+    "HTML",
+    "Java",
+    "JavaScript",
+    "Julia",
+    "Kotlin",
+    "LabVIEW",
+    "Lisp",
+    "Lua",
+    "MATLAB",
+    "Objective-C",
+    "OCaml",
+    "Pascal",
+    "Perl",
+    "PHP",
+    "PowerShell",
+    "Prolog",
+    "Python",
+    "R",
+    "Racket",
+    "Rexx",
+    "Ruby",
+    "Rust",
+    "Scala",
+    "Scheme",
+    "Shell",
+    "SQL",
+    "Swift",
+    "Tcl",
+    "TypeScript",
+    "VBScript",
+    "VBA",
+    "Visual Basic",
+    "Visual Basic .NET",
+    "WebAssembly",
+    "Wolfram",
+    "Zig",
 ]
 
 IDE_MAPPING = {
-    "rstudio": "R",
+    # Python
     "pycharm": "Python",
     "jupyter": "Python",
     "spyder": "Python",
-    "eclipse": "Java",
+    "vscode": "Python",
+    "atom": "Python",
+    "sublime text": "Python",
+    "thonny": "Python",
+
+    # R
+    "rstudio": "R",
+
+    # Java
     "intellij": "Java",
-    "visual studio": "C#",
+    "eclipse": "Java",
     "netbeans": "Java",
     "android studio": "Java",
-    # add more IDE→language pairs as needed
+
+    # C/C++
+    "visual studio": "C#",
+    "clion": "C++",
+    "qt creator": "C++",
+    "code::blocks": "C++",
+    "xcode": "C",
+    "dev c++": "C++",
+
+    # C#
+    "visual studio": "C#",
+    "sharpdevelop": "C#",
+
+    # JavaScript / TypeScript
+    "vscode": "JavaScript",
+    "webstorm": "JavaScript",
+    "atom": "JavaScript",
+    "sublime text": "JavaScript",
+
+    # Go
+    "goland": "Go",
+
+    # Rust
+    "intellij": "Rust",
+    "vscode": "Rust",
+
+    # Scala
+    "intellij": "Scala",
+    "ensime": "Scala",
+
+    # Haskell
+    "haskell ide": "Haskell",
+    "intellij": "Haskell",
+
+    # MATLAB
+    "matlab": "MATLAB",
+
+    # PHP
+    "phpstorm": "PHP",
+    "netbeans": "PHP",
+
+    # Perl
+    "padre": "Perl",
+
+    # Swift / Objective-C
+    "xcode": "Swift",
+    "xcode": "Objective-C",
+
+    # Kotlin
+    "intellij": "Kotlin",
+
+    # Dart / Flutter
+    "android studio": "Dart",
+    "vscode": "Dart",
+
+    # Julia
+    "julia studio": "Julia",
+    "vscode": "Julia",
+
+    # Ruby
+    "ruby mine": "Ruby",
+    "vscode": "Ruby",
+
+    # Erlang / Elixir
+    "intellij": "Erlang",
+    "intellij": "Elixir",
+
+    # F#
+    "visual studio": "F#",
 }
 
 def get_language_positions(

@@ -89,8 +89,8 @@ def label_true(row: pd.Series) -> int:
 
 
 if __name__ == "__main__":
-    df = pd.read_csv('temp/temp/similarities.csv',delimiter=';')
-    df['true_label'] = df.apply(label_true, axis=1)
-    df.to_csv('similarities.csv', index=False)
-    evaluation(df)
+    df = pd.read_csv('input1.csv',delimiter=';')
+    #df['true_label'] = df.apply(label_true, axis=1)
+    df.to_csv('input1.csv', index=False)
+    #evaluation(df)
 
