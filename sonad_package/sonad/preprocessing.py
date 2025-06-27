@@ -1702,27 +1702,160 @@ def make_pairs(df:pd.DataFrame, output_path:str) -> pd.DataFrame:
 
 
 
-
-
-# Reuse or customize these lists/mappings
 COMMON_LANGUAGES = [
-    "Python", "R", "Java", "C\\+\\+", "C#", "C", "JavaScript",
-    "TypeScript", "Ruby", "Go", "Rust", "Scala", "Haskell",
-    "MATLAB", "PHP", "Perl", "Swift", "Kotlin", "Dart", "Julia"
+    "ABAP",
+    "Ada",
+    "ALGOL",
+    "APL",
+    "AppleScript",
+    "Assembly",
+    "AWK",
+    "Bash",
+    "Batch",
+    "C",
+    "C#",
+    "C\\+\\+",            # escaped for regex
+    "Clojure",
+    "COBOL",
+    "Crystal",
+    "D",
+    "Dart",
+    "Delphi",
+    "Erlang",
+    "Elixir",
+    "Elm",
+    "F#",
+    "Fortran",
+    "Go",
+    "Groovy",
+    "Haskell",
+    "HTML",
+    "Java",
+    "JavaScript",
+    "Julia",
+    "Kotlin",
+    "LabVIEW",
+    "Lisp",
+    "Lua",
+    "MATLAB",
+    "Objective-C",
+    "OCaml",
+    "Pascal",
+    "Perl",
+    "PHP",
+    "PowerShell",
+    "Prolog",
+    "Python",
+    "R",
+    "Racket",
+    "Rexx",
+    "Ruby",
+    "Rust",
+    "Scala",
+    "Scheme",
+    "Shell",
+    "SQL",
+    "Swift",
+    "Tcl",
+    "TypeScript",
+    "VBScript",
+    "VBA",
+    "Visual Basic",
+    "Visual Basic .NET",
+    "WebAssembly",
+    "Wolfram",
+    "Zig",
 ]
 
 IDE_MAPPING = {
-    "rstudio": "R",
+    # Python
     "pycharm": "Python",
     "jupyter": "Python",
     "spyder": "Python",
-    "eclipse": "Java",
+    "vscode": "Python",
+    "atom": "Python",
+    "sublime text": "Python",
+    "thonny": "Python",
+
+    # R
+    "rstudio": "R",
+
+    # Java
     "intellij": "Java",
-    "visual studio": "C#",
+    "eclipse": "Java",
     "netbeans": "Java",
     "android studio": "Java",
-    # add more IDE→language pairs as needed
+
+    # C/C++
+    "visual studio": "C#",
+    "clion": "C++",
+    "qt creator": "C++",
+    "code::blocks": "C++",
+    "xcode": "C",
+    "dev c++": "C++",
+
+    # C#
+    "visual studio": "C#",
+    "sharpdevelop": "C#",
+
+    # JavaScript / TypeScript
+    "vscode": "JavaScript",
+    "webstorm": "JavaScript",
+    "atom": "JavaScript",
+    "sublime text": "JavaScript",
+
+    # Go
+    "goland": "Go",
+
+    # Rust
+    "intellij": "Rust",
+    "vscode": "Rust",
+
+    # Scala
+    "intellij": "Scala",
+    "ensime": "Scala",
+
+    # Haskell
+    "haskell ide": "Haskell",
+    "intellij": "Haskell",
+
+    # MATLAB
+    "matlab": "MATLAB",
+
+    # PHP
+    "phpstorm": "PHP",
+    "netbeans": "PHP",
+
+    # Perl
+    "padre": "Perl",
+
+    # Swift / Objective-C
+    "xcode": "Swift",
+    "xcode": "Objective-C",
+
+    # Kotlin
+    "intellij": "Kotlin",
+
+    # Dart / Flutter
+    "android studio": "Dart",
+    "vscode": "Dart",
+
+    # Julia
+    "julia studio": "Julia",
+    "vscode": "Julia",
+
+    # Ruby
+    "ruby mine": "Ruby",
+    "vscode": "Ruby",
+
+    # Erlang / Elixir
+    "intellij": "Erlang",
+    "intellij": "Elixir",
+
+    # F#
+    "visual studio": "F#",
 }
+
 
 def get_language_positions(
     text: str
@@ -1876,70 +2009,12 @@ def get_synonyms_from_CZI(df, dictionary ,keys):
         # Store synonyms as a list
         dictionary[key].update(matches)
 
-def get_synonyms_from_SoftwareKG(dictionary, keys):
+
+def get_synonyms(dictionary, keys, CZI = 1, CZI_df: pd.DataFrame = None) -> Dict[str, set]:
     """
-    Populate synonyms for keys by querying the SoftwareKG SPARQL endpoint.
+    Retrieve synonyms for software names using CZI.
 
-    For each `key` whose `dictionary[key]` is empty, runs a SPARQL query
-    on GESIS SomeSci to retrieve alternative spellings (`nif:anchorOf`)
-    linked to the same software entity.
-
-    Parameters:
-        dictionary (Dict[str, Set[str]]):
-            Mapping from lowercase software name to a set of synonyms.
-        keys (Iterable[str]):
-            Software names (lowercase) to query.
-
-    Side Effects:
-        Updates `dictionary` in place.
-    """
-    # Define the SPARQL endpoint
-    sparql = SPARQLWrapper("https://data.gesis.org/somesci/sparql")
-    # Execute the query
-    for key in keys:
-        if dictionary[key] != set():
-            continue
-        query = f"""
-    PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
-PREFIX sms: <http://data.gesis.org/somesci/>
-PREFIX its: <http://www.w3.org/2005/11/its/rdf#>
-
-SELECT DISTINCT ?synonym
-WHERE {{
-    # Find the software entity associated with the given spelling
-    ?sw_phrase a nif:Phrase ;
-               its:taClassRef [ rdfs:subClassOf sms:Software ] ;
-               its:taIdentRef ?sw_identity ;
-               nif:anchorOf "{key}" .  # Replace "Excel" with the desired software name
-
-    # Retrieve other spellings linked to the same software identity
-    ?other_phrase its:taIdentRef ?sw_identity ;
-                  nif:anchorOf ?synonym .
-    
-    FILTER (?synonym != "{key}")  # Exclude the original input spelling from results
-}}
-ORDER BY ?synonym
-    """
-        try:
-            # Set query and return format
-            sparql.setQuery(query)
-            sparql.setReturnFormat(JSON)
-            results = sparql.query().convert()
-
-            # Process results
-            for result in results["results"]["bindings"]:
-                synonym = result.get("synonym", {}).get("value")
-                if synonym:
-                    dictionary[key].add(synonym)
-
-        except Exception as e:
-            print(f"Error retrieving synonyms for {key}: {e}")
-def get_synonyms(dictionary, keys, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame = None) -> Dict[str, set]:
-    """
-    Retrieve synonyms for software names using CZI and/or SoftwareKG sources.
-
-    Depending on flags, calls `get_synonyms_from_CZI` and/or
-    `get_synonyms_from_SoftwareKG`, then converts each set into a list.
+    Depending on flags, calls `get_synonyms_from_CZI` then converts each set into a list.
 
     Parameters:
         dictionary (Dict[str, Set[str]]):
@@ -1948,8 +2023,6 @@ def get_synonyms(dictionary, keys, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame
             Names (lowercase) for which to fetch synonyms.
         CZI (bool):
             Whether to use the CZI DataFrame source.
-        SoftwareKG (bool):
-            Whether to use the SPARQL SoftwareKG source.
         CZI_df (Optional[pd.DataFrame]):
             DataFrame for CZI source lookups.
 
@@ -1959,19 +2032,18 @@ def get_synonyms(dictionary, keys, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame
     """
     if CZI == 1:
         get_synonyms_from_CZI(CZI_df, dictionary, keys)
-    if SoftwareKG == 1:
-        get_synonyms_from_SoftwareKG(dictionary, keys)
+    
     dictionary = {key: list(value) for key, value in dictionary.items()}
     return dictionary
 
-def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFrame, CZI = 1, SoftwareKG = 1, CZI_df: pd.DataFrame = None) -> pd.DataFrame:
+def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFrame, CZI = 1, CZI_df: pd.DataFrame = None) -> pd.DataFrame:
     """
     Load, augment, and persist a synonyms dictionary, then map into the DataFrame.
 
     1. If `synonym_file_location` exists and is non-empty, load it as JSON to a dict of sets.
        Otherwise initialize an empty set for each unique `benchmark_df["name"]`.
     2. Ensure every lowercase name from `benchmark_df` has an entry in the dict.
-    3. Call `get_synonyms(...)` with CZI and/or SoftwareKG sources to populate missing synonyms.
+    3. Call `get_synonyms(...)` with CZI sources to populate missing synonyms.
     4. Write the updated dictionary back to `synonym_file_location` as JSON.
     5. Add or overwrite `benchmark_df["synonyms"]` by lowercasing each name, looking up its
        synonyms (as a list), and joining them with commas.
@@ -1983,8 +2055,6 @@ def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFram
             Input DataFrame containing at least a `"name"` column of software mentions.
         CZI (bool):
             Whether to fetch synonyms from the CZI CSV source.
-        SoftwareKG (bool):
-            Whether to fetch synonyms via the SoftwareKG SPARQL endpoint.
         CZI_df (Optional[pd.DataFrame]):
             DataFrame loaded from the CZI synonyms CSV (if `CZI` is True).
 
@@ -2019,7 +2089,7 @@ def get_synonyms_from_file(synonym_file_location: str, benchmark_df: pd.DataFram
     else:
             benchmark_dictionary = {name.lower(): set() for name in benchmark_df["name"].unique()}
     names = benchmark_df["name"].str.lower().unique()
-    benchmark_dictionary = get_synonyms(benchmark_dictionary, CZI=CZI, SoftwareKG=SoftwareKG, keys=names, CZI_df=CZI_df)
+    benchmark_dictionary = get_synonyms(benchmark_dictionary, CZI=CZI, keys=names, CZI_df=CZI_df)
     # Save the updated dictionary to a JSON file
     with open(synonym_file_location, "w", encoding="utf-8") as f:
         json.dump(benchmark_dictionary, f, ensure_ascii=False, indent=4)

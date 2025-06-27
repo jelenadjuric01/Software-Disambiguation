@@ -1,6 +1,6 @@
 [tool.poetry]
 name         = "sonad"
-version      = "0.2.3"
+version      = "0.2.5"
 description  = "Software name disambiguation pipeline"
 authors      = ["Jelena Duric <djuricjelena611@gmail.com>"]
 license      = "MIT"
