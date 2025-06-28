@@ -19,12 +19,6 @@ Given a CSV with software mentions and context (name, paragraph, DOI, etc.), the
 
 ---
 
-### ✔️ Final Program
-
-install using
-pip install sonad
-
----
 # SONAD: Software Name Disambiguation
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)  
